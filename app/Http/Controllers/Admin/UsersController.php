@@ -22,21 +22,9 @@ class UsersController extends Controller
 
     public function index()
     {
-        $data_now = Carbon::now();
-        $data_parse = Carbon::parse(now());
-        // echo $data_now;
-        // echo $data_parse;
-
-        $e_all = User::all();
-        $q_get = DB::table('users')->select('name','created_at')->get();
-        // $q_first = DB::table('users')->select('name')->first();
-
-        // $c_test = collect([
-        //     'name' => 'テスト'
-        // ]);
-
-        // dd($e_all, $q_get, $q_first, $c_test);
-        return view('admin.users.index', compact('e_all', 'q_get'));
+        $users = User::select('name', 'email', 'created_at')->get();
+       
+        return view('admin.users.index', compact('users'));
     }
 
     /**
@@ -44,7 +32,7 @@ class UsersController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.users.create');
     }
 
     /**
