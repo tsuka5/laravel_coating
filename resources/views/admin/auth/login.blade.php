@@ -2,7 +2,7 @@
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
     
-        管理者用
+    Administrator_Side
 
     <form method="POST" action="{{ route('admin.login') }}">
         @csrf
