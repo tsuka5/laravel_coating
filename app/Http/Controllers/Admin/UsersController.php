@@ -4,6 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User; //エロクアント
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+
 
 class UsersController extends Controller
 {
@@ -18,7 +22,21 @@ class UsersController extends Controller
 
     public function index()
     {
-        dd('ユーザー一覧です');
+        $data_now = Carbon::now();
+        $data_parse = Carbon::parse(now());
+        // echo $data_now;
+        // echo $data_parse;
+
+        $e_all = User::all();
+        $q_get = DB::table('users')->select('name','created_at')->get();
+        // $q_first = DB::table('users')->select('name')->first();
+
+        // $c_test = collect([
+        //     'name' => 'テスト'
+        // ]);
+
+        // dd($e_all, $q_get, $q_first, $c_test);
+        return view('admin.users.index', compact('e_all', 'q_get'));
     }
 
     /**
