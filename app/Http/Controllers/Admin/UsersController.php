@@ -58,7 +58,8 @@ class UsersController extends Controller
         ]);
 
         return redirect()->route('admin.users.index')
-        ->with('message', 'Registration Complete' );
+        ->with(['message'=>'Registration Complete',
+        'status'=>'info'] );
     }
 
     /**
@@ -92,7 +93,8 @@ class UsersController extends Controller
 
         return redirect()
         ->route('admin.users.index')
-        ->with('message', 'Update Complete');
+        ->with(['message'=>'Update Complete',
+        'status'=>'info']);
         
     }
 
@@ -101,6 +103,22 @@ class UsersController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        User::findOrFail($id)->delete(); //ソフトデリート
+
+        return redirect()
+        ->route('admin.users.index')
+        ->with(['message'=>'Delete Complete',
+        'status'=>'alert']);
     }
+
+    public function expiredUserIndex(){
+        $expiredUsers = User::onlyTrashed()->get();
+        return view('admin.expired-users', compact('expiredUsers'));
+    }
+
+    public function expiredUserDestroy($id){
+        User::onlyTrashed()->findOrFail($id)->forceDelete();
+        return redirect()->route('admin.expired-users.index');
+    }
+
 }

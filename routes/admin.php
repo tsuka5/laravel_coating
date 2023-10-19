@@ -31,6 +31,12 @@ Route::get('/', function () {
 Route::resource('users', UsersController::class)
 ->middleware(['auth:admin', 'verified']);
 
+Route::prefix('expired-users')
+->middleware('auth:admin')->group(function(){
+    Route::get('index',[UsersController::class,'expiredUserIndex'])->name('expired-users.index');
+    Route::post('destroy/{user}',[UsersController::class,'expiredUserDestroy'])->name('expired-users.destroy');
+});
+
 Route::get('/dashboard', function () {
     return view('admin.dashboard');
 })->middleware(['auth:admin', 'verified'])->name('dashboard');

@@ -20,6 +20,9 @@
                     <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.index')">
                         User_Management
                     </x-nav-link>
+                    <x-nav-link :href="route('admin.expired-users.index')" :active="request()->routeIs('admin.expired-users.index')">
+                        Expired_User_Management
+                    </x-nav-link>
                 </div>
             </div>
 
