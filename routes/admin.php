@@ -24,12 +24,12 @@ use App\Http\Controllers\Admin\UsersController;
 |
 */
 
-Route::get('/', function () {
-    return view('admin.welcome');
-});
+// Route::get('/', function () {
+//     return view('admin.welcome');
+// });
 
 Route::resource('users', UsersController::class)
-->middleware(['auth:admin', 'verified']);
+->middleware(['auth:admin', 'verified'])->except(['show']);
 
 Route::prefix('expired-users')
 ->middleware('auth:admin')->group(function(){
