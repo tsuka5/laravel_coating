@@ -26,7 +26,7 @@ class UsersController extends Controller
 
     public function index()
     {
-        $users = User::select('name', 'email', 'created_at')->get();
+        $users = User::select('id', 'name', 'email', 'created_at')->get();
        
         return view('admin.users.index', compact('users'));
     }
@@ -74,7 +74,9 @@ class UsersController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+        
+        return view('admin.users.edit', compact('user'));
     }
 
     /**
@@ -82,7 +84,16 @@ class UsersController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        return redirect()
+        ->route('admin.users.index')
+        ->with('message', 'Update Complete');
+        
     }
 
     /**

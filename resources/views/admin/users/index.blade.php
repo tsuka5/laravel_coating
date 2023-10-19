@@ -22,7 +22,7 @@
                                   <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">Name</th>
                                   <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Email</th>
                                   <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Created_at</th>
-                                  <th class="w-10 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br"></th>
+                                  <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br"></th>
                                 </tr>
                               </thead>
                               <tbody>
@@ -31,8 +31,8 @@
                                         <td class="px-4 py-3">{{ $user->name }}</td>
                                         <td class="px-4 py-3">{{ $user->email }}</td>
                                         <td class="px-4 py-3">{{ $user->created_at->diffForHumans() }}</td>
-                                        <td class="w-10 text-center">
-                                            <input name="plan" type="radio">
+                                        <td class="px-4 py-3">
+                                            <button onclick="location.href='{{ route('admin.users.edit', ['user' => $user->id])}}'" class="text-white bg-indigo-400 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-500 rounded">Edit</button>
                                         </td>
                                     </tr>
                                 @endforeach
