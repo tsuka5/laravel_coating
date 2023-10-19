@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use App\Models\User; //エロクアント
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules;
+
+
 
 
 class UsersController extends Controller
@@ -38,9 +42,23 @@ class UsersController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request) //フォームに入力した値がRequestクラスにありそれをインスタンス化する役割
     {
-        //
+        // $request->name;
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'confirmed', 'min:8'],
+        ]);
+
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+
+        return redirect()->route('admin.users.index')
+        ->with('message', 'Registration Complete' );
     }
 
     /**
