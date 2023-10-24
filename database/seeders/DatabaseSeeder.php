@@ -20,7 +20,17 @@ class DatabaseSeeder extends Seeder
         // ]);
         $this->call([
             AdminSeeder::class,
-            UserSeeder::class
+            UserSeeder::class,
+            ExperimentSeeder::class,
+            MaterialSeeder::class,
+            AdditiveSeeder::class,
+            Film_conditionSeeder::class,
+            Charactaristic_testSeeder::class,
+            Antibacteria_testSeeder::class,
+            Material_detailSeeder::class,
+            Bacteria_detailSeeder::class,
+            Storing_testSeeder::class,
+           
         ]);
         
     }

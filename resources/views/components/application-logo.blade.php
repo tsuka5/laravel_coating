@@ -1,4 +1,4 @@
-<div class="w-52">
+<div class="w-48">
     <img src="{{ asset("images/logo.png") }}">
 </div>
 
