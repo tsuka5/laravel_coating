@@ -21,7 +21,7 @@ class CreateExperimentsTable extends Migration
             $table->text('title');
             $table->text('name');
             $table->date('date');
-            $table->text('papar');
+            $table->text('paper')->nullable();
         });
 
         Schema::enableForeignKeyConstraints();

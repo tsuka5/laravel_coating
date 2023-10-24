@@ -15,17 +15,25 @@ class experiment extends Model
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    public $timestamps = false; //update_atなどを無効にする
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
+
+       // ここで初期値を定義する
+    // protected $attributes = [
+    //     'paper' => 'null',
+    // ];
+
     protected $fillable = [
         'user_id',
         'title',
         'name' ,
         'date' ,
-        'papar',
+        'paper',
     ];
 
     public function user(): BelongsTo

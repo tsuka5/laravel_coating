@@ -40,16 +40,35 @@ class ProfileController extends Controller
      */
     public function create()
     {
-        //
+        return view('user.profile.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request) 
     {
-        //
+        $request->validate([
+            'title' => ['required', 'string', 'max:255','unique:experiments'], 
+            'name' => ['required', 'string', 'max:255'],
+            'date' => ['required','date'],
+            'paper' => ['string', 'max:255','nullable'],
+        ]);
+
+        Experiment::create([
+            'user_id'=>Auth::user()->id,
+            'title' => $request->title,
+            'name' => $request->name,
+            'date' => $request->date,
+            'paper' => $request->paper,
+            
+        ]);
+
+        return redirect()->route('user.profile.index')
+        ->with(['message'=>'Registration Complete',
+        'status'=>'info'] );
     }
+
 
     /**
      * Display the specified resource.
