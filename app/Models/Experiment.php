@@ -7,7 +7,11 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use App\Models\User;
+use App\Models\Film_condition;
+
 
 
 
@@ -39,6 +43,11 @@ class experiment extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function film_comdition(): HasOne
+    {
+        return $this->hasOne(Film_condition::class);
     }
 
  

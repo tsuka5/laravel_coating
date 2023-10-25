@@ -13,12 +13,12 @@
                     <div class="max-w-4xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
                         <!-- Card -->
                         <div class="bg-white rounded-xl shadow p-4 sm:p-7 dark:bg-slate-900">
-                        <div class="mb-8">
+                        {{-- <div class="mb-8">
                             
                             <p class="text-sm text-blue-800 dark:text-gray-400">
                             Your information
                             </p>
-                        </div>
+                        </div> --}}
                     
                        
                             <div class="sm:col-span-3">
@@ -41,19 +41,7 @@
                             <!-- End Col -->
                     
                             <div class="sm:col-span-9py-2 px-3 pr-11 block w-full border-gray-200 shadow-sm text-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400">
-                                {{ $userInformation->email}}
-                            </div>
-                            <!-- End Col -->
-
-                            <div class="sm:col-span-3">
-                                <label for="af-account-bio" class="inline-block text-sm text-gray-400 mt-2.5 dark:text-gray-200">
-                                Your major
-                                </label>
-                            </div>
-                            <!-- End Col -->
-                    
-                            <div class="sm:col-span-9 py-2 px-3 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400">
-                                Type your majoring material
+                                {{ $userInformation->email }}
                             </div>
                             <!-- End Col -->
                         </div>
