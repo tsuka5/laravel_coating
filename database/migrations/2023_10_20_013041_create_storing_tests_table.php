@@ -19,7 +19,7 @@ class CreateStoringTestsTable extends Migration
             ->constrained()
             ->onUpdate('cascade')
             ->onDelete('cascade');
-            $table->string('name');
+            $table->string('s_name')->nullable();
             $table->integer('storing_days')->nullable();
             $table->float('mass_loss_rate')->nullable();
             $table->float('color_l')->nullable();

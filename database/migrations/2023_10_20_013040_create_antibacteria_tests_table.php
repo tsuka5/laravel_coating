@@ -19,9 +19,9 @@ class CreateAntibacteriaTestsTable extends Migration
             ->constrained()
             ->onUpdate('cascade')
             ->onDelete('cascade');
-            $table->string('name');
+            $table->string('a_name')->nullable();
             $table->float('bacteria_rate')->nullable();
-            $table->float('moisture_content')->nullable();
+            $table->float('a_moisture_content')->nullable();
             $table->binary('afm')->nullable();
             $table->binary('sem')->nullable();
             $table->binary('dsc')->nullable();

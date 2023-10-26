@@ -11,7 +11,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use App\Models\User;
 use App\Models\Film_condition;
-
+use App\Models\Charactaristic_test;
+use App\Models\Storing_test;
+use App\Models\Material;
 
 
 
@@ -48,6 +50,26 @@ class experiment extends Model
     public function film_comdition(): HasOne
     {
         return $this->hasOne(Film_condition::class);
+    }
+
+    public function charactaristic_test(): HasOne
+    {
+        return $this->hasOne(Charactaristic_test::class);
+    }
+
+    public function storing_test(): HasOne
+    {
+        return $this->hasOne(Storing_test::class);
+    }
+
+    public function antibacteria_test(): HasOne
+    {
+        return $this->hasOne(Antibacteria_test::class);
+    }
+
+    public function material(): HasMany
+    {
+        return $this->hasMany(Material::class);
     }
 
  

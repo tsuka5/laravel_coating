@@ -18,7 +18,7 @@ class Storing_testSeeder extends Seeder
         DB::table('storing_tests')->insert([
         [
             'experiment_id' => '1',
-            'name' => 'orange',
+            's_name' => 'orange',
             'storing_days' => '4',
             'mass_loss_rate' => '0.8',
             'color_l' => '1.8',
@@ -31,7 +31,7 @@ class Storing_testSeeder extends Seeder
         ],
         [
             'experiment_id' => '2',
-            'name' => 'orange',
+            's_name' => 'orange',
             'storing_days' => '4',
             'mass_loss_rate' => '0.8',
             'color_l' => '1.8',
@@ -44,7 +44,7 @@ class Storing_testSeeder extends Seeder
         ],
         [
             'experiment_id' => '3',
-            'name' => 'orange',
+            's_name' => 'orange',
             'storing_days' => '4',
             'mass_loss_rate' => '0.8',
             'color_l' => '1.8',

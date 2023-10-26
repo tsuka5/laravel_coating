@@ -18,9 +18,9 @@ class Antibacteria_testSeeder extends Seeder
         DB::table('antibacteria_tests')->insert([
         [
             'experiment_id' => '1',
-            'name' => 'Rhizopus',
+            'a_name' => 'Rhizopus',
             'bacteria_rate' => '3.0',
-            'moisture_content' => '50.0',
+            'a_moisture_content' => '50.0',
             'afm' => '1',
             'sem' => '78.0',
             'dsc' => '0.8',
@@ -28,9 +28,9 @@ class Antibacteria_testSeeder extends Seeder
         ],
         [
             'experiment_id' => '2',
-            'name' => 'Rhizopus',
+            'a_name' => 'Rhizopus',
             'bacteria_rate' => '3.0',
-            'moisture_content' => '50.0',
+            'a_moisture_content' => '50.0',
             'afm' => '1',
             'sem' => '78.0',
             'dsc' => '0.8',
@@ -38,9 +38,9 @@ class Antibacteria_testSeeder extends Seeder
         ],
         [
             'experiment_id' => '3',
-            'name' => 'Rhizopus',
+            'a_name' => 'Rhizopus',
             'bacteria_rate' => '3.0',
-            'moisture_content' => '50.0',
+            'a_moisture_content' => '50.0',
             'afm' => '1',
             'sem' => '78.0',
             'dsc' => '0.8',
