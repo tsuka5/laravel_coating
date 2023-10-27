@@ -9,6 +9,7 @@ use App\Models\Experiment; //エロクアント
 use App\Models\Film_condition; 
 use App\Models\Charactaristic_test; 
 use App\Models\Material;
+use App\Models\Additive;
 use App\Models\Storing_test;
 use App\Models\Antibacteria_test;
 use Illuminate\Support\Facades\DB;
@@ -125,6 +126,13 @@ class ProfileController extends Controller
         $material-> ph_target = $request->ph_target;
         $material->save();
 
+        $additive = new Additive;
+        $additive-> experiment_id = $experiment->id;
+        $additive-> name = $request->name;
+        $additive-> price = $request->price;
+        $additive-> concentration = $request->concentration;
+        $additive->save();
+
         $film_condition = new Film_condition;
         $film_condition-> experiment_id = $experiment->id;
         $film_condition-> degassing_temperature = $request->degassing_temperature;
@@ -180,25 +188,7 @@ class ProfileController extends Controller
         ->with(['message'=>'Registration Complete',
         'status'=>'info'] );
 
-        // Experiment::create([
-        //     'user_id'=>Auth::user()->id,
-        //     'title' => $request->title,
-        //     'name' => $request->name,
-        //     'date' => $request->date,
-        //     'paper' => $request->paper,
-        // ]);
-
-        // Film_condition::create([
-        //     'experiment_id'=>Experiment::id(),
-        //     'degassing_temperature' => $request->degassing_temperature,
-        //     'dish_type' => $request->dish_type,
-        //     'dish_area' => $request->dish_area,
-        //     'casting' => $request->casting,
-        //     'incubator_type' => $request->incubator_type,
-        //     'drying_temperature' => $request->drying_temperature,
-        //     'drying_humidity' => $request->drying_humidity,
-        //     'drying_time' => $request->drying_time,
-        // ]);
+       
 
         //save()を使わないとcreateでは同じフォーム内のインスタンスを使うことができなかった。
 
@@ -221,7 +211,9 @@ class ProfileController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $experiment = Experiment::findOrFail($id);
+
+        return view('user.profile.edit', compact('experiment'));
     }
 
     /**
@@ -229,7 +221,17 @@ class ProfileController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $experiment = Experiment::findOrFail($id);
+        $experiment->title = $request->title;
+        $experiment->name = $request->name;
+        // $experiment->date = $request->date;
+        // $experiment->paper = $request->paper;        
+        $experiment->save();
+
+        return redirect()
+        ->route('user.profile.index')
+        ->with(['message'=>'Update Complete',
+        'status'=>'info']);
     }
 
     /**
@@ -237,6 +239,11 @@ class ProfileController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Experiment::findOrFail($id)->delete(); //ソフトデリート
+
+        return redirect()
+        ->route('user.profile.index')
+        ->with(['message'=>'Delete Complete',
+        'status'=>'alert']);
     }
 }

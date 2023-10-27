@@ -11,14 +11,14 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <!-- Card Section -->
                     <div class="max-w-4xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
+                        {{-- <div class="mb-8">
+                            <h6 class="text-sm text-gray-800 dark:text-gray-400">
+                            Your information
+                            </h6>
+                        </div> --}}
                         <!-- Card -->
                         <div class="bg-white rounded-xl shadow p-4 sm:p-7 dark:bg-slate-900">
-                        {{-- <div class="mb-8">
                             
-                            <p class="text-sm text-blue-800 dark:text-gray-400">
-                            Your information
-                            </p>
-                        </div> --}}
                     
                        
                             <div class="sm:col-span-3">
@@ -58,28 +58,28 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <section class="text-gray-600 body-font">
                         <div class="mb-8">
-                            <p class="text-sm text-blue-800 dark:text-gray-400">
+                            <h6 class="text-sm text-gray-800 dark:text-gray-400">
                             Your experiments
-                            </p>
+                            </h6>
                         </div>
                         <div class="container px-5 mx-auto">
                             <x-flash-message status="session('status')" />
                             <div class='flex justify-end mb-4'>
                                 <button onclick="location.href='{{ route('user.profile.create') }}'" class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">Register</button>
                             </div>
-                          <div class="lg:w-2/3 w-full mx-auto overflow-auto">
+                        <div class="lg:w-2/3 w-full mx-auto overflow-auto">
                             <table class="table-auto w-full text-left whitespace-no-wrap">
-                              <thead>
+                            <thead>
                                 <tr>
-                                  <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">Title</th>
-                                  <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Name</th>
-                                  <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Date</th>
-                                  <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Paper</th>
-                                  <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br"></th>
-                                  <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br"></th>
+                                <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">Title</th>
+                                <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Name</th>
+                                <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Date</th>
+                                <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Paper</th>
+                                <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br"></th>
+                                <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br"></th>
                                 </tr>
-                              </thead>
-                              <tbody>
+                            </thead>
+                            <tbody>
                                 @foreach ($experiments as $experiment)
                                     <tr>
                                         <td class="px-4 py-3">{{ $experiment->title }}</td>
@@ -87,27 +87,36 @@
                                         <td class="px-4 py-3">{{ $experiment->date }}</td>
                                         <td class="px-4 py-3">{{ $experiment->paper }}</td>
                                         <td class="px-4 py-3">
-                                            {{-- <button onclick="location.href='{{ route('admin.users.edit', ['user' => $user->id])}}'" class="text-white bg-indigo-400 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-500 rounded">Edit</button> --}}
+                                            <button onclick="location.href='{{ route('user.profile.edit', ['profile' => $experiment->id])}}'" class="text-white bg-indigo-400 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-500 rounded">Edit</button>
                                         </td>
-                                        {{-- <form id="delete_{{ $user->id }}" method="post" action="{{ route('admin.users.destroy', ['user' => $user->id ])}}">
+                                        <form id="delete_{{ $experiment->id }}" method="post" action="{{ route('user.profile.destroy', ['profile' => $experiment->id ])}}">
                                             @csrf
-                                            @method('delete')  --}}
+                                            @method('delete')  
                                             {{-- リソースコントローラに渡す時だけ必要になる。それ以外はそれぞれのメソッドに合わせる。 --}}
-                                            {{-- <td class="px-4 py-3">
-                                                <a href="#" data-id="{{ $user->id }}" onclick="deletePost(this)" class="text-white bg-red-400 border-0 py-2 px-4 focus:outline-none hover:bg-red-500 rounded">Delete</a>
+                                            <td class="px-4 py-3">
+                                                <a href="#" data-id="{{ $experiment->id }}" onclick="deletePost(this)" class="text-white bg-red-400 border-0 py-2 px-4 focus:outline-none hover:bg-red-500 rounded">Delete</a>
                                             </td>
-                                        </form> --}}
+                                        </form> 
                                     </tr>
                                 @endforeach
 
-                              </tbody>
+                            </tbody>
                             </table>
                             {{-- {{ $experiments->links() }} --}}
-                        </div>
-                        </div>
-                      </section>
+                    </div>
+                    </div>
+                    </section>
                 </div>
             </div>
         </div>
     </div> 
+    <script>
+        function deletePost(e){
+            'use strict'
+            if(confirm('Are you sure you want to delete this data?')){
+                document.getElementById('delete_' + e.dataset.id).submit()
+            }
+        }
+
+    </script>
 </x-app-layout>

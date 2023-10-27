@@ -18,6 +18,9 @@
                     <x-nav-link :href="route('user.profile.index')" :active="request()->routeIs('user.profile.index')">
                             Profile
                     </x-nav-link>
+                    <x-nav-link :href="route('user.profile.create')" :active="request()->routeIs('user.profile.create')">
+                        Data_Entry
+                </x-nav-link>
                 </div>
             </div>
 

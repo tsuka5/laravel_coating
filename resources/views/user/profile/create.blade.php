@@ -51,6 +51,8 @@
                                
                                 <livewire:material></livewire:material>
 
+                                <livewire:additive></livewire:additive>
+
 
                                  {{-- <div class="container px-5 mx-auto"> --}}
                                 <div class="flex flex-col text-center w-full mb-4 mt-12">

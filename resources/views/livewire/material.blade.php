@@ -11,6 +11,10 @@
         @foreach($materials as $key => $material)
             <div class="card card-body">
 
+                <div class="text-right">
+                    <button type="button" class="bg-red-200 border-0 py-2 px-8 focus:outline-none hover:bg-red-400 rounded text-lg" wire:click.prevent="delete({{$key}})">削除</button>
+                </div>
+
                 <div class="p-2 w-1/2 mx-auto">
                     <div class="relative">
                         <label for="materials.{{ $key }}.name" class="leading-7 text-sm text-gray-600">Name</label>
