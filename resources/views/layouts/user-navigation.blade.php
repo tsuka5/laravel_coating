@@ -20,7 +20,10 @@
                     </x-nav-link>
                     <x-nav-link :href="route('user.profile.create')" :active="request()->routeIs('user.profile.create')">
                         Data_Entry
-                </x-nav-link>
+                    </x-nav-link>
+                    <x-nav-link :href="route('user.search.index')" :active="request()->routeIs('user.serch.index')">
+                        Search
+                    </x-nav-link>
                 </div>
             </div>
 

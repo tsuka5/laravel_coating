@@ -2,6 +2,7 @@
 
 // use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\ProfileController;
+use App\Http\Controllers\Auth\SearchController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -17,6 +18,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::resource('profile', ProfileController::class)
+->middleware(['auth:users', 'verified']);
+
+Route::resource('search', SearchController::class)
 ->middleware(['auth:users', 'verified']);
 
 Route::get('/', function () {

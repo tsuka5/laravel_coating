@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Auth;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Experiment; //エロクアント
+use App\Models\Experiment; 
 use App\Models\Film_condition; 
 use App\Models\Charactaristic_test; 
 use App\Models\Material;
