@@ -8,6 +8,8 @@ class Material extends Component
 {
     public $materials = [];
 
+    public $additives = [];
+
     protected $rules = [
         'materials.*.name' => 'required',
         'materials.*.price' => 'nullable',
@@ -73,7 +75,9 @@ class Material extends Component
         'staler_speed' => null,
         'ph_adjustment' => null,
         'ph_material' => null,
-        'ph_target' => null];
+        'ph_target' => null
+        ];
+
     }
 
     public function delete($key)
@@ -86,4 +90,5 @@ class Material extends Component
         $this->validate();
         dd('ok');
     }
+    
 }

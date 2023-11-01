@@ -11,18 +11,18 @@
             <div class="card card-body">
 
                 <div class="text-right">
-                    <button type="button" class="bg-red-200 border-0 py-2 px-8 focus:outline-none hover:bg-red-400 rounded text-lg" wire:click.prevent="delete({{$key}})">削除</button>
+                    <button type="button" class="bg-red-200 border-0 py-2 px-8 focus:outline-none hover:bg-red-400 rounded text-lg" wire:click.prevent="delete({{$key}})">Delete</button>
                 </div>
 
                 <div class="p-2 w-1/2 mx-auto">
                     <div class="relative">
-                        <label for="additives.{{ $key }}.name" class="leading-7 text-sm text-gray-600">Name</label>
-                        <input type="text" name="materials.{{ $key }}.name" value="{{ old('name') }}" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                            id="additives.{{ $key }}.name" wire:model.defer="additives.{{ $key }}.name">
+                        <label for="ad_name" class="leading-7 text-sm text-gray-600">Name</label>
+                        <input type="text" name="materials.{{ $key }}.ad_name" value="{{ old('ad_name') }}" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                            id="additives.{{ $key }}.ad_name" wire:model.defer="additives.{{ $key }}.ad_name">
 
-                        @error("additives.$key.name")
+                        @error("additives.$key.ad_name")
                         <span class="invalid-feedback d-block" role="alert">
-                                    <strong>{{ $errors->first("additives.$key.name") }}</strong>
+                                    <strong>{{ $errors->first("additives.$key.ad_name") }}</strong>
                         </span>
                         @enderror
                     </div>

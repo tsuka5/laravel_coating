@@ -12,6 +12,7 @@ use App\Models\Material;
 use App\Models\Additive;
 use App\Models\Storing_test;
 use App\Models\Antibacteria_test;
+use Illuminate\Database\Eloquent\Builder;
 
 class SearchController extends Controller
 {
@@ -21,17 +22,45 @@ class SearchController extends Controller
     public function index(Request $request)
     {
         $keyword = $request->input('keyword');
+        // $additive = $request->input('additive');
+        $material = $request->input('material');
+        
 
-        $query = Experiment::query();
+        // $query = Experiment::query();
+        $query = Material::query();
+
+        $query->join('experiments', function($query) use ($request) {
+            $query->on('materials.experiment_id', '=', 'experiments.id');
+            });
+
+        // $query = Experiment::join('materials','experiments.id', '=', 'experiment_id')
+        // ->join('additives', 'experiments.id', '=', 'experiment_id')->get();
+        // 一対多の関係の際は多の方のテーブルを基準にしないと一意に定まらず、おかしなことになる
+
+        //Eager loradingで解決できるかもしれない
+        // $query = Experiment::with(['material'])
 
         if(!empty($keyword)) {
             $query->where('title', 'LIKE', "%{$keyword}%")
-                ->orWhere('name', 'LIKE', "%{$keyword}%");
+            ->orWhere('name', 'LIKE', "%{$keyword}%");
+        }
+
+        // if(!empty($additive)) {
+        //     $query->where('ad_name', 'LIKE', "%{$additive}%");
+        // }
+
+        if(!empty($material)) {
+            $query->where('m_name', 'LIKE', "%{$material}%");
         }
 
         $selected_experiments = $query->get();
 
-        return view('user.search.index', compact('selected_experiments', 'keyword'));
+        // $additives_list = Additive::all();
+        $materials_list = Material::get();
+
+        
+
+        return view('user.search.index', compact('selected_experiments', 'keyword', 'material', 'materials_list'));
 
         // $experiments = Experiment::get();
 
@@ -59,7 +88,9 @@ class SearchController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $experiment = Experiment::findOrFail($id);
+
+        return view('user.search.show', compact('experiment'));
     }
 
     /**

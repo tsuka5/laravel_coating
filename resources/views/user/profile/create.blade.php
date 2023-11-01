@@ -54,14 +54,11 @@
                                 <livewire:additive></livewire:additive>
 
 
-                                 {{-- <div class="container px-5 mx-auto"> --}}
+                                
                                 <div class="flex flex-col text-center w-full mb-4 mt-12">
                                     <h4 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Film Conditions</h4>
                                 </div>
-                                {{-- <div class="lg:w-1/2 md:w-2/3 mx-auto"> --}}
-                                    {{-- <x-input-error :messages="$errors->all()" class="mb-4"  /> --}}
-                                    {{-- <form method="post" action="{{ route('user.profile.store') }}"> --}}
-                                    {{-- @csrf --}}
+                                
                                 <div class="m-2">
                                     <div class="p-2 w-1/2 mx-auto">
                                       <div class="relative">
@@ -375,9 +372,6 @@
 
                             </form>
                           
-                          {{-- </div> --}}
-                        {{-- </div> --}}
-
                         
                       </section>
                 </div>

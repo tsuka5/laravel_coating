@@ -111,7 +111,7 @@ class ProfileController extends Controller
 
         $material = new Material;
         $material-> experiment_id = $experiment->id;
-        $material-> name = $request->name;
+        $material-> m_name = $request->m_name;
         $material-> price = $request->price;
         $material-> concentration = $request->concentration;
         $material-> heat = $request->heat;
@@ -128,7 +128,7 @@ class ProfileController extends Controller
 
         $additive = new Additive;
         $additive-> experiment_id = $experiment->id;
-        $additive-> name = $request->name;
+        $additive-> ad_name = $request->ad_name;
         $additive-> price = $request->price;
         $additive-> concentration = $request->concentration;
         $additive->save();

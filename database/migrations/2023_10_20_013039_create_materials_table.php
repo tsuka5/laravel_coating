@@ -19,7 +19,7 @@ class CreateMaterialsTable extends Migration
             ->constrained()
             ->onUpdate('cascade')
             ->onDelete('cascade');
-            $table->string('name');
+            $table->string('m_name')->nullable();
             $table->float('price')->nullable();
             $table->float('concentration')->nullable();
             $table->boolean('heat')->nullable();

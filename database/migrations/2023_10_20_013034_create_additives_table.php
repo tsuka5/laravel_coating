@@ -19,7 +19,7 @@ class CreateAdditivesTable extends Migration
             ->constrained()
             ->onUpdate('cascade')
             ->onDelete('cascade');
-            $table->string('name')->nullable();
+            $table->string('ad_name')->nullable();
             $table->float('price')->nullable();
             $table->float('concentration')->nullable();
         });
