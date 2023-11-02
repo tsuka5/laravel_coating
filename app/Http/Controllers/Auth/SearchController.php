@@ -22,45 +22,57 @@ class SearchController extends Controller
     public function index(Request $request)
     {
         $keyword = $request->input('keyword');
-        // $additive = $request->input('additive');
         $material = $request->input('material');
+        $additive = $request->input('additive');
+        $bacterium = $request->input('bacterium');
+        $fruit = $request->input('fruit');
+        //requestの内容の区別はform内のnameでおこなっている。
         
 
-        // $query = Experiment::query();
-        $query = Material::query();
+        $query = Experiment::query();
+        // $query = Material::query();
+       
 
-        $query->join('experiments', function($query) use ($request) {
-            $query->on('materials.experiment_id', '=', 'experiments.id');
-            });
-
-        // $query = Experiment::join('materials','experiments.id', '=', 'experiment_id')
-        // ->join('additives', 'experiments.id', '=', 'experiment_id')->get();
-        // 一対多の関係の際は多の方のテーブルを基準にしないと一意に定まらず、おかしなことになる
-
-        //Eager loradingで解決できるかもしれない
-        // $query = Experiment::with(['material'])
+        $query->join('materials','experiments.id', '=', 'materials.experiment_id')
+            ->join('additives', 'experiments.id', '=','additives.experiment_id')
+            ->join('antibacteria_tests', 'experiments.id', '=', 'antibacteria_tests.experiment_id')
+            ->join('storing_tests', 'experiments.id', '=', 'storing_tests.experiment_id') ->get();
+            
+     
 
         if(!empty($keyword)) {
             $query->where('title', 'LIKE', "%{$keyword}%")
             ->orWhere('name', 'LIKE', "%{$keyword}%");
         }
 
-        // if(!empty($additive)) {
-        //     $query->where('ad_name', 'LIKE', "%{$additive}%");
-        // }
+        if(!empty($additive)) {
+            $query->where('ad_name', 'LIKE', "%{$additive}%");
+        }
 
         if(!empty($material)) {
             $query->where('m_name', 'LIKE', "%{$material}%");
         }
 
+        if(!empty($bacterium)) {
+            $query->where('a_name', 'LIKE', "%{$bacterium}%");
+        }
+
+        if(!empty($fruit)) {
+            $query->where('s_name', 'LIKE', "%{$fruit}%");
+        }
+
+
         $selected_experiments = $query->get();
 
-        // $additives_list = Additive::all();
-        $materials_list = Material::get();
+        $additives_list = Additive::select('ad_name')->distinct()->get();
+        $materials_list = Material::select('m_name')->distinct()->get();
+        $bacteria_list = Antibacteria_test::select('a_name')->distinct()->get();
+        $fruits_list = Storing_test::select('s_name')->distinct()->get();
 
         
 
-        return view('user.search.index', compact('selected_experiments', 'keyword', 'material', 'materials_list'));
+        return view('user.search.index', compact('selected_experiments', 'keyword', 'material', 'materials_list',
+         'additive', 'additives_list', 'bacterium', 'bacteria_list', 'fruit', 'fruits_list'));
 
         // $experiments = Experiment::get();
 

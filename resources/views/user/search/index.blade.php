@@ -5,8 +5,9 @@
         </h2>
     </x-slot>
     
-    <div class="lg:w-1/4 md:w-1/2 w-full px-4 mx-auto mt-6">
-        <div class="flex xl:flex-nowrap md:flex-nowrap lg:flex-wrap flex-wrap justify-center items-end md:justify-start">
+    {{-- <div class="lg:w-1/4 md:w-1/2 w-full px-4 mx-auto mt-6"> --}}
+        <div class="lg:w-1/2 w-full px-4 mx-auto mt-6">
+            <div class="flex xl:flex-nowrap md:flex-nowrap lg:flex-wrap flex-wrap justify-center items-end md:justify-start">
             <form action="{{ route('user.search.index') }}" method="GET">
                 <div class = "flex items-end">
                     <div class="relative w-40 sm:w-auto xl:mr-4 lg:mr-0 sm:mr-4 mr-2">
@@ -19,12 +20,38 @@
                         <select name="material" data-toggle="select">
                             <option value="">All</option>
                             @foreach ($materials_list as $selected_material)
-                            {{-- <option value="{{ $selected_material->m_name }}" @if($material=='{{ $selected_material->m_name }}') selected @endif>{{ $selected_material->m_name }}</option> --}}
                             <option value="{{ $selected_material->m_name }}"> {{ $selected_material->m_name }}</option>
                             @endforeach
                         </select>                    
                     </div>
-
+                    <div class="relative w-40 sm:w-auto xl:mr-4 lg:mr-0 sm:mr-4 mr-2">
+                        <label for="footer-field" class="leading-7 text-sm text-gray-600">Additives</label>
+                        <select name="additive" data-toggle="select">
+                            <option value="">All</option>
+                            @foreach ($additives_list as $selected_additive)
+                            <option value="{{ $selected_additive->ad_name }}"> {{ $selected_additive->ad_name }}</option>
+                            @endforeach
+                        </select>                    
+                    </div>
+                    <div class="relative w-40 sm:w-auto xl:mr-4 lg:mr-0 sm:mr-4 mr-2">
+                        <label for="footer-field" class="leading-7 text-sm text-gray-600">Bacteria</label>
+                        <select name="bacterium" data-toggle="select">
+                            <option value="">All</option>
+                            @foreach ($bacteria_list as $selected_bacterium)
+                            <option value="{{ $selected_bacterium->a_name }}"> {{ $selected_bacterium->a_name }}</option>
+                            @endforeach
+                        </select>                    
+                    </div>
+                    <div class="relative w-40 sm:w-auto xl:mr-4 lg:mr-0 sm:mr-4 mr-2">
+                        <label for="footer-field" class="leading-7 text-sm text-gray-600">Fruits</label>
+                        <select name="fruit" data-toggle="select">
+                            <option value="">All</option>
+                            @foreach ($fruits_list as $selected_fruit)
+                            <option value="{{ $selected_fruit->s_name }}"> {{ $selected_fruit->s_name }}</option>
+                            @endforeach
+                        </select>                    
+                    </div>
+                    
 
                     <div>
                         <input type="submit" value="Search" class="lg:mt-2 xl:mt-4 flex-shrink-0 inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
