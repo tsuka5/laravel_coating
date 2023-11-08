@@ -62,7 +62,7 @@ class SearchController extends Controller
         }
 
 
-        $selected_experiments = $query->get();
+        $selected_experiments = $query->paginate(10);
 
         $additives_list = Additive::select('ad_name')->distinct()->get();
         $materials_list = Material::select('m_name')->distinct()->get();

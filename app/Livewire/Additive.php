@@ -9,14 +9,14 @@ class Additive extends Component
     public $additives = [];
 
     protected $rules = [
-        'additives.*.name' => 'required',
+        'additives.*.ad_name' => 'nullable',
         'additives.*.price' => 'nullable',
         'additives.*.concentration' => 'nullable',
         
     ];
 
     protected $validationAttributes = [
-        'additives.*.name' => 'name',
+        'additives.*.ad_name' => 'ad_name',
         'additives.*.price' => 'price',
         'additives.*.concentration' => 'concentration',
     ];
@@ -25,7 +25,7 @@ class Additive extends Component
     {
         $this->additives = [
             ['experiment_id' => null,
-            'name' => null,
+            'ad_name' => null,
             'price' => null,
             'concentration' => null,
             ],   
@@ -41,7 +41,7 @@ class Additive extends Component
     public function add()
     {
         $this->additives[] = [
-        'name' => null,
+        'ad_name' => null,
         'price' => null,
         'concentration' =>null,
         ];

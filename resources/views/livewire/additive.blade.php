@@ -17,12 +17,12 @@
                 <div class="p-2 w-1/2 mx-auto">
                     <div class="relative">
                         <label for="ad_name" class="leading-7 text-sm text-gray-600">Name</label>
-                        <input type="text" name="materials.{{ $key }}.ad_name" value="{{ old('ad_name') }}" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                            id="additives.{{ $key }}.ad_name" wire:model.defer="additives.{{ $key }}.ad_name">
+                        <input type="text" name="ad_name" value="{{ old('ad_name') }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                            id="ad_name" wire:model.defer="ad_name">
 
-                        @error("additives.$key.ad_name")
+                        @error("ad_name")
                         <span class="invalid-feedback d-block" role="alert">
-                                    <strong>{{ $errors->first("additives.$key.ad_name") }}</strong>
+                                    <strong>{{ $errors->first("ad_name") }}</strong>
                         </span>
                         @enderror
                     </div>
@@ -30,13 +30,13 @@
 
                 <div class="p-2 w-1/2 mx-auto">
                     <div class="relative">
-                        <label for="additives.{{ $key }}.price" class="leading-7 text-sm text-gray-600">Price</label>
-                        <input type="number" name="additives.{{ $key }}.price" value="{{ old('price') }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                            id="additives.{{ $key }}.price" wire:model.defer="additives.{{ $key }}.price">
+                        <label for="price" class="leading-7 text-sm text-gray-600">Price</label>
+                        <input type="number" name="price" value="{{ old('price') }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                            id="price" wire:model.defer="price">
 
-                        @error("additives.$key.price")
+                        @error("price")
                         <span class="invalid-feedback d-block" role="alert">
-                                    <strong>{{ $errors->first("additives.$key.price") }}</strong>
+                                    <strong>{{ $errors->first("price") }}</strong>
                         </span>
                         @enderror
                     </div>
@@ -44,13 +44,13 @@
 
                 <div class="p-2 w-1/2 mx-auto">
                     <div class="relative">
-                        <label for="additives.{{ $key }}.concentration" class="leading-7 text-sm text-gray-600">Concentration</label>
-                        <input type="number" name="additives.{{ $key }}.concentration" value="{{ old('concentration') }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                            id="additives.{{ $key }}.concentration" wire:model.defer="additives.{{ $key }}.concentration">
+                        <label for="concentration" class="leading-7 text-sm text-gray-600">Concentration</label>
+                        <input type="number" name="concentration" value="{{ old('concentration') }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                            id="concentration" wire:model.defer="concentration">
 
-                        @error("additives.$key.concentration")
+                        @error("concentration")
                         <span class="invalid-feedback d-block" role="alert">
-                                    <strong>{{ $errors->first("additives.$key.concentration") }}</strong>
+                                    <strong>{{ $errors->first("concentration") }}</strong>
                         </span>
                         @enderror
                     </div>
@@ -58,6 +58,10 @@
 
             </div>
         @endforeach
-        {{-- <button type="button" class="btn btn-success col-2" wire:click.prevent="create">登録</button> --}}
+        </form>
+        <div class="p-2 w-full flex justify-around mt-4">
+            <button type="button" onclick="location.href='{{ route('user.profile.index') }}'" class="bg-gray-200 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">Back</button>
+            <button type="submit" class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">Register</button>
+        </div>
     </div>
 </div>

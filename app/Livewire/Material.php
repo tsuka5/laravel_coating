@@ -7,11 +7,10 @@ use Livewire\Component;
 class Material extends Component
 {
     public $materials = [];
-
-    public $additives = [];
+    
 
     protected $rules = [
-        'materials.*.name' => 'required',
+        'materials.*.m_name' => 'nullable',
         'materials.*.price' => 'nullable',
         'materials.*.concentration' => 'nullable',
         'materials.*.heat' => 'nullable',
@@ -24,7 +23,7 @@ class Material extends Component
     ];
 
     protected $validationAttributes = [
-        'materials.*.name' => 'name',
+        'materials.*.m_name' => 'm_name',
         'materials.*.price' => 'price',
         'materials.*.concentration' => 'concentration',
         'materials.*.heat' => 'heat',
@@ -39,8 +38,8 @@ class Material extends Component
     public function mount()
     {
         $this->materials = [
-            ['experiment_id' => null,
-            'name' => null,
+            ['experiment_id' => '',
+            'm_name' => '',
             'price' => null,
             'concentration' => null,
             'heat' => null,
@@ -63,10 +62,10 @@ class Material extends Component
             
     }
 
-    public function add()
+    public function addMaterial()
     {
         $this->materials[] = [
-        'name' => null,
+        'm_name' => null,
         'price' => null,
         'concentration' =>null,
         'heat' => null,
@@ -80,6 +79,7 @@ class Material extends Component
 
     }
 
+
     public function delete($key)
     {
         unset($this->materials[$key]);
@@ -90,5 +90,7 @@ class Material extends Component
         $this->validate();
         dd('ok');
     }
+
+   
     
 }

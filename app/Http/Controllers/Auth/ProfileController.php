@@ -34,7 +34,7 @@ class ProfileController extends Controller
         $userInformation = Auth::user();
 
         // $experiments = Experiment::where('user_id', Auth::user()->id)->get();
-        $experiments = Experiment::where('user_id', Auth::user()->id)->get();
+        $experiments = Experiment::where('user_id', Auth::user()->id)->paginate(5);
 
 
         return view('user.profile.index', compact('userInformation','experiments'));
@@ -51,7 +51,7 @@ class ProfileController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request) 
+    public function store(Request $request)  
     {
         $request->validate([
             'title' => ['required', 'string', 'max:255','unique:experiments'], 
@@ -109,22 +109,25 @@ class ProfileController extends Controller
         $experiment->paper = $request->paper;        
         $experiment->save();
 
-        $material = new Material;
-        $material-> experiment_id = $experiment->id;
-        $material-> m_name = $request->m_name;
-        $material-> price = $request->price;
-        $material-> concentration = $request->concentration;
-        $material-> heat = $request->heat;
-        $material-> water_temperature = $request->water_temperature;
-        $material-> water_rate = $request->water_rate;
-        $material-> material_rate = $request->material_rate;
-        $material-> staler_speed = $request->staler_speed;
-        $material-> repeat = $request->repeat;
-        $material-> staler_time = $request->staler_time;
-        $material-> ph_adjustment = $request->ph_adjustment;
-        $material-> ph_material = $request->ph_material;
-        $material-> ph_target = $request->ph_target;
-        $material->save();
+        // foreach ($request->materials as $materialData) {
+        //     $material = new Material;
+        //     $material-> experiment_id = $experiment->id;
+        //     $material-> m_name = $materialData['m_name'];
+        //     $material-> price = $request->price;
+        //     $material-> concentration = $request->concentration;
+        //     $material-> heat = $request->heat;
+        //     $material-> water_temperature = $request->water_temperature;
+        //     $material-> water_rate = $request->water_rate;
+        //     $material-> material_rate = $request->material_rate;
+        //     $material-> staler_speed = $request->staler_speed;
+        //     $material-> repeat = $request->repeat;
+        //     $material-> staler_time = $request->staler_time;
+        //     $material-> ph_adjustment = $request->ph_adjustment;
+        //     $material-> ph_material = $request->ph_material;
+        //     $material-> ph_target = $request->ph_target;
+        //     $material->save();
+        // }
+        
 
         $additive = new Additive;
         $additive-> experiment_id = $experiment->id;

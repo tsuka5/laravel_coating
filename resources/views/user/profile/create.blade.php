@@ -48,11 +48,13 @@
                                     </div>
                                 </div>
 
-                               
-                                <livewire:material></livewire:material>
-
-                                <livewire:additive></livewire:additive>
-
+                                <div id="dynamicFields">
+                                  <!-- ここに動的なフォームフィールドが追加される -->
+                              </div>
+                      
+                              <button type="button" id="addDynamicGroup">フォームグループ追加</button>                             
+                                {{-- @livewire('material')
+                               @livewire('additive') --}}
 
                                 
                                 <div class="flex flex-col text-center w-full mb-4 mt-12">
@@ -181,8 +183,8 @@
 
                               <div class="flex flex-col text-center w-full mb-4 mt-12">
                                 <h4 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Storing Test</h4>
-                            </div>
-                            <div class="m-2">
+                              </div>
+                              <div class="m-2">
                                 <div class="p-2 w-1/2 mx-auto">
                                   <div class="relative">
                                       <label for="s_name" class="leading-7 text-sm text-gray-600">Fruits or Vegitable </label>
@@ -245,67 +247,66 @@
                                 </div>
 
 
-                            <div class="flex flex-col text-center w-full mb-4 mt-12">
-                              <h4 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Antibacteria Test</h4>
-                          </div>
-                          <div class="m-2">
-                              <div class="p-2 w-1/2 mx-auto">
-                                <div class="relative">
-                                    <label for="a_name" class="leading-7 text-sm text-gray-600">Bacteria Name </label>
-                                    <input type="text" id="a_name" name="a_name" value="{{ old('a_name') }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                <div class="flex flex-col text-center w-full mb-4 mt-12">
+                                  <h4 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Antibacteria Test</h4>
                                 </div>
-                              </div>
-                              <div class="p-2 w-1/2 mx-auto">
-                                <div class="relative">
-                                    <label for="bacteria_rate" class="leading-7 text-sm text-gray-600">Bacteria Rate</label>
-                                    <input type="number" id="bacteria_rate" name="bacteria_rate" value="{{ old('bacteria_rate') }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                </div>
-                              </div>
-                              <div class="p-2 w-1/2 mx-auto">
-                                <div class="relative"> 
-                                    <label for="a_moisture_content" class="leading-7 text-sm text-gray-600">Moisture Content </label>
-                                    <input type="number" id="a_moisture_content" name="a_moisture_content" value="{{ old('a_moisture_content') }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                </div>
-                              </div>
-                              <div class="p-2 w-1/2 mx-auto">
-                                  <div class="relative">
-                                    <label for="afm" class="leading-7 text-sm text-gray-600">AFM</label>
-                                    <input type="file" id="afm" name="afm" value="{{ old('afm') }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                  </div>
-                              </div>
-                              <div class="p-2 w-1/2 mx-auto">
-                                  <div class="relative">
-                                    <label for="sem" class="leading-7 text-sm text-gray-600">SEM</label>
-                                    <input type="file" id="sem" name="sem" value="{{ old('sem') }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                  </div>
-                              </div>
-                              <div class="p-2 w-1/2 mx-auto">
-                                <div class="relative">
-                                  <label for="dsc" class="leading-7 text-sm text-gray-600">DSC</label>
-                                  <input type="file" id="dsc" name="dsc" value="{{ old('dsc') }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                </div>
-                              </div>
-                              <div class="p-2 w-1/2 mx-auto">
-                                  <div class="relative">
-                                    <label for="ftir" class="leading-7 text-sm text-gray-600">FTIR</label>
-                                    <input type="file" id="ftir" name="ftir" value="{{ old('ftir') }}"  class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                  </div>
-                              </div>
+                                <div class="m-2">
+                                    <div class="p-2 w-1/2 mx-auto">
+                                      <div class="relative">
+                                          <label for="a_name" class="leading-7 text-sm text-gray-600">Bacteria Name </label>
+                                          <input type="text" id="a_name" name="a_name" value="{{ old('a_name') }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                      </div>
+                                    </div>
+                                    <div class="p-2 w-1/2 mx-auto">
+                                      <div class="relative">
+                                          <label for="bacteria_rate" class="leading-7 text-sm text-gray-600">Bacteria Rate</label>
+                                          <input type="number" id="bacteria_rate" name="bacteria_rate" value="{{ old('bacteria_rate') }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                      </div>
+                                    </div>
+                                    <div class="p-2 w-1/2 mx-auto">
+                                      <div class="relative"> 
+                                          <label for="a_moisture_content" class="leading-7 text-sm text-gray-600">Moisture Content </label>
+                                          <input type="number" id="a_moisture_content" name="a_moisture_content" value="{{ old('a_moisture_content') }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                      </div>
+                                    </div>
+                                    <div class="p-2 w-1/2 mx-auto">
+                                        <div class="relative">
+                                          <label for="afm" class="leading-7 text-sm text-gray-600">AFM</label>
+                                          <input type="file" id="afm" name="afm" value="{{ old('afm') }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                        </div>
+                                    </div>
+                                    <div class="p-2 w-1/2 mx-auto">
+                                        <div class="relative">
+                                          <label for="sem" class="leading-7 text-sm text-gray-600">SEM</label>
+                                          <input type="file" id="sem" name="sem" value="{{ old('sem') }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                        </div>
+                                    </div>
+                                    <div class="p-2 w-1/2 mx-auto">
+                                      <div class="relative">
+                                        <label for="dsc" class="leading-7 text-sm text-gray-600">DSC</label>
+                                        <input type="file" id="dsc" name="dsc" value="{{ old('dsc') }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                      </div>
+                                    </div>
+                                    <div class="p-2 w-1/2 mx-auto">
+                                        <div class="relative">
+                                          <label for="ftir" class="leading-7 text-sm text-gray-600">FTIR</label>
+                                          <input type="file" id="ftir" name="ftir" value="{{ old('ftir') }}"  class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                        </div>
+                                    </div>
 
 
-                              
-                                <div class="p-2 w-full flex justify-around mt-4">
+                                  {{-- <livewire:material></livewire:material> --}}
+                                  @livewire('material')
+
+                                  {{-- <div class="p-2 w-full flex justify-around mt-4">
                                     <button type="button" onclick="location.href='{{ route('user.profile.index') }}'" class="bg-gray-200 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">Back</button>
                                     <button type="submit" class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">Register</button>
-                                </div>
-                            </div>
+                                </div> --}}
+                    
+                          </div>
                           </div>
 
-
-
-
-
-                            </form>
+                          
                           
                         
                       </section>
@@ -313,4 +314,34 @@
             </div>
         </div>
     </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+          const dynamicFieldsContainer = document.getElementById('dynamicFields');
+          const addDynamicGroupButton = document.getElementById('addDynamicGroup');
+          const submitButton = document.getElementById('submitForm');
+          
+          addDynamicGroupButton.addEventListener('click', function() {
+              // フォームグループのコンテナを作成
+              const groupContainer = document.createElement('div');
+              
+              // フォームフィールドを3つ追加
+              for (let i = 1; i <= 3; i++) {
+                  const newField = document.createElement('input');
+                  newField.type = 'text';
+                  newField.name = 'dynamic_field[]';
+                  newField.placeholder = '動的なフィールド ' + i;
+                  groupContainer.appendChild(newField);
+              }
+              
+              dynamicFieldsContainer.appendChild(groupContainer);
+          });
+
+          // Submitボタンをクリックしたときの処理
+          submitButton.addEventListener('click', function() {
+              // フォームをサブミット
+              document.querySelector('form').submit();
+          });
+      });
+  </script>
 </x-app-layout>
