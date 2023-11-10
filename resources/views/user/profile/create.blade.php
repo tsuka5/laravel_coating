@@ -19,7 +19,7 @@
                           </div>
                           <div class="lg:w-1/2 md:w-2/3 mx-auto">
                             <x-input-error :messages="$errors->all()" class="mb-4"  />
-                            <form method="post" action="{{ route('user.profile.store') }}">
+                            <form method="post" action="{{ route('user.store', ['formType'=>'experiment']) }}">
                               @csrf
 
                               <div class="m-2">
@@ -47,17 +47,23 @@
                                       <input type="text" id="paper" name="paper" value="{{ old('paper') }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                     </div>
                                 </div>
+                              </form>
 
-                                <div id="dynamicFields">
-                                  <!-- ここに動的なフォームフィールドが追加される -->
+                              <div class="p-2 w-full flex justify-around mt-4">
+                                <button type="button" onclick="location.href='{{ route('user.profile.index') }}'" class="bg-gray-200 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">Back</button>
+                                <button type="submit" class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">Register</button>
                               </div>
+
+                                {{-- <div id="dynamicFields"> --}}
+                                  <!-- ここに動的なフォームフィールドが追加される -->
+                              {{-- </div> --}}
                       
-                              <button type="button" id="addDynamicGroup">フォームグループ追加</button>                             
+                              {{-- <button type="button" id="addDynamicGroup">フォームグループ追加</button>                              --}}
                                 {{-- @livewire('material')
                                @livewire('additive') --}}
 
                                 
-                                <div class="flex flex-col text-center w-full mb-4 mt-12">
+                                {{-- <div class="flex flex-col text-center w-full mb-4 mt-12">
                                     <h4 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Film Conditions</h4>
                                 </div>
                                 
@@ -118,6 +124,7 @@
                                 <div class="flex flex-col text-center w-full mb-4 mt-12">
                                     <h4 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Charactaristic Test</h4>
                                 </div>
+
                                 <div class="m-2">
                                     <div class="p-2 w-1/2 mx-auto">
                                       <div class="relative">
@@ -184,6 +191,7 @@
                               <div class="flex flex-col text-center w-full mb-4 mt-12">
                                 <h4 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Storing Test</h4>
                               </div>
+                              
                               <div class="m-2">
                                 <div class="p-2 w-1/2 mx-auto">
                                   <div class="relative">
@@ -295,16 +303,16 @@
                                     </div>
 
 
-                                  {{-- <livewire:material></livewire:material> --}}
+                                  <livewire:material></livewire:material>
                                   @livewire('material')
 
-                                  {{-- <div class="p-2 w-full flex justify-around mt-4">
+                                  <div class="p-2 w-full flex justify-around mt-4">
                                     <button type="button" onclick="location.href='{{ route('user.profile.index') }}'" class="bg-gray-200 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">Back</button>
                                     <button type="submit" class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">Register</button>
-                                </div> --}}
+                                </div>
                     
                           </div>
-                          </div>
+                          </div> --}}
 
                           
                           

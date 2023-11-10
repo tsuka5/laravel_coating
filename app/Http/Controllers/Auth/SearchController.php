@@ -101,8 +101,12 @@ class SearchController extends Controller
     public function show(string $id)
     {
         $experiment = Experiment::findOrFail($id);
-
-        return view('user.search.show', compact('experiment'));
+        $materials = Material::where('experiment_id', $id)->get();
+        $additives = Additive::where('experiment_id', $id)->get();
+        $film_conditions = Film_condition::where('experiment_id', $id)->get();
+        
+        
+        return view('user.search.show', compact('experiment', 'materials','additives','film_conditions'));
     }
 
     /**

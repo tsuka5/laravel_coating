@@ -9,7 +9,19 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("You're logged in!") }}
+                    <p class="text-xl">You're logged in!<br><br>
+                    <p class="text-xl">This is Web Database for Coating!</p><br>
+
+                    <p class="text-xl">You can do a lot of things here<br><br>
+
+                    <p class="text-lg">
+                    ・You can register/edit/delete your experiment data.<br>
+                    ・You can search experiment data of coating.<br>
+                    ・You can edit csv files.<br></p><br>
+
+                    <p class="text-xl">If you find some error, please tell ozaki.</p>
+            
+
                 </div>
             </div>
         </div>

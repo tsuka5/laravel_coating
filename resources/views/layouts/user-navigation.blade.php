@@ -18,7 +18,7 @@
                     <x-nav-link :href="route('user.profile.index')" :active="request()->routeIs('user.profile.index')">
                             Profile
                     </x-nav-link>
-                    <x-nav-link :href="route('user.profile.create')" :active="request()->routeIs('user.profile.create')">
+                    <x-nav-link :href="route('user.create.experiment')" :active="request()->routeIs('user.create.experiment')">
                         Data_Entry
                     </x-nav-link>
                     <x-nav-link :href="route('user.search.index')" :active="request()->routeIs('user.serch.index')">

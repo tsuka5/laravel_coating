@@ -3,6 +3,7 @@
 // use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\Auth\SearchController;
+use App\Http\Controllers\ProfileController as ControllersProfileController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -20,8 +21,19 @@ use Illuminate\Support\Facades\Route;
 Route::resource('profile', ProfileController::class)
 ->middleware(['auth:users', 'verified']);
 
+Route::get('profile/create/{id}/{form_type}', [ProfileController::class,'create'])->name('create')
+->middleware(['auth:users', 'verified']);
+
+Route::get('profile/create',[ProfileController::class,'createExperiment'])->name('create.experiment')
+->middleware(['auth:users', 'verified']);
+
+Route::post('profile', [ProfileController::class, 'store'])->name('store');
+
+
 Route::resource('search', SearchController::class)
 ->middleware(['auth:users', 'verified']);
+
+
 
 Route::get('/', function () {
     return view('user.welcome');
