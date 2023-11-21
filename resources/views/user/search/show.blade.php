@@ -17,7 +17,7 @@
                             <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Experiment</h1>
                             </div>
                             <div class="lg:w-1/2 md:w-2/3 mx-auto">
-                                <div class="container">
+                                <div class="container border-b-4">
                                     <div class="flex justify-center flex-wrap flex-row">
                                         <div class="p-2 w-1/2 mx-auto">
                                             <div class="relative">

@@ -48,7 +48,7 @@ class experiment extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function film_comdition(): HasOne
+    public function film_condition(): HasOne
     {
         return $this->hasOne(Film_condition::class);
     }

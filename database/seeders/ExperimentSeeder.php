@@ -19,21 +19,21 @@ class ExperimentSeeder extends Seeder
         [
             'user_id' => '1',
             'title' => 'test',
-            'name' => '尾﨑司',
+            'name' => 'oaki tsukasa',
             'date' => '2023/10/20',
             'paper' => 'URLや論文の名前'
         ],
         [
             'user_id' => '1',
             'title' => 'test1',
-            'name' => '尾﨑司',
+            'name' => 'ozaki tsukasa',
             'date' => '2023/10/20',
             'paper' => 'URLや論文の名前'
         ],
         [
             'user_id' => '2',
             'title' => 'test2',
-            'name' => '橋本拓矢',
+            'name' => 'hashimoto takuya',
             'date' => '2023/10/20',
             'paper' => 'URLや論文の名前'
         ],

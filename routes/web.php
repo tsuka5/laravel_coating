@@ -3,6 +3,7 @@
 // use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\Auth\SearchController;
+use App\Http\Controllers\Auth\CsvController;
 use App\Http\Controllers\ProfileController as ControllersProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,10 +30,12 @@ Route::get('profile/create',[ProfileController::class,'createExperiment'])->name
 
 Route::post('profile', [ProfileController::class, 'store'])->name('store');
 
-
 Route::resource('search', SearchController::class)
 ->middleware(['auth:users', 'verified']);
 
+Route::get('csv/csv-export', [CsvController::class, 'exportCsv'])->name('csv.export');
+
+ROute::get('csv/csv-show', [CsvController::class, 'show'])->name('csv.show');
 
 
 Route::get('/', function () {

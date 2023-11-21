@@ -35,8 +35,8 @@ class SearchController extends Controller
 
         $query->join('materials','experiments.id', '=', 'materials.experiment_id')
             ->join('additives', 'experiments.id', '=','additives.experiment_id')
-            ->join('antibacteria_tests', 'experiments.id', '=', 'antibacteria_tests.experiment_id')
-            ->join('storing_tests', 'experiments.id', '=', 'storing_tests.experiment_id') ->get();
+            ->join('storing_tests', 'experiments.id', '=', 'storing_tests.experiment_id')
+            ->join('antibacteria_tests', 'experiments.id', '=', 'antibacteria_tests.experiment_id')->get();
             
      
 
@@ -62,7 +62,7 @@ class SearchController extends Controller
         }
 
 
-        $selected_experiments = $query->paginate(10);
+        $selected_experiments = $query->paginate(5);
 
         $additives_list = Additive::select('ad_name')->distinct()->get();
         $materials_list = Material::select('m_name')->distinct()->get();
