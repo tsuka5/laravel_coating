@@ -16,7 +16,7 @@ class CreateBacteriaDetailsTable extends Migration
         Schema::create('bacteria_details', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('charactaristic');
+            $table->text('charactaristic')->nullable();
         });
 
         Schema::enableForeignKeyConstraints();

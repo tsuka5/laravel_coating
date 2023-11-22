@@ -8,6 +8,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\Experiment;
+// use App\Models\Material_detail;
 
 
 
@@ -26,6 +27,7 @@ class Material extends Model
 
     protected $fillable = [
         'experiment_id',
+        // 'material_id',
         'name',
         'price',
         'concentration',
@@ -45,6 +47,10 @@ class Material extends Model
     {
         return $this->belongsTo(Experiment::class);
     }
+    // public function material_detail(): BelongsTo
+    // {
+    //     return $this->belongsTo(Material_detail::class);
+    // }
 
  
 }

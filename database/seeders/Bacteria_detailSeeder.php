@@ -16,19 +16,43 @@ class Bacteria_detailSeeder extends Seeder
     public function run(): void
     {
         DB::table('bacteria_details')->insert([
-        [
-            'name' => 'test',
-            'charactaristic' => 'write some charactariscitc',
-        ],
-        [
-            'name' => 'test',
-            'charactaristic' => 'write some charactariscitc',
-        ],
-        [
-            'name' => 'test',
-            'charactaristic' => 'write some charactariscitc',
-        ],
-
+            [
+                'name' => 'test',
+                'charactaristic' => 'write some charactariscitc',
+            ],
+            [
+                'name' => 'test1',
+                'charactaristic' => 'write some charactariscitc',
+            ],
+            [
+                'name' => 'test2',
+                'charactaristic' => 'write some charactariscitc',
+            ],
+            [
+                'name' => 'test3',
+                'charactaristic' => 'write some charactariscitc',
+            ],
+            [
+                'name' => 'test4',
+                'charactaristic' => 'write some charactariscitc',
+            ],
+            [
+                'name' => 'test5',
+                'charactaristic' => 'write some charactariscitc',
+            ],
+            [
+                'name' => 'test6',
+                'charactaristic' => 'write some charactariscitc',
+            ],
+            [
+                'name' => 'test7',
+                'charactaristic' => 'write some charactariscitc',
+            ],
+            [
+                'name' => 'test8',
+                'charactaristic' => 'write some charactariscitc',
+            ],
+    
 
         ]);
     }

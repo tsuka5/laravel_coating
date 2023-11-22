@@ -27,9 +27,11 @@ class DatabaseSeeder extends Seeder
             Film_conditionSeeder::class,
             Charactaristic_testSeeder::class,
             Antibacteria_testSeeder::class,
-            Material_detailSeeder::class,
-            Bacteria_detailSeeder::class,
             Storing_testSeeder::class,
+            Material_detailSeeder::class,
+            Additive_detailSeeder::class,
+            Fruit_detailSeeder::class,
+            Bacteria_detailSeeder::class
            
         ]);
         

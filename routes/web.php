@@ -4,6 +4,7 @@
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\Auth\SearchController;
 use App\Http\Controllers\Auth\CsvController;
+use App\Http\Controllers\Auth\DetailController;
 use App\Http\Controllers\ProfileController as ControllersProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,6 +20,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//profileについて
 Route::resource('profile', ProfileController::class)
 ->middleware(['auth:users', 'verified']);
 
@@ -30,9 +32,18 @@ Route::get('profile/create',[ProfileController::class,'createExperiment'])->name
 
 Route::post('profile', [ProfileController::class, 'store'])->name('store');
 
+//detailについて
+Route::get('detail/index', [DetailController::class, 'index'])->name('detail.index');
+
+Route::get('detail/create/{formType}', [DetailController::class, 'create'])->name('detail.create');
+
+Route::post('detail', [DetailController::class, 'store'])->name('detail.store');
+
+//searchについて
 Route::resource('search', SearchController::class)
 ->middleware(['auth:users', 'verified']);
 
+//csvについて
 Route::get('csv/csv-export', [CsvController::class, 'exportCsv'])->name('csv.export');
 
 ROute::get('csv/csv-show', [CsvController::class, 'show'])->name('csv.show');
