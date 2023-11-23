@@ -12,6 +12,10 @@ use App\Models\Material;
 use App\Models\Additive;
 use App\Models\Storing_test;
 use App\Models\Antibacteria_test;
+use App\Models\Material_detail;
+use App\Models\Additive_detail;
+use App\Models\Fruit_detail;
+use App\Models\Bacteria_detail;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
@@ -67,19 +71,23 @@ class ProfileController extends Controller
 
     public function create($id, $formType)
     {
+        $materials_list = Material_detail::orderby('name', 'asc')->get();
+        $additives_list = Additive_detail::orderby('name', 'asc')->get();
+        $fruits_list = Fruit_detail::orderby('name', 'asc')->get();
+        $bacteria_list = Bacteria_detail::orderby('name','asc')->get();
         // $id を使用して必要な処理を行う
         if ($formType === 'material') {
-            return view('user.profile.material_create', ['id'=>$id]);
+            return view('user.profile.material_create', compact('id', 'materials_list'));
         } elseif ($formType === 'additive') {
-            return view('user.profile.additive_create', ['id'=>$id]);
+            return view('user.profile.additive_create', compact('id', 'additives_list'));
         } elseif ($formType === 'film_condition') {
             return view('user.profile.film_condition_create', ['id'=>$id]);
         } elseif ($formType === 'charactaristic_test') {
             return view('user.profile.charactaristic_test_create', ['id'=>$id]);
         } elseif ($formType === 'storing_test') {
-            return view('user.profile.storing_test_create', ['id'=>$id]);
+            return view('user.profile.storing_test_create', compact('id', 'fruits_list'));
         } elseif ($formType === 'antibacteria_test') {
-            return view('user.profile.antibacteria_test_create', ['id'=>$id]);
+            return view('user.profile.antibacteria_test_create', compact('id', 'bacteria_list'));
         } 
         // return view('user.profile.create');
     }

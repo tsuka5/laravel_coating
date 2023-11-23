@@ -25,8 +25,13 @@
                                 
                                   <div class="p-2 w-1/2 mx-auto">
                                     <div class="relative">
-                                        <label for="a_name" class="leading-7 text-sm text-gray-600">Bacteria Name </label>
-                                        <input type="text" id="a_name" name="a_name" value="{{ old('a_name') }}"placeholder="Enter bacteria name." class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                        <label for="a_name" class="leading-7 text-sm text-gray-600">Microbial Name </label>
+                                        <select name="a_name" data-toggle="select" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                          <option value="">Select microbial</option>
+                                          @foreach ($bacteria_list as $selected_bacterium)
+                                          <option value="{{ $selected_bacterium->name }}"> {{ $selected_bacterium->name }}</option>
+                                          @endforeach
+                                        </select>                                      
                                     </div>
                                   </div>
                                   <div class="p-2 w-1/2 mx-auto">

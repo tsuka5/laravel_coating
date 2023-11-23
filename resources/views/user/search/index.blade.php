@@ -9,7 +9,7 @@
         <div class="lg:w-1/2 w-full px-4 mx-auto mt-6">
             <div class="flex xl:flex-nowrap md:flex-nowrap lg:flex-wrap flex-wrap justify-center items-end md:justify-start">
             <form action="{{ route('user.search.index') }}" method="GET">
-                <div class = "flex items-end w-[900px]">
+                <div class = "flex items-end w-[900px] ">
                     <div class="relative w-40 sm:w-auto xl:mr-4 lg:mr-0 sm:mr-4 mr-2">
                         <label for="footer-field" class="leading-7 text-sm text-gray-600">Key words</label>
                         <input type="text" name="keyword" value="{{ $keyword }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:bg-transparent focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">

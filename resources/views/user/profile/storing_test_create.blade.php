@@ -26,7 +26,12 @@
                                   <div class="p-2 w-1/2 mx-auto">
                                     <div class="relative">
                                         <label for="s_name" class="leading-7 text-sm text-gray-600">Fruits or Vegitable </label>
-                                        <input type="text" id="s_name" name="s_name" value="{{ old('s_name') }}" placeholder="Enter name of fruits or vegtables. (ex: strawberry)" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                        <select name="s_name" data-toggle="select" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                          <option value="">Select fruits or vegitable</option>
+                                          @foreach ($fruits_list as $selected_fruit)
+                                          <option value="{{ $selected_fruit->name }}"> {{ $selected_fruit->name }}</option>
+                                          @endforeach
+                                        </select>                                      
                                     </div>
                                   </div>
                                   <div class="p-2 w-1/2 mx-auto">
