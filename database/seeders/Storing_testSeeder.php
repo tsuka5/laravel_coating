@@ -28,6 +28,8 @@ class Storing_testSeeder extends Seeder
             'ph' => '6.9',
             'tss' => '5.4',
             'hardness' => '6.7',
+            'moisture_content' => '20.0'
+
         ],
         [
             'experiment_id' => '2',
@@ -41,6 +43,8 @@ class Storing_testSeeder extends Seeder
             'ph' => '6.9',
             'tss' => '5.4',
             'hardness' => '6.7',
+            'moisture_content' => '20.0'
+
         ],
         [
             'experiment_id' => '3',
@@ -54,6 +58,8 @@ class Storing_testSeeder extends Seeder
             'ph' => '6.9',
             'tss' => '5.4',
             'hardness' => '6.7',
+            'moisture_content' => '20.0'
+
         ],
         
 

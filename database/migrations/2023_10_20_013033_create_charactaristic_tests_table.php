@@ -29,6 +29,11 @@ class CreateCharactaristicTestsTable extends Migration
             $table->float('thickness')->nullable();
             $table->float('contact_angle')->nullable();
             $table->float('tensile_strength')->nullable();
+            $table->binary('afm')->nullable();
+            $table->binary('sem')->nullable();
+            $table->binary('dsc')->nullable();
+            $table->binary('ftir')->nullable();
+
         });
 
         Schema::enableForeignKeyConstraints();

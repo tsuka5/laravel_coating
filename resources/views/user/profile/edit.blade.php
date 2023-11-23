@@ -106,9 +106,9 @@
               
                               <div class="p-2 w-1/2 mx-auto">
                                   <div class="relative">
-                                      <label for="starler_speed" class="leading-7 text-sm text-gray-600">Starler Speed</label>
-                                      <input type="number" name="starler_speed[{{ $material->id }}]" value="{{ $material->starler_speed }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                                          id="starler_speed">
+                                      <label for="staler_speed" class="leading-7 text-sm text-gray-600">Staler Speed</label>
+                                      <input type="number" name="staler_speed[{{ $material->id }}]" value="{{ $material->staler_speed }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                                          id="staler_speed">
                                   </div>
                               </div>
               
@@ -312,6 +312,30 @@
                                       <input type="number" id="tensile_strength" name="tensile_strength[{{ $charactaristic_test->id }}]" value="{{ $charactaristic_test->tensile_strength }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                     </div>
                                   </div>
+                                  <div class="p-2 w-1/2 mx-auto">
+                                    <div class="relative">
+                                      <label for="afm" class="leading-7 text-sm text-gray-600">AFM</label>
+                                      <input type="file" id="afm" name="afm[{{ $charactaristic_test->id }}]" value="{{ $charactaristic_test->afm }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                    </div>
+                                  </div>
+                                  <div class="p-2 w-1/2 mx-auto">
+                                      <div class="relative">
+                                        <label for="sem" class="leading-7 text-sm text-gray-600">SEM</label>
+                                        <input type="file" id="sem" name="sem[{{ $charactaristic_test->id }}]" value="{{ $charactaristic_test->sem }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                      </div>
+                                  </div>
+                                  <div class="p-2 w-1/2 mx-auto">
+                                    <div class="relative">
+                                      <label for="dsc" class="leading-7 text-sm text-gray-600">DSC</label>
+                                      <input type="file" id="dsc" name="dsc[{{ $charactaristic_test->id }}]" value="{{ $charactaristic_test->dsc }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                    </div>
+                                  </div>
+                                  <div class="p-2 w-1/2 mx-auto">
+                                      <div class="relative">
+                                        <label for="ftir" class="leading-7 text-sm text-gray-600">FTIR</label>
+                                        <input type="file" id="ftir" name="ftir[{{ $charactaristic_test->id }}]" value="{{ $charactaristic_test->ftir }}"  class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                      </div>
+                                  </div>
                               </div>
                               @endforeach
 
@@ -381,7 +405,13 @@
                                   <input type="number" id="hardness" name="hardness[{{ $storing_test->id}}]" value="{{ $storing_test->hardness }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                 </div>
                               </div>
-                          </div>
+                              <div class="p-2 w-1/2 mx-auto">
+                                <div class="relative"> 
+                                    <label for="moisture_content" class="leading-7 text-sm text-gray-600">Moisture Content </label>
+                                    <input type="number" id="moisture_content" name="moisture_content[{{ $storing_test->id }}]" value="{{ $storing_test->moisture_content }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                </div>
+                              </div>
+                            </div>
                           @endforeach
 
 
@@ -399,38 +429,14 @@
                             <div class="p-2 w-1/2 mx-auto">
                               <div class="relative">
                                   <label for="bacteria_rate" class="leading-7 text-sm text-gray-600">Bacteria Rate</label>
-                                  <input type="number" id="bacteria_rate" name="bacteria_rate[{{ $antibacteria_test->id }}]" value="{{ $experiment->antibacteria_test->bacteria_rate }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                  <input type="number" id="bacteria_rate" name="bacteria_rate[{{ $antibacteria_test->id }}]" value="{{ $antibacteria_test->bacteria_rate }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                               </div>
                             </div>
                             <div class="p-2 w-1/2 mx-auto">
                               <div class="relative"> 
-                                  <label for="a_moisture_content" class="leading-7 text-sm text-gray-600">Moisture Content </label>
-                                  <input type="number" id="a_moisture_content" name="a_moisture_content[{{ $antibacteria_test->id }}]" value="{{ $experiment->antibacteria_test->a_moisture_content }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                  <label for="mic" class="leading-7 text-sm text-gray-600">Moisture Content </label>
+                                  <input type="number" id="mic" name="mic[{{ $antibacteria_test->id }}]" value="{{ $antibacteria_test->mic }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                               </div>
-                            </div>
-                            <div class="p-2 w-1/2 mx-auto">
-                                <div class="relative">
-                                  <label for="afm" class="leading-7 text-sm text-gray-600">AFM</label>
-                                  <input type="file" id="afm" name="afm[{{ $antibacteria_test->id }}]" value="{{ $antibacteria_test->afm }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                </div>
-                            </div>
-                            <div class="p-2 w-1/2 mx-auto">
-                                <div class="relative">
-                                  <label for="sem" class="leading-7 text-sm text-gray-600">SEM</label>
-                                  <input type="file" id="sem" name="sem[{{ $antibacteria_test->id }}]" value="{{ $antibacteria_test->sem }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                </div>
-                            </div>
-                            <div class="p-2 w-1/2 mx-auto">
-                              <div class="relative">
-                                <label for="dsc" class="leading-7 text-sm text-gray-600">DSC</label>
-                                <input type="file" id="dsc" name="dsc[{{ $antibacteria_test->id }}]" value="{{ $antibacteria_test->dsc }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                              </div>
-                            </div>
-                            <div class="p-2 w-1/2 mx-auto">
-                                <div class="relative">
-                                  <label for="ftir" class="leading-7 text-sm text-gray-600">FTIR</label>
-                                  <input type="file" id="ftir" name="ftir[{{ $antibacteria_test->id }}]" value="{{ $antibacteria_test->ftir }}"  class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                </div>
                             </div>
                         </div>
                         @endforeach

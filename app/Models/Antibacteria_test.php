@@ -28,11 +28,7 @@ class Antibacteria_test extends Model
         'experiment_id',
         'a_name',
         'bacteria_rate',
-        'a_moisture_content',
-        'afm',
-        'sem',
-        'dsc',
-        'ftir',
+        'mic',
     ];
 
     public function experiment(): BelongsTo

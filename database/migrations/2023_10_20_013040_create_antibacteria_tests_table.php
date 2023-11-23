@@ -21,11 +21,7 @@ class CreateAntibacteriaTestsTable extends Migration
             ->onDelete('cascade');
             $table->string('a_name')->nullable();
             $table->float('bacteria_rate')->nullable();
-            $table->float('a_moisture_content')->nullable();
-            $table->binary('afm')->nullable();
-            $table->binary('sem')->nullable();
-            $table->binary('dsc')->nullable();
-            $table->binary('ftir')->nullable();
+            $table->float('mic')->nullable();
         });
 
         Schema::enableForeignKeyConstraints();

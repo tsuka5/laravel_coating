@@ -29,6 +29,7 @@ class CreateStoringTestsTable extends Migration
             $table->float('ph')->nullable();
             $table->float('tss')->nullable();
             $table->float('hardness')->nullable();
+            $table->float('moisture_content')->nullable();
         });
 
         Schema::enableForeignKeyConstraints();

@@ -187,6 +187,10 @@ class ProfileController extends Controller
                 'thickness' => ['numeric', 'nullable'],
                 'contact_angle' => ['numeric', 'nullable'],
                 'tensile_strength' => ['numeric', 'nullable'],
+                'afm' => ['nullable'],
+                'sem' => ['nullable'],
+                'dsc' => ['nullable'],
+                'ftir' => ['nullable'],
             ]);
 
             $charactaristic_test = new Charactaristic_test;
@@ -201,6 +205,10 @@ class ProfileController extends Controller
             $charactaristic_test-> thickness = $request->thickness;
             $charactaristic_test-> contact_angle = $request->contact_angle;
             $charactaristic_test-> tensile_strength = $request->tensile_strength;
+            $charactaristic_test-> afm = $request->afm;
+            $charactaristic_test-> sem = $request->sem;
+            $charactaristic_test-> dsc = $request->dsc;
+            $charactaristic_test-> ftir = $request->ftir;
             $charactaristic_test->save();
 
         }elseif($request->formType === 'storing_test'){
@@ -215,6 +223,7 @@ class ProfileController extends Controller
                 'ph' => ['numeric', 'nullable'],
                 'tss' => ['numeric', 'nullable'],
                 'hardness' => ['numeric', 'nullable'],
+                'moisture_content' => ['numeric', 'nullable']
             ]);
 
             $storing_test = new Storing_test;
@@ -229,6 +238,7 @@ class ProfileController extends Controller
             $storing_test-> ph = $request->ph;
             $storing_test-> tss = $request->tss;
             $storing_test-> hardness = $request->hardness;
+            $storing_test-> moisture_content = $request->moisture_content;
             $storing_test->save();
 
         }else{
@@ -236,20 +246,13 @@ class ProfileController extends Controller
                 'a_name' => ['string', 'nullable'],
                 'bacteria_rate' => ['numeric', 'nullable'],
                 'a_moisture_content' => ['numeric', 'nullable'],
-                'afm' => ['nullable'],
-                'sem' => ['nullable'],
-                'dsc' => ['nullable'],
-                'ftir' => ['nullable'],
+                'mic' => ['numeric', 'nullable'],
             ]);
             $antibacteria_test = new Antibacteria_test;
             $antibacteria_test-> experiment_id = $request->id;
             $antibacteria_test-> a_name = $request->a_name;
             $antibacteria_test-> bacteria_rate = $request->bacteria_rate;
-            $antibacteria_test-> a_moisture_content = $request->a_moisture_content;
-            $antibacteria_test-> afm = $request->afm;
-            $antibacteria_test-> sem = $request->sem;
-            $antibacteria_test-> dsc = $request->dsc;
-            $antibacteria_test-> ftir = $request->ftir;
+            $antibacteria_test-> mic = $request->mic;
             $antibacteria_test->save();
         }
 
@@ -350,9 +353,55 @@ class ProfileController extends Controller
             $film_condition->save();
         }
 
-        
-        
+        $charactaristictests = Charactaristic_test::where('experiment_id', $id)->get();
+        foreach($charactaristictests as $charactaristic_test) {
+            $charactaristic_test-> experiment_id = $id;
+            $charactaristic_test-> ph = $request->input("ph.$charactaristic_test->id");
+            $charactaristic_test-> shear_rate = $request->input("shear_rate.$charactaristic_test->id");
+            $charactaristic_test-> shear_stress = $request->input("shear_stress.$charactaristic_test->id");
+            $charactaristic_test-> viscosity_tem = $request->input("viscosity_tem.$charactaristic_test->id");
+            $charactaristic_test-> viscosity = $request->input("viscosity.$charactaristic_test->id");
+            $charactaristic_test-> moisture_content = $request->input("moisture_content.$charactaristic_test->id");
+            $charactaristic_test-> water_solubility = $request->input("water_solubility.$charactaristic_test->id");
+            $charactaristic_test-> wvp = $request->input("wvp.$charactaristic_test->id");
+            $charactaristic_test-> thickness = $request->input("thickness.$charactaristic_test->id");    
+            $charactaristic_test-> contact_angle = $request->input("cotact_angle.$charactaristic_test->id");
+            $charactaristic_test-> tensile_strength = $request->input("tensile_strength.$charactaristic_test->id");
+            $charactaristic_test-> afm = $request->input("afm.$charactaristic_test->id");
+            $charactaristic_test-> sem = $request->input("sem.$charactaristic_test->id");
+            $charactaristic_test-> dsc = $request->input("dsc.$charactaristic_test->id");
+            $charactaristic_test-> ftir = $request->input("ftir.$charactaristic_test->id");
+            $charactaristic_test->save();
+        }
 
+        $storingtests = Storing_test::where('experiment_id', $id)->get();
+        foreach($storingtests as $storing_test) {
+            $storing_test-> experiment_id = $id;
+            $storing_test-> s_name = $request->input("s_name.$storing_test->id");
+            $storing_test-> storing_days = $request->input("storing_days.$storing_test->id");
+            $storing_test-> mass_loss_rate = $request->input("mass_loss_rate.$storing_test->id");
+            $storing_test-> color_l = $request->input("color_l.$storing_test->id");
+            $storing_test-> color_a = $request->input("color_a.$storing_test->id");
+            $storing_test-> color_b = $request->input("color_b.$storing_test->id");
+            $storing_test-> color_e = $request->input("color_e.$storing_test->id");
+            $storing_test-> ph = $request->input("ph.$storing_test->id");
+            $storing_test-> tss = $request->input("tss.$storing_test->id");
+            $storing_test-> hardness = $request->input("hardness.$storing_test->id");
+            $storing_test-> moisture_content = $request->input("moisture_content.$storing_test->id");
+            $storing_test->save();
+        }
+
+        $antibacteriatests = Antibacteria_test::where('experiment_id', $id)->get();
+        foreach($antibacteriatests as $antibacteria_test) {
+            $antibacteria_test-> experiment_id = $id;
+            $antibacteria_test-> s_name = $request->input("s_name.$antibacteria_test->id");
+            $antibacteria_test-> bacteria_rate = $request->input("bacteria_rate.$antibacteria_test->id");
+            $antibacteria_test-> mic = $request->input("mic.$antibacteria_test->id");
+            $antibacteria_test->save();
+
+        }
+
+ 
         return redirect()
         ->route('user.profile.index')
         ->with(['message'=>'Update Complete',

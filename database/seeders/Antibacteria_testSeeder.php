@@ -20,31 +20,19 @@ class Antibacteria_testSeeder extends Seeder
             'experiment_id' => '1',
             'a_name' => 'Rhizopus',
             'bacteria_rate' => '3.0',
-            'a_moisture_content' => '50.0',
-            'afm' => '1',
-            'sem' => '78.0',
-            'dsc' => '0.8',
-            'ftir' => '0.2',
+            'mic' => '9.7'
         ],
         [
             'experiment_id' => '2',
             'a_name' => 'Rhizopus',
             'bacteria_rate' => '3.0',
-            'a_moisture_content' => '50.0',
-            'afm' => '1',
-            'sem' => '78.0',
-            'dsc' => '0.8',
-            'ftir' => '0.2',
+            'mic' => '9.7'
         ],
         [
             'experiment_id' => '3',
             'a_name' => 'Rhizopus',
             'bacteria_rate' => '3.0',
-            'a_moisture_content' => '50.0',
-            'afm' => '1',
-            'sem' => '78.0',
-            'dsc' => '0.8',
-            'ftir' => '0.2',
+            'mic' => '9.7'
         ],
 
 

@@ -36,6 +36,7 @@ class Storing_test extends Model
         'ph',
         'tss',
         'hardness',
+        'moisture_content'
     ];
 
     public function experiment(): BelongsTo
