@@ -29,10 +29,14 @@ class CreateCharactaristicTestsTable extends Migration
             $table->float('thickness')->nullable();
             $table->float('contact_angle')->nullable();
             $table->float('tensile_strength')->nullable();
-            $table->binary('afm')->nullable();
-            $table->binary('sem')->nullable();
-            $table->binary('dsc')->nullable();
-            $table->binary('ftir')->nullable();
+            $table->text('afm1')->nullable();
+            $table->text('afm2')->nullable();
+            $table->text('sem1')->nullable();
+            $table->text('sem2')->nullable();
+            $table->text('dsc1')->nullable();
+            $table->text('dsc2')->nullable();
+            $table->text('ftir1')->nullable();
+            $table->text('ftir2')->nullable();
 
         });
 

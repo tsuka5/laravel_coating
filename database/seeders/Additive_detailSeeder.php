@@ -17,15 +17,15 @@ class Additive_detailSeeder extends Seeder
     {
         DB::table('additive_details')->insert([
         [
-            'name' => 'test',
+            'name' => 'span80',
             'charactaristic' => 'write some charactariscitc',
         ],
         [
-            'name' => 'test1',
+            'name' => 'span60',
             'charactaristic' => 'write some charactariscitc',
         ],
         [
-            'name' => 'test2',
+            'name' => 'span40',
             'charactaristic' => 'write some charactariscitc',
         ],
         [

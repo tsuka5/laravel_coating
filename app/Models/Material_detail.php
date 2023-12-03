@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use App\Models\Material;
+
 // use Illuminate\Database\Eloquent\Relations\BelongsTo;
 // use App\Models\Experiment;
 
@@ -33,6 +36,9 @@ class Material_detail extends Model
     // {
     //     return $this->belongsTo(Experiment::class);
     // }
-
+    // public function material(): HasOne
+    // {
+    //     return $this->hasOne(Material::class);
+    // }
  
 }

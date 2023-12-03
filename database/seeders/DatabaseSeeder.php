@@ -22,17 +22,17 @@ class DatabaseSeeder extends Seeder
             AdminSeeder::class,
             UserSeeder::class,
             ExperimentSeeder::class,
+            Material_detailSeeder::class,
+            Additive_detailSeeder::class,
+            Fruit_detailSeeder::class,
+            Bacteria_detailSeeder::class,
             MaterialSeeder::class,
             AdditiveSeeder::class,
             Film_conditionSeeder::class,
             Charactaristic_testSeeder::class,
             Antibacteria_testSeeder::class,
-            Storing_testSeeder::class,
-            Material_detailSeeder::class,
-            Additive_detailSeeder::class,
-            Fruit_detailSeeder::class,
-            Bacteria_detailSeeder::class
-           
+            Storing_testSeeder::class
+        
         ]);
         
     }

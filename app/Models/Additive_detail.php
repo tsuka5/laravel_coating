@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
-// use Illuminate\Database\Eloquent\Relations\BelongsTo;
-// use App\Models\Experiment;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use App\Models\Additive;
 
 
 
@@ -30,10 +30,10 @@ class Additive_detail extends Model
         
     ];
 
-    // public function experiment(): BelongsTo
-    // {
-    //     return $this->belongsTo(Experiment::class);
-    // }
+    public function additive(): HasOne
+    {
+        return $this->hasOne(Additive::class);
+    }
 
  
 }

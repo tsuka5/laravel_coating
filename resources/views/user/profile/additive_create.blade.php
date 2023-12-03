@@ -31,7 +31,8 @@
                                         @foreach ($additives_list as $selected_additive)
                                         <option value="{{ $selected_additive->name }}"> {{ $selected_additive->name }}</option>
                                         @endforeach
-                                      </select>                                      </div>
+                                      </select>                                     
+                                    </div>
                                   </div>
                                   <div class="p-2 w-1/2 mx-auto">
                                     <div class="relative">

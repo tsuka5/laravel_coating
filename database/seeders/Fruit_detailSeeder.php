@@ -17,11 +17,11 @@ class Fruit_detailSeeder extends Seeder
     {
         DB::table('fruit_details')->insert([
         [
-            'name' => 'grape',
+            'name' => 'orange',
             'charactaristic' => 'write some charactariscitc',
         ],
         [
-            'name' => 'test1',
+            'name' => 'grape',
             'charactaristic' => 'write some charactariscitc',
         ],
         [

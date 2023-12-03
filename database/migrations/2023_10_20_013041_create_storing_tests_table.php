@@ -20,6 +20,10 @@ class CreateStoringTestsTable extends Migration
             ->onUpdate('cascade')
             ->onDelete('cascade');
             $table->string('s_name')->nullable();
+            // $table->unsignedBigInteger('fruit_id');
+            $table->bigInteger('fruit_id');
+            // ->references('id')->on('fruit_details')
+            // ->onDelete('cascade')->onUpdate('cascade');
             $table->integer('storing_days')->nullable();
             $table->float('mass_loss_rate')->nullable();
             $table->float('color_l')->nullable();

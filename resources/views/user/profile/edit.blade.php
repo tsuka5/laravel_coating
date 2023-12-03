@@ -15,10 +15,10 @@
                         </div>
                         <div class="lg:w-1/2 md:w-2/3 mx-auto">
                           <x-input-error :messages="$errors->all()" class="mb-4"  />
-                          <form method="post" action="{{ route('user.profile.update', ['profile' => $experiment->id]) }}">
+                          <form method="post" enctype="multipart/form-data" action="{{ route('user.profile.update', ['profile' => $experiment->id]) }}">
                             @method('PUT')  
                             {{-- アップデートの時はpostがサポートしてないから疑似的にputで送っているという意味 --}}
-                            @csrf
+                            @csrf 
 
                             {{-- experimentのEdit --}}
                             <div class="m-2">
@@ -59,8 +59,12 @@
                               <div class="p-2 w-1/2 mx-auto">
                                 <div class="relative">
                                     <label for="m_name" class="leading-7 text-sm text-gray-600">Name</label>
-                                    <input type="text" name="m_name[{{ $material->id }}]" value="{{ $material->m_name }}" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                                        id="m_name">
+                                    <select name="m_name[{{ $material->id }}]" data-toggle="select" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                      <option value="">{{ $material->m_name }}</option>
+                                      @foreach ($materials_list as $selected_material)
+                                      <option value="{{ $selected_material->name }}"> {{ $selected_material->name }}</option>
+                                      @endforeach
+                                    </select>                                    
                                 </div>
                               </div>
             
@@ -163,8 +167,13 @@
                             <div class="p-2 w-1/2 mx-auto">
                               <div class="relative">
                                   <label for="ad_name" class="leading-7 text-sm text-gray-600">Name</label>
-                                  <input type="text" name="ad_name[{{ $additive->id }}]" value="{{ $additive->ad_name }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                                      id="ad_name">
+                                  <select name="ad_name[{{ $additive->id }}]" data-toggle="select" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                    <option value="">{{ $additive->ad_name }}</option>
+                                    @foreach ($additives_list as $selected_additive)
+                                    <option value="{{ $selected_additive->name }}"> {{ $selected_additive->name }}</option>
+                                    @endforeach
+                                  </select>                                     
+
                               </div>
                             </div>
           
@@ -315,25 +324,32 @@
                                   <div class="p-2 w-1/2 mx-auto">
                                     <div class="relative">
                                       <label for="afm" class="leading-7 text-sm text-gray-600">AFM</label>
-                                      <input type="file" id="afm" name="afm[{{ $charactaristic_test->id }}]" value="{{ $charactaristic_test->afm }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                      <img src="{{ asset($afm1_imagePath) }}" alt="AFM Image">
+                                      <input type="file" id="afm1" name="afm1" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                      {{-- <img src="{{ asset($afm2_imagePath) }}" alt="AFM Image"> --}}
+                                      <input type="file" id="afm2" name="afm2" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                     </div>
                                   </div>
                                   <div class="p-2 w-1/2 mx-auto">
                                       <div class="relative">
                                         <label for="sem" class="leading-7 text-sm text-gray-600">SEM</label>
-                                        <input type="file" id="sem" name="sem[{{ $charactaristic_test->id }}]" value="{{ $charactaristic_test->sem }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                        
+                                        <input type="file" id="sem1" name="sem1" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                        <input type="file" id="sem2" name="sem2" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                       </div>
                                   </div>
                                   <div class="p-2 w-1/2 mx-auto">
                                     <div class="relative">
                                       <label for="dsc" class="leading-7 text-sm text-gray-600">DSC</label>
-                                      <input type="file" id="dsc" name="dsc[{{ $charactaristic_test->id }}]" value="{{ $charactaristic_test->dsc }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                      <input type="file" id="sem1" name="sem1" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                      <input type="file" id="sem2" name="sem2" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                     </div>
                                   </div>
                                   <div class="p-2 w-1/2 mx-auto">
                                       <div class="relative">
                                         <label for="ftir" class="leading-7 text-sm text-gray-600">FTIR</label>
-                                        <input type="file" id="ftir" name="ftir[{{ $charactaristic_test->id }}]" value="{{ $charactaristic_test->ftir }}"  class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                        <input type="file" id="ftir1" name="ftir1" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                        <input type="file" id="ftir2" name="ftir2" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                       </div>
                                   </div>
                               </div>
@@ -348,7 +364,12 @@
                               <div class="p-2 w-1/2 mx-auto">
                                 <div class="relative">
                                     <label for="s_name" class="leading-7 text-sm text-gray-600">Fruits or Vegitable </label>
-                                    <input type="text" id="s_name" name="s_name[{{ $storing_test->id}}]" value="{{ $storing_test->s_name }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                    <select name="s_name[{{ $storing_test->id}}]" data-toggle="select" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                      <option value="">{{ $storing_test->s_name }}</option>
+                                      @foreach ($fruits_list as $selected_fruit)
+                                      <option value="{{ $selected_fruit->name }}"> {{ $selected_fruit->name }}</option>
+                                      @endforeach
+                                    </select>                                      
                                 </div>
                               </div>
                               <div class="p-2 w-1/2 mx-auto">
@@ -423,7 +444,12 @@
                             <div class="p-2 w-1/2 mx-auto">
                               <div class="relative">
                                   <label for="a_name" class="leading-7 text-sm text-gray-600">Bacteria Name </label>
-                                  <input type="text" id="a_name" name="a_name[{{ $antibacteria_test->id }}]" value="{{ $antibacteria_test->a_name }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                  <select name="a_name[{{ $antibacteria_test->id }}]" data-toggle="select" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                    <option value="">{{ $antibacteria_test->a_name }}</option>
+                                    @foreach ($bacteria_list as $selected_bacterium)
+                                    <option value="{{ $selected_bacterium->name }}"> {{ $selected_bacterium->name }}</option>
+                                    @endforeach
+                                  </select>                                      
                               </div>
                             </div>
                             <div class="p-2 w-1/2 mx-auto">

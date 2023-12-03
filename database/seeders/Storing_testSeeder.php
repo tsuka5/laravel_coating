@@ -19,6 +19,7 @@ class Storing_testSeeder extends Seeder
         [
             'experiment_id' => '1',
             's_name' => 'orange',
+            'fruit_id' => '1',
             'storing_days' => '4',
             'mass_loss_rate' => '0.8',
             'color_l' => '1.8',
@@ -34,6 +35,7 @@ class Storing_testSeeder extends Seeder
         [
             'experiment_id' => '2',
             's_name' => 'orange',
+            'fruit_id' => '1',
             'storing_days' => '4',
             'mass_loss_rate' => '0.8',
             'color_l' => '1.8',
@@ -49,6 +51,7 @@ class Storing_testSeeder extends Seeder
         [
             'experiment_id' => '3',
             's_name' => 'orange',
+            'fruit_id' => '1',
             'storing_days' => '4',
             'mass_loss_rate' => '0.8',
             'color_l' => '1.8',

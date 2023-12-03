@@ -36,10 +36,14 @@ class Charactaristic_test extends Model
         'thickness',
         'contact_angle',
         'tensile_strength',
-        'afm',
-        'sem',
-        'dsc',
-        'ftir',
+        'afm1',
+        'afm2',
+        'sem1',
+        'sem2',
+        'dsc1',
+        'dsc2',
+        'ftir1',
+        'ftir2',
     ];
 
     public function experiment(): BelongsTo

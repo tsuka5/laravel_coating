@@ -8,6 +8,8 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\Experiment;
+use App\Models\Additive_detail;
+
 
 
 
@@ -26,6 +28,7 @@ class Additive extends Model
 
     protected $fillable = [
         'experiment_id',
+        'material_id',
         'name',
         'price',
         'concentration'
@@ -35,6 +38,10 @@ class Additive extends Model
     public function experiment(): BelongsTo
     {
         return $this->belongsTo(Experiment::class);
+    }
+    public function additive_detail(): BelongsTo
+    {
+        return $this->belongsTo(Additive_detail::class);
     }
 
  

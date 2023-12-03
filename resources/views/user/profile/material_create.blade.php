@@ -32,7 +32,7 @@
                                       <option value="{{ $selected_material->name }}"> {{ $selected_material->name }}</option>
                                       @endforeach
                                     </select>                    
-                                            </div>
+                                  </div>
                                 </div>
                                 <div class="p-2 w-1/2 mx-auto">
                                   <div class="relative">

@@ -12,7 +12,12 @@ use App\Models\Material;
 use App\Models\Additive;
 use App\Models\Storing_test;
 use App\Models\Antibacteria_test;
+use App\Models\Material_detail;
+use App\Models\Additive_detail;
+use App\Models\Fruit_detail;
+use App\Models\Bacteria_detail;
 use Illuminate\Database\Eloquent\Builder;
+
 
 class SearchController extends Controller
 {
@@ -64,10 +69,10 @@ class SearchController extends Controller
 
         $selected_experiments = $query->paginate(5);
 
-        $additives_list = Additive::select('ad_name')->distinct()->get();
-        $materials_list = Material::select('m_name')->distinct()->get();
-        $bacteria_list = Antibacteria_test::select('a_name')->distinct()->get();
-        $fruits_list = Storing_test::select('s_name')->distinct()->get();
+        $materials_list = Material_detail::orderby('name', 'asc')->get();
+        $additives_list = Additive_detail::orderby('name', 'asc')->get();
+        $fruits_list = Fruit_detail::orderby('name', 'asc')->get();
+        $bacteria_list = Bacteria_detail::orderby('name','asc')->get();
 
         
 
@@ -103,11 +108,13 @@ class SearchController extends Controller
         $experiment = Experiment::findOrFail($id);
         $materials = Material::where('experiment_id', $id)->get();
         $additives = Additive::where('experiment_id', $id)->get();
-        $film_conditions = Film_condition::where('experiment_id', $id)->get();
+        $film_conditions = Film_condition::where('experiment_id', $id)->get();  
+
+        $file_path = Charactaristic_test::where('experiment_id', $id)->get();
         
-        
-        return view('user.search.show', compact('experiment', 'materials','additives','film_conditions'));
+        return view('user.search.show', compact('experiment', 'materials','additives','film_conditions','file_path'));
     }
+
 
     /**
      * Show the form for editing the specified resource.

@@ -20,7 +20,7 @@
                         <select name="material" data-toggle="select">
                             <option value="">All</option>
                             @foreach ($materials_list as $selected_material)
-                            <option value="{{ $selected_material->m_name }}"> {{ $selected_material->m_name }}</option>
+                            <option value="{{ $selected_material->name }}"> {{ $selected_material->name }}</option>
                             @endforeach
                         </select>                    
                     </div>
@@ -29,7 +29,7 @@
                         <select name="additive" data-toggle="select">
                             <option value="">All</option>
                             @foreach ($additives_list as $selected_additive)
-                            <option value="{{ $selected_additive->ad_name }}"> {{ $selected_additive->ad_name }}</option>
+                            <option value="{{ $selected_additive->name }}"> {{ $selected_additive->name }}</option>
                             @endforeach
                         </select>                    
                     </div>
@@ -38,7 +38,7 @@
                         <select name="bacterium" data-toggle="select">
                             <option value="">All</option>
                             @foreach ($bacteria_list as $selected_bacterium)
-                            <option value="{{ $selected_bacterium->a_name }}"> {{ $selected_bacterium->a_name }}</option>
+                            <option value="{{ $selected_bacterium->name }}"> {{ $selected_bacterium->name }}</option>
                             @endforeach
                         </select>                    
                     </div>
@@ -47,7 +47,7 @@
                         <select name="fruit" data-toggle="select">
                             <option value="">All</option>
                             @foreach ($fruits_list as $selected_fruit)
-                            <option value="{{ $selected_fruit->s_name }}"> {{ $selected_fruit->s_name }}</option>
+                            <option value="{{ $selected_fruit->name }}"> {{ $selected_fruit->name }}</option>
                             @endforeach
                         </select>                    
                     </div>

@@ -18,6 +18,7 @@ class MaterialSeeder extends Seeder
         DB::table('materials')->insert([
         [
             'experiment_id' => '1',
+            'material_id' => '1',
             'm_name' => 'starch',
             'price' => '100.0',
             'concentration' => '0.3',
@@ -36,6 +37,7 @@ class MaterialSeeder extends Seeder
         ],
         [
             'experiment_id' => '1',
+            'material_id' => '2',
             'm_name' => 'chitosan',
             'price' => '100.0',
             'concentration' => '0.3',
@@ -54,6 +56,7 @@ class MaterialSeeder extends Seeder
         ],
         [
             'experiment_id' => '2',
+            'material_id' => '2',
             'm_name' => 'chitosan',
             'price' => '100.0',
             'concentration' => '0.3',
@@ -72,6 +75,7 @@ class MaterialSeeder extends Seeder
         ],
         [
             'experiment_id' => '3',
+            'material_id' => '2',
             'm_name' => 'chitosan',
             'price' => '100.0',
             'concentration' => '0.3',

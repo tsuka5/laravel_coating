@@ -19,24 +19,28 @@ class AdditiveSeeder extends Seeder
         [
             'experiment_id' => '1',
             'ad_name' => 'span80',
+            'additive_id' => '1',
             'price' => '100.0',
             'concentration' => '0.6',
         ],
         [
             'experiment_id' => '2',
             'ad_name' => 'span80',
+            'additive_id' => '1',
             'price' => '100.0',
             'concentration' => '0.4',
         ],
         [
             'experiment_id' => '3',
             'ad_name' => 'span80',
+            'additive_id' => '1',
             'price' => '100.0',
             'concentration' => '1.6',
         ],
         [
             'experiment_id' => '3',
             'ad_name' => 'span60',
+            'additive_id' => '2',
             'price' => '80.0',
             'concentration' => '1.6',
         ],

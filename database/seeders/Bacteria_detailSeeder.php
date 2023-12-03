@@ -17,7 +17,7 @@ class Bacteria_detailSeeder extends Seeder
     {
         DB::table('bacteria_details')->insert([
             [
-                'name' => 'test',
+                'name' => 'Rhizopus',
                 'charactaristic' => 'write some charactariscitc',
             ],
             [

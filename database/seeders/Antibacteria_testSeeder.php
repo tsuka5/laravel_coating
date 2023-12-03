@@ -19,18 +19,21 @@ class Antibacteria_testSeeder extends Seeder
         [
             'experiment_id' => '1',
             'a_name' => 'Rhizopus',
+            'bacteria_id' => '1',
             'bacteria_rate' => '3.0',
             'mic' => '9.7'
         ],
         [
             'experiment_id' => '2',
             'a_name' => 'Rhizopus',
+            'bacteria_id' => '1',
             'bacteria_rate' => '3.0',
             'mic' => '9.7'
         ],
         [
             'experiment_id' => '3',
             'a_name' => 'Rhizopus',
+            'bacteria_id' => '1',
             'bacteria_rate' => '3.0',
             'mic' => '9.7'
         ],

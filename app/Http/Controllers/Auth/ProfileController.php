@@ -16,6 +16,7 @@ use App\Models\Material_detail;
 use App\Models\Additive_detail;
 use App\Models\Fruit_detail;
 use App\Models\Bacteria_detail;
+
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
@@ -127,10 +128,13 @@ class ProfileController extends Controller
                 'ph_material' => ['numeric', 'nullable'],
                 'ph_target' => ['numeric', 'nullable'],    
             ]);
+            
+            $materialDetail = Material_detail::where('name', $request->m_name)->first();
 
             $material = new Material;
             $material-> experiment_id = $request->id;
             $material-> m_name = $request->m_name;
+            $material-> material_id = $materialDetail->id;
             $material-> price = $request->price;
             $material-> concentration = $request->concentration;
             $material-> heat = $request->heat;
@@ -152,9 +156,12 @@ class ProfileController extends Controller
                 'concentration' =>['numeric', 'nullable'],
             ]);
 
+            $additiveDetail = Additive_detail::where('name', $request->ad_name)->first();
+
             $additive = new Additive;
             $additive-> experiment_id = $request->id;
             $additive-> ad_name = $request->ad_name;
+            $additive-> additive_id = $additiveDetail->id;
             $additive-> price = $request->price;
             $additive-> concentration = $request->concentration;
             $additive->save();
@@ -195,11 +202,34 @@ class ProfileController extends Controller
                 'thickness' => ['numeric', 'nullable'],
                 'contact_angle' => ['numeric', 'nullable'],
                 'tensile_strength' => ['numeric', 'nullable'],
-                'afm' => ['nullable'],
-                'sem' => ['nullable'],
-                'dsc' => ['nullable'],
-                'ftir' => ['nullable'],
+                'afm1' => ['nullable'],
+                'afm2' => ['nullable'],
+                'sem1' => ['nullable'],
+                'sem2' => ['nullable'],
+                'dsc1' => ['nullable'],
+                'dsc2' => ['nullable'],
+                'ftir1' => ['nullable'],
+                'ftir2' => ['nullable'],
             ]);
+
+
+            $afmImage_1 = $request->file('afm1');
+            $afmImage_2 = $request->file('afm2');
+            $semImage_1 = $request->file('sem1');
+            $semImage_2 = $request->file('sem2');
+            $dscImage_1 = $request->file('dsc1');
+            $dscImage_2 = $request->file('dsc2');
+            $ftirImage_1 = $request->file('ftir1');
+            $ftirImage_2 = $request->file('ftir2');
+
+            $filePath_afm1 = $afmImage_1 ? $afmImage_1->store('images', 'public') : null;
+            $filePath_afm2 = $afmImage_2 ? $afmImage_2->store('images', 'public') : null;
+            $filePath_sem1 = $semImage_1 ? $semImage_1->store('images', 'public') : null;
+            $filePath_sem2 = $semImage_2 ? $semImage_2->store('images', 'public') : null;
+            $filePath_dsc1 = $dscImage_1 ? $dscImage_1->store('images', 'public') : null;
+            $filePath_dsc2 = $dscImage_2 ? $dscImage_2->store('images', 'public') : null;
+            $filePath_ftir1 = $ftirImage_1 ? $ftirImage_1->store('images', 'public') : null;
+            $filePath_ftir2 = $ftirImage_2 ? $ftirImage_2->store('images', 'public') : null;
 
             $charactaristic_test = new Charactaristic_test;
             $charactaristic_test-> experiment_id = $request->id;
@@ -213,10 +243,14 @@ class ProfileController extends Controller
             $charactaristic_test-> thickness = $request->thickness;
             $charactaristic_test-> contact_angle = $request->contact_angle;
             $charactaristic_test-> tensile_strength = $request->tensile_strength;
-            $charactaristic_test-> afm = $request->afm;
-            $charactaristic_test-> sem = $request->sem;
-            $charactaristic_test-> dsc = $request->dsc;
-            $charactaristic_test-> ftir = $request->ftir;
+            $charactaristic_test-> afm1 = $filePath_afm1;
+            $charactaristic_test-> afm2 = $filePath_afm2;
+            $charactaristic_test-> sem1 = $filePath_sem1;
+            $charactaristic_test-> sem2 = $filePath_sem2;
+            $charactaristic_test-> dsc1 = $filePath_dsc1;
+            $charactaristic_test-> dsc2 = $filePath_dsc2;
+            $charactaristic_test-> ftir1 = $filePath_ftir1;
+            $charactaristic_test-> ftir2 = $filePath_ftir2;
             $charactaristic_test->save();
 
         }elseif($request->formType === 'storing_test'){
@@ -234,9 +268,12 @@ class ProfileController extends Controller
                 'moisture_content' => ['numeric', 'nullable']
             ]);
 
+            $fruitDetail = Fruit_detail::where('name', $request->s_name)->first();
+
             $storing_test = new Storing_test;
             $storing_test-> experiment_id = $request->id;
             $storing_test-> s_name = $request->s_name;
+            $storing_test-> fruit_id = $fruitDetail->id;
             $storing_test-> storing_days = $request->storing_days;
             $storing_test-> mass_loss_rate = $request->mass_loss_rate;
             $storing_test-> color_l = $request->color_l;
@@ -256,9 +293,13 @@ class ProfileController extends Controller
                 'a_moisture_content' => ['numeric', 'nullable'],
                 'mic' => ['numeric', 'nullable'],
             ]);
+
+            $bacteriaDetail = Bacteria_detail::where('name', $request->a_name)->first();
+            
             $antibacteria_test = new Antibacteria_test;
             $antibacteria_test-> experiment_id = $request->id;
             $antibacteria_test-> a_name = $request->a_name;
+            $antibacteria_test-> bacteria_id = $bacteriaDetail->id;
             $antibacteria_test-> bacteria_rate = $request->bacteria_rate;
             $antibacteria_test-> mic = $request->mic;
             $antibacteria_test->save();
@@ -299,11 +340,21 @@ class ProfileController extends Controller
         $charactaristic_tests = Charactaristic_test::where('experiment_id', $id)->get();
         $storing_tests = Storing_test::where('experiment_id', $id)->get();
         $antibacteria_tests = Antibacteria_test::where('experiment_id', $id)->get();
-        
-        
+
+        $materials_list = Material_detail::orderby('name', 'asc')->get();
+        $additives_list = Additive_detail::orderby('name', 'asc')->get();
+        $fruits_list = Fruit_detail::orderby('name', 'asc')->get();
+        $bacteria_list = Bacteria_detail::orderby('name','asc')->get();
+
+        $afm1_image = Charactaristic_test::select('afm1')->where('experiment_id', $id)->first();
+        if($afm1_image) {
+            $afm1_imagePath = '/storage/' . $afm1_image->afm1;
+        }
+
 
         return view('user.profile.edit', compact('experiment', 'materials','additives','film_conditions',
-                    'charactaristic_tests','storing_tests','antibacteria_tests'));
+                    'charactaristic_tests','storing_tests','antibacteria_tests', 'materials_list', 'additives_list', 
+                    'fruits_list', 'bacteria_list', 'afm1_imagePath'));
    
     }
 
@@ -321,8 +372,13 @@ class ProfileController extends Controller
 
         $materials = Material::where('experiment_id', $id)->get();
         foreach($materials as $material) {
+
+            
+            $materialDetail = Material_detail::where('name', $request->input("m_name.{$material->id}"))->first();
+        
             $material-> experiment_id = $id;
             $material-> m_name = $request->input("m_name.$material->id");
+            $material-> material_id = $materialDetail->id;
             $material-> price = $request->input("price.$material->id");
             $material-> concentration = $request->input("concentration.$material->id");
             $material-> heat = $request->input("heat.$material->id");
@@ -340,8 +396,12 @@ class ProfileController extends Controller
 
         $additives = Additive::where('experiment_id', $id)->get();
         foreach($additives as $additive) {
+
+            $additiveDetail = Additive_detail::where('name', $request->input("ad_name.{$additive->id}"))->first();
+
             $additive-> experiment_id = $id;
             $additive-> ad_name = $request->input("ad_name.$additive->id");
+            $additive-> additive_id = $additiveDetail->id;
             $additive-> price = $request->input("price.$additive->id");
             $additive-> concentration = $request->input("concentration.$additive->id");
             $additive->save();
@@ -363,11 +423,58 @@ class ProfileController extends Controller
 
         $charactaristictests = Charactaristic_test::where('experiment_id', $id)->get();
         foreach($charactaristictests as $charactaristic_test) {
+
+            
+
+            $afmImage_1 = $request->file('afm1');
+            $afmImage_2 = $request->file('afm2');
+            $semImage_1 = $request->file('sem1');
+            $semImage_2 = $request->file('sem2');
+            $dscImage_1 = $request->file('dsc1');
+            $dscImage_2 = $request->file('dsc2');
+            $ftirImage_1 = $request->file('ftir1');
+            $ftirImage_2 = $request->file('ftir2');
+
+            // dd($afmImage_1);
+
+            // $afmFilesArray_1 = $request->file('afm1');
+            // $afmFilesArray_2 = $request->file('afm2');
+            // $semFilesArray_1 = $request->file('sem1');
+            // $semFilesArray_1 = $request->file('sem2');
+            // $dscFilesArray_1 = $request->file('dsc1');
+            // $dscFilesArray_1 = $request->file('dsc2');
+            // $ftirFilesArray_1 = $request->file('ftir1');
+            // $ftirFilesArray_1 = $request->file('ftir2');
+
+            // dd($afmFilesArray_1);
+
+            // $filePath_afm1 = null; // $filePath_afm1 を初期化
+            // if (is_array($afmFilesArray_1)) {
+            //     foreach ($afmFilesArray_1 as $file) {
+                    // if ($afmFilesArray_1 instanceof Illuminate\Http\UploadedFile) {
+                    //     // $file は UploadedFile のインスタンスです
+                    //     // ここで必要な処理を行います
+                    //     dd($afmFilesArray_1);
+                    //     $filePath_afm1 = $afmFilesArray_1->store('images', 'public');
+                    //     break;
+                    //     // 保存されたファイルのパスなどを取得します
+                    // }
+            //     }
+            // }
+
+            $filePath_afm1 = $afmImage_1 ? $afmImage_1->store('images', 'public') : null;
+            $filePath_afm2 = $afmImage_2 ? $afmImage_2->store('images', 'public') : null;
+            $filePath_sem1 = $semImage_1 ? $semImage_1->store('images', 'public') : null;
+            $filePath_sem2 = $semImage_2 ? $semImage_2->store('images', 'public') : null;
+            $filePath_dsc1 = $dscImage_1 ? $dscImage_1->store('images', 'public') : null;
+            $filePath_dsc2 = $dscImage_2 ? $dscImage_2->store('images', 'public') : null;
+            $filePath_ftir1 = $ftirImage_1 ? $ftirImage_1->store('images', 'public') : null;
+            $filePath_ftir2 = $ftirImage_2 ? $ftirImage_2->store('images', 'public') : null;
+
             $charactaristic_test-> experiment_id = $id;
             $charactaristic_test-> ph = $request->input("ph.$charactaristic_test->id");
             $charactaristic_test-> shear_rate = $request->input("shear_rate.$charactaristic_test->id");
             $charactaristic_test-> shear_stress = $request->input("shear_stress.$charactaristic_test->id");
-            $charactaristic_test-> viscosity_tem = $request->input("viscosity_tem.$charactaristic_test->id");
             $charactaristic_test-> viscosity = $request->input("viscosity.$charactaristic_test->id");
             $charactaristic_test-> moisture_content = $request->input("moisture_content.$charactaristic_test->id");
             $charactaristic_test-> water_solubility = $request->input("water_solubility.$charactaristic_test->id");
@@ -375,17 +482,25 @@ class ProfileController extends Controller
             $charactaristic_test-> thickness = $request->input("thickness.$charactaristic_test->id");    
             $charactaristic_test-> contact_angle = $request->input("cotact_angle.$charactaristic_test->id");
             $charactaristic_test-> tensile_strength = $request->input("tensile_strength.$charactaristic_test->id");
-            $charactaristic_test-> afm = $request->input("afm.$charactaristic_test->id");
-            $charactaristic_test-> sem = $request->input("sem.$charactaristic_test->id");
-            $charactaristic_test-> dsc = $request->input("dsc.$charactaristic_test->id");
-            $charactaristic_test-> ftir = $request->input("ftir.$charactaristic_test->id");
+            $charactaristic_test-> afm1 = $filePath_afm1;
+            $charactaristic_test-> afm2 = $filePath_afm2;
+            $charactaristic_test-> sem1 = $filePath_sem1;
+            $charactaristic_test-> sem2 = $filePath_sem2;
+            $charactaristic_test-> dsc1 = $filePath_dsc1;
+            $charactaristic_test-> dsc2 = $filePath_dsc2;
+            $charactaristic_test-> ftir1 = $filePath_ftir1;
+            $charactaristic_test-> ftir2 = $filePath_ftir2;
             $charactaristic_test->save();
         }
 
         $storingtests = Storing_test::where('experiment_id', $id)->get();
         foreach($storingtests as $storing_test) {
+
+            $fruitDetail = Fruit_detail::where('name', $request->input("s_name.{$additive->id}"))->first();
+
             $storing_test-> experiment_id = $id;
             $storing_test-> s_name = $request->input("s_name.$storing_test->id");
+            $storing_test-> fruit_id = $fruitDetail->id;
             $storing_test-> storing_days = $request->input("storing_days.$storing_test->id");
             $storing_test-> mass_loss_rate = $request->input("mass_loss_rate.$storing_test->id");
             $storing_test-> color_l = $request->input("color_l.$storing_test->id");
@@ -401,8 +516,11 @@ class ProfileController extends Controller
 
         $antibacteriatests = Antibacteria_test::where('experiment_id', $id)->get();
         foreach($antibacteriatests as $antibacteria_test) {
+
+            $bacteriaDetail = Bacteria_detail::where('name', $request->input("a_name.{$antibacteria_test->id}"))->first();
             $antibacteria_test-> experiment_id = $id;
-            $antibacteria_test-> s_name = $request->input("s_name.$antibacteria_test->id");
+            $antibacteria_test-> a_name = $request->input("a_name.$antibacteria_test->id");
+            $antibacteria_test-> bacteria_id = $bacteriaDetail->id;
             $antibacteria_test-> bacteria_rate = $request->input("bacteria_rate.$antibacteria_test->id");
             $antibacteria_test-> mic = $request->input("mic.$antibacteria_test->id");
             $antibacteria_test->save();

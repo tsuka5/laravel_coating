@@ -27,8 +27,8 @@ class Material extends Model
 
     protected $fillable = [
         'experiment_id',
-        // 'material_id',
         'name',
+        'material_id',
         'price',
         'concentration',
         'heat',
@@ -47,10 +47,11 @@ class Material extends Model
     {
         return $this->belongsTo(Experiment::class);
     }
-    // public function material_detail(): BelongsTo
+    // public function material(): BelongsTo
     // {
-    //     return $this->belongsTo(Material_detail::class);
+    //     return $this->belongTo(Material_detail::class);
     // }
+   
 
  
 }

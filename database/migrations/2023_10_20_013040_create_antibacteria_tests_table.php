@@ -20,6 +20,9 @@ class CreateAntibacteriaTestsTable extends Migration
             ->onUpdate('cascade')
             ->onDelete('cascade');
             $table->string('a_name')->nullable();
+            $table->bigInteger('bacteria_id');
+            // ->references('id')->on('bacteria_details')
+            // ->onDelete('cascade')->onUpdate('cascade');
             $table->float('bacteria_rate')->nullable();
             $table->float('mic')->nullable();
         });

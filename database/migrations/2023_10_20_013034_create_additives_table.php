@@ -20,6 +20,10 @@ class CreateAdditivesTable extends Migration
             ->onUpdate('cascade')
             ->onDelete('cascade');
             $table->string('ad_name')->nullable();
+            $table->bigInteger('additive_id');
+            // ->constrained()
+            // ->onUpdate('cascade')
+            // ->onDelete('cascade');
             $table->float('price')->nullable();
             $table->float('concentration')->nullable();
         });

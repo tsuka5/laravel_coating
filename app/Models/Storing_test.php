@@ -7,7 +7,9 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use App\Models\Experiment;
+use App\Models\Fruit_detail;
 
 
 
@@ -27,6 +29,7 @@ class Storing_test extends Model
     protected $fillable = [
         'experiment_id',
         's_name',
+        'fruit_id',
         'storing_days',
         'mass_loss_rate',
         'color_l',
@@ -42,6 +45,14 @@ class Storing_test extends Model
     public function experiment(): BelongsTo
     {
         return $this->belongsTo(Experiment::class);
+    }
+    public function storing_test(): BelongsTo
+    {
+        return $this->belongsTo(Storing_test::class);
+    }
+    public function fruit_detail(): HasOne
+    {
+        return $this->hasOne(Fruit_detail::class);
     }
 
  

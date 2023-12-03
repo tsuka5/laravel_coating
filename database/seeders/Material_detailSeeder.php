@@ -17,11 +17,11 @@ class Material_detailSeeder extends Seeder
     {
         DB::table('material_details')->insert([
         [
-            'name' => 'test',
+            'name' => 'starch',
             'charactaristic' => 'write some charactariscitc',
         ],
         [
-            'name' => 'test6',
+            'name' => 'chitosan',
             'charactaristic' => 'write some charactariscitc',
         ],
         [
@@ -29,7 +29,7 @@ class Material_detailSeeder extends Seeder
             'charactaristic' => 'write some charactariscitc',
         ],
         [
-            'name' => 'chitosan',
+            'name' => 'test',
             'charactaristic' => 'write some charactariscitc',
         ],
         [
@@ -49,7 +49,7 @@ class Material_detailSeeder extends Seeder
             'charactaristic' => 'write some charactariscitc',
         ],
         [
-            'name' => 'starch',
+            'name' => 'test3',
             'charactaristic' => 'write some charactariscitc',
         ],
 

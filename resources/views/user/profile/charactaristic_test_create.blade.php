@@ -18,7 +18,7 @@
                             </div>
                             <div class="lg:w-1/2 md:w-2/3 mx-auto">
                               <x-input-error :messages="$errors->all()" class="mb-4"  />
-                                <form method="post" action="{{ route('user.store', ['id'=>$id, 'formType'=>'charactaristic_test']) }}">
+                                <form method="post" enctype="multipart/form-data" action="{{ route('user.store', ['id'=>$id, 'formType'=>'charactaristic_test']) }}">
                                   @csrf
     
                             

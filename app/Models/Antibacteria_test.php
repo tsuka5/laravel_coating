@@ -8,6 +8,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\Experiment;
+use App\Models\Bacteria_detail;
 
 
 
@@ -27,6 +28,7 @@ class Antibacteria_test extends Model
     protected $fillable = [
         'experiment_id',
         'a_name',
+        'bacteria_id',
         'bacteria_rate',
         'mic',
     ];
@@ -34,6 +36,10 @@ class Antibacteria_test extends Model
     public function experiment(): BelongsTo
     {
         return $this->belongsTo(Experiment::class);
+    }
+    public function bacteria_detail(): BelongsTo
+    {
+        return $this->belongsTo(Bacteria_detail::class);
     }
 
  
