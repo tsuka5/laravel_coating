@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 
 
 
-class Additive_detail extends Model
+class Antibacteria_test_type extends Model
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -27,7 +27,7 @@ class Additive_detail extends Model
     protected $fillable = [
         'name',
         'charactaristic'
-        
+    
     ];
 
     // public function experiment(): BelongsTo

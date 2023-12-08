@@ -26,11 +26,9 @@ class Film_condition extends Model
 
     protected $fillable = [
         'experiment_id',
-        'degassing_temperature',
-        'dish_type',
-        'dish_area',
-        'casting_ml',
-        'incubator_type',
+        'casting_amount',
+        'petri_dish_area',
+        'degas_temperature',
         'drying_temperature',
         'drying_humidity',
         'drying_time',

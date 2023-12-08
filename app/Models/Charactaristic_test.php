@@ -27,19 +27,27 @@ class Charactaristic_test extends Model
     protected $fillable = [
         'experiment_id',
         'ph',
+        'temperature',
         'shear_rate',
         'shear_stress',
+        'rotation_speed',
         'viscosity',
-        'moisture_content',
-        'water_solubility',
+        'mc',
+        'ws',
         'wvp',
         'thickness',
-        'contact_angle',
-        'tensile_strength',
+        'ca',
+        'ts',
+        'd43',
+        'd32',
+        'eab',
+        'light_transmittance',
+        'xrd',
         'afm',
         'sem',
         'dsc',
         'ftir',
+        'clsm'
     ];
 
     public function experiment(): BelongsTo

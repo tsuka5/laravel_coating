@@ -19,11 +19,9 @@ class CreateFilmConditionsTable extends Migration
             ->constrained()
             ->onUpdate('cascade')
             ->onDelete('cascade');
-            $table->float('degassing_temperature')->nullable();
-            $table->text('dish_type')->nullable();
-            $table->float('dish_area')->nullable();
-            $table->float('casting_ml')->nullable();
-            $table->text('incubator_type')->nullable();
+            $table->float('casting_amount')->nullable();
+            $table->float('petri_dish_area')->nullable();
+            $table->float('degas_temperature')->nullable();
             $table->float('drying_temperature')->nullable();
             $table->float('drying_humidity')->nullable();
             $table->float('drying_time')->nullable();

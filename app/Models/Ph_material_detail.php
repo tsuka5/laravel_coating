@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Models\Experiment;
+// use Illuminate\Database\Eloquent\Relations\BelongsTo;
+// use App\Models\Experiment;
 
 
 
-class Antibacteria_test extends Model
+class Ph_material_detail extends Model
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -25,19 +25,15 @@ class Antibacteria_test extends Model
 
 
     protected $fillable = [
-        'experiment_id',
-        'bacteria_id',
-        'fruit_id',
-        'test_id',
-        'invivo_invitro',
-        'bacteria_concentration',
-        'mic',
+        'name',
+        'charactaristic'
+    
     ];
 
-    public function experiment(): BelongsTo
-    {
-        return $this->belongsTo(Experiment::class);
-    }
+    // public function experiment(): BelongsTo
+    // {
+    //     return $this->belongsTo(Experiment::class);
+    // }
 
  
 }

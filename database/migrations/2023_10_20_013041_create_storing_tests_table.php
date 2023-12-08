@@ -19,17 +19,27 @@ class CreateStoringTestsTable extends Migration
             ->constrained()
             ->onUpdate('cascade')
             ->onDelete('cascade');
-            $table->string('s_name')->nullable();
-            $table->integer('storing_days')->nullable();
+            $table->bigInteger('fruit_id')->nullable();
+            $table->float('storing_temperature')->nullable();
+            $table->float('storing_humidity')->nullable();
+            $table->integer('storing_day')->nullable();
             $table->float('mass_loss_rate')->nullable();
-            $table->float('color_l')->nullable();
-            $table->float('color_a')->nullable();
-            $table->float('color_b')->nullable();
-            $table->float('color_e')->nullable();
+            $table->float('l')->nullable();
+            $table->float('a')->nullable();
+            $table->float('b')->nullable();
+            $table->float('e')->nullable();
             $table->float('ph')->nullable();
             $table->float('tss')->nullable();
             $table->float('hardness')->nullable();
             $table->float('moisture_content')->nullable();
+            $table->float('ta')->nullable();
+            $table->float('vitamin_c')->nullable();
+            $table->float('rr')->nullable();
+            $table->text('sem')->nullable();
+            $table->text('clsm')->nullable();
+            $table->text('afm')->nullable();
+            $table->text('ftir')->nullable();
+            $table->text('dsc')->nullable();
         });
 
         Schema::enableForeignKeyConstraints();

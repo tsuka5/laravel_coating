@@ -19,8 +19,11 @@ class CreateAntibacteriaTestsTable extends Migration
             ->constrained()
             ->onUpdate('cascade')
             ->onDelete('cascade');
-            $table->string('a_name')->nullable();
-            $table->float('bacteria_rate')->nullable();
+            $table->bigInteger('bacteria_id')->nullable();
+            $table->bigInteger('fruit_id')->nullable();
+            $table->bigInteger('test_id')->nullable();
+            $table->boolean('invivo_invitro')->nullable();
+            $table->float('bacteria_concentration')->nullable();
             $table->float('mic')->nullable();
         });
 

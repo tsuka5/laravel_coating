@@ -20,19 +20,30 @@ class CreateCharactaristicTestsTable extends Migration
             ->onUpdate('cascade')
             ->onDelete('cascade');
             $table->float('ph')->nullable();
+            $table->float('temperature')->nullable();
             $table->float('shear_rate')->nullable();
             $table->float('shear_stress')->nullable();
+            $table->float('rotation_speed')->nullable();
             $table->float('viscosity')->nullable();
-            $table->float('moisture_content')->nullable();
-            $table->float('water_solubility')->nullable();
+            $table->float('mc')->nullable();
+            $table->float('ws')->nullable();
             $table->float('wvp')->nullable();
             $table->float('thickness')->nullable();
-            $table->float('contact_angle')->nullable();
-            $table->float('tensile_strength')->nullable();
-            $table->binary('afm')->nullable();
-            $table->binary('sem')->nullable();
-            $table->binary('dsc')->nullable();
-            $table->binary('ftir')->nullable();
+            $table->float('ca')->nullable();
+            $table->float('ts')->nullable();
+            $table->text('afm')->nullable();
+            $table->text('sem')->nullable();
+            $table->text('dsc')->nullable();
+            $table->text('ftir')->nullable();
+            $table->text('clsm')->nullable();
+            $table->float('d43')->nullable();
+            $table->float('d32')->nullable();
+            $table->float('eab')->nullable();
+            $table->float('light_transmittance')->nullable();
+            $table->float('xrd')->nullable();
+            
+
+            
 
         });
 

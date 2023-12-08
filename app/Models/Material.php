@@ -27,20 +27,11 @@ class Material extends Model
 
     protected $fillable = [
         'experiment_id',
-        // 'material_id',
-        'name',
-        'price',
+        'material_id',
         'concentration',
-        'heat',
-        'water_temperature',
-        'water_rate',
-        'material_rate',
-        'staler_speed',
-        'repeat',
-        'staler_time',
         'ph_adjustment',
-        'ph_material',
-        'ph_target',
+        'ph_material_id',
+        'ph_purpose',
     ];
 
     public function experiment(): BelongsTo

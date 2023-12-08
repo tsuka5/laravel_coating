@@ -16,24 +16,30 @@ class Antibacteria_testSeeder extends Seeder
     public function run(): void
     {
         DB::table('antibacteria_tests')->insert([
-        [
-            'experiment_id' => '1',
-            'a_name' => 'Rhizopus',
-            'bacteria_rate' => '3.0',
-            'mic' => '9.7'
-        ],
-        [
-            'experiment_id' => '2',
-            'a_name' => 'Rhizopus',
-            'bacteria_rate' => '3.0',
-            'mic' => '9.7'
-        ],
-        [
-            'experiment_id' => '3',
-            'a_name' => 'Rhizopus',
-            'bacteria_rate' => '3.0',
-            'mic' => '9.7'
-        ],
+            [
+                'experiment_id' => '1',
+                'bacteria_id' => '1',
+                'fruit_id' => '2',
+                'test_id' => '1',
+                'invivo_invitro' => '0',
+                'mic' => '9.7'
+            ],
+            [
+                'experiment_id' => '2',
+                'bacteria_id' => '2',
+                'fruit_id' => '1',
+                'test_id' => '1',
+                'invivo_invitro' => '0',
+                'mic' => '9.7'
+            ],
+            [
+                'experiment_id' => '3',
+                'bacteria_id' => '3',
+                'fruit_id' => '2',
+                'test_id' => '1',
+                'invivo_invitro' => '0',
+                'mic' => '9.7'
+            ],
 
 
         ]);

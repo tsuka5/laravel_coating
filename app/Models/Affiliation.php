@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Models\Experiment;
+// use Illuminate\Database\Eloquent\Relations\BelongsTo;
+// use App\Models\Experiment;
 
 
 
-class Additive extends Model
+class Affiliation extends Model
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -25,17 +25,14 @@ class Additive extends Model
 
 
     protected $fillable = [
-        'experiment_id',
         'name',
-        'price',
-        'concentration'
-        
+    
     ];
 
-    public function experiment(): BelongsTo
-    {
-        return $this->belongsTo(Experiment::class);
-    }
+    // public function experiment(): BelongsTo
+    // {
+    //     return $this->belongsTo(Experiment::class);
+    // }
 
  
 }

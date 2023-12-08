@@ -19,19 +19,12 @@ class CreateMaterialsTable extends Migration
             ->constrained()
             ->onUpdate('cascade')
             ->onDelete('cascade');
-            $table->string('m_name')->nullable();
+            $table->bigInteger('material_id')->nullable();
             $table->float('price')->nullable();
             $table->float('concentration')->nullable();
-            $table->boolean('heat')->nullable();
-            $table->float('water_temperature')->nullable();
-            $table->float('water_rate')->nullable();
-            $table->float('material_rate')->nullable();
-            $table->float('staler_speed')->nullable();
-            $table->integer('repeat')->nullable();
-            $table->integer('staler_time')->nullable();
             $table->boolean('ph_adjustment')->nullable();
-            $table->text('ph_material')->nullable();
-            $table->float('ph_target')->nullable();
+            $table->bigInteger('ph_material_id')->nullable();
+            $table->float('ph_purpose')->nullable();
         });
 
         Schema::enableForeignKeyConstraints();

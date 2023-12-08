@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAdditiveDetailsTable extends Migration
+class CreateAntibacteriaTestTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateAdditiveDetailsTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('additive_details', function (Blueprint $table) {
+        Schema::create('antibacteria_test_types', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->text('charactaristic')->nullable();
@@ -28,6 +28,6 @@ class CreateAdditiveDetailsTable extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('additive_details');
+        Schema::dropIfExists('antibacteria_test_types');
     }
 };

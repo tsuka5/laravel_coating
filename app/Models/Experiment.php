@@ -40,7 +40,8 @@ class experiment extends Model
         'title',
         'name' ,
         'date' ,
-        'paper',
+        'paper_name',
+        'paper_url'
     ];
 
     public function user(): BelongsTo
@@ -58,9 +59,9 @@ class experiment extends Model
         return $this->hasOne(Charactaristic_test::class);
     }
 
-    public function storing_test(): HasOne
+    public function storing_test(): HasMany
     {
-        return $this->hasOne(Storing_test::class);
+        return $this->hasMany(Storing_test::class);
     }
 
     public function antibacteria_test(): HasOne

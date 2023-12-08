@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\Experiment;
 
-
+use function PHPSTORM_META\map;
 
 class Storing_test extends Model
 {
@@ -26,17 +26,28 @@ class Storing_test extends Model
 
     protected $fillable = [
         'experiment_id',
-        's_name',
-        'storing_days',
+        'fruit_id',
+        'storing_temperature',
+        'storing_humidity',
+        'storing_day',
         'mass_loss_rate',
-        'color_l',
-        'color_a',
-        'color_b',
-        'color_e',
+        'l',
+        'a',
+        'b',
+        'e',
         'ph',
         'tss',
         'hardness',
-        'moisture_content'
+        'moisture_content',
+        'ta',
+        'vitamin_c',
+        'rr',
+        'sem',
+        'clsm',
+        'afm',
+        'ftir',
+        'dsc'
+
     ];
 
     public function experiment(): BelongsTo
