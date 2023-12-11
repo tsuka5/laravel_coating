@@ -25,9 +25,9 @@
                                 
                                   <div class="p-2 w-1/2 mx-auto">
                                     <div class="relative">
-                                        <label for="a_name" class="leading-7 text-sm text-gray-600">Microbial Name </label>
-                                        <select name="a_name" data-toggle="select" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                          <option value="">Select microbial</option>
+                                        <label for="bacteria_name" class="leading-7 text-sm text-gray-600">Bacteria Name </label>
+                                        <select name="bacteria_name" data-toggle="select" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                          {{-- <option value="">Select bacteria</option> --}}
                                           @foreach ($bacteria_list as $selected_bacterium)
                                           <option value="{{ $selected_bacterium->name }}"> {{ $selected_bacterium->name }}</option>
                                           @endforeach
@@ -36,8 +36,39 @@
                                   </div>
                                   <div class="p-2 w-1/2 mx-auto">
                                     <div class="relative">
-                                        <label for="bacteria_rate" class="leading-7 text-sm text-gray-600">Bacteria Rate</label>
-                                        <input type="number" id="bacteria_rate" name="bacteria_rate" step="0.01" placeholder="Enter bacteria rate."value="{{ old('bacteria_rate') }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                        <label for="fruit_name" class="leading-7 text-sm text-gray-600">Fruit or Vegetable </label>
+                                        <select name="fruit_name" data-toggle="select" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                          {{-- <option value="">Select fruit or vegetable</option> --}}
+                                          @foreach ($fruits_list as $selected_fruit)
+                                          <option value="{{ $selected_fruit->name }}"> {{ $selected_fruit->name }}</option>
+                                          @endforeach
+                                        </select>                                      
+                                    </div>
+                                  </div>
+                                  <div class="p-2 w-1/2 mx-auto">
+                                    <div class="relative">
+                                        <label for="test_type" class="leading-7 text-sm text-gray-600">Test Type </label>
+                                        <select name="test_name" data-toggle="select" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                          {{-- <option value="">Select test type</option> --}}
+                                          @foreach ($antibacteria_test_list as $selected_test)
+                                          <option value="{{ $selected_test->name }}"> {{ $selected_test->name }}</option>
+                                          @endforeach
+                                        </select>                                      
+                                    </div>
+                                  </div>
+                                  <div class="p-2 w-1/2 mx-auto">
+                                    <div class="relative">
+                                        <label for="invivo_invitro" class="leading-7 text-sm text-gray-600">Invivo or Invitro</label>
+                                        <select name="invivo_invitro" data-toggle="select" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                          <option value="1">Invivo</option>
+                                          <option value="0">Invitro</option>
+                                        </select>
+                                    </div>
+                                  </div>
+                                  <div class="p-2 w-1/2 mx-auto">
+                                    <div class="relative">
+                                        <label for="bacteria_concentration" class="leading-7 text-sm text-gray-600">Bacteria Concentration</label>
+                                        <input type="number" id="bacteria_concentration" name="bacteria_concentration" step="0.01" placeholder="Enter bacteria concentration."value="{{ old('bacteria_concentration') }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                     </div>
                                   </div>
                                   <div class="p-2 w-1/2 mx-auto">

@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
+
 // use Illuminate\Database\Eloquent\Relations\BelongsTo;
 // use App\Models\Experiment;
 
@@ -33,6 +36,11 @@ class Bacteria_detail extends Model
     // {
     //     return $this->belongsTo(Experiment::class);
     // }
+
+    public function antibacteria_test(): BelongsTo
+    {
+        return $this->belongsTo(Antibacteria_test::class, 'id', 'bacteria_id' );
+    }
 
  
 }

@@ -15,37 +15,47 @@
                         </div>
                         <div class="lg:w-1/2 md:w-2/3 mx-auto">
                           <x-input-error :messages="$errors->all()" class="mb-4"  />
-                          <form method="post" action="{{ route('user.profile.update', ['profile' => $experiment->id]) }}">
+                          <form method="post" enctype="multipart/form-data" action="{{ route('user.profile.update', ['profile' => $experiment->id]) }}">
                             @method('PUT')  
-                            {{-- アップデートの時はpostがサポートしてないから疑似的にputで送っているという意味 --}}
                             @csrf
 
                             {{-- experimentのEdit --}}
+                            
                             <div class="m-2">
-                              <div class="p-2 w-1/2 mx-auto">
-                                <div class="relative">
-                                  <label for="title" class="leading-7 text-sm text-gray-600">Title</label>
-                                  <input type="text" id="title" name="title" value="{{ $experiment->title }}" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                </div>
-                              </div>
-                              <div class="p-2 w-1/2 mx-auto">
-                                <div class="relative">
-                                  <label for="name" class="leading-7 text-sm text-gray-600">Name</label>
-                                  <input type="text" id="name" name="name" value="{{ $experiment->name }}" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                </div>
-                              </div>
-                              <div class="p-2 w-1/2 mx-auto">
-                                <div class="relative"> 
-                                  <label for="date" class="leading-7 text-sm text-gray-600">Date</label>
-                                  <input type="date" id="date" name="date" value="{{ $experiment->date }}" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                </div>
-                              </div>
-                              <div class="p-2 w-1/2 mx-auto">
+                              <div class="flex flex-wrap">
+                                <div class="p-2 w-1/2 mx-auto">
                                   <div class="relative">
-                                    <label for="paper" class="leading-7 text-sm text-gray-600">Paper</label>
-                                    <input type="text" id="paper" name="paper" value="{{ $experiment->paper }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                    <label for="title" class="leading-7 text-sm text-gray-600">Title</label>
+                                    <input type="text" id="title" name="title" value="{{ $experiment->title }}" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                   </div>
+                                </div>
+                                <div class="p-2 w-1/2 mx-auto">
+                                  <div class="relative">
+                                    <label for="name" class="leading-7 text-sm text-gray-600">Name</label>
+                                    <input type="text" id="name" name="name" value="{{ $experiment->name }}" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                  </div>
+                                </div>
+                                <div class="p-2 w-1/2 mx-auto">
+                                  <div class="relative"> 
+                                    <label for="date" class="leading-7 text-sm text-gray-600">Date</label>
+                                    <input type="date" id="date" name="date" value="{{ $experiment->date }}" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                  </div>
+                                </div>
+                                <div class="p-2 w-1/2 mx-auto">
+                                    <div class="relative">
+                                      <label for="paper_name" class="leading-7 text-sm text-gray-600">Paper</label>
+                                      <input type="text" id="paper_name" name="paper_name" value="{{ $experiment->paper_name }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                    </div>
+                                </div>
+                                <div class="p-2 w-1/2 mx-auto">
+                                  <div class="relative">
+                                    <label for="paper_url" class="leading-7 text-sm text-gray-600">Paper URL</label>
+                                    <input type="text" id="paper_url" name="paper_url" value="{{ $experiment->paper_url }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                  </div>
+                                </div>
                               </div>
+                            </div>
+
 
                               
                               <div class="flex flex-col text-center w-full mb-4 mt-12">
@@ -55,137 +65,71 @@
                              
                               @foreach ($materials as $material)
                              
-
-                              <div class="p-2 w-1/2 mx-auto">
-                                <div class="relative">
-                                    <label for="m_name" class="leading-7 text-sm text-gray-600">Name</label>
-                                    <input type="text" name="m_name[{{ $material->id }}]" value="{{ $material->m_name }}" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                                        id="m_name">
+                              <div class="flex flex-wrap">
+                                <div class="p-2 w-1/2 mx-auto">
+                                  <div class="relative">
+                                      <label for="material_name" class="leading-7 text-sm text-gray-600">Name</label>
+                                      <select name="material_name[{{ $material->id }}]" data-toggle="select" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                        <option value="{{ $material->material_detail->name}}">{{$material->material_detail->name}} </option>
+                                        @foreach ($materials_list as $selected_material)
+                                        <option value="{{ $selected_material->name }}"> {{ $selected_material->name }}</option>
+                                        @endforeach
+                                      </select>                    
+                                  </div>
                                 </div>
-                              </div>
-            
-                              <div class="p-2 w-1/2 mx-auto">
+                          
+                                <div class="p-2 w-1/2 mx-auto">
+                                    <div class="relative">
+                                        <label for="concentration" class="leading-7 text-sm text-gray-600">Concentration</label>
+                                        <input type="number" name="concentration[{{ $material->id }}]" value="{{ $material->concentration }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                                            id="concentration">
+                                    </div>
+                                </div>
+                
+                                <div class="p-2 w-1/2 mx-auto">
+                                    <div class="relative">
+                                        <label for="ph_adjustment" class="leading-7 text-sm text-gray-600">ph Adjustment (Yes or No)</label>
+                                        <select name="ph_adjustment" data-toggle="select" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                          <option value="{{ $material->ph_adjustment }}">
+                                            @if ( $material->ph_adjustment == 1)
+                                              Yes
+                                            @else
+                                              No
+                                            @endif
+                                          </option>
+                                          <option value="1">Yes</option>
+                                          <option value="0">No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                
+                                <div class="p-2 w-1/2 mx-auto">
                                   <div class="relative">
-                                      <label for="price" class="leading-7 text-sm text-gray-600">Price</label>
-                                      <input type="number" name="price[{{ $material->id }}]" value="{{ $material->price }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                                          id="price">
+                                      <label for="ph_material" class="leading-7 text-sm text-gray-600">Material Name for ph Adjustment</label>
+                                      <select name="ph_material[{{ $material->id }}]" data-toggle="select" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                        <option value="{{ $material->ph_material_detail->name}}">
+                                          @if ($material->ph_material_id == null)
+                                            Nothing
+                                          @else
+                                            {{$material->ph_material_detail->name}}
+                                          @endif
+                                            </option>
+                                        @foreach ($ph_materials_list as $selected_ph_material)
+                                          <option value="{{ $selected_ph_material->name }}"> {{ $selected_ph_material->name }}</option>
+                                        @endforeach
+                                      </select>                    
                                   </div>
+                                </div>
+                
+                                <div class="p-2 w-1/2 mx-auto">
+                                    <div class="relative">
+                                        <label for="ph_purpose" class="leading-7 text-sm text-gray-600">pH purpose</label>
+                                        <input type="number" name="ph_purpose[{{ $material->id }}]" value="{{ $material->ph_purpose }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                                            id="ph_pu">
+                                    </div>
+                                </div> 
                               </div>
-              
-                              <div class="p-2 w-1/2 mx-auto">
-                                  <div class="relative">
-                                      <label for="concentration" class="leading-7 text-sm text-gray-600">Concentration</label>
-                                      <input type="number" name="concentration[{{ $material->id }}]" value="{{ $material->concentration }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                                          id="concentration">
-                                  </div>
-                              </div>
-              
-                              <div class="p-2 w-1/2 mx-auto">
-                                  <div class="relative">
-                                      <label for="heat" class="leading-7 text-sm text-gray-600">Heat</label>
-                                      <input type="number" name="heat[{{ $material->id }}]" value="{{ $material->heat }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                                          id="heat">
-                                  </div>
-                              </div>
-              
-                              <div class="p-2 w-1/2 mx-auto">
-                                  <div class="relative">
-                                      <label for="water_temperature" class="leading-7 text-sm text-gray-600">Water Temperature</label>
-                                      <input type="number" name="water_temperature[{{ $material->id }}]" value="{{ $material->water_temperature }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                                          id="water_temperature">
-                                  </div>
-                              </div>
-              
-                              <div class="p-2 w-1/2 mx-auto">
-                                  <div class="relative">
-                                      <label for="material_rate" class="leading-7 text-sm text-gray-600">Material Rate</label>
-                                      <input type="number" name="material_rate[{{ $material->id }}]" value="{{ $material->material_rate }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                                          id="material_rate" >
-                                  </div>
-                              </div>
-              
-                              <div class="p-2 w-1/2 mx-auto">
-                                  <div class="relative">
-                                      <label for="staler_speed" class="leading-7 text-sm text-gray-600">Staler Speed</label>
-                                      <input type="number" name="staler_speed[{{ $material->id }}]" value="{{ $material->staler_speed }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                                          id="staler_speed">
-                                  </div>
-                              </div>
-              
-                              <div class="p-2 w-1/2 mx-auto">
-                                  <div class="relative">
-                                      <label for="repeat" class="leading-7 text-sm text-gray-600">Rpeat</label>
-                                      <input type="number" name="repeat[{{ $material->id }}]" value="{{ $material->repeat }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                                          id="repeat">
-                                  </div>
-                              </div>
-              
-                              <div class="p-2 w-1/2 mx-auto">
-                                  <div class="relative">
-                                      <label for="staler_time" class="leading-7 text-sm text-gray-600">Staler Time</label>
-                                      <input type="number" name="staler_time[{{ $material->id }}]" value="{{ $material->staler_time }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                                          id="staler_time">
-                                  </div>
-                              </div>
-              
-                              <div class="p-2 w-1/2 mx-auto">
-                                  <div class="relative">
-                                      <label for="ph_adjustment" class="leading-7 text-sm text-gray-600">pH Adjustment</label>
-                                      <input type="number" name="ph_adjustment[{{ $material->id }}]" value="{{ $material->ph_adjustment }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                                          id="ph_adjustment">
-                                  </div>
-                              </div>
-              
-                              <div class="p-2 w-1/2 mx-auto">
-                                  <div class="relative">
-                                      <label for="ph_material" class="leading-7 text-sm text-gray-600">pH Material </label>
-                                      <input type="number" name="ph_material[{{ $material->id }}]" value="{{ $material->ph_material }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                                          id="ph_material">
-                                  </div>
-                              </div>
-              
-                              <div class="p-2 w-1/2 mx-auto">
-                                  <div class="relative">
-                                      <label for="ph_target" class="leading-7 text-sm text-gray-600">pH target</label>
-                                      <input type="number" name="ph_target[{{ $material->id }}]" value="{{ $material->ph_target }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                                          id="ph_target">
-                                  </div>
-                              </div> 
                               @endforeach
-
-
-                              <div class="flex flex-col text-center w-full mb-4 mt-12">
-                                <h4 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Additive</h4>
-                              </div>
-
-                            @foreach($additives as $additive)
-
-                            <div class="p-2 w-1/2 mx-auto">
-                              <div class="relative">
-                                  <label for="ad_name" class="leading-7 text-sm text-gray-600">Name</label>
-                                  <input type="text" name="ad_name[{{ $additive->id }}]" value="{{ $additive->ad_name }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                                      id="ad_name">
-                              </div>
-                            </div>
-          
-                            <div class="p-2 w-1/2 mx-auto">
-                              <div class="relative">
-                                  <label for="price" class="leading-7 text-sm text-gray-600">Price</label>
-                                  <input type="number" name="price[{{ $additive->id }}]" value="{{ $additive->price }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                                      id="price">
-                              </div>
-                            </div>
-          
-                            <div class="p-2 w-1/2 mx-auto">
-                              <div class="relative">
-                                  <label for="concentration" class="leading-7 text-sm text-gray-600">Concentration</label>
-                                  <input type="number" name="concentration[{{ $additive->id }}]" value="{{ $additive->concentration }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                                      id="concentration">
-                              </div>
-                            </div>
-
-                            @endforeach
-                            
 
                             <div class="flex flex-col text-center w-full mb-4 mt-12">
                                 <h4 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Film Conditions</h4>
@@ -194,54 +138,44 @@
                             @foreach ($film_conditions as $film_condition)
 
                             <div class="m-2">
+                              <div class="flex flex-wrap">
                                 <div class="p-2 w-1/2 mx-auto">
                                   <div class="relative">
-                                      <label for="degassing_temperature" class="leading-7 text-sm text-gray-600">Degassing Temperature<br>(脱気温度) ℃</label>
-                                      <input type="number" id="degassing_temperature" name="degassing_temperature[{{ $film_condition->id }}]" value="{{ $film_condition->degassing_temperature }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                  </div>
-                                </div>
-                                <div class="p-2 w-1/2 mx-auto">
-                                  <div class="relative">
-                                      <label for="dish_type" class="leading-7 text-sm text-gray-600">Dish Type(ペトリ皿のタイプ)</label>
-                                      <input type="text" id="dish_type" name="dish_type[{{ $film_condition->id }}]" value="{{ $film_condition->dish_type }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                    <label for="casting_amount" class="leading-7 text-sm text-gray-600">Casting amount (ml)</label>
+                                    <input type="number" id="casting_amount" name="casting_amount[{{ $film_condition->id }}]" value="{{ $film_condition->casting_amount }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                   </div>
                                 </div>
                                 <div class="p-2 w-1/2 mx-auto">
                                   <div class="relative"> 
-                                      <label for="dish_area" class="leading-7 text-sm text-gray-600">Dish Area<br>(ペトリ皿の表面積) cm^2</label>
-                                      <input type="number" id="dish_area" name="dish_area[{{ $film_condition->id }}]" value="{{ $film_condition->dish_area }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                      <label for="petri_dish_area" class="leading-7 text-sm text-gray-600">Petri Dish Area (cm^2)</label>
+                                      <input type="number" id="petri_dish_area" name="petri_dish_area[{{ $film_condition->id }}]" value="{{ $film_condition->petri_dish_area }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                  </div>
+                                </div>
+                                <div class="p-2 w-1/2 mx-auto">
+                                  <div class="relative">
+                                      <label for="degas_temperature" class="leading-7 text-sm text-gray-600">Degassing Temperature (℃)</label>
+                                      <input type="number" id="degas_temperature" name="degas_temperature[{{ $film_condition->id }}]" value="{{ $film_condition->degas_temperature }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                  </div>
+                                </div>
+                                <div class="p-2 w-1/2 mx-auto">
+                                  <div class="relative">
+                                    <label for="drying_temperature" class="leading-7 text-sm text-gray-600">Drying Temperature (℃)</label>
+                                    <input type="number" id="drying_temperature" name="drying_temperature[{{ $film_condition->id }}]" value="{{ $film_condition->drying_temperature }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                   </div>
                                 </div>
                                 <div class="p-2 w-1/2 mx-auto">
                                     <div class="relative">
-                                      <label for="casting_ml" class="leading-7 text-sm text-gray-600">Casting(キャスティング量) ml</label>
-                                      <input type="number" id="casting_ml" name="casting_ml[{{ $film_condition->id }}]" value="{{ $film_condition->casting_ml }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                    </div>
-                                </div>
-                                <div class="p-2 w-1/2 mx-auto">
-                                    <div class="relative">
-                                      <label for="incubator_type" class="leading-7 text-sm text-gray-600">Incubator Type<br>(インキュベータの種類)</label>
-                                      <input type="text" id="incubator_type" name="incubator_type[{{ $film_condition->id }}]" value="{{ $film_condition->incubator_type }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                    </div>
-                                </div>
-                                <div class="p-2 w-1/2 mx-auto">
-                                    <div class="relative">
-                                      <label for="drying_temperature" class="leading-7 text-sm text-gray-600">Drying Temperature<br>(乾燥温度) ℃</label>
-                                      <input type="number" id="drying_temperature" name="drying_temperature[{{ $film_condition->id }}]" value="{{ $film_condition->drying_temperature }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                    </div>
-                                </div>
-                                <div class="p-2 w-1/2 mx-auto">
-                                    <div class="relative">
-                                      <label for="drying_humidity" class="leading-7 text-sm text-gray-600">Drying_humidity<br>(乾燥温度) %RH</label>
+                                      <label for="drying_humidity" class="leading-7 text-sm text-gray-600">Drying_humidity (%RH)</label>
                                       <input type="number" id="drying_humidity" name="drying_humidity[{{ $film_condition->id }}]" value="{{ $film_condition->drying_humidity }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                     </div>
                                 </div>
                                 <div class="p-2 w-1/2 mx-auto">
                                     <div class="relative">
-                                      <label for="drying_time" class="leading-7 text-sm text-gray-600">Drying Time(乾燥時間) h</label>
+                                      <label for="drying_time" class="leading-7 text-sm text-gray-600">Drying Time (h)</label>
                                       <input type="number" id="drying_time" name="drying_time[{{ $film_condition->id }}]" value="{{ $film_condition->drying_time }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                     </div>
                                 </div>
+                              </div>
                             </div>
 
                             @endforeach
@@ -252,91 +186,141 @@
 
                               @foreach ($charactaristic_tests as $charactaristic_test)
                               <div class="m-2">
+                                <div class="flex flex-wrap">
                                   <div class="p-2 w-1/2 mx-auto">
                                     <div class="relative">
-                                        <label for="ph" class="leading-7 text-sm text-gray-600">ph </label>
+                                        <label for="ph" class="leading-7 text-sm text-gray-600">pH </label>
                                         <input type="number" id="ph" name="ph[{{ $charactaristic_test->id }}]" value="{{ $charactaristic_test->ph }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                     </div>
                                   </div>
                                   <div class="p-2 w-1/2 mx-auto">
                                     <div class="relative">
-                                        <label for="shear_rate" class="leading-7 text-sm text-gray-600">Shear Rate(せん断速度)</label>
+                                        <label for="temperature" class="leading-7 text-sm text-gray-600">Temperature (℃) </label>
+                                        <input type="number" id="temperature" name="temperature[{{ $charactaristic_test->id }}]" value="{{ $charactaristic_test->temperature }}" step="0.1" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                    </div>  
+                                  </div>
+                                  <div class="p-2 w-1/2 mx-auto">
+                                    <div class="relative">
+                                        <label for="shear_rate" class="leading-7 text-sm text-gray-600">Shear Rate (1/s)</label>
                                         <input type="number" id="shear_rate" name="shear_rate[{{ $charactaristic_test->id }}]" value="{{ $charactaristic_test->shear_rate }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                     </div>
                                   </div>
                                   <div class="p-2 w-1/2 mx-auto">
                                     <div class="relative"> 
-                                        <label for="shear_stress" class="leading-7 text-sm text-gray-600">Shear Stress(せん断応力) </label>
+                                        <label for="shear_stress" class="leading-7 text-sm text-gray-600">Shear Stress (Pa・s) </label>
                                         <input type="number" id="shear_stress" name="shear_stress[{{ $charactaristic_test->id }}]" value="{{ $charactaristic_test->shear_stress }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                     </div>
                                   </div>
                                   <div class="p-2 w-1/2 mx-auto">
+                                    <div class="relative">
+                                        <label for="rotation_speed" class="leading-7 text-sm text-gray-600">Rotation Speed (rpm)</label>
+                                        <input type="number" id="rotation_speed" name="rotation_speed[{{ $charactaristic_test->id }}]" value="{{ $charactaristic_test->rotation_speed }}" step="0.1" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                    </div>
+                                  </div>
+                                  <div class="p-2 w-1/2 mx-auto">
                                       <div class="relative">
-                                        <label for="viscosity" class="leading-7 text-sm text-gray-600">Viscosity(粘度)</label>
+                                        <label for="viscosity" class="leading-7 text-sm text-gray-600">Viscosity (cP)</label>
                                         <input type="number" id="viscosity" name="viscosity[{{ $charactaristic_test->id }}]" value="{{ $charactaristic_test->viscosity }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                       </div>
                                   </div>
                                   <div class="p-2 w-1/2 mx-auto">
                                       <div class="relative">
-                                        <label for="moisture_content" class="leading-7 text-sm text-gray-600">Moisture Content(含水量)</label>
-                                        <input type="number" id="moisture_content" name="moisture_content[{{ $charactaristic_test->id }}]" value="{{ $charactaristic_test->moisture_content }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                        <label for="mc" class="leading-7 text-sm text-gray-600">Moisture Content (％)</label>
+                                        <input type="number" id="mc" name="mc[{{ $charactaristic_test->id }}]" value="{{ $charactaristic_test->mc }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                       </div>
                                   </div>
                                   <div class="p-2 w-1/2 mx-auto">
                                       <div class="relative">
-                                        <label for="water_solubility" class="leading-7 text-sm text-gray-600">Water Solubility(溶解度)</label>
-                                        <input type="number" id="water_solubility" name="water_solubility[{{ $charactaristic_test->id }}]" value="{{ $charactaristic_test->water_solubility }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                        <label for="ws" class="leading-7 text-sm text-gray-600">Water Solubility (％)</label>
+                                        <input type="number" id="ws" name="ws[{{ $charactaristic_test->id }}]" value="{{ $charactaristic_test->ws }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                       </div>
                                   </div>
                                   <div class="p-2 w-1/2 mx-auto">
                                       <div class="relative">
-                                        <label for="wvp" class="leading-7 text-sm text-gray-600">WVP(水蒸気透過性)</label>
+                                        <label for="wvp" class="leading-7 text-sm text-gray-600">Water Vapor Permeabilty (g・mm/(m^2・day・kPa))</label>
                                         <input type="number" id="wvp" name="wvp[{{ $charactaristic_test->id }}]" value="{{ $charactaristic_test->wvp }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                       </div>
                                   </div>
                                   <div class="p-2 w-1/2 mx-auto">
                                       <div class="relative">
-                                        <label for="thickness" class="leading-7 text-sm text-gray-600">Thickness(厚さ) mm</label>
+                                        <label for="thickness" class="leading-7 text-sm text-gray-600">Thickness (mm)</label>
                                         <input type="number" id="thickness" name="thickness[{{ $charactaristic_test->id }}]" value="{{ $charactaristic_test->thickness }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                       </div>
                                   </div>
                                   <div class="p-2 w-1/2 mx-auto">
                                     <div class="relative">
-                                      <label for="contact_angle" class="leading-7 text-sm text-gray-600">Contact Angle(接触角) ℃</label>
-                                      <input type="number" id="contact_angle" name="contact_angle[{{ $charactaristic_test->id }}]" value="{{ $charactaristic_test->contact_angle }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                      <label for="ca" class="leading-7 text-sm text-gray-600">Contact Angle (°)</label>
+                                      <input type="number" id="ca" name="ca[{{ $charactaristic_test->id }}]" value="{{ $charactaristic_test->ca }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                     </div>
                                   </div>
                                   <div class="p-2 w-1/2 mx-auto">
                                     <div class="relative">
-                                      <label for="tensile_strength" class="leading-7 text-sm text-gray-600">Tensile Strength(引張強度)</label>
-                                      <input type="number" id="tensile_strength" name="tensile_strength[{{ $charactaristic_test->id }}]" value="{{ $charactaristic_test->tensile_strength }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                      <label for="ts" class="leading-7 text-sm text-gray-600">Tensile Strength (MPa)</label>
+                                      <input type="number" id="ts" name="ts[{{ $charactaristic_test->id }}]" value="{{ $charactaristic_test->ts }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                     </div>
                                   </div>
                                   <div class="p-2 w-1/2 mx-auto">
+                                    <div class="relative">
+                                    <label for="d43" class="leading-7 text-sm text-gray-600">D43 ()</label>
+                                    <input type="number" id="d43" name="d43[{{ $charactaristic_test->id }}]" value="{{ $charactaristic_test->d43 }}" step="0.01"placeholder="Enter d43 value.(ex: 30)"class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                    </div>
+                                  </div>
+                                  <div class="p-2 w-1/2 mx-auto">
+                                      <div class="relative">
+                                      <label for="d32" class="leading-7 text-sm text-gray-600">D32 ()</label>
+                                      <input type="number" id="d32" name="d32[{{ $charactaristic_test->id }}]" value="{{ $charactaristic_test->d32 }}" step="0.01"placeholder="Enter d32 value.(ex: 40)"class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                      </div>
+                                  </div>
+                                  <div class="p-2 w-1/2 mx-auto">
+                                      <div class="relative">
+                                      <label for="eab" class="leading-7 text-sm text-gray-600">EAB (%)</label>
+                                      <input type="number" id="eab" name="eab[{{ $charactaristic_test->id }}]" value="{{ $charactaristic_test->eab }}" step="0.01"placeholder="Enter eab value.(ex: 40)"class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                      </div>
+                                  </div>
+                                  <div class="p-2 w-1/2 mx-auto">
+                                      <div class="relative">
+                                      <label for="light_transmittance" class="leading-7 text-sm text-gray-600">Light Trancemittance (%)</label>
+                                      <input type="number" id="light_transmittance" name="light_transmittance[{{ $charactaristic_test->id }}]" value="{{ $charactaristic_test->light_transmittance }}" step="0.01"placeholder="Enter TS value.(ex: 40)"class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                      </div>
+                                  </div>
+                                  <div class="p-2 w-1/2 mx-auto">
+                                      <div class="relative">
+                                      <label for="xrd" class="leading-7 text-sm text-gray-600">XRD ()</label>
+                                      <input type="number" id="xrd" name="xrd[{{ $charactaristic_test->id }}]" value="{{ $charactaristic_test->xrd }}" step="0.01"placeholder="Enter XRD value.(ex: 40)"class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                      </div>
+                                  </div>
+                                  
+                                    <div class="p-2 w-1/2 mx-auto">
                                     <div class="relative">
                                       <label for="afm" class="leading-7 text-sm text-gray-600">AFM</label>
-                                      <input type="file" id="afm" name="afm[{{ $charactaristic_test->id }}]" value="{{ $charactaristic_test->afm }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                      <img src="{{ asset('storage/'.$charactaristic_test->afm) }}" alt="" style="max-width: 200px; max-height: 200px;">
+                                      <input type="file" id="afm" name="afm[{{ $charactaristic_test->id }}]" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                     </div>
                                   </div>
                                   <div class="p-2 w-1/2 mx-auto">
                                       <div class="relative">
                                         <label for="sem" class="leading-7 text-sm text-gray-600">SEM</label>
-                                        <input type="file" id="sem" name="sem[{{ $charactaristic_test->id }}]" value="{{ $charactaristic_test->sem }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                        <img src="{{ asset('storage/'.$charactaristic_test->sem) }}" alt="" style="max-width: 200px; max-height: 200px;">
+                                        <input type="file" id="sem" name="sem[{{ $charactaristic_test->id }}]" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                       </div>
                                   </div>
                                   <div class="p-2 w-1/2 mx-auto">
                                     <div class="relative">
                                       <label for="dsc" class="leading-7 text-sm text-gray-600">DSC</label>
-                                      <input type="file" id="dsc" name="dsc[{{ $charactaristic_test->id }}]" value="{{ $charactaristic_test->dsc }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                      <img src="{{ asset('storage/'.$charactaristic_test->dsc) }}" alt="" style="max-width: 200px; max-height: 200px;">
+                                      <input type="file" id="dsc" name="dsc[{{ $charactaristic_test->id }}]" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                     </div>
                                   </div>
                                   <div class="p-2 w-1/2 mx-auto">
                                       <div class="relative">
                                         <label for="ftir" class="leading-7 text-sm text-gray-600">FTIR</label>
-                                        <input type="file" id="ftir" name="ftir[{{ $charactaristic_test->id }}]" value="{{ $charactaristic_test->ftir }}"  class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                        <img src="{{ asset('storage/'.$charactaristic_test->ftir) }}" alt="" style="max-width: 200px; max-height: 200px;">
+                                        <input type="file" id="ftir" name="ftir[{{ $charactaristic_test->id }}]" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                       </div>
                                   </div>
+                                </div>
                               </div>
+                              
                               @endforeach
 
 
@@ -345,46 +329,64 @@
                           </div>
                           @foreach ($storing_tests as $storing_test)
                           <div class="m-2">
+                            <div class="flex flex-wrap">
                               <div class="p-2 w-1/2 mx-auto">
                                 <div class="relative">
-                                    <label for="s_name" class="leading-7 text-sm text-gray-600">Fruits or Vegitable </label>
-                                    <input type="text" id="s_name" name="s_name[{{ $storing_test->id}}]" value="{{ $storing_test->s_name }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                    <label for="fruit_name" class="leading-7 text-sm text-gray-600">Fruits or Vegitable </label>
+                                    <select name="fruit_name[{{ $storing_test->id}}]" data-toggle="select" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                      <option value="{{ $storing_test->fruit_detail->name }}">{{ $storing_test->fruit_detail->name}}</option>
+                                      @foreach ($fruits_list as $selected_fruit)
+                                      <option value="{{ $selected_fruit->name }}"> {{ $selected_fruit->name }}</option>
+                                      @endforeach
+                                    </select>                                      
                                 </div>
                               </div>
                               <div class="p-2 w-1/2 mx-auto">
                                 <div class="relative">
-                                    <label for="storing_days" class="leading-7 text-sm text-gray-600">Storing days</label>
-                                    <input type="number" id="storing_days" name="storing_days[{{ $storing_test->id}}]" value="{{ $storing_test->storing_days }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                    <label for="storing_temperature" class="leading-7 text-sm text-gray-600">Storing temperature (℃)</label>
+                                    <input type="number" id="storing_temperature" name="storing_temperature[{{ $storing_test->id}}]" value="{{ $storing_test->storing_temperature }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                </div>
+                              </div>
+                              <div class="p-2 w-1/2 mx-auto">
+                                <div class="relative">
+                                    <label for="storing_humidity" class="leading-7 text-sm text-gray-600">Storing humidity (%)</label>
+                                    <input type="number" id="storing_humidity" name="storing_humidity[{{ $storing_test->id}}]" value="{{ $storing_test->storing_humidity }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                </div>
+                              </div>
+                              <div class="p-2 w-1/2 mx-auto">
+                                <div class="relative">
+                                    <label for="storing_day" class="leading-7 text-sm text-gray-600">Storing day</label>
+                                    <input type="number" id="storing_day" name="storing_day[{{ $storing_test->id}}]" value="{{ $storing_test->storing_day }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                 </div>
                               </div>
                               <div class="p-2 w-1/2 mx-auto">
                                 <div class="relative"> 
-                                    <label for="mass_loss_rate" class="leading-7 text-sm text-gray-600">Mass Loss Rate </label>
+                                    <label for="mass_loss_rate" class="leading-7 text-sm text-gray-600">Mass Loss Rate (%)</label>
                                     <input type="number" id="mass_loss_rate" name="mass_loss_rate[{{ $storing_test->id}}]" value="{{ $storing_test->mass_loss_rate }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                 </div>
                               </div>
                               <div class="p-2 w-1/2 mx-auto">
                                   <div class="relative">
-                                    <label for="color_l" class="leading-7 text-sm text-gray-600">*L</label>
-                                    <input type="number" id="color_l" name="color_l[{{ $storing_test->id}}]" value="{{ $storing_test->color_l }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                    <label for="l" class="leading-7 text-sm text-gray-600">*L</label>
+                                    <input type="number" id="l" name="l[{{ $storing_test->id}}]" value="{{ $storing_test->l }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                   </div>
                               </div>
                               <div class="p-2 w-1/2 mx-auto">
                                   <div class="relative">
-                                    <label for="color_a" class="leading-7 text-sm text-gray-600">*b</label>
-                                    <input type="number" id="color_a" name="color_a[{{ $storing_test->id}}]" value="{{ $storing_test->color_a }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                    <label for="a" class="leading-7 text-sm text-gray-600">*a</label>
+                                    <input type="number" id="a" name="a[{{ $storing_test->id}}]" value="{{ $storing_test->a }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                   </div>
                               </div>
                               <div class="p-2 w-1/2 mx-auto">
                                 <div class="relative">
-                                  <label for="color_b" class="leading-7 text-sm text-gray-600">*b</label>
-                                  <input type="number" id="color_b" name="color_b[{{ $storing_test->id}}]" value="{{ $storing_test->color_b }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                  <label for="b" class="leading-7 text-sm text-gray-600">*b</label>
+                                  <input type="number" id="b" name="b[{{ $storing_test->id}}]" value="{{ $storing_test->b }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                 </div>
                               </div>
                               <div class="p-2 w-1/2 mx-auto">
                                   <div class="relative">
-                                    <label for="color_e" class="leading-7 text-sm text-gray-600">⊿*E</label>
-                                    <input type="number" id="color_e" name="color_e[{{ $storing_test->id}}]" value="{{ $storing_test->color_e }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                    <label for="e" class="leading-7 text-sm text-gray-600">⊿*E</label>
+                                    <input type="number" id="e" name="e[{{ $storing_test->id}}]" value="{{ $storing_test->e }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                   </div>
                               </div>
                               <div class="p-2 w-1/2 mx-auto">
@@ -411,7 +413,61 @@
                                     <input type="number" id="moisture_content" name="moisture_content[{{ $storing_test->id }}]" value="{{ $storing_test->moisture_content }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                 </div>
                               </div>
+                              <div class="p-2 w-1/2 mx-auto">
+                                <div class="relative">
+                                    <label for="ta" class="leading-7 text-sm text-gray-600">TA ()</label>
+                                    <input type="number" id="ta" name="ta[{{ $storing_test->id }}]" step="0.1" value="{{ $storing_test->ta }}" step="0.01" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                </div>
+                              </div>
+                              <div class="p-2 w-1/2 mx-auto">
+                                <div class="relative">
+                                  <label for="vitamin_c" class="leading-7 text-sm text-gray-600">Vitamin C</label>
+                                  <input type="number" id="vitamin_c" name="vitamin_c[{{ $storing_test->id }}]" value="{{ $storing_test->vitamin_c }}" step="0.1" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                </div>
+                              </div>
+                              <div class="p-2 w-1/2 mx-auto">
+                                <div class="relative">
+                                  <label for="rr" class="leading-7 text-sm text-gray-600">RR</label>
+                                  <input type="number" id="rr" name="rr[{{ $storing_test->id }}]" value="{{ $storing_test->rr }}" step="0.1" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                </div>
+                              </div>
+                              <div class="p-2 w-1/2 mx-auto">
+                                <div class="relative mb-4">
+                                    <label for="afm" class="leading-7 text-sm text-gray-600">AFM</label>
+                                    <img src="{{ asset('storage/'.$storing_test->afm) }}" alt="" style="max-width: 200px; max-height: 200px;">
+                                    <input type="file" id="afm" name="s-afm[{{ $storing_test->id }}]" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                </div>
+                              </div>
+                              <div class="p-2 w-1/2 mx-auto">
+                                <div class="relative mb-4">
+                                    <label for="sem" class="leading-7 text-sm text-gray-600">SEM</label>
+                                    <img src="{{ asset('storage/'.$storing_test->sem) }}" alt="" style="max-width: 200px; max-height: 200px;">
+                                    <input type="file" id="sem" name="s-sem[{{ $storing_test->id }}]" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                </div>
+                              </div>
+                              <div class="p-2 w-1/2 mx-auto">
+                                <div class="relative mb-4">
+                                    <label for="dsc" class="leading-7 text-sm text-gray-600">DSC</label>
+                                    <img src="{{ asset('storage/'.$storing_test->dsc) }}" alt="" style="max-width: 200px; max-height: 200px;">
+                                    <input type="file" id="dsc" name="s-dsc[{{ $storing_test->id }}]" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                </div>
+                              </div>
+                              <div class="p-2 w-1/2 mx-auto">
+                                <div class="relative mb-4">
+                                    <label for="ftir" class="leading-7 text-sm text-gray-600">FT-IR</label>
+                                    <img src="{{ asset('storage/'.$storing_test->ftir) }}" alt="" style="max-width: 200px; max-height: 200px;">
+                                    <input type="file" id="ftir" name="s-ftir[{{ $storing_test->id }}]" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                </div>
+                              </div>
+                              <div class="p-2 w-1/2 mx-auto">
+                                <div class="relative mb-4">
+                                    <label for="clsm" class="leading-7 text-sm text-gray-600">CLSM</label>
+                                    <img src="{{ asset('storage/'.$storing_test->clsm) }}" alt="" style="max-width: 200px; max-height: 200px;">
+                                    <input type="file" id="clsm" name="s-clsm[{{ $storing_test->id }}]" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                </div>
+                              </div>
                             </div>
+                          </div>
                           @endforeach
 
 
@@ -420,24 +476,69 @@
                         </div>
                         @foreach ($antibacteria_tests as $antibacteria_test)
                         <div class="m-2">
+                          <div class="flex flex-wrap">
                             <div class="p-2 w-1/2 mx-auto">
                               <div class="relative">
-                                  <label for="a_name" class="leading-7 text-sm text-gray-600">Bacteria Name </label>
-                                  <input type="text" id="a_name" name="a_name[{{ $antibacteria_test->id }}]" value="{{ $antibacteria_test->a_name }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                  <label for="bacteria_name" class="leading-7 text-sm text-gray-600">Bacteria Name </label>
+                                  <select name="bacteria_name[{{ $antibacteria_test->id }}]" data-toggle="select" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                    <option value="{{ $antibacteria_test->bacteria_detail->name }}">{{ $antibacteria_test->bacteria_detail->name}}</option>
+                                    @foreach ($bacteria_list as $selected_bacteria)
+                                    <option value="{{ $selected_bacteria->name }}"> {{ $selected_bacteria->name }}</option>
+                                    @endforeach
+                                  </select>                                      
                               </div>
                             </div>
                             <div class="p-2 w-1/2 mx-auto">
                               <div class="relative">
-                                  <label for="bacteria_rate" class="leading-7 text-sm text-gray-600">Bacteria Rate</label>
-                                  <input type="number" id="bacteria_rate" name="bacteria_rate[{{ $antibacteria_test->id }}]" value="{{ $antibacteria_test->bacteria_rate }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                  <label for="fruit_name" class="leading-7 text-sm text-gray-600">Fruits or Vegitable </label>
+                                  <select name="fruit_name[{{ $antibacteria_test->id }}]" data-toggle="select" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                    <option value="{{ $antibacteria_test->fruit_detail->name }}">{{ $antibacteria_test->fruit_detail->name}}</option>
+                                    @foreach ($fruits_list as $selected_fruit)
+                                    <option value="{{ $selected_fruit->name }}"> {{ $selected_fruit->name }}</option>
+                                    @endforeach
+                                  </select>                                      
+                              </div>
+                            </div>
+                            <div class="p-2 w-1/2 mx-auto">
+                              <div class="relative">
+                                  <label for="test_type" class="leading-7 text-sm text-gray-600">Test Type </label>
+                                  <select name="test_name[{{ $antibacteria_test->id }}]" data-toggle="select" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                    <option value="{{ $antibacteria_test->antibacteria_test_type->name }}">{{ $antibacteria_test->antibacteria_test_type->name}}</option>
+                                    @foreach ($antibacteria_test_list as $selected_test_type)
+                                    <option value="{{ $selected_test_type->name }}"> {{ $selected_test_type->name }}</option>
+                                    @endforeach
+                                  </select>                                      
+                              </div>
+                            </div>
+                            <div class="p-2 w-1/2 mx-auto">
+                              <div class="relative">
+                                  <label for="invivo_invitro" class="leading-7 text-sm text-gray-600">Invivo or Invitro (Yes or No)</label>
+                                  <select name="invivo_invitro" data-toggle="select" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                    <option value="{{ $antibacteria_test->invivo_invitro }}">
+                                      @if ( $antibacteria_test->invivo_invitro == 1)
+                                        Invivo
+                                      @else
+                                        Invitro
+                                      @endif
+                                    </option>
+                                    <option value="1">Invivo</option>
+                                    <option value="0">Invitro</option>
+                                  </select>
+                              </div>
+                            </div>
+                            <div class="p-2 w-1/2 mx-auto">
+                              <div class="relative">
+                                  <label for="bacteria_concentration" class="leading-7 text-sm text-gray-600">Bacteria Concentration</label>
+                                  <input type="number" id="bacteria_concentration" name="bacteria_concentration[{{ $antibacteria_test->id }}]" value="{{ $antibacteria_test->bacteria_concentra }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                               </div>
                             </div>
                             <div class="p-2 w-1/2 mx-auto">
                               <div class="relative"> 
-                                  <label for="mic" class="leading-7 text-sm text-gray-600">Moisture Content </label>
+                                  <label for="mic" class="leading-7 text-sm text-gray-600">MIC </label>
                                   <input type="number" id="mic" name="mic[{{ $antibacteria_test->id }}]" value="{{ $antibacteria_test->mic }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                               </div>
                             </div>
+                          </div>
                         </div>
                         @endforeach
                               

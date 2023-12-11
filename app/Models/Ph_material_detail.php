@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
-// use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 // use App\Models\Experiment;
 
 
@@ -30,10 +30,10 @@ class Ph_material_detail extends Model
     
     ];
 
-    // public function experiment(): BelongsTo
-    // {
-    //     return $this->belongsTo(Experiment::class);
-    // }
+    public function material(): BelongsTo
+    {
+        return $this->belongsTo(Material::class, 'id', 'ph_material_id');
+    }
 
  
 }

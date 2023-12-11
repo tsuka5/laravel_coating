@@ -9,13 +9,14 @@ use App\Models\Experiment;
 use App\Models\Film_condition; 
 use App\Models\Charactaristic_test; 
 use App\Models\Material;
-use App\Models\Additive;
 use App\Models\Storing_test;
 use App\Models\Antibacteria_test;
 use App\Models\Material_detail;
-use App\Models\Additive_detail;
 use App\Models\Fruit_detail;
 use App\Models\Bacteria_detail;
+use App\Models\Ph_material_detail;
+use App\Models\Antibacteria_test_type;
+use App\Models\Affiliation;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
@@ -42,7 +43,6 @@ class ProfileController extends Controller
         $experiments = Experiment::where('user_id', Auth::user()->id)->orderby('id', 'desc')->paginate(4);
 
         $materialCounts = [];
-        $additiveCounts = [];
         $film_conditionCounts = [];
         $charactaristic_testCounts = [];
         $storing_testCounts = [];
@@ -50,14 +50,13 @@ class ProfileController extends Controller
 
         foreach ($experiments as $experiment) {
             $materialCounts[$experiment->id] = Material::where('experiment_id', $experiment->id)->count();
-            $additiveCounts[$experiment->id] = Additive::where('experiment_id', $experiment->id)->count();
             $film_conditionCounts[$experiment->id] = Film_condition::where('experiment_id', $experiment->id)->count();
             $charactaristic_testCounts[$experiment->id] = Charactaristic_test::where('experiment_id', $experiment->id)->count();
             $storing_testCounts[$experiment->id] = Storing_test::where('experiment_id', $experiment->id)->count();
             $antibacteria_testCounts[$experiment->id] = Antibacteria_test::where('experiment_id', $experiment->id)->count();
         }
        
-        return view('user.profile.index', compact('userInformation','experiments','materialCounts','additiveCounts','film_conditionCounts',
+        return view('user.profile.index', compact('userInformation','experiments','materialCounts','film_conditionCounts',
             'charactaristic_testCounts','storing_testCounts','antibacteria_testCounts'));
     }
 
@@ -72,14 +71,13 @@ class ProfileController extends Controller
     public function create($id, $formType)
     {
         $materials_list = Material_detail::orderby('name', 'asc')->get();
-        $additives_list = Additive_detail::orderby('name', 'asc')->get();
+        $ph_materials_list = Ph_material_detail::orderby('name', 'asc')->get();
         $fruits_list = Fruit_detail::orderby('name', 'asc')->get();
         $bacteria_list = Bacteria_detail::orderby('name','asc')->get();
+        $antibacteria_test_list = Antibacteria_test_type::orderby('name','asc')->get();
         // $id を使用して必要な処理を行う
         if ($formType === 'material') {
-            return view('user.profile.material_create', compact('id', 'materials_list'));
-        } elseif ($formType === 'additive') {
-            return view('user.profile.additive_create', compact('id', 'additives_list'));
+            return view('user.profile.material_create', compact('id', 'materials_list', 'ph_materials_list'));
         } elseif ($formType === 'film_condition') {
             return view('user.profile.film_condition_create', ['id'=>$id]);
         } elseif ($formType === 'charactaristic_test') {
@@ -87,9 +85,8 @@ class ProfileController extends Controller
         } elseif ($formType === 'storing_test') {
             return view('user.profile.storing_test_create', compact('id', 'fruits_list'));
         } elseif ($formType === 'antibacteria_test') {
-            return view('user.profile.antibacteria_test_create', compact('id', 'bacteria_list'));
+            return view('user.profile.antibacteria_test_create', compact('id', 'bacteria_list', 'fruits_list', 'antibacteria_test_list'));
         } 
-        // return view('user.profile.create');
     }
 
     /**
@@ -104,7 +101,8 @@ class ProfileController extends Controller
                 'title' => ['required', 'string', 'max:255','unique:experiments'], 
                 'name' => ['required', 'string', 'max:255'],
                 'date' => ['required','date'],
-                'paper' => ['string', 'max:255','nullable'],
+                'paper_name' => ['string', 'max:255','nullable'],
+                'paper_url' => ['string', 'max:255','nullable'],
             ]);
 
             $experiment = new Experiment;
@@ -112,60 +110,32 @@ class ProfileController extends Controller
             $experiment->title = $request->title;
             $experiment->name = $request->name;
             $experiment->date = $request->date;
-            $experiment->paper = $request->paper;        
+            $experiment->paper_name = $request->paper_name;        
+            $experiment->paper_url = $request->paper_url;        
             $experiment->save();
         }elseif($request->formType === 'material'){
             $request->validate([
-                'm_name' =>['required', 'string', 'max:255'],
-                'price' => ['numeric', 'nullable'],
-                'heat' => ['numeric', 'nullable'],
-                'water_temperature' => ['numeric', 'nullable'],
-                'starler_speed' => ['numeric', 'nullable'],
-                'repeat' => ['numeric', 'nullable'],
-                'staler_time' => ['numeric', 'nullable'],
+                'concentration' =>['numeric', 'nullable'],
                 'ph_adjustment' => ['numeric', 'nullable'],
-                'ph_material' => ['numeric', 'nullable'],
-                'ph_target' => ['numeric', 'nullable'],    
+                'ph_purpose' => ['numeric', 'nullable'],    
             ]);
 
             $material = new Material;
             $material-> experiment_id = $request->id;
-            $material-> m_name = $request->m_name;
-            $material-> price = $request->price;
+            $materialDetail = Material_detail::select('id')->where('name', $request->material_name)->first();
+            $material->material_id = $materialDetail->id;
             $material-> concentration = $request->concentration;
-            $material-> heat = $request->heat;
-            $material-> water_temperature = $request->water_temperature;
-            $material-> water_rate = $request->water_rate;
-            $material-> material_rate = $request->material_rate;
-            $material-> staler_speed = $request->staler_speed;
-            $material-> repeat = $request->repeat;
-            $material-> staler_time = $request->staler_time;
             $material-> ph_adjustment = $request->ph_adjustment;
-            $material-> ph_material = $request->ph_material;
-            $material-> ph_target = $request->ph_target;
+            $phMaterialDetail = Ph_material_detail::select('id')->where('name', $request->ph_material)->first();
+            $material-> ph_material_id = $phMaterialDetail->id;
+            $material-> ph_purpose = $request->ph_purpose;
             $material->save();
-
-        }elseif($request->formType === 'additive'){
-            $request->validate([
-                'ad_name' =>['required', 'string', 'max:255'],
-                'price' => ['numeric', 'nullable'],
-                'concentration' =>['numeric', 'nullable'],
-            ]);
-
-            $additive = new Additive;
-            $additive-> experiment_id = $request->id;
-            $additive-> ad_name = $request->ad_name;
-            $additive-> price = $request->price;
-            $additive-> concentration = $request->concentration;
-            $additive->save();
 
         }elseif($request->formType === 'film_condition'){
             $request->validate([
-                'degassing_temperature' => ['numeric', 'nullable'],
-                'dish_type' => ['string', 'nullable'],
-                'dish_area' => ['numeric', 'nullable'],
-                'casting_ml' => ['numeric', 'nullable'],
-                'incubator_type' => ['string', 'nullable'],
+                'casting_amount' => ['numeric', 'nullable'],
+                'petri_dish_area' => ['string', 'nullable'],
+                'degas_temperature' => ['numeric', 'nullable'],
                 'drying_temperature' => ['numeric', 'nullable'],
                 'drying_humidity' => ['numeric', 'nullable'],
                 'drying_time' => ['numeric', 'nullable'],
@@ -173,11 +143,9 @@ class ProfileController extends Controller
 
             $film_condition = new Film_condition;
             $film_condition-> experiment_id = $request->id;
-            $film_condition-> degassing_temperature = $request->degassing_temperature;
-            $film_condition-> dish_type = $request->dish_type;
-            $film_condition-> dish_area = $request->dish_area;
-            $film_condition-> casting_ml = $request->casting_ml;
-            $film_condition-> incubator_type = $request->incubator_type;
+            $film_condition-> casting_amount = $request->casting_amount;
+            $film_condition-> petri_dish_area = $request->petri_dish_area;
+            $film_condition-> degas_temperature = $request->degas_temperature;
             $film_condition-> drying_temperature = $request->drying_temperature;
             $film_condition-> drying_humidity = $request->drying_humidity;
             $film_condition-> drying_time = $request->drying_time;
@@ -186,80 +154,147 @@ class ProfileController extends Controller
         }elseif($request->formType === 'charactaristic_test'){
             $request->validate([
                 'ph' => ['numeric', 'nullable'],
+                'temperature' => ['numeric', 'nullable'],
                 'shear_rate' => ['numeric', 'nullable'],
                 'shear_stress' => ['numeric', 'nullable'],
+                'rotation_speed' => ['numeric', 'nullable'],
                 'viscosity' => ['numeric', 'nullable'],
-                'moisture_content' => ['numeric', 'nullable'],
-                'water_solubility' => ['numeric', 'nullable'],
+                'mc' => ['numeric', 'nullable'],
+                'ws' => ['numeric', 'nullable'],
                 'wvp' => ['numeric', 'nullable'],
                 'thickness' => ['numeric', 'nullable'],
-                'contact_angle' => ['numeric', 'nullable'],
-                'tensile_strength' => ['numeric', 'nullable'],
+                'ca' => ['numeric', 'nullable'],
+                'ts' => ['numeric', 'nullable'],
+                'd43' => ['numeric', 'nullable'],
+                'd32' => ['numeric', 'nullable'],
+                'eab' => ['numeric', 'nullable'],
+                'light_transmittance' => ['numeric', 'nullable'],
+                'xrd' => ['string', 'nullable'],
                 'afm' => ['nullable'],
                 'sem' => ['nullable'],
                 'dsc' => ['nullable'],
                 'ftir' => ['nullable'],
+                'clsm' => ['nullable'],
             ]);
+
+
+            $afmImage = $request->file('afm');
+            $semImage = $request->file('sem');
+            $dscImage = $request->file('dsc');
+            $ftirImage = $request->file('ftir');
+            $clsmImage = $request->file('clsm');
+
+            $filePath_afm = $afmImage ? $afmImage->store('images', 'public') : null;
+            $filePath_sem = $semImage ? $semImage->store('images', 'public') : null;
+            $filePath_dsc = $dscImage ? $dscImage->store('images', 'public') : null;
+            $filePath_ftir = $ftirImage ? $ftirImage->store('images', 'public') : null;
+            $filePath_clsm = $clsmImage ? $clsmImage->store('images', 'public') : null;
 
             $charactaristic_test = new Charactaristic_test;
             $charactaristic_test-> experiment_id = $request->id;
             $charactaristic_test-> ph = $request->ph;
+            $charactaristic_test-> temperature = $request->temperature;
             $charactaristic_test-> shear_rate = $request->shear_rate;
             $charactaristic_test-> shear_stress = $request->shear_stress;
+            $charactaristic_test-> rotation_speed = $request->rotation_speed;
             $charactaristic_test-> viscosity = $request->viscosity;
-            $charactaristic_test-> moisture_content = $request->moisture_content;
-            $charactaristic_test-> water_solubility = $request->water_solubility;
+            $charactaristic_test-> mc = $request->mc;
+            $charactaristic_test-> ws = $request->ws;
             $charactaristic_test-> wvp = $request->wvp;
             $charactaristic_test-> thickness = $request->thickness;
-            $charactaristic_test-> contact_angle = $request->contact_angle;
-            $charactaristic_test-> tensile_strength = $request->tensile_strength;
-            $charactaristic_test-> afm = $request->afm;
-            $charactaristic_test-> sem = $request->sem;
-            $charactaristic_test-> dsc = $request->dsc;
-            $charactaristic_test-> ftir = $request->ftir;
+            $charactaristic_test-> ca = $request->ca;
+            $charactaristic_test-> ts = $request->ts;
+            $charactaristic_test-> d43 = $request->d43;
+            $charactaristic_test-> d32 = $request->d32;
+            $charactaristic_test-> eab = $request->eab;
+            $charactaristic_test-> light_transmittance = $request->light_transmittance;
+            $charactaristic_test-> xrd = $request->xrd;
+            $charactaristic_test-> afm = $filePath_afm;
+            $charactaristic_test-> sem = $filePath_sem;
+            $charactaristic_test-> dsc = $filePath_dsc;
+            $charactaristic_test-> ftir = $filePath_ftir;
+            $charactaristic_test-> clsm = $filePath_clsm;
             $charactaristic_test->save();
 
         }elseif($request->formType === 'storing_test'){
             $request->validate([
-                's_name' => ['string', 'nullable'],
-                'storing_days' => ['numeric', 'nullable'],
+                'storing_temperature' => ['numeric', 'nullable'],
+                'storing_humidity' => ['numeric', 'nullable'],
+                'storing_day' => ['numeric', 'nullable'],
                 'mass_loss_rate' => ['numeric', 'nullable'],
-                'color_l' => ['numeric', 'nullable'],
-                'color_a' => ['numeric', 'nullable'],
-                'color_b' => ['numeric', 'nullable'],
-                'color_e' => ['numeric', 'nullable'],
+                'l' => ['numeric', 'nullable'],
+                'a' => ['numeric', 'nullable'],
+                'b' => ['numeric', 'nullable'],
+                'e' => ['numeric', 'nullable'],
                 'ph' => ['numeric', 'nullable'],
                 'tss' => ['numeric', 'nullable'],
                 'hardness' => ['numeric', 'nullable'],
-                'moisture_content' => ['numeric', 'nullable']
+                'moisture_content' => ['numeric', 'nullable'],
+                'ta' => ['numeric', 'nullable'],
+                'vitamin_c' => ['numeric', 'nullable'],
+                'rr' => ['numeric', 'nullable'],
+                'sem' => ['nullable'],
+                'clsm' => ['nullable'],
+                'afm' => ['nullable'],
+                'ftir' => ['nullable'],
+                'dsc' => ['nullable'],
+                
             ]);
+
+            $afmImage = $request->file('afm');
+            $semImage = $request->file('sem');
+            $dscImage = $request->file('dsc');
+            $ftirImage = $request->file('ftir');
+            $clsmImage = $request->file('clsm');
+
+            $filePath_afm = $afmImage ? $afmImage->store('images', 'public') : null;
+            $filePath_sem = $semImage ? $semImage->store('images', 'public') : null;
+            $filePath_dsc = $dscImage ? $dscImage->store('images', 'public') : null;
+            $filePath_ftir = $ftirImage ? $ftirImage->store('images', 'public') : null;
+            $filePath_clsm = $clsmImage ? $clsmImage->store('images', 'public') : null;
 
             $storing_test = new Storing_test;
             $storing_test-> experiment_id = $request->id;
-            $storing_test-> s_name = $request->s_name;
-            $storing_test-> storing_days = $request->storing_days;
+            $fruitDetail = Fruit_detail::select('id')->where('name', $request->fruit_name)->first();
+            $storing_test-> fruit_id = $fruitDetail->id;
+            $storing_test-> storing_temperature = $request->storing_temperature;
+            $storing_test-> storing_humidity = $request->storing_humidity;
+            $storing_test-> storing_day = $request->storing_day;
             $storing_test-> mass_loss_rate = $request->mass_loss_rate;
-            $storing_test-> color_l = $request->color_l;
-            $storing_test-> color_a = $request->color_a;
-            $storing_test-> color_b = $request->color_b;
-            $storing_test-> color_e = $request->color_e;
+            $storing_test-> l = $request->l;
+            $storing_test-> a = $request->a;
+            $storing_test-> b = $request->b;
+            $storing_test-> e = $request->e;
             $storing_test-> ph = $request->ph;
             $storing_test-> tss = $request->tss;
             $storing_test-> hardness = $request->hardness;
             $storing_test-> moisture_content = $request->moisture_content;
+            $storing_test-> ta = $request->ta;
+            $storing_test-> vitamin_c = $request->vitamin_c;
+            $storing_test-> rr = $request->rr;
+            $storing_test-> afm = $filePath_afm;
+            $storing_test-> sem = $filePath_sem;
+            $storing_test-> dsc = $filePath_dsc;
+            $storing_test-> ftir = $filePath_ftir;
+            $storing_test-> clsm = $filePath_clsm;
             $storing_test->save();
 
         }else{
             $request->validate([
-                'a_name' => ['string', 'nullable'],
-                'bacteria_rate' => ['numeric', 'nullable'],
-                'a_moisture_content' => ['numeric', 'nullable'],
+                'invivo_invitro' => ['string', 'nullable'],
+                'bacteria_concentration' => ['numeric', 'nullable'],
                 'mic' => ['numeric', 'nullable'],
             ]);
             $antibacteria_test = new Antibacteria_test;
             $antibacteria_test-> experiment_id = $request->id;
-            $antibacteria_test-> a_name = $request->a_name;
-            $antibacteria_test-> bacteria_rate = $request->bacteria_rate;
+            $bacteriaDetail = Bacteria_detail::select('id')->where('name', $request->bacteria_name)->first();
+            $antibacteria_test-> bacteria_id = $bacteriaDetail->id;
+            $fruitDetail = Fruit_detail::select('id')->where('name', $request->fruit_name)->first();
+            $antibacteria_test-> fruit_id = $fruitDetail->id;
+            $antibacteriaTestType = Antibacteria_test_type::select('id')->where('name', $request->test_name)->first();
+            $antibacteria_test->test_id = $antibacteriaTestType->id;
+            $antibacteria_test-> invivo_invitro = $request->invivo_invitro;
+            $antibacteria_test-> bacteria_concentration = $request->bacteria_concentration;
             $antibacteria_test-> mic = $request->mic;
             $antibacteria_test->save();
         }
@@ -292,9 +327,14 @@ class ProfileController extends Controller
      */
     public function edit(string $id)
     {
+        $materials_list = Material_detail::orderby('name', 'asc')->get();
+        $ph_materials_list = Ph_material_detail::orderby('name', 'asc')->get();
+        $fruits_list = Fruit_detail::orderby('name', 'asc')->get();
+        $bacteria_list = Bacteria_detail::orderby('name','asc')->get();
+        $antibacteria_test_list = Antibacteria_test_type::orderby('name','asc')->get();
+
         $experiment = Experiment::findOrFail($id);
         $materials = Material::where('experiment_id', $id)->get();
-        $additives = Additive::where('experiment_id', $id)->get();
         $film_conditions = Film_condition::where('experiment_id', $id)->get();
         $charactaristic_tests = Charactaristic_test::where('experiment_id', $id)->get();
         $storing_tests = Storing_test::where('experiment_id', $id)->get();
@@ -302,8 +342,9 @@ class ProfileController extends Controller
         
         
 
-        return view('user.profile.edit', compact('experiment', 'materials','additives','film_conditions',
-                    'charactaristic_tests','storing_tests','antibacteria_tests'));
+        return view('user.profile.edit', compact('experiment', 'materials','film_conditions',
+                    'charactaristic_tests','storing_tests','antibacteria_tests', 'materials_list',
+                    'ph_materials_list', 'fruits_list', 'bacteria_list', 'antibacteria_test_list'));
    
     }
 
@@ -316,94 +357,169 @@ class ProfileController extends Controller
         $experiment->title = $request->title;
         $experiment->name = $request->name;
         $experiment->date = $request->date;
-        $experiment->paper = $request->paper;        
+        $experiment->paper_name = $request->paper_name;
+        $experiment->paper_url = $request->paper_url;        
         $experiment->save();
 
         $materials = Material::where('experiment_id', $id)->get();
         foreach($materials as $material) {
             $material-> experiment_id = $id;
-            $material-> m_name = $request->input("m_name.$material->id");
-            $material-> price = $request->input("price.$material->id");
+            $materialDetail = Material_detail::select('id')->where('name', $request->input("material_name.$material->id"))->first();
+            $material-> material_id = $materialDetail->id;
             $material-> concentration = $request->input("concentration.$material->id");
-            $material-> heat = $request->input("heat.$material->id");
-            $material-> water_temperature = $request->input("water_temperature.$material->id");
-            $material-> water_rate = $request->input("water_rate.$material->id");
-            $material-> material_rate = $request->input("material_rate.$material->id");
-            $material-> staler_speed = $request->input("staler_speed.$material->id");
-            $material-> repeat = $request->input("repeat.$material->id");
-            $material-> staler_time = $request->input("staler_time.$material->id");
             $material-> ph_adjustment = $request->input("ph_adjustment.$material->id");
-            $material-> ph_material = $request->input("ph_material.$material->id");
-            $material-> ph_target = $request->input("ph_target.$material->id");
+            $phMaterialDetail = Ph_material_detail::select('id')->where('name', $request->input("ph_material.$material->id"))->first();
+            $material-> ph_material_id = $phMaterialDetail->id;
+            $material-> ph_purpose = $request->input("ph_purpose.$material->id");
             $material->save();
-        }
-
-        $additives = Additive::where('experiment_id', $id)->get();
-        foreach($additives as $additive) {
-            $additive-> experiment_id = $id;
-            $additive-> ad_name = $request->input("ad_name.$additive->id");
-            $additive-> price = $request->input("price.$additive->id");
-            $additive-> concentration = $request->input("concentration.$additive->id");
-            $additive->save();
         }
 
         $filmconditions = Film_condition::where('experiment_id', $id)->get();
         foreach($filmconditions as $film_condition) {
             $film_condition-> experiment_id = $id;
-            $film_condition-> degassing_temperature = $request->input("degassing_temperature.$film_condition->id");
-            $film_condition-> dish_type = $request->input("dish_type.$film_condition->id");
-            $film_condition-> dish_area = $request->input("dish_area.$film_condition->id");
-            $film_condition-> casting_ml = $request->input("casting_ml.$film_condition->id");
-            $film_condition-> incubator_type = $request->input("incubator_type.$film_condition->id");
+            $film_condition-> casting_amount = $request->input("casting_amount.$film_condition->id");
+            $film_condition-> petri_dish_area = $request->input("petri_dish_area.$film_condition->id");
+            $film_condition-> degas_temperature = $request->input("degas_temperature.$film_condition->id");
             $film_condition-> drying_temperature = $request->input("drying_temperature.$film_condition->id");
             $film_condition-> drying_humidity = $request->input("drying_humidity.$film_condition->id");
             $film_condition-> drying_time = $request->input("drying_time.$film_condition->id");
             $film_condition->save();
         }
 
+
         $charactaristictests = Charactaristic_test::where('experiment_id', $id)->get();
         foreach($charactaristictests as $charactaristic_test) {
+            $afmImage = $request->file("afm.{$charactaristic_test->id}");
+            $semImage = $request->file("sem.{$charactaristic_test->id}");
+            $dscImage = $request->file("dsc.{$charactaristic_test->id}");
+            $ftirImage = $request->file("ftir.{$charactaristic_test->id}");
+            $clsmImage = $request->file("clsm.{$charactaristic_test->id}");
+ 
+            $filePath_afm = $afmImage ? $afmImage->store('images', 'public') : null;
+            $filePath_sem = $semImage ? $semImage->store('images', 'public') : null;
+            $filePath_dsc = $dscImage ? $dscImage->store('images', 'public') : null;
+            $filePath_ftir = $ftirImage ? $ftirImage->store('images', 'public') : null;
+            $filePath_clsm = $clsmImage ? $clsmImage->store('images', 'public') : null;
+
+            if (!$afmImage){
+                $previousAfmValue = $charactaristic_test->afm;
+                $filePath_afm = $previousAfmValue ? $previousAfmValue : null;
+            }
+            if (!$semImage){
+                $previousSemValue = $charactaristic_test->sem;
+                $filePath_sem = $previousSemValue ? $previousSemValue : null;
+            }
+            if (!$dscImage){
+                $previousDscValue = $charactaristic_test->dsc;
+                $filePath_dsc = $previousDscValue ? $previousDscValue : null;
+            }
+            if (!$ftirImage){
+                $previousFtirValue = $charactaristic_test->ftir;
+                $filePath_ftir = $previousFtirValue ? $previousFtirValue : null;
+            }
+            if (!$clsmImage){
+                $previousClsmValue = $charactaristic_test->clsm;
+                $filePath_clsm = $previousClsmValue ? $previousClsmValue : null;
+            }
+
             $charactaristic_test-> experiment_id = $id;
             $charactaristic_test-> ph = $request->input("ph.$charactaristic_test->id");
+            $charactaristic_test-> temperature = $request->input("temperature.$charactaristic_test->id");
             $charactaristic_test-> shear_rate = $request->input("shear_rate.$charactaristic_test->id");
             $charactaristic_test-> shear_stress = $request->input("shear_stress.$charactaristic_test->id");
-            $charactaristic_test-> viscosity_tem = $request->input("viscosity_tem.$charactaristic_test->id");
+            $charactaristic_test-> rotation_speed = $request->input("rotation_speed.$charactaristic_test->id");
             $charactaristic_test-> viscosity = $request->input("viscosity.$charactaristic_test->id");
-            $charactaristic_test-> moisture_content = $request->input("moisture_content.$charactaristic_test->id");
-            $charactaristic_test-> water_solubility = $request->input("water_solubility.$charactaristic_test->id");
+            $charactaristic_test-> mc = $request->input("mc.$charactaristic_test->id");
+            $charactaristic_test-> ws = $request->input("ws.$charactaristic_test->id");
             $charactaristic_test-> wvp = $request->input("wvp.$charactaristic_test->id");
             $charactaristic_test-> thickness = $request->input("thickness.$charactaristic_test->id");    
-            $charactaristic_test-> contact_angle = $request->input("cotact_angle.$charactaristic_test->id");
-            $charactaristic_test-> tensile_strength = $request->input("tensile_strength.$charactaristic_test->id");
-            $charactaristic_test-> afm = $request->input("afm.$charactaristic_test->id");
-            $charactaristic_test-> sem = $request->input("sem.$charactaristic_test->id");
-            $charactaristic_test-> dsc = $request->input("dsc.$charactaristic_test->id");
-            $charactaristic_test-> ftir = $request->input("ftir.$charactaristic_test->id");
+            $charactaristic_test-> ca = $request->input("ca.$charactaristic_test->id");
+            $charactaristic_test-> ts = $request->input("ts.$charactaristic_test->id");
+            $charactaristic_test-> d43 = $request->input("d43.$charactaristic_test->id");
+            $charactaristic_test-> d32 = $request->input("d32.$charactaristic_test->id");
+            $charactaristic_test-> eab = $request->input("eab.$charactaristic_test->id");
+            $charactaristic_test-> light_transmittance = $request->input("light_transmittance.$charactaristic_test->id");
+            $charactaristic_test-> xrd = $request->input("xrd.$charactaristic_test->id");
+            $charactaristic_test-> afm = $filePath_afm;
+            $charactaristic_test-> sem = $filePath_sem;
+            $charactaristic_test-> dsc = $filePath_dsc;
+            $charactaristic_test-> ftir = $filePath_ftir;
+            $charactaristic_test-> clsm = $filePath_clsm;
             $charactaristic_test->save();
         }
 
         $storingtests = Storing_test::where('experiment_id', $id)->get();
         foreach($storingtests as $storing_test) {
+            $afmImage = $request->file("s-afm.{$storing_test->id}");
+            $semImage = $request->file("s-sem.{$storing_test->id}");
+            $dscImage = $request->file("s-dsc.{$storing_test->id}");
+            $ftirImage = $request->file("s-ftir.{$storing_test->id}");
+            $clsmImage = $request->file("s-clsm.{$storing_test->id}");
+ 
+            $filePath_afm = $afmImage ? $afmImage->store('images', 'public') : null;
+            $filePath_sem = $semImage ? $semImage->store('images', 'public') : null;
+            $filePath_dsc = $dscImage ? $dscImage->store('images', 'public') : null;
+            $filePath_ftir = $ftirImage ? $ftirImage->store('images', 'public') : null;
+            $filePath_clsm = $clsmImage ? $clsmImage->store('images', 'public') : null;
+
+            if (!$afmImage){
+                $previousAfmValue = $storing_test->afm;
+                $filePath_afm = $previousAfmValue ? $previousAfmValue : null;
+            }
+            if (!$semImage){
+                $previousSemValue = $storing_test->sem;
+                $filePath_sem = $previousSemValue ? $previousSemValue : null;
+            }
+            if (!$dscImage){
+                $previousDscValue = $storing_test->dsc;
+                $filePath_dsc = $previousDscValue ? $previousDscValue : null;
+            }
+            if (!$ftirImage){
+                $previousFtirValue = $storing_test->ftir;
+                $filePath_ftir = $previousFtirValue ? $previousFtirValue : null;
+            }
+            if (!$clsmImage){
+                $previousClsmValue = $storing_test->clsm;
+                $filePath_clsm = $previousClsmValue ? $previousClsmValue : null;
+            }
+
             $storing_test-> experiment_id = $id;
-            $storing_test-> s_name = $request->input("s_name.$storing_test->id");
-            $storing_test-> storing_days = $request->input("storing_days.$storing_test->id");
+            $fruitDetail = Fruit_detail::select('id')->where('name', $request->input("fruit_name.$storing_test->id"))->first();
+            $storing_test-> fruit_id = $fruitDetail->id;
+            $storing_test-> storing_temperature = $request->input("storing_temperature.$storing_test->id");
+            $storing_test-> storing_humidity = $request->input("storing_humidity.$storing_test->id");
+            $storing_test-> storing_day = $request->input("storing_day.$storing_test->id");
             $storing_test-> mass_loss_rate = $request->input("mass_loss_rate.$storing_test->id");
-            $storing_test-> color_l = $request->input("color_l.$storing_test->id");
-            $storing_test-> color_a = $request->input("color_a.$storing_test->id");
-            $storing_test-> color_b = $request->input("color_b.$storing_test->id");
-            $storing_test-> color_e = $request->input("color_e.$storing_test->id");
+            $storing_test-> l = $request->input("l.$storing_test->id");
+            $storing_test-> a = $request->input("a.$storing_test->id");
+            $storing_test-> b = $request->input("b.$storing_test->id");
+            $storing_test-> e = $request->input("e.$storing_test->id");
             $storing_test-> ph = $request->input("ph.$storing_test->id");
             $storing_test-> tss = $request->input("tss.$storing_test->id");
             $storing_test-> hardness = $request->input("hardness.$storing_test->id");
             $storing_test-> moisture_content = $request->input("moisture_content.$storing_test->id");
+            $storing_test-> ta = $request->input("ta.$storing_test->id");
+            $storing_test-> vitamin_c = $request->input("vitamin_c.$storing_test->id");
+            $storing_test-> rr = $request->input("rr.$storing_test->id");
+            $storing_test-> afm = $filePath_afm;
+            $storing_test-> sem = $filePath_sem;
+            $storing_test-> dsc = $filePath_dsc;
+            $storing_test-> ftir = $filePath_ftir;
+            $storing_test-> clsm = $filePath_clsm;
             $storing_test->save();
         }
 
         $antibacteriatests = Antibacteria_test::where('experiment_id', $id)->get();
         foreach($antibacteriatests as $antibacteria_test) {
             $antibacteria_test-> experiment_id = $id;
-            $antibacteria_test-> s_name = $request->input("s_name.$antibacteria_test->id");
-            $antibacteria_test-> bacteria_rate = $request->input("bacteria_rate.$antibacteria_test->id");
+            $bacteriaDetail = Bacteria_detail::select('id')->where('name', $request->input("bacteria_name.$antibacteria_test->id"))->first();
+            $antibacteria_test-> bacteria_id = $bacteriaDetail->id;
+            $fruitDetail = Fruit_detail::select('id')->where('name', $request->input("fruit_name.$antibacteria_test->id"))->first();
+            $antibacteria_test-> fruit_id = $fruitDetail->id;
+            $antibacteriaTestType = Antibacteria_test_type::select('id')->where('name', $request->input("test_name.$antibacteria_test->id"))->first();
+            $antibacteria_test-> test_id = $antibacteriaTestType->id;
+            $antibacteria_test-> invivo_invitro = $request->input("invivo_invitro.$antibacteria_test->id");
+            $antibacteria_test-> bacteria_concentration = $request->input("bacteria_concentration.$antibacteria_test->id");
             $antibacteria_test-> mic = $request->input("mic.$antibacteria_test->id");
             $antibacteria_test->save();
 

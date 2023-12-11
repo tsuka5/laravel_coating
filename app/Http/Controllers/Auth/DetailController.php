@@ -9,11 +9,9 @@ use App\Models\Experiment;
 use App\Models\Film_condition; 
 use App\Models\Charactaristic_test; 
 use App\Models\Material;
-use App\Models\Additive;
 use App\Models\Storing_test;
 use App\Models\Antibacteria_test;
 use App\Models\Material_detail;
-use App\Models\Additive_detail;
 use App\Models\Fruit_detail;
 use App\Models\Bacteria_detail;
 use Illuminate\Support\Facades\DB;
@@ -37,11 +35,10 @@ class DetailController extends Controller
     {
         
         $materials = Material_detail::orderby('name', 'asc')->simplePaginate(7);
-        $additives = Additive_detail::orderby('name', 'asc')->simplePaginate(7);
         $fruits = Fruit_detail::orderby('name', 'asc')->simplePaginate(7);
         $bacteria = Bacteria_detail::orderby('name', 'asc')->simplePaginate(7);
        
-        return view('user.detail.index', compact('materials', 'additives', 'fruits', 'bacteria'));
+        return view('user.detail.index', compact('materials', 'fruits', 'bacteria'));
     }
 
     /**
@@ -52,9 +49,6 @@ class DetailController extends Controller
     {
         if ($formType === 'material') {
             return view('user.detail.material_create');
-         } 
-        elseif ($formType === 'additive') {
-            return view('user.detail.additive_create');
         } elseif ($formType === 'film_condition') {
             return view('user.detail.fruit_create');
         } elseif ($formType === 'charactaristic_test') {
@@ -75,18 +69,6 @@ class DetailController extends Controller
             ]);
 
             $material_detail = new Material_detail();
-            $material_detail-> name = $request->name;
-            $material_detail-> charactaristic = $request->charactaristic;
-            $material_detail->save();
-
-        }elseif($request->formType === 'additive'){
-            $request->validate([
-                'name' =>['required', 'string', 'max:255'],
-                'price' => ['numeric', 'nullable'],
-                'charactaristic' =>  ['string', 'nullable']
-            ]);
-
-            $material_detail = new Additive_detail();
             $material_detail-> name = $request->name;
             $material_detail-> charactaristic = $request->charactaristic;
             $material_detail->save();
@@ -144,7 +126,6 @@ class DetailController extends Controller
     {
         $experiment = Experiment::findOrFail($id);
         $materials = Material::where('experiment_id', $id)->get();
-        $additives = Additive::where('experiment_id', $id)->get();
         $film_conditions = Film_condition::where('experiment_id', $id)->get();
         $charactaristic_tests = Charactaristic_test::where('experiment_id', $id)->get();
         $storing_tests = Storing_test::where('experiment_id', $id)->get();
@@ -152,7 +133,7 @@ class DetailController extends Controller
         
         
 
-        return view('user.profile.edit', compact('experiment', 'materials','additives','film_conditions',
+        return view('user.profile.edit', compact('experiment', 'materials','film_conditions',
                     'charactaristic_tests','storing_tests','antibacteria_tests'));
    
     }
@@ -186,15 +167,6 @@ class DetailController extends Controller
             $material-> ph_material = $request->input("ph_material.$material->id");
             $material-> ph_target = $request->input("ph_target.$material->id");
             $material->save();
-        }
-
-        $additives = Additive::where('experiment_id', $id)->get();
-        foreach($additives as $additive) {
-            $additive-> experiment_id = $id;
-            $additive-> ad_name = $request->input("ad_name.$additive->id");
-            $additive-> price = $request->input("price.$additive->id");
-            $additive-> concentration = $request->input("concentration.$additive->id");
-            $additive->save();
         }
 
         $filmconditions = Film_condition::where('experiment_id', $id)->get();

@@ -20,7 +20,6 @@ class CreateMaterialsTable extends Migration
             ->onUpdate('cascade')
             ->onDelete('cascade');
             $table->bigInteger('material_id')->nullable();
-            $table->float('price')->nullable();
             $table->float('concentration')->nullable();
             $table->boolean('ph_adjustment')->nullable();
             $table->bigInteger('ph_material_id')->nullable();

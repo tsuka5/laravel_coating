@@ -7,6 +7,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use App\Models\Experiment;
 
 
@@ -38,6 +39,18 @@ class Antibacteria_test extends Model
     {
         return $this->belongsTo(Experiment::class);
     }
+    public function bacteria_detail(): HasOne
+    {
+        return $this->hasOne(Bacteria_detail::class, 'id', 'bacteria_id');
+    }
+    public function fruit_detail(): HasOne
+    {
+        return $this->hasOne(Fruit_detail::class, 'id', 'fruit_id');
+    }
+    public function antibacteria_test_type(): HasOne
+    {
+        return $this->hasOne(Antibacteria_test_type::class, 'id', 'test_id');
+    }
 
- 
+
 }
