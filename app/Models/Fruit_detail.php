@@ -33,11 +33,11 @@ class Fruit_detail extends Model
 
     public function storing_test(): BelongsTo
     {
-        return $this->belongsTo(storing_test::class, 'id', 'fruit_id' );
+        return $this->belongsTo(storing_test::class, 'id', 'storing_fruit_id' );
     }
     public function antibacteria_test(): BelongsTo
     {
-        return $this->belongsTo(Antibacteria_test::class, 'id', 'fruit_id' );
+        return $this->belongsTo(Antibacteria_test::class, 'id', 'antibacteria_fruit_id' );
     }
 
     // public function experiment(): BelongsTo

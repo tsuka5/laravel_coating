@@ -28,7 +28,7 @@ class Antibacteria_test extends Model
     protected $fillable = [
         'experiment_id',
         'bacteria_id',
-        'fruit_id',
+        'antibacteria_fruit_id',
         'test_id',
         'invivo_invitro',
         'bacteria_concentration',
@@ -45,7 +45,7 @@ class Antibacteria_test extends Model
     }
     public function fruit_detail(): HasOne
     {
-        return $this->hasOne(Fruit_detail::class, 'id', 'fruit_id');
+        return $this->hasOne(Fruit_detail::class, 'id', 'antibacteria_fruit_id');
     }
     public function antibacteria_test_type(): HasOne
     {

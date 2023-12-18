@@ -107,7 +107,7 @@
                                   <div class="relative">
                                       <label for="ph_material" class="leading-7 text-sm text-gray-600">Material Name for ph Adjustment</label>
                                       <select name="ph_material[{{ $material->id }}]" data-toggle="select" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                        <option value="{{ $material->ph_material_detail->name}}">
+                                        <option value="{{ isset($material->ph_material_detail) ? $material->ph_material_detail->name : '' }}">
                                           @if ($material->ph_material_id == null)
                                             Nothing
                                           @else
@@ -333,7 +333,7 @@
                               <div class="p-2 w-1/2 mx-auto">
                                 <div class="relative">
                                     <label for="fruit_name" class="leading-7 text-sm text-gray-600">Fruits or Vegitable </label>
-                                    <select name="fruit_name[{{ $storing_test->id}}]" data-toggle="select" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                    <select name="storing_fruit_name[{{ $storing_test->id}}]" data-toggle="select" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                       <option value="{{ $storing_test->fruit_detail->name }}">{{ $storing_test->fruit_detail->name}}</option>
                                       @foreach ($fruits_list as $selected_fruit)
                                       <option value="{{ $selected_fruit->name }}"> {{ $selected_fruit->name }}</option>
@@ -491,7 +491,7 @@
                             <div class="p-2 w-1/2 mx-auto">
                               <div class="relative">
                                   <label for="fruit_name" class="leading-7 text-sm text-gray-600">Fruits or Vegitable </label>
-                                  <select name="fruit_name[{{ $antibacteria_test->id }}]" data-toggle="select" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                  <select name="antibacteria_fruit_name[{{ $antibacteria_test->id }}]" data-toggle="select" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                     <option value="{{ $antibacteria_test->fruit_detail->name }}">{{ $antibacteria_test->fruit_detail->name}}</option>
                                     @foreach ($fruits_list as $selected_fruit)
                                     <option value="{{ $selected_fruit->name }}"> {{ $selected_fruit->name }}</option>

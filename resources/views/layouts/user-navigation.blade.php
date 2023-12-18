@@ -22,14 +22,14 @@
                         Data_Entry
                     </x-nav-link>
                     <x-nav-link :href="route('user.detail.index')" :active="request()->routeIs('user.detail.index')">
-                        Material_Type
+                        Category
                     </x-nav-link>
                     <x-nav-link :href="route('user.search.index')" :active="request()->routeIs('user.serch.index')">
                         Search
                     </x-nav-link>
-                    <x-nav-link :href="route('user.csv.show')" :active="request()->routeIs('user.csv.show')">
+                    {{-- <x-nav-link :href="route('user.csv.show')" :active="request()->routeIs('user.csv.show')">
                         Export
-                    </x-nav-link>
+                    </x-nav-link> --}}
                 </div>
             </div>
 

@@ -27,103 +27,103 @@
                                     <div class="p-2 w-1/2 mx-auto">
                                         <div class="relative">
                                             <label for="ph" class="leading-7 text-sm text-gray-600">pH </label>
-                                            <input type="number" id="ph" name="ph" value="{{ old('ph') }}" step="0.1" placeholder="Enter pH value.(ex: 6.0)" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                            <input type="number" id="ph" name="ph" value="{{ old('ph') }}" step="0.1" placeholder="ex: 6.0" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                         </div>
                                     </div>
                                     <div class="p-2 w-1/2 mx-auto">
                                         <div class="relative">
                                             <label for="temperature" class="leading-7 text-sm text-gray-600">Temperature (℃) </label>
-                                            <input type="number" id="temperature" name="temperature" value="{{ old('temperature') }}" step="0.1" placeholder="Enter Sear Rate value.(ex: 23)" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                            <input type="number" id="temperature" name="temperature" value="{{ old('temperature') }}" step="0.1" placeholder="ex: 23" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                         </div>
                                     </div>
                                     <div class="p-2 w-1/2 mx-auto">
                                         <div class="relative">
                                             <label for="shear_rate" class="leading-7 text-sm text-gray-600">Shear Rate (1/s) </label>
-                                            <input type="number" id="shear_rate" name="shear_rate" value="{{ old('shear_rate') }}" step="0.1" placeholder="Enter Sear Rate value.(ex: 10)" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                            <input type="number" id="shear_rate" name="shear_rate" value="{{ old('shear_rate') }}" step="0.1" placeholder="ex: 10" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                         </div>
                                     </div>
                                     <div class="p-2 w-1/2 mx-auto">
                                         <div class="relative"> 
                                             <label for="shear_stress" class="leading-7 text-sm text-gray-600">Shear Stress (Pa・s)</label>
-                                            <input type="number" id="shear_stress" name="shear_stress" value="{{ old('shear_stress') }}" step="0.01" placeholder="Enter Shear stress value.(ex: 2563.24)" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                            <input type="number" id="shear_stress" name="shear_stress" value="{{ old('shear_stress') }}" step="0.01" placeholder="ex: 2563.24" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                         </div>
                                     </div>
                                     <div class="p-2 w-1/2 mx-auto">
                                         <div class="relative">
                                             <label for="rotation_speed" class="leading-7 text-sm text-gray-600">Rotation Speed (rpm)</label>
-                                            <input type="number" id="rotation_speed" name="rotation_speed" value="{{ old('rotation_speed') }}" step="0.1" placeholder="Enter rotation speed.(ex: 1000)" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                            <input type="number" id="rotation_speed" name="rotation_speed" value="{{ old('rotation_speed') }}" step="0.1" placeholder="ex: 1000" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                         </div>
                                     </div>
                                     <div class="p-2 w-1/2 mx-auto">
                                         <div class="relative">
                                             <label for="viscosity" class="leading-7 text-sm text-gray-600">Viscosity (cP)</label>
-                                            <input type="number" id="viscosity" name="viscosity" value="{{ old('viscosity') }}" step="0.1" placeholder="Enter viscosity value.(ex: 123.2)" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                            <input type="number" id="viscosity" name="viscosity" value="{{ old('viscosity') }}" step="0.1" placeholder="ex: 123.2" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                         </div>
                                     </div>
                                     <div class="p-2 w-1/2 mx-auto">
                                         <div class="relative">
                                             <label for="mc" class="leading-7 text-sm text-gray-600">Moisture Content (％)</label>
-                                            <input type="number" id="mc" name="mc" value="{{ old('mc') }}" step="0.01" placeholder="Enter MC value. (ex:30)" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                            <input type="number" id="mc" name="mc" value="{{ old('mc') }}" step="0.01" placeholder="ex:30" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                         </div>
                                     </div>                                    
                                     <div class="p-2 w-1/2 mx-auto">
                                         <div class="relative">
                                             <label for="ws" class="leading-7 text-sm text-gray-600">Water Solubility  (％)</label>
-                                            <input type="number" id="ws" name="ws" value="{{ old('ws') }}" step="0.01" placeholder="Enter WS value. (ex:30)" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                            <input type="number" id="ws" name="ws" value="{{ old('ws') }}" step="0.01" placeholder="ex:30" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                         </div>
                                     </div>
                                     <div class="p-2 w-1/2 mx-auto">
                                         <div class="relative">
                                             <label for="wvp" class="leading-7 text-sm text-gray-600">Water Vapor Permeabilty (g・mm/(m^2・day・kPa))</label>
-                                            <input type="number" id="wvp" name="wvp" value="{{ old('wvp') }}" step=0.01 placeholder="Enter WVP value. (ex:25.8)" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                            <input type="number" id="wvp" name="wvp" value="{{ old('wvp') }}" step=0.01 placeholder="ex:25.8" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                         </div>
                                     </div>
                                     <div class="p-2 w-1/2 mx-auto">
                                         <div class="relative">
                                             <label for="thickness" class="leading-7 text-sm text-gray-600">Thickness (mm)</label>
-                                            <input type="number" id="thickness" name="thickness" value="{{ old('thickness') }}" step="0.001" placeholder="Enter thickness value.(ex: 0.065)" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                            <input type="number" id="thickness" name="thickness" value="{{ old('thickness') }}" step="0.001" placeholder="ex: 0.065" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                         </div>
                                     </div>
                                     <div class="p-2 w-1/2 mx-auto">
                                         <div class="relative">
                                         <label for="ca" class="leading-7 text-sm text-gray-600">Contact Angle  (°)</label>
-                                        <input type="number" id="ca" name="ca" value="{{ old('ca') }}" step="0.01"placeholder="Enter CA value.(ex: 40)" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                        <input type="number" id="ca" name="ca" value="{{ old('ca') }}" step="0.01"placeholder="ex: 40" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                         </div>
                                     </div>
                                     <div class="p-2 w-1/2 mx-auto">
                                         <div class="relative">
                                         <label for="ts" class="leading-7 text-sm text-gray-600">Tensile Strength (MPa)</label>
-                                        <input type="number" id="ts" name="ts" value="{{ old('ts') }}" step="0.01"placeholder="Enter TS value.(ex: 40)"class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                        <input type="number" id="ts" name="ts" value="{{ old('ts') }}" step="0.01"placeholder="ex: 40"class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                         </div>
                                     </div>
                                     <div class="p-2 w-1/2 mx-auto">
                                         <div class="relative">
-                                        <label for="d43" class="leading-7 text-sm text-gray-600">D43 ()</label>
-                                        <input type="number" id="d43" name="d43" value="{{ old('d43') }}" step="0.01"placeholder="Enter d43 value.(ex: 30)"class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                        <label for="d43" class="leading-7 text-sm text-gray-600">D43 (mm)</label>
+                                        <input type="number" id="d43" name="d43" value="{{ old('d43') }}" step="0.0001"placeholder="ex: 0.0001"class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                         </div>
                                     </div>
                                     <div class="p-2 w-1/2 mx-auto">
                                         <div class="relative">
-                                        <label for="d32" class="leading-7 text-sm text-gray-600">D32 ()</label>
-                                        <input type="number" id="d32" name="d32" value="{{ old('d32') }}" step="0.01"placeholder="Enter d32 value.(ex: 40)"class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                        <label for="d32" class="leading-7 text-sm text-gray-600">D32 (mm)</label>
+                                        <input type="number" id="d32" name="d32" value="{{ old('d32') }}" step="0.0001"placeholder="ex: 0.0001"class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                         </div>
                                     </div>
                                     <div class="p-2 w-1/2 mx-auto">
                                         <div class="relative">
                                         <label for="eab" class="leading-7 text-sm text-gray-600">EAB (%)</label>
-                                        <input type="number" id="eab" name="eab" value="{{ old('eab') }}" step="0.01"placeholder="Enter eab value.(ex: 40)"class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                        <input type="number" id="eab" name="eab" value="{{ old('eab') }}" step="0.01"placeholder="ex: 40"class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                         </div>
                                     </div>
                                     <div class="p-2 w-1/2 mx-auto">
                                         <div class="relative">
                                         <label for="light_transmittance" class="leading-7 text-sm text-gray-600">Light Trancemittance (%)</label>
-                                        <input type="number" id="light_transmittance" name="light_transmittance" value="{{ old('light_transmittance') }}" step="0.01"placeholder="Enter TS value.(ex: 40)"class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                        <input type="number" id="light_transmittance" name="light_transmittance" value="{{ old('light_transmittance') }}" step="0.01"placeholder="ex: 40"class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                         </div>
                                     </div>
                                     <div class="p-2 w-1/2 mx-auto">
                                         <div class="relative">
-                                        <label for="xrd" class="leading-7 text-sm text-gray-600">XRD ()</label>
-                                        <input type="number" id="xrd" name="xrd" value="{{ old('xrd') }}" step="0.01"placeholder="Enter XRD value.(ex: 40)"class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                        <label for="xrd" class="leading-7 text-sm text-gray-600">XRD (nm?)</label>
+                                        <input type="number" id="xrd" name="xrd" value="{{ old('xrd') }}" step="0.01"placeholder="ex: 40"class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                         </div>
                                     </div>
                                   </div>

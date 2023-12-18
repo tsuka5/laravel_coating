@@ -29,7 +29,7 @@ class Storing_test extends Model
 
     protected $fillable = [
         'experiment_id',
-        'fruit_id',
+        'storing_fruit_id',
         'storing_temperature',
         'storing_humidity',
         'storing_day',
@@ -59,7 +59,7 @@ class Storing_test extends Model
     }
     public function fruit_detail(): HasOne
     {
-        return $this->hasOne(fruit_detail::class, 'id', 'fruit_id');
+        return $this->hasOne(fruit_detail::class, 'id', 'storing_fruit_id');
     }
 
 }

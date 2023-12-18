@@ -17,17 +17,38 @@ class AntibactriaTestTypeSeeder extends Seeder
     {
         DB::table('antibacteria_test_types')->insert([
             [
-                'name' => 'antibacteria_test_type1',
+                'name' => 'agar gas diffusion method',
                 'charactaristic' => 'write some charactariscitc',
             ],
             [
-                'name' => 'antibacteria_test_type2',
+                'name' => 'agar gas method',
                 'charactaristic' => 'write some charactariscitc',
             ],
             [
-                'name' => 'antibacteria_test_type3',
+                'name' => 'agar gas diffusion inhibition method',
                 'charactaristic' => 'write some charactariscitc',
             ],
+            [
+                'name' => 'paper disk method',
+                'charactaristic' => 'write some charactariscitc',
+            ],
+            [
+                'name' => 'MIC method',
+                'charactaristic' => 'write some charactariscitc',
+            ],
+            [
+                'name' => 'suspection method',
+                'charactaristic' => 'write some charactariscitc',
+            ],
+            [
+                'name' => 'halo method',
+                'charactaristic' => 'write some charactariscitc',
+            ],
+            [
+                'name' => 'agar plate method',
+                'charactaristic' => 'write some charactariscitc',
+            ],
+
            
                    
 

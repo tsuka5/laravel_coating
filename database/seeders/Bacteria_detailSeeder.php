@@ -17,41 +17,50 @@ class Bacteria_detailSeeder extends Seeder
     {
         DB::table('bacteria_details')->insert([
             [
-                'name' => 'test',
+                'name' => 'P.digitatum',
                 'charactaristic' => 'write some charactariscitc',
             ],
             [
-                'name' => 'test1',
+                'name' => 'P.italium',
                 'charactaristic' => 'write some charactariscitc',
             ],
             [
-                'name' => 'test2',
+                'name' => 'P.expansum',
                 'charactaristic' => 'write some charactariscitc',
             ],
             [
-                'name' => 'test3',
+                'name' => 'B.cinerea',
                 'charactaristic' => 'write some charactariscitc',
             ],
             [
-                'name' => 'test4',
+                'name' => 'P.citrinum',
                 'charactaristic' => 'write some charactariscitc',
             ],
             [
-                'name' => 'test5',
+                'name' => 'Rhizopus',
                 'charactaristic' => 'write some charactariscitc',
             ],
             [
-                'name' => 'test6',
+                'name' => 'M.piriformis',
                 'charactaristic' => 'write some charactariscitc',
             ],
             [
-                'name' => 'test7',
+                'name' => 'P.glabrum',
                 'charactaristic' => 'write some charactariscitc',
             ],
             [
-                'name' => 'test8',
+                'name' => 'P.chrysogenum',
                 'charactaristic' => 'write some charactariscitc',
             ],
+            [
+                'name' => 'E.penicillium',
+                'charactaristic' => 'write some charactariscitc',
+            ],
+            [
+                'name' => 'S.aureus',
+                'charactaristic' => 'write some charactariscitc',
+            ],
+            
     
 
         ]);

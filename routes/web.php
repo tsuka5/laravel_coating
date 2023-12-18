@@ -44,9 +44,9 @@ Route::resource('search', SearchController::class)
 ->middleware(['auth:users', 'verified']);
 
 //csvについて
-Route::get('csv/csv-export', [CsvController::class, 'exportCsv'])->name('csv.export');
+// Route::get('csv/csv-export', [CsvController::class, 'exportCsv'])->name('csv.export');
 
-ROute::get('csv/csv-show', [CsvController::class, 'show'])->name('csv.show');
+// ROute::get('csv/csv-show', [CsvController::class, 'show'])->name('csv.show');
 
 
 Route::get('/', function () {

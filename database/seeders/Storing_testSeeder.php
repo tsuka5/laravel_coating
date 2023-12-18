@@ -18,7 +18,7 @@ class Storing_testSeeder extends Seeder
         DB::table('storing_tests')->insert([
             [
                 'experiment_id' => '1',
-                'fruit_id' => '1',
+                'storing_fruit_id' => '1',
                 'storing_temperature' => '4',
                 'storing_humidity' => '4',
                 'storing_day' => '4',
@@ -42,7 +42,7 @@ class Storing_testSeeder extends Seeder
             ],
             [
                 'experiment_id' => '2',
-                'fruit_id' => '2',
+                'storing_fruit_id' => '2',
                 'storing_temperature' => '4',
                 'storing_humidity' => '4',
                 'storing_day' => '4',
@@ -66,7 +66,7 @@ class Storing_testSeeder extends Seeder
             ],
             [
                 'experiment_id' => '3',
-                'fruit_id' => '3',
+                'storing_fruit_id' => '3',
                 'storing_temperature' => '4',
                 'storing_humidity' => '4',
                 'storing_day' => '4',

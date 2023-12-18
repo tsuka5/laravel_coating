@@ -26,38 +26,38 @@
                                   <div class="p-2 w-1/2 mx-auto">
                                     <div class="relative">
                                       <label for="casting_amount" class="leading-7 text-sm text-gray-600">Casting amount (ml)</label>
-                                      <input type="number" id="casting_amount" name="casting_amount" value="{{ old('casting_amount') }}" step="0.1"placeholder="Enter casting amount.(ex: 20)" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                      <input type="number" id="casting_amount" name="casting_amount" value="{{ old('casting_amount') }}" step="0.1"placeholder="ex: 20" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                     </div>
                                 </div>
                                   <div class="p-2 w-1/2 mx-auto">
                                     <div class="relative">
                                         <label for="petri_dish_area" class="leading-7 text-sm text-gray-600">Petri Dish Aria (cm^2)</label>
-                                        <input type="number" id="petri_dish_area" name="petri_dish_area" value="{{ old('petri_dish_area') }}"placeholder="Enter dish area.(ex: 24)" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                        <input type="number" id="petri_dish_area" name="petri_dish_area" value="{{ old('petri_dish_area') }}"placeholder="ex: 24" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                     </div>
                                   </div>
                                   <div class="p-2 w-1/2 mx-auto">
                                     <div class="relative"> 
                                         <label for="degas_temperature" class="leading-7 text-sm text-gray-600">Degasting Temperature (℃)</label>
-                                        <input type="number" id="degas_temperature" name="degas_temperature" value="{{ old('degas_temperature') }}" step="0.01"placeholder="Enter degasting temperature.(ex: 24.3)" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                        <input type="number" id="degas_temperature" name="degas_temperature" value="{{ old('degas_temperature') }}" step="0.01"placeholder="ex: 24.3" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                     </div>
                                   </div>
                                   
                                   <div class="p-2 w-1/2 mx-auto">
                                       <div class="relative">
-                                        <label for="drying_temperature" class="leading-7 text-sm text-gray-600">Drying Temperature</label>
-                                        <input type="number" id="drying_temperature" name="drying_temperature" value="{{ old('drying_temperature') }}" placeholder="Enter drying temperature.(ex: 60.8)" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                        <label for="drying_temperature" class="leading-7 text-sm text-gray-600">Drying Temperature (℃)</label>
+                                        <input type="number" id="drying_temperature" name="drying_temperature" value="{{ old('drying_temperature') }}" placeholder="ex: 60.8" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                       </div>
                                   </div>
                                   <div class="p-2 w-1/2 mx-auto">
                                       <div class="relative">
                                         <label for="drying_humidity" class="leading-7 text-sm text-gray-600">Drying_humidity (%RH)</label>
-                                        <input type="number" id="drying_humidity" name="drying_humidity" value="{{ old('drying_humidity') }}" step="0.1" placeholder="Enter drying huminity.(ex: 80)" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                        <input type="number" id="drying_humidity" name="drying_humidity" value="{{ old('drying_humidity') }}" step="0.1" placeholder="ex: 80" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                       </div>
                                   </div>
                                   <div class="p-2 w-1/2 mx-auto">
                                       <div class="relative">
                                         <label for="drying_time" class="leading-7 text-sm text-gray-600">Drying Time (h)</label>
-                                        <input type="number" id="drying_time" name="drying_time" value="{{ old('drying_time') }}" step="0.1" placeholder="Enter drying time.(24)" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                        <input type="number" id="drying_time" name="drying_time" value="{{ old('drying_time') }}" step="0.1" placeholder="ex: 24" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                       </div>
                                   </div>
                               </div>

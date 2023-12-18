@@ -256,7 +256,7 @@ class ProfileController extends Controller
             $storing_test = new Storing_test;
             $storing_test-> experiment_id = $request->id;
             $fruitDetail = Fruit_detail::select('id')->where('name', $request->fruit_name)->first();
-            $storing_test-> fruit_id = $fruitDetail->id;
+            $storing_test-> storing_fruit_id = $fruitDetail->id;
             $storing_test-> storing_temperature = $request->storing_temperature;
             $storing_test-> storing_humidity = $request->storing_humidity;
             $storing_test-> storing_day = $request->storing_day;
@@ -290,7 +290,7 @@ class ProfileController extends Controller
             $bacteriaDetail = Bacteria_detail::select('id')->where('name', $request->bacteria_name)->first();
             $antibacteria_test-> bacteria_id = $bacteriaDetail->id;
             $fruitDetail = Fruit_detail::select('id')->where('name', $request->fruit_name)->first();
-            $antibacteria_test-> fruit_id = $fruitDetail->id;
+            $antibacteria_test-> antibacteria_fruit_id = $fruitDetail->id;
             $antibacteriaTestType = Antibacteria_test_type::select('id')->where('name', $request->test_name)->first();
             $antibacteria_test->test_id = $antibacteriaTestType->id;
             $antibacteria_test-> invivo_invitro = $request->invivo_invitro;
@@ -369,7 +369,9 @@ class ProfileController extends Controller
             $material-> concentration = $request->input("concentration.$material->id");
             $material-> ph_adjustment = $request->input("ph_adjustment.$material->id");
             $phMaterialDetail = Ph_material_detail::select('id')->where('name', $request->input("ph_material.$material->id"))->first();
-            $material-> ph_material_id = $phMaterialDetail->id;
+            if($phMaterialDetail != null){
+                $material-> ph_material_id = $phMaterialDetail->id;
+            }
             $material-> ph_purpose = $request->input("ph_purpose.$material->id");
             $material->save();
         }
@@ -484,8 +486,8 @@ class ProfileController extends Controller
             }
 
             $storing_test-> experiment_id = $id;
-            $fruitDetail = Fruit_detail::select('id')->where('name', $request->input("fruit_name.$storing_test->id"))->first();
-            $storing_test-> fruit_id = $fruitDetail->id;
+            $fruitDetail = Fruit_detail::select('id')->where('name', $request->input("storing_fruit_name.$storing_test->id"))->first();
+            $storing_test-> storing_fruit_id = $fruitDetail->id;
             $storing_test-> storing_temperature = $request->input("storing_temperature.$storing_test->id");
             $storing_test-> storing_humidity = $request->input("storing_humidity.$storing_test->id");
             $storing_test-> storing_day = $request->input("storing_day.$storing_test->id");
@@ -514,8 +516,8 @@ class ProfileController extends Controller
             $antibacteria_test-> experiment_id = $id;
             $bacteriaDetail = Bacteria_detail::select('id')->where('name', $request->input("bacteria_name.$antibacteria_test->id"))->first();
             $antibacteria_test-> bacteria_id = $bacteriaDetail->id;
-            $fruitDetail = Fruit_detail::select('id')->where('name', $request->input("fruit_name.$antibacteria_test->id"))->first();
-            $antibacteria_test-> fruit_id = $fruitDetail->id;
+            $fruitDetail = Fruit_detail::select('id')->where('name', $request->input("antibacteria_fruit_name.$antibacteria_test->id"))->first();
+            $antibacteria_test-> antibacteria_fruit_id = $fruitDetail->id;
             $antibacteriaTestType = Antibacteria_test_type::select('id')->where('name', $request->input("test_name.$antibacteria_test->id"))->first();
             $antibacteria_test-> test_id = $antibacteriaTestType->id;
             $antibacteria_test-> invivo_invitro = $request->input("invivo_invitro.$antibacteria_test->id");

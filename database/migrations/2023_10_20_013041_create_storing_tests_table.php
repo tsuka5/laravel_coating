@@ -19,7 +19,7 @@ class CreateStoringTestsTable extends Migration
             ->constrained()
             ->onUpdate('cascade')
             ->onDelete('cascade');
-            $table->bigInteger('fruit_id')->nullable();
+            $table->bigInteger('storing_fruit_id')->nullable();
             $table->float('storing_temperature')->nullable();
             $table->float('storing_humidity')->nullable();
             $table->integer('storing_day')->nullable();

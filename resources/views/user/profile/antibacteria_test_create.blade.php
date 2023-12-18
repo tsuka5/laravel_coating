@@ -60,21 +60,21 @@
                                     <div class="relative">
                                         <label for="invivo_invitro" class="leading-7 text-sm text-gray-600">Invivo or Invitro</label>
                                         <select name="invivo_invitro" data-toggle="select" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                          <option value="1">Invivo</option>
-                                          <option value="0">Invitro</option>
+                                          <option value="1">Yes</option>
+                                          <option value="0">No</option>
                                         </select>
                                     </div>
                                   </div>
                                   <div class="p-2 w-1/2 mx-auto">
                                     <div class="relative">
-                                        <label for="bacteria_concentration" class="leading-7 text-sm text-gray-600">Bacteria Concentration</label>
-                                        <input type="number" id="bacteria_concentration" name="bacteria_concentration" step="0.01" placeholder="Enter bacteria concentration."value="{{ old('bacteria_concentration') }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                        <label for="bacteria_concentration" class="leading-7 text-sm text-gray-600">Bacteria Concentration(CFU/mL)</label>
+                                        <input type="number" id="bacteria_concentration" name="bacteria_concentration" step="0.01" placeholder="ex: 91000"value="{{ old('bacteria_concentration') }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                     </div>
                                   </div>
                                   <div class="p-2 w-1/2 mx-auto">
                                       <div class="relative">
-                                        <label for="mic" class="leading-7 text-sm text-gray-600">MIC </label>
-                                        <input type="mic" id="mic" name="mic" value="{{ old('mic') }}" step="0.01"placeholder="Enter MIC." class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                        <label for="mic" class="leading-7 text-sm text-gray-600">MIC</label>
+                                        <input type="mic" id="mic" name="mic" value="{{ old('mic') }}" step="0.01"placeholder="ex: ?" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                       </div>
                                   </div>
                                 </div>
