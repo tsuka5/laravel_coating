@@ -5,6 +5,8 @@ use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\Auth\SearchController;
 use App\Http\Controllers\Auth\CsvController;
 use App\Http\Controllers\Auth\DetailController;
+use App\Http\Controllers\Auth\CategoryController;
+
 use App\Http\Controllers\ProfileController as ControllersProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -42,6 +44,11 @@ Route::post('detail', [DetailController::class, 'store'])->name('detail.store');
 //searchについて
 Route::resource('search', SearchController::class)
 ->middleware(['auth:users', 'verified']);
+
+//categoryについて
+Route::get('category/index', [CategoryController::class, 'index'])->name('category.index');
+
+Route::get('category/show/{id}/{category_type}', [CategoryController::class, 'show'])->name('category.show');
 
 //csvについて
 // Route::get('csv/csv-export', [CsvController::class, 'exportCsv'])->name('csv.export');

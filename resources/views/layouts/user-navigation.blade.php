@@ -21,7 +21,7 @@
                     <x-nav-link :href="route('user.create.experiment')" :active="request()->routeIs('user.create.experiment')">
                         Data_Entry
                     </x-nav-link>
-                    <x-nav-link :href="route('user.detail.index')" :active="request()->routeIs('user.detail.index')">
+                    <x-nav-link :href="route('user.category.index')" :active="request()->routeIs('user.category.index')">
                         Category
                     </x-nav-link>
                     <x-nav-link :href="route('user.search.index')" :active="request()->routeIs('user.serch.index')">
