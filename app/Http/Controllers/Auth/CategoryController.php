@@ -95,56 +95,6 @@ public function index(Request $request)
     $selected_phMaterials = Ph_material_detail::query();
     $selected_antibacteriaTestTypes = Antibacteria_test_type::query();
 
-    //インプットの値で絞る
-    // if(!empty($keyword)){
-    //     $selected_materials->where('name', 'LIKE', "%{$keyword}%");
-    //     $selected_bacteria->where('name', 'LIKE', "%{$keyword}%");
-    //     $selected_fruits->where('name', 'LIKE', "%{$keyword}%");
-    //     $selected_phMaterials->where('name', 'LIKE', "%{$keyword}%");
-    //     $selected_antibacteriaTestTypes->where('name', 'LIKE', "%{$keyword}%");
-    // }
-    // if (!empty($material)) {
-    //     $selected_materials->OrWhere('name', 'LIKE', "%{$material}%");
-    // }
-    // if (!empty($bacterium)) {
-    //     $selected_bacteria->OrWhere('name', 'LIKE', "%{$bacterium}%");
-    // }
-    // if (!empty($fruit)) {
-    //     $selected_fruits->OrWhere('name', 'LIKE', "%{$fruit}%");
-    // }
-    // if (!empty($ph_material)) {
-    //     $selected_phMaterials->OrWhere('name', 'LIKE', "%{$ph_material}%");
-    // }
-    // if (!empty($antibacteria_test_type)) {
-    //     $selected_antibacteriaTestTypes->OrWhere('name', 'LIKE', "%{$antibacteria_test_type}%");
-    // }
-
-    // //絞ったデータをゲットする，もしインプットに値が入っていなければ，空にする
-    // if (!empty($keyword) || !empty($material)) {
-    //     $selected_materials = $selected_materials->get();
-    // } else {
-    //     $selected_materials = [];
-    // }
-    // if (!empty($keyword) || !empty($bacteria)) {
-    //     $selected_bacteria = $selected_bacteria->get();
-    // } else {
-    //     $selected_bacteria = [];
-    // }
-    // if (!empty($keyword) || !empty($fruit)) {
-    //     $selected_fruits = $selected_fruits->get();
-    // } else {
-    //     $selected_materials = [];
-    // }
-    // if (!empty($keyword) || !empty($ph_material)) {
-    //     $selected_phMaterials = $selected_phMaterials->get();
-    // } else {
-    //     $selected_phMaterials = [];
-    // }
-    // if (!empty($keyword) || !empty($antibacteriaTestType)) {
-    //     $selected_antibacteriaTestTypes = $selected_antibacteriaTestTypes->get();
-    // } else {
-    //     $selected_antibacteriaTestTypes = [];
-    // }
 
     if(!empty($keyword)){
         $selected_materials->where('name', 'LIKE', "%{$keyword}%");

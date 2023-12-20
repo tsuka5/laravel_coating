@@ -57,7 +57,7 @@
                         <select name="antibacteria_test_type" data-toggle="select">
                             <option value="">Select</option>
                             @foreach ($antibacteriaTypeTest_list as $selected_antibacteriaTypeTest)
-                            <option value="{{ $selected_fruit->name }}"> {{ $selected_fruit->name }}</option>
+                            <option value="{{ $selected_antibacteriaTypeTest->name }}"> {{ $selected_antibacteriaTypeTest->name }}</option>
                             @endforeach
                         </select>                    
                     </div>

@@ -60,8 +60,8 @@
                                     <div class="relative">
                                         <label for="invivo_invitro" class="leading-7 text-sm text-gray-600">Invivo or Invitro</label>
                                         <select name="invivo_invitro" data-toggle="select" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                          <option value="1">Yes</option>
-                                          <option value="0">No</option>
+                                          <option value="1">Invivo</option>
+                                          <option value="0">Invitro</option>
                                         </select>
                                     </div>
                                   </div>
@@ -74,7 +74,7 @@
                                   <div class="p-2 w-1/2 mx-auto">
                                       <div class="relative">
                                         <label for="mic" class="leading-7 text-sm text-gray-600">MIC</label>
-                                        <input type="mic" id="mic" name="mic" value="{{ old('mic') }}" step="0.01"placeholder="ex: ?" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                        <input type="mic" id="mic" name="mic" value="{{ old('mic') }}" step="0.01" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                       </div>
                                   </div>
                                 </div>

@@ -126,8 +126,10 @@ class ProfileController extends Controller
             $material->material_id = $materialDetail->id;
             $material-> concentration = $request->concentration;
             $material-> ph_adjustment = $request->ph_adjustment;
+            if(!empty($request->ph_material)){
             $phMaterialDetail = Ph_material_detail::select('id')->where('name', $request->ph_material)->first();
             $material-> ph_material_id = $phMaterialDetail->id;
+            }
             $material-> ph_purpose = $request->ph_purpose;
             $material->save();
 
