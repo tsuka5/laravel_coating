@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
     
-    {{-- <div class="lg:w-1/4 md:w-1/2 w-full px-4 mx-auto mt-6"> --}}
+    {{-- <div class="lg:w-1/4 md:w-1/2 w-full px-4 mx-auto mt-6">
         <div class="lg:w-1/2 w-full px-4 mx-auto mt-6">
             <div class="flex xl:flex-nowrap md:flex-nowrap lg:flex-wrap flex-wrap justify-center items-end md:justify-start">
             <form action="{{ route('user.search.index') }}" method="GET">
@@ -50,8 +50,76 @@
                     </div>
                 </div>
             </form>
+            </div>
+        </div> --}}
+    <div class="lg:w-1/2 w-full px-4 mx-auto mt-6">
+        <div class="flex xl:flex-nowrap md:flex-nowrap lg:flex-wrap flex-wrap justify-center items-end md:justify-start">
+        <form action="{{ route('user.search.index') }}" method="GET">
+            <div class = "flex-col justify-start">
+                <div class="relative w-40 sm:w-auto xl:mr-4 lg:mr-0 sm:mr-4 mr-2 mb-4">
+                    <label for="footer-field" class="leading-7 text-sm text-gray-600">Key words</label>
+                    <input type="text" name="keyword" value="{{ $keyword }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:bg-transparent focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                </div>
+
+                <div class="relative w-40 sm:w-auto xl:mr-4 lg:mr-0 sm:mr-4 mr-2 mb-4 ">
+                    <label for="footer-field" class="leading-7 text-sm text-gray-600">Materials</label>
+                    <select name="material" data-toggle="select">
+                        <option value="">Select</option>
+                        @foreach ($materials_list as $selected_material)
+                        <option value="{{ $selected_material->material_detail->name }}"> {{ $selected_material->material_detail->name }}</option>
+                        @endforeach
+                    </select>                    
+                </div>
+
+                <div class="relative w-40 sm:w-auto xl:mr-4 lg:mr-0 sm:mr-4 mr-2 mb-4">
+                    <label for="footer-field" class="leading-7 text-sm text-gray-600">Bacteria</label>
+                    <select name="bacterium" data-toggle="select">
+                        <option value="">Select</option>
+                        @foreach ($bacteria_list as $selected_bacterium)
+                        <option value="{{ $selected_bacterium->bacteria_detail->name }}"> {{ $selected_bacterium->bacteria_detail->name }}</option>
+                        @endforeach
+                    </select>                    
+                </div>
+                <div class="relative w-40 sm:w-auto xl:mr-4 lg:mr-0 sm:mr-4 mr-2 mb-4">
+                    <label for="footer-field" class="leading-7 text-sm text-gray-600">Fruit and Vegitable</label>
+                    <select name="fruit" data-toggle="select">
+                        <option value="">Select</option>
+
+                        @foreach ($fruits_list as $selected_fruit)
+                        <option value="{{ $selected_fruit->fruit_detail->name }}"> {{ $selected_fruit->fruit_detail->name }}</option>
+                        @endforeach
+                    </select>                    
+                </div>
+                <div class="relative w-40 sm:w-auto xl:mr-4 lg:mr-0 sm:mr-4 mr-2 mb-4">
+                    <label for="footer-field" class="leading-7 text-sm text-gray-600">pH Materials</label>
+                    <select name="ph_material" data-toggle="select">
+                        <option value="">Select</option>
+                        @foreach ($phMaterial_list as $selected_phMaterial)
+                        @if ($selected_phMaterial && $selected_phMaterial->ph_material_detail)
+                            <option value="{{ $selected_phMaterial->ph_material_detail->name }}"> {{ $selected_phMaterial->ph_material_detail->name }}</option>
+                        @endif
+                        @endforeach
+                    </select>                    
+                </div>
+                <div class="relative w-40 sm:w-auto xl:mr-4 lg:mr-0 sm:mr-4 mr-2 mb-4">
+                    <label for="footer-field" class="leading-7 text-sm text-gray-600">Antibacteria Test Type</label>
+                    <select name="antibacteria_test_type" data-toggle="select">
+                        <option value="">Select</option>
+                        @foreach ($antibacteriaTypeTest_list as $selected_antibacteriaTypeTest)
+                        <option value="{{ $selected_antibacteriaTypeTest->antibacteria_test_type->name }}"> {{ $selected_antibacteriaTypeTest->antibacteria_test_type->name }}</option>
+                        @endforeach
+                    </select>                    
+                </div>
+                
+
+                <div>
+                    <input type="submit" value="Search" class="lg:mt-2 xl:mt-4 flex-shrink-0 inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
+                </div>
+            </div>
+        </form>
         </div>
     </div>
+
     
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -87,7 +155,7 @@
                                         
                                     </tr>
                                 @endforeach
-                                {{ $selected_experiments->links()}}
+                                {{-- {{ $selected_experiments->links()}} --}}
                             </tbody>
                             </table>
                             

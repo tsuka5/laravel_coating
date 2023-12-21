@@ -85,19 +85,19 @@
                                   <div class="p-2 w-1/2 mx-auto">
                                       <div class="relative">
                                         <label for="ph" class="leading-7 text-sm text-gray-600">pH</label>
-                                        <input type="number" id="ph" name="ph" value="{{ old('ph') }}" step="0.1" placeholder="ex: 6.5" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                        <input type="number" id="ph" name="ph" value="{{ old('ph') }}" step="0.01" placeholder="ex: 6.5" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                       </div>
                                   </div>
                                   <div class="p-2 w-1/2 mx-auto">
                                     <div class="relative">
                                       <label for="tss" class="leading-7 text-sm text-gray-600">TSS</label>
-                                      <input type="number" id="tss" name="tss" value="{{ old('tss') }}" step="0.1" placeholder="ex: 8.8" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                      <input type="number" id="tss" name="tss" value="{{ old('tss') }}" step="0.001" placeholder="ex: 8.8" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                     </div>
                                   </div>
                                   <div class="p-2 w-1/2 mx-auto">
                                     <div class="relative">
                                       <label for="hardness" class="leading-7 text-sm text-gray-600">Hardness (N)</label>
-                                      <input type="number" id="hardness" name="hardness" value="{{ old('hardness') }}" step="0.01" placeholder="ex: 0.10" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                      <input type="number" id="hardness" name="hardness" value="{{ old('hardness') }}" step="0.001" placeholder="ex: 0.10" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                     </div>
                                   </div>
                                   <div class="p-2 w-1/2 mx-auto">
@@ -109,13 +109,13 @@
                                   <div class="p-2 w-1/2 mx-auto">
                                     <div class="relative">
                                         <label for="ta" class="leading-7 text-sm text-gray-600">TA (%)</label>
-                                        <input type="number" id="ta" name="ta" step="0.1" placeholder="ex: 3.0" value="{{ old('ta') }}" step="0.1" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                        <input type="number" id="ta" name="ta" step="0.1" placeholder="ex: 3.0" value="{{ old('ta') }}" step="0.001" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                     </div>
                                   </div>
                                   <div class="p-2 w-1/2 mx-auto">
                                     <div class="relative">
                                       <label for="vitamin_c" class="leading-7 text-sm text-gray-600">Vitamin C (%)</label>
-                                      <input type="number" id="vitamin_c" name="vitamin_c" value="{{ old('vitamin_c') }}" step="0.1" placeholder="ex: 6.5" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                      <input type="number" id="vitamin_c" name="vitamin_c" value="{{ old('vitamin_c') }}" step="0.01" placeholder="ex: 6.5" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                     </div>
                                   </div>
                                   <div class="p-2 w-1/2 mx-auto">

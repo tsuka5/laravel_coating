@@ -61,7 +61,7 @@
                                 <div class="p-2 w-1/2 mx-auto">
                                   <div class="relative">
                                     <label for="ph_purpose" class="leading-7 text-sm text-gray-600">ph purpose</label>
-                                    <input type="number" id="ph_purpose" name="ph_purpose" value="{{ old('ph_purpose') }}" step="0.1" placeholder="ex:6.0" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                    <input type="number" id="ph_purpose" name="ph_purpose" value="{{ old('ph_purpose') }}" step="0.01" placeholder="ex:6.0" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                   </div>
                                 </div>
                               

@@ -53,10 +53,6 @@ class Material_detailSeeder extends Seeder
             'charactaristic' => 'write some charactariscitc',
         ],
         [
-            'name' => 'methylcellulose',
-            'charactaristic' => 'write some charactariscitc',
-        ],
-        [
             'name' => 'whey protein',
             'charactaristic' => 'write some charactariscitc',
         ],
@@ -66,10 +62,6 @@ class Material_detailSeeder extends Seeder
         ],
         [
             'name' => 'soy protein',
-            'charactaristic' => 'write some charactariscitc',
-        ],
-        [
-            'name' => 'carboxymethyl cellulose',
             'charactaristic' => 'write some charactariscitc',
         ],
         [
@@ -253,15 +245,7 @@ class Material_detailSeeder extends Seeder
             'charactaristic' => 'write some charactariscitc',
         ],
         [
-            'name' => 'rosemary essential oil',
-            'charactaristic' => 'write some charactariscitc',
-        ],
-        [
             'name' => 'origanum essential oil',
-            'charactaristic' => 'write some charactariscitc',
-        ],
-        [
-            'name' => 'lavender essential oil',
             'charactaristic' => 'write some charactariscitc',
         ],
         [
@@ -302,10 +286,6 @@ class Material_detailSeeder extends Seeder
         ],
         [
             'name' => '2,2,6,6-tetramethylpiperidine-1-oxyl',
-            'charactaristic' => 'write some charactariscitc',
-        ],
-        [
-            'name' => 'polyvinylalcohol',
             'charactaristic' => 'write some charactariscitc',
         ],
         [
@@ -350,10 +330,6 @@ class Material_detailSeeder extends Seeder
         ],
         [
             'name' => '2,3-epoxypropyltrimethyl ammonium chloride',
-            'charactaristic' => 'write some charactariscitc',
-        ],
-        [
-            'name' => 'oleic acid',
             'charactaristic' => 'write some charactariscitc',
         ],
         [
@@ -450,14 +426,6 @@ class Material_detailSeeder extends Seeder
         ],
         [
             'name' => 'oxalic acid',
-            'charactaristic' => 'write some charactariscitc',
-        ],
-        [
-            'name' => 'sodium alginate',
-            'charactaristic' => 'write some charactariscitc',
-        ],
-        [
-            'name' => 'pectin',
             'charactaristic' => 'write some charactariscitc',
         ],
         [
@@ -581,10 +549,6 @@ class Material_detailSeeder extends Seeder
             'charactaristic' => 'write some charactariscitc',
         ],
         [
-            'name' => 'lemon essential oil',
-            'charactaristic' => 'write some charactariscitc',
-        ],
-        [
             'name' => 'grapefruit essential oil',
             'charactaristic' => 'write some charactariscitc',
         ],
@@ -615,6 +579,10 @@ class Material_detailSeeder extends Seeder
         [
             'name' => 'medium chain fatty acid oil',
             'charactaristic' => 'MCT oil',
+        ],
+        [
+            'name' => 'calcium propinate',
+            'charactaristic' => 'write some charactariscitc',
         ],
         
 

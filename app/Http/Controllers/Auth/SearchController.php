@@ -26,43 +26,157 @@ class SearchController extends Controller
     
      public function index(Request $request)
      {
-         $keyword = $request->input('keyword');
-         $material = $request->input('material');
-         $bacterium = $request->input('bacterium');
-         $fruit = $request->input('fruit');
+        //  $keyword = $request->input('keyword');
+        //  $material = $request->input('material');
+        //  $bacterium = $request->input('bacterium');
+        //  $fruit = $request->input('fruit');
 
-         $query = Experiment::query();
+        //  $query = Experiment::query();
         
-         $query->join('materials','experiments.id', '=', 'materials.experiment_id')
-             ->join('storing_tests', 'experiments.id', '=', 'storing_tests.experiment_id')
-             ->join('antibacteria_tests', 'experiments.id', '=', 'antibacteria_tests.experiment_id')
-             ->get();
+        //  $query->join('materials','experiments.id', '=', 'materials.experiment_id')
+        //      ->join('storing_tests', 'experiments.id', '=', 'storing_tests.experiment_id')
+        //      ->join('antibacteria_tests', 'experiments.id', '=', 'antibacteria_tests.experiment_id')
+        //      ->get();
              
-         if(!empty($keyword)) {
-             $query->where('title', 'LIKE', "%{$keyword}%")
-             ->orWhere('name', 'LIKE', "%{$keyword}%");
-         }
+        //  if(!empty($keyword)) {
+        //      $query->where('title', 'LIKE', "%{$keyword}%")
+        //      ->orWhere('name', 'LIKE', "%{$keyword}%");
+        //  }
  
-         if(!empty($material)) {
-             $query->where('material_id', 'LIKE', "%{$material}%");
-         }
+        //  if(!empty($material)) {
+        //      $query->where('material_id', 'LIKE', "%{$material}%");
+        //  }
  
-         if(!empty($bacterium)) {
-             $query->where('bacteria_id', 'LIKE', "%{$bacterium}%");
-         }
+        //  if(!empty($bacterium)) {
+        //      $query->where('bacteria_id', 'LIKE', "%{$bacterium}%");
+        //  }
  
-         if(!empty($fruit)) {
-             $query->where('storing_fruit_id', 'LIKE', "%{$fruit}%");
-         }
+        //  if(!empty($fruit)) {
+        //      $query->where('storing_fruit_id', 'LIKE', "%{$fruit}%");
+        //  }
  
-         $selected_experiments = $query->paginate(5);
+        //  $selected_experiments = $query->paginate(5);
  
-         $materials_list = Material::select('material_id')->distinct()->get();
-         $fruits_list = Storing_test::select('storing_fruit_id')->distinct()->get();
-         $bacteria_list = Antibacteria_test::select('bacteria_id')->distinct()->get();
+        //  $materials_list = Material::select('material_id')->distinct()->get();
+        //  $fruits_list = Storing_test::select('storing_fruit_id')->distinct()->get();
+        //  $bacteria_list = Antibacteria_test::select('bacteria_id')->distinct()->get();
  
-         return view('user.search.index', compact('selected_experiments', 'keyword', 'material', 'materials_list',
-          'bacterium', 'bacteria_list', 'fruit', 'fruits_list'));
+        //  return view('user.search.index', compact('selected_experiments', 'keyword', 'material', 'materials_list',
+        //   'bacterium', 'bacteria_list', 'fruit', 'fruits_list'));
+
+        $keyword = $request->input('keyword');
+        $material = $request->input('material');
+        $bacterium = $request->input('bacterium');
+        $fruit = $request->input('fruit');
+        $ph_material = $request->input('ph_material');
+        $antibacteria_test_type = $request->input('antibacteria_test_type');
+
+        //一旦全部のデータをとる
+        $selected_materials = Material_detail::query();
+        $selected_bacteria = Bacteria_detail::query();
+        $selected_fruits = Fruit_detail::query();
+        $selected_phMaterials = Ph_material_detail::query();
+        $selected_antibacteriaTestTypes = Antibacteria_test_type::query();
+        $selected_experiments = Experiment::query();
+
+        if(!empty($keyword)){
+            $selected_materials->where('name', 'LIKE', "%{$keyword}%");
+            $selected_bacteria->where('name', 'LIKE', "%{$keyword}%");
+            $selected_fruits->where('name', 'LIKE', "%{$keyword}%");
+            $selected_phMaterials->where('name', 'LIKE', "%{$keyword}%");
+            $selected_antibacteriaTestTypes->where('name', 'LIKE', "%{$keyword}%");
+        }
+        if (!empty($material)) {
+            $selected_materials->where('name', 'LIKE', "%{$material}%");
+        }
+        if (!empty($bacterium)) {
+            $selected_bacteria->where('name', 'LIKE', "%{$bacterium}%");
+        }
+        if (!empty($fruit)) {
+            $selected_fruits->where('name', 'LIKE', "%{$fruit}%");
+        }
+        if (!empty($ph_material)) {
+            $selected_phMaterials->where('name', 'LIKE', "%{$ph_material}%");
+        }
+        if (!empty($antibacteria_test_type)) {
+            $selected_antibacteriaTestTypes->where('name', 'LIKE', "%{$antibacteria_test_type}%");
+        }
+
+        //絞ったデータをゲットする，もしインプットに値が入っていなければ，空にする
+        if (!empty($keyword) || !empty($material)) {
+            $selected_materials = $selected_materials->get();
+        } else {
+            $selected_materials = [];
+        }
+        if (!empty($keyword) || !empty($bacterium)) {
+            $selected_bacteria = $selected_bacteria->get();
+        } else {
+            $selected_bacteria = [];
+        }
+        if (!empty($keyword) || !empty($fruit)) {
+            $selected_fruits = $selected_fruits->get();
+        } else {
+            $selected_fruits = [];
+        }
+        if (!empty($keyword) || !empty($ph_material)) {
+            $selected_phMaterials = $selected_phMaterials->get();
+        } else {
+            $selected_phMaterials = [];
+        }
+        if (!empty($keyword) || !empty($antibacteria_test_type)) {
+            $selected_antibacteriaTestTypes = $selected_antibacteriaTestTypes->get();
+        } else {
+            $selected_antibacteriaTestTypes = [];
+        }
+        foreach($selected_materials as $selected_material){
+            $material = Material::where('material_id', $selected_material->id)->first();
+            if($material){
+                $selected_experiments->where('id', $material->experiment_id);
+            }
+        }
+        foreach($selected_bacteria as $selected_bacterium){
+            $bacteria = Antibacteria_test::where('bacteria_id', $selected_bacterium->id)->first();
+            if($bacteria){
+                $selected_experiments->orWhere('id', $bacteria->experiment_id);
+            }
+        }
+        foreach($selected_fruits as $selected_fruit){
+            $fruit = Storing_test::where('storing_fruit_id', $selected_fruit->id)->first();
+            if($fruit){
+                $selected_experiments->orWhere('id', $fruit->experiment_id);
+            }
+        }
+        foreach($selected_phMaterials as $selected_phMaterial){
+            $phMaterial = Material::where('ph_material_id', $selected_phMaterial->id)->first();
+            if($phMaterial){
+                $selected_experiments->orWhere('id', $phMaterial->experiment_id);
+            }
+        }
+        foreach($selected_antibacteriaTestTypes as $selected_antibacteriaTestType){
+            $antibacteriaTestType = Antibacteria_test::where('test_id', $selected_antibacteriaTestType->id)->first();
+            if($antibacteriaTestType){
+                $selected_experiments->orWhere('id', $antibacteriaTestType->experiment_id);
+            }
+        }
+
+        // if (!empty($keyword) || !empty($material) || !empty($bacterium) || !empty($fruit) || !empty($ph_material) || !empty($antibacteria_test_type)) {
+            $selected_experiments = $selected_experiments->get();
+        // } else {
+            // $selected_experiments = [];
+        // }
+
+
+        $materials_list = Material::select('material_id')->distinct()->get();
+        $fruits_list = Storing_test::select('storing_fruit_id')->distinct()->get();
+        $bacteria_list = Antibacteria_test::select('bacteria_id')->distinct()->get();
+        $phMaterial_list = Material::select('ph_material_id')->distinct()->get();
+        $antibacteriaTypeTest_list = Antibacteria_test::select('test_id')->distinct()->get();
+
+    
+        return view('user.search.index', compact(
+            'materials_list', 'bacteria_list', 'fruits_list', 'phMaterial_list', 'antibacteriaTypeTest_list',
+            'selected_experiments','keyword'
+        ));
  
         } 
 

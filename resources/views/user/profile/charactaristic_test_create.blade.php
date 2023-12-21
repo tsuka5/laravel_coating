@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            Register Experiment Charactaristic Test
+            Register Experiment Characteristic Test
         </h2>
     </x-slot>
 
@@ -14,7 +14,7 @@
 
                         <div class="container px-5 mx-auto">
                             <div class="flex flex-col text-center w-full mb-4 mt-4">
-                              <h4 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Charactaristic Test</h4>
+                              <h4 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Characteristic Test</h4>
                             </div>
                             <div class="lg:w-1/2 md:w-2/3 mx-auto">
                               <x-input-error :messages="$errors->all()" class="mb-4"  />
@@ -27,7 +27,7 @@
                                     <div class="p-2 w-1/2 mx-auto">
                                         <div class="relative">
                                             <label for="ph" class="leading-7 text-sm text-gray-600">pH </label>
-                                            <input type="number" id="ph" name="ph" value="{{ old('ph') }}" step="0.1" placeholder="ex: 6.0" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                            <input type="number" id="ph" name="ph" value="{{ old('ph') }}" step="0.01" placeholder="ex: 6.0" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                         </div>
                                     </div>
                                     <div class="p-2 w-1/2 mx-auto">
@@ -75,7 +75,7 @@
                                     <div class="p-2 w-1/2 mx-auto">
                                         <div class="relative">
                                             <label for="wvp" class="leading-7 text-sm text-gray-600">Water Vapor Permeabilty (g・mm/(m^2・day・kPa))</label>
-                                            <input type="number" id="wvp" name="wvp" value="{{ old('wvp') }}" step=0.01 placeholder="ex:25.8" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                            <input type="number" id="wvp" name="wvp" value="{{ old('wvp') }}" step=0.001 placeholder="ex:25.8" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                         </div>
                                     </div>
                                     <div class="p-2 w-1/2 mx-auto">
@@ -122,7 +122,7 @@
                                     </div>
                                     <div class="p-2 w-1/2 mx-auto">
                                         <div class="relative">
-                                        <label for="xrd" class="leading-7 text-sm text-gray-600">XRD (nm?)</label>
+                                        <label for="xrd" class="leading-7 text-sm text-gray-600">XRD (nm)</label>
                                         <input type="number" id="xrd" name="xrd" value="{{ old('xrd') }}" step="0.01"placeholder="ex: 40"class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                         </div>
                                     </div>

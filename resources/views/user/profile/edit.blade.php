@@ -124,7 +124,7 @@
                                 <div class="p-2 w-1/2 mx-auto">
                                     <div class="relative">
                                         <label for="ph_purpose" class="leading-7 text-sm text-gray-600">pH purpose</label>
-                                        <input type="number" name="ph_purpose[{{ $material->id }}]" value="{{ $material->ph_purpose }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                                        <input type="number" name="ph_purpose[{{ $material->id }}]" value="{{ $material->ph_purpose }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                                             id="ph_pu">
                                     </div>
                                 </div> 
@@ -181,7 +181,7 @@
                             @endforeach
                           
                               <div class="flex flex-col text-center w-full mb-4 mt-12">
-                                  <h4 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Charactaristic Test</h4>
+                                  <h4 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Characteristic Test</h4>
                               </div>
 
                               @foreach ($charactaristic_tests as $charactaristic_test)
@@ -238,7 +238,7 @@
                                   <div class="p-2 w-1/2 mx-auto">
                                       <div class="relative">
                                         <label for="wvp" class="leading-7 text-sm text-gray-600">Water Vapor Permeabilty (g・mm/(m^2・day・kPa))</label>
-                                        <input type="number" id="wvp" name="wvp[{{ $charactaristic_test->id }}]" value="{{ $charactaristic_test->wvp }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                        <input type="number" id="wvp" name="wvp[{{ $charactaristic_test->id }}]" value="{{ $charactaristic_test->wvp }}" step=0.001 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                       </div>
                                   </div>
                                   <div class="p-2 w-1/2 mx-auto">
@@ -285,7 +285,7 @@
                                   </div>
                                   <div class="p-2 w-1/2 mx-auto">
                                       <div class="relative">
-                                      <label for="xrd" class="leading-7 text-sm text-gray-600">XRD ()</label>
+                                      <label for="xrd" class="leading-7 text-sm text-gray-600">XRD (nm)</label>
                                       <input type="number" id="xrd" name="xrd[{{ $charactaristic_test->id }}]" value="{{ $charactaristic_test->xrd }}" step="0.01"placeholder="Enter XRD value.(ex: 40)"class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                       </div>
                                   </div>
@@ -398,13 +398,13 @@
                               <div class="p-2 w-1/2 mx-auto">
                                 <div class="relative">
                                   <label for="tss" class="leading-7 text-sm text-gray-600">TSS</label>
-                                  <input type="number" id="tss" name="tss[{{ $storing_test->id}}]" value="{{ $storing_test->tss }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                  <input type="number" id="tss" name="tss[{{ $storing_test->id}}]" value="{{ $storing_test->tss }}" step=0.001 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                 </div>
                               </div>
                               <div class="p-2 w-1/2 mx-auto">
                                 <div class="relative">
                                   <label for="hardness" class="leading-7 text-sm text-gray-600">Hardness</label>
-                                  <input type="number" id="hardness" name="hardness[{{ $storing_test->id}}]" value="{{ $storing_test->hardness }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                  <input type="number" id="hardness" name="hardness[{{ $storing_test->id}}]" value="{{ $storing_test->hardness }}" step=0.001 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                 </div>
                               </div>
                               <div class="p-2 w-1/2 mx-auto">
@@ -415,14 +415,14 @@
                               </div>
                               <div class="p-2 w-1/2 mx-auto">
                                 <div class="relative">
-                                    <label for="ta" class="leading-7 text-sm text-gray-600">TA ()</label>
-                                    <input type="number" id="ta" name="ta[{{ $storing_test->id }}]" step="0.1" value="{{ $storing_test->ta }}" step="0.01" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                    <label for="ta" class="leading-7 text-sm text-gray-600">TA (%)</label>
+                                    <input type="number" id="ta" name="ta[{{ $storing_test->id }}]" step="0.1" value="{{ $storing_test->ta }}" step="0.001" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                 </div>
                               </div>
                               <div class="p-2 w-1/2 mx-auto">
                                 <div class="relative">
                                   <label for="vitamin_c" class="leading-7 text-sm text-gray-600">Vitamin C</label>
-                                  <input type="number" id="vitamin_c" name="vitamin_c[{{ $storing_test->id }}]" value="{{ $storing_test->vitamin_c }}" step="0.1" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                  <input type="number" id="vitamin_c" name="vitamin_c[{{ $storing_test->id }}]" value="{{ $storing_test->vitamin_c }}" step="0.001" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                 </div>
                               </div>
                               <div class="p-2 w-1/2 mx-auto">
