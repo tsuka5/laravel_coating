@@ -26,43 +26,6 @@ class SearchController extends Controller
     
      public function index(Request $request)
      {
-        //  $keyword = $request->input('keyword');
-        //  $material = $request->input('material');
-        //  $bacterium = $request->input('bacterium');
-        //  $fruit = $request->input('fruit');
-
-        //  $query = Experiment::query();
-        
-        //  $query->join('materials','experiments.id', '=', 'materials.experiment_id')
-        //      ->join('storing_tests', 'experiments.id', '=', 'storing_tests.experiment_id')
-        //      ->join('antibacteria_tests', 'experiments.id', '=', 'antibacteria_tests.experiment_id')
-        //      ->get();
-             
-        //  if(!empty($keyword)) {
-        //      $query->where('title', 'LIKE', "%{$keyword}%")
-        //      ->orWhere('name', 'LIKE', "%{$keyword}%");
-        //  }
- 
-        //  if(!empty($material)) {
-        //      $query->where('material_id', 'LIKE', "%{$material}%");
-        //  }
- 
-        //  if(!empty($bacterium)) {
-        //      $query->where('bacteria_id', 'LIKE', "%{$bacterium}%");
-        //  }
- 
-        //  if(!empty($fruit)) {
-        //      $query->where('storing_fruit_id', 'LIKE', "%{$fruit}%");
-        //  }
- 
-        //  $selected_experiments = $query->paginate(5);
- 
-        //  $materials_list = Material::select('material_id')->distinct()->get();
-        //  $fruits_list = Storing_test::select('storing_fruit_id')->distinct()->get();
-        //  $bacteria_list = Antibacteria_test::select('bacteria_id')->distinct()->get();
- 
-        //  return view('user.search.index', compact('selected_experiments', 'keyword', 'material', 'materials_list',
-        //   'bacterium', 'bacteria_list', 'fruit', 'fruits_list'));
 
         $keyword = $request->input('keyword');
         $material = $request->input('material');
@@ -159,12 +122,8 @@ class SearchController extends Controller
             }
         }
 
-        // if (!empty($keyword) || !empty($material) || !empty($bacterium) || !empty($fruit) || !empty($ph_material) || !empty($antibacteria_test_type)) {
-            $selected_experiments = $selected_experiments->get();
-        // } else {
-            // $selected_experiments = [];
-        // }
-
+            $selected_experiments = $selected_experiments->paginate(10);
+    
 
         $materials_list = Material::select('material_id')->distinct()->get();
         $fruits_list = Storing_test::select('storing_fruit_id')->distinct()->get();

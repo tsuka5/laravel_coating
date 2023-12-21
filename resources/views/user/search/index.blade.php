@@ -155,7 +155,7 @@
                                         
                                     </tr>
                                 @endforeach
-                                {{-- {{ $selected_experiments->links()}} --}}
+                                {{ $selected_experiments->links()}}
                             </tbody>
                             </table>
                             
