@@ -17,7 +17,7 @@ class ExperimentSeeder extends Seeder
     {
         DB::table('experiments')->insert([
         [
-            'user_id' => '1',
+            'user_id' => '7',
             'title' => 'test',
             'name' => 'oaki tsukasa',
             'date' => '2023/10/20',
@@ -25,7 +25,7 @@ class ExperimentSeeder extends Seeder
             'paper_url' => 'paper_url1'
         ],
         [
-            'user_id' => '1',
+            'user_id' => '7',
             'title' => 'test1',
             'name' => 'ozaki tsukasa',
             'date' => '2023/10/20',
@@ -34,7 +34,7 @@ class ExperimentSeeder extends Seeder
 
         ],
         [
-            'user_id' => '2',
+            'user_id' => '7',
             'title' => 'test2',
             'name' => 'hashimoto takuya',
             'date' => '2023/10/20',
