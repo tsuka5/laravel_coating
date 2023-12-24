@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\Auth\PasswordController;
 use App\Http\Controllers\Admin\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Admin\Auth\RegisteredUserController;
 use App\Http\Controllers\Admin\Auth\VerifyEmailController;
+use App\Http\Controllers\Admin\Auth\Pdf_fileController;
 use App\Http\Controllers\Admin\UsersController;
 
 
@@ -97,4 +98,12 @@ Route::middleware('auth:admin')->group(function () {
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->name('logout');
 });
+
+Route::middleware('auth:admin')->group(function (){
+    Route::get('/pdf_file/index', [Pdf_fileController::class, 'index'])->name('pdf_file.index');
+    Route::post('/pdf_file/index', [Pdf_fileController::class, 'store'])->name('pdf_file.store');
+
+});
+// Route::get('/pdf_file/index', [Pdf_fileController::class, 'index'])->name('pdf_file.index');
+// Route::post('/pdf_file/index', [Pdf_fileController::class, 'store'])->name('pdf_file.store');
 

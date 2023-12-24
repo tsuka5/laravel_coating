@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Admin;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -32,6 +34,7 @@ class DatabaseSeeder extends Seeder
             Charactaristic_testSeeder::class,
             Antibacteria_testSeeder::class,
             Storing_testSeeder::class,
+            AdminSeeder::class,
             
            
         ]);

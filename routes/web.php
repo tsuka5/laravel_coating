@@ -1,6 +1,7 @@
 <?php
 
 // use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Auth\DashboardController;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\Auth\SearchController;
 use App\Http\Controllers\Auth\CsvController;
@@ -21,7 +22,9 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+//dashboardについて
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+// Route::get('/pdf-download', [PDFController::class, 'downloadPDF'])->name('pdf.download');
 //profileについて
 Route::resource('profile', ProfileController::class)
 ->middleware(['auth:users', 'verified']);
@@ -60,9 +63,9 @@ Route::get('/', function () {
     return view('user.welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('user.dashboard');
-})->middleware(['auth:users', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('user.dashboard');
+// })->middleware(['auth:users', 'verified'])->name('dashboard');
 
 
 // Route::middleware('auth:users')->group(function () {

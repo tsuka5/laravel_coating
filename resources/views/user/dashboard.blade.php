@@ -19,7 +19,10 @@
                     ・You can search experiment data of coating.<br><br>
                     {{-- ・You can edit csv files.<br></p><br> --}}
 
-                    <p class="text-xl">If you find some error, please tell ozaki.</p>
+                    <p class="text-xl">If you find some error, please tell ozaki.</p><br>
+                    
+                    <embed src="{{ asset('storage/' . $pdfFile->pdf_file_path) }}" type="application/pdf" width="100%" height="600px">
+                    
             
 
                 </div>
