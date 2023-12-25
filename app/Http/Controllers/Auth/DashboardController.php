@@ -14,9 +14,7 @@ class DashboardController extends Controller
 {
     public function index()
 {
-    $pdfFile = Pdf_file::findOrFail(5); 
-    // $a = 'gjeo';
-    // dd($a);
+    $pdfFile = Pdf_file::where('name', 'how_to_use_webdatabase')->first(); 
     return view('user.dashboard', ['pdfFile' => $pdfFile]);
 }
 
