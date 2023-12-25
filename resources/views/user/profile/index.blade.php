@@ -9,41 +9,18 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="justify-center p-6 text-gray-900 dark:text-gray-100">
                     <section class="text-gray-600 body-font">
-                       
-                        {{-- <div class="bg-white rounded-xl shadow p-4 sm:p-7 dark:bg-slate-900">
-                            <div class="sm:col-span-3">
-                                <label for="af-account-full-name" class="inline-block text-sm text-gray-400 mt-2.5 dark:text-gray-200">
-                                Full name
-                                </label>
-                            </div>
-                            <!-- End Col -->
-                    
-                            <div class="sm:col-span-9 sm:flex af-account-full-name py-2 px-3 pr-11 block w-full border-gray-200 shadow-sm -mt-px -ml-px first:rounded-t-lg last:rounded-b-lg sm:first:rounded-l-lg sm:mt-0 sm:first:ml-0 sm:first:rounded-tr-none sm:last:rounded-bl-none sm:last:rounded-r-lg text-sm relative focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400">
-                                {{ $userInformation->name }}
-                            </div>
-                            <!-- End Col -->
-                    
-                            <div class="sm:col-span-3">
-                                <label for="af-account-email" class="inline-block text-sm text-gray-400 mt-2.5 dark:text-gray-200">
-                                Email
-                                </label>
-                            </div>
-                            <!-- End Col -->
-                    
-                            <div class="sm:col-span-9py-2 px-3 pr-11 block w-full border-gray-200 shadow-sm text-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400">
-                                {{ $userInformation->email }}
-                            </div>
-                        </div> --}}
 
                         <div class="container px-5 mx-auto">
                             <x-flash-message status="session('status')" />
-                            {{-- <div class='flex justify-center mt-4 mb-4'>
-                                <button onclick="location.href='{{ route('user.create.experiment') }}'" class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">Register</button>
-                            </div> --}}
+                            {{-- <h3 class="flex justify-center my-5 underline">To register a new experiment, start here</h3> --}}
+                            <div class='flex justify-center mt-4 mb-4'>
+                                <button onclick="location.href='{{ route('user.create.experiment') }}'" class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">Data_Entry</button>
+                            </div>
                         <div class="lg:w-2/3 w-full mx-auto overflow-auto">
                            
 
                                 <h3 class="flex justify-center my-5 underline">Your Experiment Data</h3>
+                                
                                 <div class="flex justify-center flex-wrap flex-row ml-3">
                                 @foreach ($experiments as $experiment)
                                     <div class="container border border-gray-500 w-2/5 mb-6 rounded-xl ml-6">

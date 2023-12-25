@@ -18,14 +18,17 @@
                     <x-nav-link :href="route('user.profile.index')" :active="request()->routeIs('user.profile.index')">
                             Profile
                     </x-nav-link>
-                    <x-nav-link :href="route('user.create.experiment')" :active="request()->routeIs('user.create.experiment')">
+                    {{-- <x-nav-link :href="route('user.create.experiment')" :active="request()->routeIs('user.create.experiment')">
                         Data_Entry
+                    </x-nav-link> --}}
+                    <x-nav-link :href="route('user.search.index')" :active="request()->routeIs('user.search.index')">
+                        Search
                     </x-nav-link>
                     <x-nav-link :href="route('user.category.index')" :active="request()->routeIs('user.category.index')">
                         Category
                     </x-nav-link>
-                    <x-nav-link :href="route('user.search.index')" :active="request()->routeIs('user.serch.index')">
-                        Search
+                    <x-nav-link :href="route('user.contact.index')" :active="request()->routeIs('user.contact.index')">
+                        Contact
                     </x-nav-link>
                     {{-- <x-nav-link :href="route('user.csv.show')" :active="request()->routeIs('user.csv.show')">
                         Export

@@ -18,10 +18,5 @@ class DashboardController extends Controller
     return view('user.dashboard', ['pdfFile' => $pdfFile]);
 }
 
-// public function downloadPDF()
-// {
-//     $pdf = PDF::loadView('pdf_view'); // ビューをPDFとして読み込む
 
-//     return $pdf->download('how_to_use_webdatabase.pdf'); // PDFをダウンロード
-// }
 }

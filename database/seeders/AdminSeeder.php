@@ -17,22 +17,24 @@ class AdminSeeder extends Seeder
     {
         DB::table('admins')->insert([
         [
-            'name' => 'test',
-            'email' => 'test@test.com',
-            'password' => Hash::make('password123'),
-            'created_at' => '2021/01/01 11:11:11'
+            'name' => 'ozaki tsukasa',
+            'email' => 'ozaki.tsukasa.941@s.kyushu-u.ac.jp',
+            'password' => Hash::make('Se8YDbkE'),
         ],
         [
-            'name' => 'test1',
-            'email' => 'test1@test.com',
-            'password' => Hash::make('password123'),
-            'created_at' => '2021/01/01 11:11:11'
+            'name' => 'takahashi manaka',
+            'email' => 'takahashi.manaka.005@s.kyushu-u.ac.jp',
+            'password' => Hash::make('Z9z4NGVi'),
         ],
         [
-            'name' => 'test2',
-            'email' => 'test2@test.com',
-            'password' => Hash::make('password123'),
-            'created_at' => '2021/01/01 11:11:11'
+            'name' => 'tanaka fumihiko',
+            'email' => 'fumit@bpes.kyushu-u.ac.jp',
+            'password' => Hash::make('E8mWGuh5'),
+        ],
+        [
+            'name' => 'tanaka fumina',
+            'email' => 'fuminat@bpes.kyushu-u.ac.jp',
+            'password' => Hash::make('i6C7sZKq'),
         ],
 
 

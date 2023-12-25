@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\SearchController;
 use App\Http\Controllers\Auth\CsvController;
 use App\Http\Controllers\Auth\DetailController;
 use App\Http\Controllers\Auth\CategoryController;
+use App\Http\Controllers\Auth\ContactController;
 
 use App\Http\Controllers\ProfileController as ControllersProfileController;
 use Illuminate\Support\Facades\Route;
@@ -52,6 +53,10 @@ Route::resource('search', SearchController::class)
 Route::get('category/index', [CategoryController::class, 'index'])->name('category.index');
 
 Route::get('category/show/{id}/{category_type}', [CategoryController::class, 'show'])->name('category.show');
+
+//contactについて
+Route::get('contact/index', [ContactController::class, 'index'])->name('contact.index');
+Route::post('contact/index', [ContactController::class, 'store'])->name('contact.store');
 
 //csvについて
 // Route::get('csv/csv-export', [CsvController::class, 'exportCsv'])->name('csv.export');

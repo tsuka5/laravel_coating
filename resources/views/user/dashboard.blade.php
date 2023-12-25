@@ -18,11 +18,11 @@
                     ・You can register/edit/delete your experiment data.<br>
                     ・You can search experiment data of coating.<br><br>
                     {{-- ・You can edit csv files.<br></p><br> --}}
-
+                    @if(!empty($pdfFile))
                     <p class="text-xl">If you have any questions about how to use this web database, <br>
                         please click on the link below, which describes how to use the web database</p><br>
                     <a href="{{ asset('storage/' . $pdfFile->pdf_file_path) }}" target="_blank" class="text-black hover:text-blue-500">→ PDF_file (How to use Web database)</a><br><br>
-
+                    @endif
                     <p class="text-xl">If you find some error, please tell ozaki.</p>
                     
 

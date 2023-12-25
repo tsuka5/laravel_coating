@@ -55,4 +55,8 @@ class User extends Authenticatable
         return $this->hasOne(Experiment::class);
     }
 
+    public function request(): HasOne
+    {
+        return $this->hasOne(Request::class);
+    }
 }
