@@ -12,8 +12,6 @@ use Illuminate\Database\Eloquent\Model;
 class Pdf_file extends Model
 {
 
-    public $timestamps = false; //update_atなどを無効にする
-
     /**
      * The attributes that are mass assignable.
      *
@@ -23,7 +21,8 @@ class Pdf_file extends Model
 
     protected $fillable = [
         'name',
-        'pdf_file_path'
+        'pdf_file_path',
+        'created_at'
     ];
 
 }

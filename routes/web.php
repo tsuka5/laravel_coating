@@ -57,6 +57,7 @@ Route::get('category/show/{id}/{category_type}', [CategoryController::class, 'sh
 //contactについて
 Route::get('contact/index', [ContactController::class, 'index'])->name('contact.index');
 Route::post('contact/index', [ContactController::class, 'store'])->name('contact.store');
+Route::get('contact/show/{id}', [ContactController::class, 'show'])->name('contact.show');
 
 //csvについて
 // Route::get('csv/csv-export', [CsvController::class, 'exportCsv'])->name('csv.export');

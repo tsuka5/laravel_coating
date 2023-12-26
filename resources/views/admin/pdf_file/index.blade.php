@@ -42,6 +42,35 @@
                               </div>
                             </form>
                           </div>
+                          @if($uploadedFiles->isEmpty())
+                           {{-- <p>No past uploadedFile found.</p> --}}
+
+                          @else
+                            <div class="flex flex-col text-center w-full mb-4 mt-4">
+                              <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight mt-8">
+                                Uploded File
+                              </h2>
+                            </div>
+                            <div class="w-1/2 mx-auto">
+                              <table class="table-auto w-full">
+                                <thead>
+                                  <tr>
+                                    <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">Date</th>
+                                    <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">Name</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  @foreach ($uploadedFiles as $uploadedFile)
+                                      <tr>
+                                          <td class="px-4 py-3">{{ $uploadedFile->created_at }}</td>
+                                          <td class="px-4 py-3">{{ $uploadedFile->name }}</td>
+                                      </tr>
+                                  @endforeach
+                                </tbody>
+                              </table>
+                              {{ $uploadedFiles->links() }}
+                            </div>
+                          @endif
                         </div>
                     </section>
                 </div>

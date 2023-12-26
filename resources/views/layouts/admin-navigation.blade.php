@@ -25,6 +25,9 @@
                     <x-nav-link :href="route('admin.pdf_file.index')" :active="request()->routeIs('admin.pdf_file.index')">
                         PDF_Registment
                     </x-nav-link>
+                    <x-nav-link :href="route('admin.contact.index')" :active="request()->routeIs('admin.contact.index')">
+                        Contact
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -89,6 +92,9 @@
             </x-responsive-nav-link>
             <x-nav-link :href="route('admin.pdf_file.index')" :active="request()->routeIs('admin.pdf_file.index')">
                 PDF_Registment
+            </x-nav-link>
+            <x-nav-link :href="route('admin.contact.index')" :active="request()->routeIs('admin.contact.index')">
+                Contact
             </x-nav-link>
         </div>
 

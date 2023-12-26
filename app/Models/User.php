@@ -10,7 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use App\Models\Experiment;
+use App\Models\Contact;
 
 
 
@@ -55,8 +55,8 @@ class User extends Authenticatable
         return $this->hasOne(Experiment::class);
     }
 
-    public function request(): HasOne
+    public function contact(): HasOne
     {
-        return $this->hasOne(Request::class);
+        return $this->hasOne(Contact::class);
     }
 }

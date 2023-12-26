@@ -23,7 +23,8 @@ class Pdf_fileController extends Controller
 
     public function index()
     {
-        return view('admin.pdf_file.index');
+        $uploadedFiles = Pdf_file::orderby('created_at', 'asc')->paginate(3);
+        return view('admin.pdf_file.index', compact('uploadedFiles'));
     }
 
     /**

@@ -1,7 +1,7 @@
 <x-app-layout>
   <x-slot name="header">
       <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-          Please enter your request
+          Enter Reply
       </h2>
   </x-slot>
 
@@ -16,11 +16,11 @@
                 <div class="container px-5 mx-auto">
                   <x-flash-message status="session('status')" />
                   <div class="flex flex-col text-center w-full mb-4 mt-4">
-                    <h4 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Contact Us</h4>
+                    <h4 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">User's Requests</h4>
                   </div>
                   <div class="lg:w-1/2 md:w-2/3 mx-auto">
                     <x-input-error :messages="$errors->all()" class="mb-4"  />
-                    <form method="post" action="{{ route('user.contact.store') }}">
+                    {{-- <form method="post" action="{{ route('user.contact.store') }}">
                       @csrf
 
                       <div class="m-2">
@@ -43,17 +43,17 @@
                         <button type="button" onclick="location.href='{{ route('user.contact.index')}}'" class="bg-gray-200 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">Back</button>
                         <button type="submit" class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">Send</button>
                       </div>
-                    </form>
+                    </form> --}}
 
                   </div>
                   @if($contacts->isEmpty())
                     {{-- <p>No past requests found.</p> --}}
                   @else
-                    <div class="flex flex-col text-center w-full mb-4 mt-4">
+                    {{-- <div class="flex flex-col text-center w-full mb-4 mt-4">
                       <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight mt-8">
-                        Your Past Requests
+                        Users Requests
                       </h2>
-                    </div>
+                    </div> --}}
                     <div class="w-full mx-auto">
                       <table class="table-auto w-full">
                         <thead>
@@ -61,6 +61,7 @@
                             <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">Date</th>
                             <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">Title</th>
                             <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">Content</th>
+                            <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl"></th>
                             <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl"></th>
                           </tr>
                         </thead>
@@ -70,13 +71,17 @@
                                   <td class="px-4 py-3">{{ $contact->created_at }}</td>
                                   <td class="px-4 py-3">{{ $contact->title }}</td>
                                   <td class="px-4 py-3">{{ $contact->content }}</td>
+                                  <td class="px-4 py-3">                     
+                                    <button onclick="location.href='{{ route('admin.contact.create', ['user_id' => $contact->id])}}'" class="mb-2 h-9 text-white bg-indigo-400 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-500 rounded">Reply</button>
+                                  </td>
+                      
                                   <td class="px-4 py-3">
                                     @if( $contact->reply )
-                                    <a href="{{ route('user.contact.show', ['id' => $contact->id]) }}" class="font-medium text-indigo-500 text-sm">Replied</a>
+                                    <a href="{{ route('admin.contact.show', ['id' => $contact->id]) }}" class="font-medium text-indigo-500 text-sm">Replied</a>
                                     @else
                                     <div class="font-midium text-red-500 text-sm"> Unreplied</div>
                                     @endif
-                                  </td>                                  
+                                  </td>
                               </tr>
                           @endforeach
                   
@@ -91,5 +96,5 @@
           </div>
       </div>
   </div>
-
+  
 </x-app-layout>

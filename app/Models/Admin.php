@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use App\Models\Contact;
+
 
 
 class Admin extends Authenticatable
@@ -41,4 +44,10 @@ class Admin extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function contact_reply(): HasOne
+    {
+        return $this->hasOne(Contact_reply::class);
+    }
+
 }

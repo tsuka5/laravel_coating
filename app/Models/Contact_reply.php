@@ -7,14 +7,13 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use App\Models\User;
-use App\Models\Contact_reply;
+use App\Models\Admin;
+use App\Models\Contact;
 
 
 
 
-class Contact extends Model
+class Contact_reply extends Model
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -26,21 +25,21 @@ class Contact extends Model
 
 
     protected $fillable = [
-        'user_id',
+        'admin_id',
+        'user_contact_id',
         'title',
         'content',
-        'reply',
 
     
     ];
 
-    public function user(): BelongsTo
+    public function admin(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Admin::class);
     }
-    public function contactReply(): hasOne
+    public function contact(): BelongsTo
     {
-        return $this->hasOne(Contact_reply::class, 'user_contact_id', 'id');
+        return $this->belongsTo(Contact::class, 'user_contact_id', 'id');
     }
 
  

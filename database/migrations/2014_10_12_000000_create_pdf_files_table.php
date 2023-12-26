@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('pdf_file_path');
+            $table->timestamps();
         });
     }
 

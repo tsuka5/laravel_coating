@@ -1,22 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Admin\Auth;
 
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Film_condition; 
-use App\Models\Charactaristic_test; 
-use App\Models\Material;
-use App\Models\Storing_test;
-use App\Models\Antibacteria_test;
-use App\Models\Material_detail;
-use App\Models\Fruit_detail;
-use App\Models\Bacteria_detail;
-use App\Models\Ph_material_detail;
-use App\Models\Antibacteria_test_type;
-use App\Models\Contact;
 use App\Models\Contact_reply;
+use App\Models\Contact;
+use App\Models\Admin;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
@@ -31,23 +22,22 @@ class ContactController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth:users');
+        $this->middleware('auth:admin');
     } 
 
     public function index()
     {
-        $contacts = Contact::where('user_id', Auth::user()->id)
-        ->orderBy('created_at', 'desc')->paginate(3);
-        return view('user.contact.index', compact('contacts'));
+        $contacts = Contact::orderBy('created_at', 'desc')->paginate(8);
+        return view('admin.contact.index', compact('contacts'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
 
-    public function create($formType)
+    public function create($user_id)
     {
-        
+        return view('admin.contact.create', compact('user_id'));
     }
 
     /**
@@ -55,14 +45,19 @@ class ContactController extends Controller
      */
     public function store(Request $request)  
     {
-        $contact = new Contact();
-        $contact-> user_id = Auth::user()->id;
+        // dd($request->user_id);
+        $contact = new Contact_reply();
+        $contact-> admin_id = Auth::user()->id;
+        $contact-> user_contact_id = $request->user_id;
         $contact-> title = $request->title;
         $contact-> content = $request->content;
-        $contact-> reply = false;
         $contact->save();
 
-        return redirect()->route('user.contact.index')
+        $userContact = Contact::findOrFail($request->user_id);
+        $userContact-> reply = true;
+        $userContact->save();
+
+        return redirect()->route('admin.contact.index')
         ->with(['message'=>'Transmission Complete',
         'status'=>'info'] );
        
@@ -76,8 +71,7 @@ class ContactController extends Controller
     {
         $contact = Contact_reply::where("user_contact_id", $id)->first();
         
-        return view('user.contact.show', compact('contact'));
-        
+        return view('admin.contact.show', compact('contact'));
     }
 
     /**
@@ -85,17 +79,7 @@ class ContactController extends Controller
      */
     public function edit(string $id)
     {
-        // $experiment = Experiment::findOrFail($id);
-        // $materials = Material::where('experiment_id', $id)->get();
-        // $film_conditions = Film_condition::where('experiment_id', $id)->get();
-        // $charactaristic_tests = Charactaristic_test::where('experiment_id', $id)->get();
-        // $storing_tests = Storing_test::where('experiment_id', $id)->get();
-        // $antibacteria_tests = Antibacteria_test::where('experiment_id', $id)->get();
-        
-        
-
-        // return view('user.profile.edit', compact('experiment', 'materials','film_conditions',
-        //             'charactaristic_tests','storing_tests','antibacteria_tests'));
+        //             
    
     }
 
@@ -104,7 +88,7 @@ class ContactController extends Controller
      */
     public function update(Request $request, string $id)
     {
-     
+        // 
     }
 
     /**
