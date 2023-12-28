@@ -33,52 +33,6 @@ class CategoryController extends Controller
         $this->middleware('auth:users');
     } 
 
-    // public function index(Request $request)
-    // {
-    //     $keyword = $request->input('keyword');
-    //     $material = $request->input('material');
-    //     $bacterium = $request->input('bacterium');
-    //     $fruit = $request->input('fruit');
-    //     $ph_material = $request->input('ph_material');
-    //     $antibacteria_test_type = $request->input('antibacteria_test_type');
-
-    //     $selected_materials = Material_detail::query();
-    //     $selected_bacteria = Bacteria_detail::query();
-    //     $selected_fruits = Fruit_detail::query();
-    //     $selected_phMaterials = Ph_material_detail::query();
-    //     $selected_antibacteriaTestTypes = Antibacteria_test_type::query();
-
-    //     $conditions = [
-    //         ['query' => $selected_materials, 'column' => 'name', 'value' => $keyword],
-    //         ['query' => $selected_materials, 'column' => 'name', 'value' => $material],
-    //         ['query' => $selected_bacteria, 'column' => 'name', 'value' => $bacterium],
-    //         ['query' => $selected_fruits, 'column' => 'name', 'value' => $fruit],
-    //         ['query' => $selected_phMaterials, 'column' => 'name', 'value' => $ph_material],
-    //         ['query' => $selected_antibacteriaTestTypes, 'column' => 'name', 'value' => $antibacteria_test_type],
-    //     ];
-
-    //     foreach ($conditions as $condition) {
-    //         if (!empty($condition['value'])) {
-    //             $condition['query']->where($condition['column'], 'LIKE', "%{$condition['value']}%");
-    //         }
-    //     }
-
-    //     $selected_materials = $selected_materials->get();
-    //     $selected_bacteria = $selected_bacteria->get();
-    //     $selected_fruits = $selected_fruits->get();
-    //     $selected_phMaterials = $selected_phMaterials->get();
-    //     $selected_antibacteriaTestTypes = $selected_antibacteriaTestTypes->get();
-
-    //     $materials_list = Material_detail::select('name')->distinct()->get();
-    //     $fruits_list = Fruit_detail::select('name')->distinct()->get();
-    //     $bacteria_list = Bacteria_detail::select('name')->distinct()->get();
-    //     $phMaterial_list = Ph_material_detail::select('name')->distinct()->get();
-    //     $antibacteriaTypeTest_list = Antibacteria_test_type::select('name')->distinct()->get();
-
-    //     return view('user.category.index', compact('selected_materials', 'selected_bacteria', 'selected_fruits', 'selected_phMaterials', 'selected_antibacteriaTestTypes', 
-    //     'keyword', 'material', 'materials_list', 'bacterium', 'bacteria_list', 'fruit', 'fruits_list', 'ph_material', 'phMaterial_list', 'antibacteria_test_type', 'antibacteriaTypeTest_list'));
-    // }
-
 public function index(Request $request)
 {
     $keyword = $request->input('keyword');
@@ -163,19 +117,9 @@ public function index(Request $request)
      * Show the form for creating a new resource.
      */
 
-    public function create($formType)
+    public function create($categoryType)
     {
-        if ($formType === 'material') {
-            return view('user.detail.material_create');
-        } elseif ($formType === 'fruit') {
-            return view('user.detail.fruit_create');
-        } elseif ($formType === 'bacteria') {
-            return view('user.detail.bacteria_create');
-        } elseif ($formType === 'ph_material') {
-            return view('user.detail.ph_material_create');
-        } elseif ($formType === 'test_type') {
-            return view('user.detail.test_type_create');
-        }
+        return view('user.category.create', compact('categoryType'));
     }
 
     /**
@@ -241,8 +185,8 @@ public function index(Request $request)
 
         }
 
-        return redirect()->route('user.detail.index')
-        ->with(['message'=>'Registration Complete',
+        return redirect()->route('user.contact.index')
+        ->with(['message'=>'Registration Complete! When you add somethings, please tell me using contact page.',
         'status'=>'info'] );
 
        
@@ -286,17 +230,6 @@ public function index(Request $request)
      */
     public function edit(string $id)
     {
-        // $experiment = Experiment::findOrFail($id);
-        // $materials = Material::where('experiment_id', $id)->get();
-        // $film_conditions = Film_condition::where('experiment_id', $id)->get();
-        // $charactaristic_tests = Charactaristic_test::where('experiment_id', $id)->get();
-        // $storing_tests = Storing_test::where('experiment_id', $id)->get();
-        // $antibacteria_tests = Antibacteria_test::where('experiment_id', $id)->get();
-        
-        
-
-        // return view('user.profile.edit', compact('experiment', 'materials','film_conditions',
-        //             'charactaristic_tests','storing_tests','antibacteria_tests'));
    
     }
 

@@ -51,7 +51,8 @@ Route::resource('search', SearchController::class)
 
 //categoryについて
 Route::get('category/index', [CategoryController::class, 'index'])->name('category.index');
-
+Route::get('category/create/{categoryType}', [CategoryController::class, 'create'])->name('category.create');
+Route::post('category/create', [CategoryController::class, 'store'])->name('category.store');
 Route::get('category/show/{id}/{category_type}', [CategoryController::class, 'show'])->name('category.show');
 
 //contactについて

@@ -1,12 +1,13 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            Search
+            Category
         </h2>
     </x-slot>
     
     {{-- <div class="lg:w-1/4 md:w-1/2 w-full px-4 mx-auto mt-6"> --}}
         <div class="lg:w-1/2 w-full px-4 mx-auto mt-6">
+            <x-flash-message status="session('status')" />
             <div class="flex xl:flex-nowrap md:flex-nowrap lg:flex-wrap flex-wrap justify-center items-end md:justify-start">
             <form action="{{ route('user.category.index') }}" method="GET">
                 <div class = "flex-col justify-start">
@@ -22,7 +23,8 @@
                             @foreach ($materials_list as $selected_material)
                             <option value="{{ $selected_material->name }}"> {{ $selected_material->name }}</option>
                             @endforeach
-                        </select>                    
+                        </select>
+                        <button type="button" onclick="location.href='{{ route('user.category.create', ['categoryType'=>'material']) }}'" class="bg-gray-200 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded">Add</button>
                     </div>
     
                     <div class="relative w-40 sm:w-auto xl:mr-4 lg:mr-0 sm:mr-4 mr-2 mb-4">
@@ -32,7 +34,8 @@
                             @foreach ($bacteria_list as $selected_bacterium)
                             <option value="{{ $selected_bacterium->name }}"> {{ $selected_bacterium->name }}</option>
                             @endforeach
-                        </select>                    
+                        </select> 
+                        <button type="button" onclick="location.href='{{ route('user.category.create', ['categoryType'=>'bacteria']) }}'" class="bg-gray-200 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded">Add</button>                   
                     </div>
                     <div class="relative w-40 sm:w-auto xl:mr-4 lg:mr-0 sm:mr-4 mr-2 mb-4">
                         <label for="footer-field" class="leading-7 text-sm text-gray-600">Fruit and Vegitable</label>
@@ -41,7 +44,8 @@
                             @foreach ($fruits_list as $selected_fruit)
                             <option value="{{ $selected_fruit->name }}"> {{ $selected_fruit->name }}</option>
                             @endforeach
-                        </select>                    
+                        </select> 
+                        <button type="button" onclick="location.href='{{ route('user.category.create', ['categoryType'=>'fruit']) }}'" class="bg-gray-200 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded">Add</button>
                     </div>
                     <div class="relative w-40 sm:w-auto xl:mr-4 lg:mr-0 sm:mr-4 mr-2 mb-4">
                         <label for="footer-field" class="leading-7 text-sm text-gray-600">pH Materials</label>
@@ -50,7 +54,8 @@
                             @foreach ($phMaterial_list as $selected_phMaterial)
                             <option value="{{ $selected_phMaterial->name }}"> {{ $selected_phMaterial->name }}</option>
                             @endforeach
-                        </select>                    
+                        </select> 
+                        <button type="button" onclick="location.href='{{ route('user.category.create', ['categoryType'=>'phMaterial']) }}'" class="bg-gray-200 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded">Add</button>
                     </div>
                     <div class="relative w-40 sm:w-auto xl:mr-4 lg:mr-0 sm:mr-4 mr-2 mb-4">
                         <label for="footer-field" class="leading-7 text-sm text-gray-600">Antibacteria Test Type</label>
@@ -59,7 +64,8 @@
                             @foreach ($antibacteriaTypeTest_list as $selected_antibacteriaTypeTest)
                             <option value="{{ $selected_antibacteriaTypeTest->name }}"> {{ $selected_antibacteriaTypeTest->name }}</option>
                             @endforeach
-                        </select>                    
+                        </select>   
+                        <button type="button" onclick="location.href='{{ route('user.category.create', ['categoryType'=>'antibacteriaTestType']) }}'" class="bg-gray-200 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded">Add</button>
                     </div>
                     
 
@@ -70,7 +76,8 @@
             </form>
             </div>
     </div>
-    
+                       
+
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
@@ -78,7 +85,6 @@
                     <section class="text-gray-600 body-font">
                     
                         <div class="container px-5 mx-auto">
-                            <x-flash-message status="session('status')" />
                             
                         <div class="lg:w-2/3 w-full mx-auto overflow-auto">
                             <table class="table-auto w-full text-left whitespace-no-wrap">
