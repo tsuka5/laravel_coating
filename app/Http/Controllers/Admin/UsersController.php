@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User; //エロクアント
+use App\Models\Affiliation; 
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
@@ -37,7 +38,8 @@ class UsersController extends Controller
      */
     public function create()
     {
-        return view('admin.users.create');
+        $affiliations_list = Affiliation::all();
+        return view('admin.users.create', compact('affiliations_list'));
     }
 
     /**
@@ -52,11 +54,18 @@ class UsersController extends Controller
             'password' => ['required', 'string', 'confirmed', 'min:8'],
         ]);
 
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        // User::create([
+        //     'name' => $request->name,
+        //     'email' => $request->email,
+        //     'password' => Hash::make($request->password),
+        // ]);
+
+        $affiliation = new User;
+        $affiliation->name = $request->name;
+        $affiliation->affiliation_id = $request->affiliation;
+        $affiliation->email = $request->email;
+        $affiliation->password = $request->password;
+        $affiliation->save();
 
         return redirect()->route('admin.users.index')
         ->with(['message'=>'Registration Complete',
