@@ -55,10 +55,8 @@ class ProfileController extends Controller
             $charactaristic_testCounts[$experiment->id] = Charactaristic_test::where('experiment_id', $experiment->id)->count();
             $storing_testCounts[$experiment->id] = Storing_test::where('experiment_id', $experiment->id)->count();
             $antibacteria_testCounts[$experiment->id] = Antibacteria_test::where('experiment_id', $experiment->id)->count();
-            $noteCount = Note::where('experiment_id', $experiment->id)->count();
-            if ($noteCount > 0) {
-                $noteCounts[$experiment->id] = $noteCount;
-    }
+            $noteCounts[$experiment->id] = Note::where('experiment_id', $experiment->id)->count();
+            
         }
        
         return view('user.profile.index', compact('userInformation','experiments','materialCounts','film_conditionCounts',
