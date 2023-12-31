@@ -48,6 +48,7 @@ class ProfileController extends Controller
         $charactaristic_testCounts = [];
         $storing_testCounts = [];
         $antibacteria_testCounts = [];
+        $noteCounts = [];
 
         foreach ($experiments as $experiment) {
             $materialCounts[$experiment->id] = Material::where('experiment_id', $experiment->id)->count();
