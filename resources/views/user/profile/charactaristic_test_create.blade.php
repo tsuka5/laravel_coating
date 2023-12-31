@@ -134,52 +134,28 @@
                                                 <input type="file" id="afm" name="afm" value="{{ old('afm') }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                             </div>
                                         </div>
-                                        {{-- <div class="p-2 w-1/2 mx-auto">
-                                            <div class="relative mb-4">
-                                                <label for="afm1" class="leading-7 text-sm text-gray-600">AFM</label>
-                                                <input type="file" id="afm1" name="afm1" value="{{ old('afm1') }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                                <input type="file" id="afm2" name="afm2" value="{{ old('afm2') }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                            </div>
-                                        </div> --}}
+                                        
                                         <div class="p-2 w-1/2 mx-auto">
                                             <div class="relative mb-4">
                                                 <label for="sem" class="leading-7 text-sm text-gray-600">SEM</label>
                                                 <input type="file" id="sem" name="sem" value="{{ old('sem') }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                             </div>
                                         </div>
-                                    {{-- <div class="p-2 w-1/2 mx-auto">
-                                        <div class="relative mb-4">
-                                          <label for="sem1" class="leading-7 text-sm text-gray-600">SEM</label>
-                                          <input type="file" id="sem1" name="sem1" value="{{ old('sem1') }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                          <input type="file" id="sem2" name="sem2" value="{{ old('sem2') }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                        </div>
-                                    </div> --}}
+                                   
                                     <div class="p-2 w-1/2 mx-auto">
                                         <div class="relative mb-4">
                                           <label for="dsc" class="leading-7 text-sm text-gray-600">DSC</label>
                                           <input type="file" id="dsc" name="dsc" value="{{ old('dsc') }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                         </div>
                                     </div>
-                                    {{-- <div class="p-2 w-1/2 mx-auto">
-                                        <div class="relative mb-4">
-                                          <label for="dsc1" class="leading-7 text-sm text-gray-600">DSC</label>
-                                          <input type="file" id="dsc1" name="dsc1" value="{{ old('dsc1') }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                          <input type="file" id="dsc2" name="dsc2" value="{{ old('dsc2') }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                        </div>
-                                    </div> --}}
+                                    
                                     <div class="p-2 w-1/2 mx-auto">
                                         <div class="relative mb-4">
                                           <label for="ftir" class="leading-7 text-sm text-gray-600">FT-IR</label>
                                           <input type="file" id="ftir" name="ftir" value="{{ old('ftir') }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                         </div>
                                     </div>
-                                    {{-- <div class="p-2 w-1/2 mx-auto">
-                                        <div class="relative mb-4">
-                                          <label for="ftir1" class="leading-7 text-sm text-gray-600">FT-IR</label>
-                                          <input type="file" id="ftir1" name="ftir1" value="{{ old('ftir1') }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                          <input type="file" id="ftir2" name="ftir2" value="{{ old('ftir2') }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                        </div>
-                                    </div> --}}
+                                    
                                     <div class="p-2 w-1/2 mx-auto">
                                         <div class="relative mb-4">
                                           <label for="clsm" class="leading-7 text-sm text-gray-600">CLSM</label>

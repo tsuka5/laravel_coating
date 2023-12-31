@@ -17,7 +17,7 @@
                             <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Experiment</h1>
                             </div>
                             <div class="lg:w-1/2 md:w-2/3 mx-auto">
-                                <div class="container border-b-4">
+                                <div class="container">
                                     <div class="flex justify-center flex-wrap flex-row">
                                         <div class="p-2 w-1/2 mx-auto">
                                             <div class="relative">
@@ -51,6 +51,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                <HR>
                         
     
                                 
@@ -109,6 +110,7 @@
                                       </div>
                                   </div> 
                                 </div>
+                                <HR>
                                 @endforeach
                                   
     
@@ -158,7 +160,7 @@
                                     </div>
                                   </div>
                                 </div>
-    
+                                <HR>
                                 @endforeach
                                 
                             
@@ -309,7 +311,7 @@
                                   </div>
                                 </div>
                               </div>
-                              
+                              <HR>
                               @endforeach
 
                                 <div class="flex flex-col text-center w-full mb-4 mt-12">
@@ -456,6 +458,7 @@
                                     </div>
                                   </div>
                                 </div>
+                                <HR>
                                 @endforeach
                   
                                 <div class="flex flex-col text-center w-full mb-4 mt-12">
@@ -508,7 +511,63 @@
                                     </div>
                                   </div>
                                 </div>
+                                <HR>
                                 @endforeach
+
+                                <div class="flex flex-col text-center w-full mb-4 mt-12">
+                                  <h4 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Note</h4>
+                              </div>
+
+
+                            @foreach ($notes as $note)
+                            <div class="m-2">
+                              <div class="flex flex-wrap">
+                                <div class="p-2 w-1/2 mx-auto">
+                                  <div class="relative">
+                                      <label for="note" class="leading-7 text-sm text-gray-600">Note</label>
+                                      <div class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">{{ $note->note }}</div>
+                                  </div>
+                                </div>
+                                
+                                
+                                <div class="p-2 w-1/2 mx-auto">
+                                  <div class="relative">
+                                    <label for="img1" class="leading-7 text-sm text-gray-600">Image1</label>
+                                    <a href="{{ asset('storage/'.$note->img1) }}" download="img1">
+                                      <img src="{{ asset('storage/'.$note->img1) }}" alt="" style="max-width: 200px; max-height: 200px;">
+                                    </a>
+                                  </div>
+                                </div>
+                                <div class="p-2 w-1/2 mx-auto">
+                                  <div class="relative">
+                                    <label for="img2" class="leading-7 text-sm text-gray-600">Image2</label>
+                                    <a href="{{ asset('storage/'.$note->img2) }}" download="img2">
+                                      <img src="{{ asset('storage/'.$note->img2) }}" alt="" style="max-width: 200px; max-height: 200px;">
+                                    </a>
+                                  </div>
+                                </div>
+                                <div class="p-2 w-1/2 mx-auto">
+                                  <div class="relative">
+                                    <label for="img3" class="leading-7 text-sm text-gray-600">Image3</label>
+                                    <a href="{{ asset('storage/'.$note->img3) }}" download="img3">
+                                      <img src="{{ asset('storage/'.$note->img3) }}" alt="" style="max-width: 200px; max-height: 200px;">
+                                    </a>
+                                  </div>
+                                </div>
+                                <div class="p-2 w-1/2 mx-auto">
+                                  <div class="relative">
+                                    <label for="img4" class="leading-7 text-sm text-gray-600">Image4</label>
+                                    <a href="{{ asset('storage/'.$note->img4) }}" download="img4">
+                                      <img src="{{ asset('storage/'.$note->img4) }}" alt="" style="max-width: 200px; max-height: 200px;">
+                                    </a>
+                                  </div>
+                                </div>
+                                
+                              </div>
+                            </div>
+                            <HR>
+                            
+                            @endforeach
                                         
                                 
                                 <div class="p-2 w-full flex justify-around mt-4">

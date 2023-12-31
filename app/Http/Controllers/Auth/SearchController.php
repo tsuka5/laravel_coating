@@ -16,6 +16,7 @@ use App\Models\Fruit_detail;
 use App\Models\Bacteria_detail;
 use App\Models\Antibacteria_test_type;
 use App\Models\Ph_material_detail;
+use App\Models\Note;
 use Illuminate\Database\Eloquent\Builder;
 
 class SearchController extends Controller
@@ -172,12 +173,13 @@ class SearchController extends Controller
         $charactaristic_tests = Charactaristic_test::where('experiment_id', $id)->get();
         $storing_tests = Storing_test::where('experiment_id', $id)->get();
         $antibacteria_tests = Antibacteria_test::where('experiment_id', $id)->get();
+        $notes = Note::where('experiment_id', $id)->get();
         
         
 
         return view('user.search.show', compact('experiment', 'materials','film_conditions',
                     'charactaristic_tests','storing_tests','antibacteria_tests', 'materials_list',
-                    'ph_materials_list', 'fruits_list', 'bacteria_list', 'antibacteria_test_list'));
+                    'ph_materials_list', 'fruits_list', 'bacteria_list', 'antibacteria_test_list','notes'));
 
         // $experiment = Experiment::findOrFail($id);
         // $materials = Material::where('experiment_id', $id)->get();

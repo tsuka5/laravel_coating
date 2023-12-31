@@ -23,7 +23,7 @@
                         please click on the link below, which describes how to use the web database</p><br>
                     <a href="{{ asset('storage/' . $pdfFile->pdf_file_path) }}" target="_blank" class="text-black hover:text-blue-500">→ PDF_file (How to use Web database)</a><br><br>
                     @endif
-                    <p class="text-xl">If you find some error, please tell ozaki.</p>
+                    <p class="text-xl">If you find any errors, please let us know using <a href="{{ route('user.contact.index')}}" class="text-black hover:text-blue-500">the contact page</a></p>
                     
 
                     

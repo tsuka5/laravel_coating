@@ -17,6 +17,7 @@ use App\Models\Bacteria_detail;
 use App\Models\Ph_material_detail;
 use App\Models\Antibacteria_test_type;
 use App\Models\Affiliation;
+use App\Models\Note;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
@@ -54,10 +55,14 @@ class ProfileController extends Controller
             $charactaristic_testCounts[$experiment->id] = Charactaristic_test::where('experiment_id', $experiment->id)->count();
             $storing_testCounts[$experiment->id] = Storing_test::where('experiment_id', $experiment->id)->count();
             $antibacteria_testCounts[$experiment->id] = Antibacteria_test::where('experiment_id', $experiment->id)->count();
+            $noteCount = Note::where('experiment_id', $experiment->id)->count();
+            if ($noteCount > 0) {
+                $noteCounts[$experiment->id] = $noteCount;
+    }
         }
        
         return view('user.profile.index', compact('userInformation','experiments','materialCounts','film_conditionCounts',
-            'charactaristic_testCounts','storing_testCounts','antibacteria_testCounts'));
+            'charactaristic_testCounts','storing_testCounts','antibacteria_testCounts', 'noteCounts'));
     }
 
     /**
@@ -75,6 +80,7 @@ class ProfileController extends Controller
         $fruits_list = Fruit_detail::orderby('name', 'asc')->get();
         $bacteria_list = Bacteria_detail::orderby('name','asc')->get();
         $antibacteria_test_list = Antibacteria_test_type::orderby('name','asc')->get();
+
         // $id を使用して必要な処理を行う
         if ($formType === 'material') {
             return view('user.profile.material_create', compact('id', 'materials_list', 'ph_materials_list'));
@@ -86,8 +92,10 @@ class ProfileController extends Controller
             return view('user.profile.storing_test_create', compact('id', 'fruits_list'));
         } elseif ($formType === 'antibacteria_test') {
             return view('user.profile.antibacteria_test_create', compact('id', 'bacteria_list', 'fruits_list', 'antibacteria_test_list'));
+        } elseif ($formType === 'note') {
+            return view('user.profile.note_create', compact('id'));
         } 
-    }
+}
 
     /**
      * Store a newly created resource in storage.
@@ -281,7 +289,7 @@ class ProfileController extends Controller
             $storing_test-> clsm = $filePath_clsm;
             $storing_test->save();
 
-        }else{
+        }elseif($request->formType === 'antibacteria_test'){
             $request->validate([
                 'invivo_invitro' => ['string', 'nullable'],
                 'bacteria_concentration' => ['numeric', 'nullable'],
@@ -299,6 +307,23 @@ class ProfileController extends Controller
             $antibacteria_test-> bacteria_concentration = $request->bacteria_concentration;
             $antibacteria_test-> mic = $request->mic;
             $antibacteria_test->save();
+        }else{
+            $request->validate([
+                'note' => ['string', 'nullable'],
+                'img1' => ['string', 'nullable'],
+                'img2' => ['string', 'nullable'],
+                'img3' => ['string', 'nullable'],
+                'img4' => ['string', 'nullable'],
+            ]);
+            $note = new Note;
+            $note->experiment_id = $request->id;
+            $note->note = $request->note;
+            $note->img1 = $request->img1;
+            $note->img2 = $request->img2;
+            $note->img3 = $request->img3;
+            $note->img4 = $request->img4;
+            $note->save();
+        
         }
 
 
@@ -341,12 +366,13 @@ class ProfileController extends Controller
         $charactaristic_tests = Charactaristic_test::where('experiment_id', $id)->get();
         $storing_tests = Storing_test::where('experiment_id', $id)->get();
         $antibacteria_tests = Antibacteria_test::where('experiment_id', $id)->get();
-        
+        $notes = Note::where('experiment_id', $id)->get();
         
 
         return view('user.profile.edit', compact('experiment', 'materials','film_conditions',
                     'charactaristic_tests','storing_tests','antibacteria_tests', 'materials_list',
-                    'ph_materials_list', 'fruits_list', 'bacteria_list', 'antibacteria_test_list'));
+                    'ph_materials_list', 'fruits_list', 'bacteria_list', 'antibacteria_test_list',
+                    'notes'));
    
     }
 
@@ -528,6 +554,46 @@ class ProfileController extends Controller
             $antibacteria_test->save();
 
         }
+
+        $notes = Note::where('experiment_id', $id)->get();
+        foreach($notes as $note) {
+            $img1 = $request->file("img1.{$note->id}");
+            $img2 = $request->file("img2.{$note->id}");
+            $img3 = $request->file("img3.{$note->id}");
+            $img4 = $request->file("img4.{$note->id}");
+ 
+            $filePath_img1 = $img1 ? $img1->store('images', 'public') : null;
+            $filePath_img2 = $img2 ? $img2->store('images', 'public') : null;
+            $filePath_img3 = $img3 ? $img3->store('images', 'public') : null;
+            $filePath_img4 = $img4 ? $img4->store('images', 'public') : null;
+
+            if (!$img1){
+                $previousImg1Value = $note->img1;
+                $filePath_img1 = $previousImg1Value ? $previousImg1Value : null;
+            }
+            if (!$img2){
+                $previousImg2Value = $note->img2;
+                $filePath_img2 = $previousImg2Value ? $previousImg2Value : null;
+            }
+            if (!$img3){
+                $previousImg3Value = $note->img3;
+                $filePath_img3 = $previousImg3Value ? $previousImg3Value : null;
+            }
+            if (!$img4){
+                $previousImg4Value = $note->img4;
+                $filePath_img4 = $previousImg4Value ? $previousImg4Value : null;
+            }
+            
+
+            $note-> experiment_id = $id;
+            $note-> note = $request->input("note.$note->id");
+            $note-> img1 = $filePath_img1;
+            $note-> img2 = $filePath_img2;
+            $note-> img3 = $filePath_img3;
+            $note-> img4 = $filePath_img4;
+            $note->save();
+        }
+        // dd($notes);
 
  
         return redirect()

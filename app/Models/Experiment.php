@@ -15,6 +15,7 @@ use App\Models\Charactaristic_test;
 use App\Models\Storing_test;
 use App\Models\Material;
 use App\Models\Additive;
+use App\Models\Note;
 
 
 
@@ -77,6 +78,10 @@ class experiment extends Model
     public function additive(): HasMany
     {
         return $this->hasMany(Additive::class);
+    }
+    public function memo(): HasMany
+    {
+        return $this->hasMany(Note::class);
     }
  
 }

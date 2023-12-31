@@ -35,6 +35,7 @@ class DatabaseSeeder extends Seeder
             Antibacteria_testSeeder::class,
             Storing_testSeeder::class,
             AdminSeeder::class,
+            NoteSeeder::class,
             
            
         ]);
