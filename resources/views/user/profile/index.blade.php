@@ -55,27 +55,27 @@
                                             
                                         <div class="justify-start  grid grid-cols-1 gap-y-2">
                                             <div class='flex justify-center mt-2'>
-                                                <button onclick="location.href='{{ route('user.create', ['id' => $experiment->id, 'material'])}}'" class="text-white bg-gray-400 py-2 hover:bg-gray-500 rounded w-3/5">Material</button>
+                                                <button onclick="location.href='{{ route('user.create', ['id' => $experiment->id, 'material'])}}'" class="text-white bg-gray-400 py-2 hover:bg-gray-500 rounded w-[170px]">Material</button>
                                                 <div class="rounded-full w-[30px] h-[30px] ml-4 mt-1 text-white bg-red-500"> <div class="flex justify-center mt-1">{{ $materialCounts[$experiment->id] }}</div> </div>
                                             </div>
                                             <div class='flex justify-center mt-2'>
-                                                <button onclick="location.href='{{ route('user.create', ['id' => $experiment->id, 'film_condition'])}}'" class="text-white bg-gray-400 py-2 hover:bg-gray-500 rounded w-3/5">Film_Condition</button>
+                                                <button onclick="location.href='{{ route('user.create', ['id' => $experiment->id, 'film_condition'])}}'" class="text-white bg-gray-400 py-2 hover:bg-gray-500 rounded w-[170px]">Film_Condition</button>
                                                 <div class="rounded-full w-[30px] h-[30px] ml-4 mt-1 text-white bg-red-500"> <div class="flex justify-center mt-1">{{ $film_conditionCounts[$experiment->id] }}</div> </div>
                                             </div>
                                             <div class='flex justify-center mt-2'>
-                                                <button onclick="location.href='{{ route('user.create', ['id' => $experiment->id, 'charactaristic_test'])}}'" class="text-white bg-gray-400 py-2 hover:bg-gray-500 rounded w-3/5">Characteristic_Test</button>
+                                                <button onclick="location.href='{{ route('user.create', ['id' => $experiment->id, 'charactaristic_test'])}}'" class="text-white bg-gray-400 py-2 hover:bg-gray-500 rounded w-[170px]">Characteristic_Test</button>
                                                 <div class="rounded-full w-[30px] h-[30px] ml-4 mt-1 text-white bg-red-500"> <div class="flex justify-center mt-1">{{ $charactaristic_testCounts[$experiment->id] }}</div> </div>
                                             </div>
                                             <div class='flex justify-center mt-2'>
-                                                <button onclick="location.href='{{ route('user.create', ['id' => $experiment->id, 'storing_test'])}}'" class="text-white bg-gray-400 py-2 hover:bg-gray-500 rounded w-3/5">Storing_Test</button>
+                                                <button onclick="location.href='{{ route('user.create', ['id' => $experiment->id, 'storing_test'])}}'" class="text-white bg-gray-400 py-2 hover:bg-gray-500 rounded w-[170px]">Storing_Test</button>
                                                 <div class="rounded-full w-[30px] h-[30px] ml-4 mt-1 text-white bg-red-500"> <div class="flex justify-center mt-1">{{ $storing_testCounts[$experiment->id] }}</div> </div>
                                             </div>
                                             <div class='flex justify-center mt-2'>
-                                                <button onclick="location.href='{{ route('user.create', ['id' => $experiment->id, 'antibacteria_test'])}}'" class="text-white bg-gray-400 py-2 hover:bg-gray-500 rounded w-3/5">Antibacteria_Test</button>
+                                                <button onclick="location.href='{{ route('user.create', ['id' => $experiment->id, 'antibacteria_test'])}}'" class="text-white bg-gray-400 py-2 hover:bg-gray-500 rounded w-[170px]">Antibacteria_Test</button>
                                                 <div class="rounded-full w-[30px] h-[30px] ml-4 mt-1 text-white bg-red-500"> <div class="flex justify-center mt-1">{{ $antibacteria_testCounts[$experiment->id] }}</div> </div>
                                             </div>
                                             <div class='flex justify-center mt-2 mb-4'>
-                                                <button onclick="location.href='{{ route('user.create', ['id' => $experiment->id, 'note'])}}'" class="text-white bg-gray-400 py-2 hover:bg-gray-500 rounded w-3/5">Note</button>
+                                                <button onclick="location.href='{{ route('user.create', ['id' => $experiment->id, 'note'])}}'" class="text-white bg-gray-400 py-2 hover:bg-gray-500 rounded w-[170px]">Note</button>
                                                 <div class="rounded-full w-[30px] h-[30px] ml-4 mt-1 text-white bg-red-500"> <div class="flex justify-center mt-1">{{ $noteCounts[$experiment->id] }}</div> </div>
                                             </div>
                                         </div>
