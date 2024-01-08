@@ -556,7 +556,6 @@
                             <div class="p-2 w-1/2 mx-auto">
                               <div class="relative">
                                   <label for="note" class="leading-7 text-sm text-gray-600">Note </label>
-                                  {{-- <input type="text" id="note" name="note[{{ $note->id }}]" value="{{ $note->note }}"  class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"> --}}
                                   <textarea id="note" name="note[{{ $note->id }}]" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-2 px-3 leading-6 transition-colors duration-200 ease-in-out" maxlength="1000" rows="7" cols="20">{{ $note->note }}</textarea>
                               </div>
                             </div>
@@ -610,3 +609,28 @@
       </div>
   </div>
 </x-app-layout>
+
+<script>
+  function deleteImage(id) {
+      if (confirm('Are you sure you want to delete this image?')) {
+          fetch(`/delete-image/${id}`, {
+              method: 'DELETE',
+              headers: {
+                  'X-CSRF-TOKEN': '{{ csrf_token() }}'
+              }
+          })
+          .then(response => {
+              if (response.ok) {
+                  // 削除成功時の処理（例：画像を非表示にするなど）
+                  console.log('Image deleted successfully');
+              } else {
+                  // 削除失敗時の処理
+                  console.error('Failed to delete image');
+              }
+          })
+          .catch(error => {
+              console.error('Error:', error);
+          });
+      }
+  }
+</script>
