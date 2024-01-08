@@ -53,21 +53,6 @@
 
                     <x-slot name="content">
                         
-                        <x-nav-link :href="route('user.dashboard')" :active="request()->routeIs('user.dashboard')">
-                            {{ __('Dashboard') }}
-                        </x-nav-link>
-                        <x-nav-link :href="route('user.profile.index')" :active="request()->routeIs('user.profile.index')">
-                                Profile
-                        </x-nav-link>
-                        <x-nav-link :href="route('user.search.index')" :active="request()->routeIs('user.search.index')">
-                            Search
-                        </x-nav-link>
-                        <x-nav-link :href="route('user.category.index')" :active="request()->routeIs('user.category.index')">
-                            Category
-                        </x-nav-link>
-                        <x-nav-link :href="route('user.contact.index')" :active="request()->routeIs('user.contact.index')">
-                            Contact
-                        </x-nav-link>
                             <form method="POST" action="{{ route('user.logout') }}">
                             @csrf
 
