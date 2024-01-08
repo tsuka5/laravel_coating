@@ -103,7 +103,7 @@ Route::middleware('auth:admin')->group(function () {
 Route::middleware('auth:admin')->group(function (){
     Route::get('/pdf_file/index', [Pdf_fileController::class, 'index'])->name('pdf_file.index');
     Route::post('/pdf_file/index', [Pdf_fileController::class, 'store'])->name('pdf_file.store');
-
+    Route::post('destroy/{pdf}',[Pdf_fileController::class,'destroy'])->name('pdf.destroy');
 });
 
 Route::middleware('auth:admin')->group(function (){

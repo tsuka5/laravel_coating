@@ -57,6 +57,7 @@
                                   <tr>
                                     <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">Date</th>
                                     <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">Name</th>
+                                    <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl"></th>
                                   </tr>
                                 </thead>
                                 <tbody>
@@ -64,6 +65,12 @@
                                       <tr>
                                           <td class="px-4 py-3">{{ $uploadedFile->created_at }}</td>
                                           <td class="px-4 py-3">{{ $uploadedFile->name }}</td>
+                                          <form id="delete_{{ $uploadedFile->id }}" method="post" action="{{ route('admin.pdf.destroy', ['pdf' => $uploadedFile->id ])}}">
+                                            @csrf
+                                            <td class="px-4 py-3">
+                                                <a href="#" data-id="{{ $uploadedFile->id }}" onclick="deletePost(this)" class="text-white bg-red-400 border-0 py-2 px-4 focus:outline-none hover:bg-red-500 rounded">Delete</a>
+                                            </td>
+                                        </form>
                                       </tr>
                                   @endforeach
                                 </tbody>
@@ -77,6 +84,15 @@
             </div>
         </div>
     </div>
+    <script>
+      function deletePost(e){
+          'use strict'
+          if(confirm('Are you sure you want to delete this data?')){
+              document.getElementById('delete_' + e.dataset.id).submit()
+          }
+      }
+
+  </script>
   
   </x-app-layout>
   

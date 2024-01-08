@@ -48,4 +48,14 @@ class Pdf_fileController extends Controller
         ->with(['message'=>'Registration Complete',
         'status'=>'info']);
     }
+
+    public function destroy(string $id)
+    {
+        Pdf_file::findOrFail($id)->delete(); 
+
+        return redirect()
+        ->route('admin.pdf_file.index')
+        ->with(['message'=>'Delete Complete',
+        'status'=>'alert']);
+    }
 }
