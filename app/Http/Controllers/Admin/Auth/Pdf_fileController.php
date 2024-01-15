@@ -34,14 +34,12 @@ class Pdf_fileController extends Controller
      */
     public function store(Request $request)
     {
-        // ファイルを保存
-        $uploadedFile = $request->file('pdf_file_path'); // リクエストからファイルを取得
-        $filePath = $uploadedFile->store('pdf_files','public'); // ファイルを特定のディレクトリに保存し、そのパスを取得
+        $uploadedFile = $request->file('pdf_file_path'); 
+        $filePath = $uploadedFile->store('pdf_files','public');
 
-        // ファイルパスをデータベースに保存
-        $pdfModel = new Pdf_file; // PdfModel は作成したモデル
+        $pdfModel = new Pdf_file; 
         $pdfModel->name = $request->name;
-        $pdfModel->pdf_file_path = $filePath; // ファイルパスをデータベースのカラムに保存
+        $pdfModel->pdf_file_path = $filePath; 
         $pdfModel->save();
 
         return redirect()->route('admin.pdf_file.index')
@@ -59,3 +57,10 @@ class Pdf_fileController extends Controller
         'status'=>'alert']);
     }
 }
+
+ // ファイルを保存
+ // リクエストからファイルを取得
+ // ファイルを特定のディレクトリに保存し、そのパスを取得
+  // ファイルパスをデータベースに保存
+   // PdfModel は作成したモデル
+   // ファイルパスをデータベースのカラムに保存

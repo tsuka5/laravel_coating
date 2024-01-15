@@ -12,7 +12,6 @@
 
                         <div class="container px-5 mx-auto">
                             <x-flash-message status="session('status')" />
-                            {{-- <h3 class="flex justify-center my-5 underline">To register a new experiment, start here</h3> --}}
                             <div class='flex justify-center mt-4 mb-4'>
                                 <button onclick="location.href='{{ route('user.create.experiment') }}'" class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">Data_Entry</button>
                             </div>
@@ -44,7 +43,8 @@
                                             </div>
                                         </div>
                                         <div class="flex justify-center my-2">
-                                            <button onclick="location.href='{{ route('user.profile.edit', ['profile' => $experiment->id])}}'" class="mb-2 h-9 text-white bg-indigo-400 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-500 rounded">Edit</button>
+                                            <button onclick="location.href='{{ route('user.profile.edit', ['profile' => $experiment->id])}}'" class="mb-2 h-9 text-white bg-indigo-400 border-0 py-2 px-4 focus:outline-none
+                                                 hover:bg-indigo-500 rounded">Edit</button>
                                             <form  class="mt-1.5" id="delete_{{ $experiment->id }}" method="post" action="{{ route('user.profile.destroy', ['profile' => $experiment->id ])}}">
                                                 @csrf
                                                 @method('delete')  
@@ -79,32 +79,7 @@
                                                 <div class="rounded-full w-[30px] h-[30px] ml-4 mt-1 text-white bg-red-500"> <div class="flex justify-center mt-1">{{ $noteCounts[$experiment->id] }}</div> </div>
                                             </div>
                                         </div>
-                                        {{-- <div class="justify-start">
-                                            <div class='flex justify-center mt-2'>
-                                                <button onclick="location.href='{{ route('user.create', ['id' => $experiment->id, 'material'])}}'" class="text-white bg-gray-400 border-0 py-2 px-4 focus:outline-none hover:bg-gray-500 rounded">Material</button>
-                                                <div class="rounded-full w-[30px] h-[30px] ml-4 mt-1 text-white bg-red-500"> <div class="flex justify-center mt-1">{{ $materialCounts[$experiment->id] }}</div> </div>
-                                            </div>
-                                            <div class='flex justify-center mt-2'>
-                                                <button onclick="location.href='{{ route('user.create', ['id' => $experiment->id, 'film_condition'])}}'" class="text-white bg-gray-400 border-0 py-2 px-4 focus:outline-none hover:bg-gray-500 rounded">Film_Condition</button>
-                                                <div class="rounded-full w-[30px] h-[30px] ml-4 mt-1 text-white bg-red-500"> <div class="flex justify-center mt-1">{{ $film_conditionCounts[$experiment->id] }}</div> </div>
-                                            </div>
-                                            <div class='flex justify-center mt-2'>
-                                                <button onclick="location.href='{{ route('user.create', ['id' => $experiment->id, 'charactaristic_test'])}}'" class="text-white bg-gray-400 border-0 py-2 px-4 focus:outline-none hover:bg-gray-500 rounded">Characteristic_Test</button>
-                                                <div class="rounded-full w-[30px] h-[30px] ml-4 mt-1 text-white bg-red-500"> <div class="flex justify-center mt-1">{{ $charactaristic_testCounts[$experiment->id] }}</div> </div>
-                                            </div>
-                                            <div class='flex justify-center mt-2'>
-                                                <button onclick="location.href='{{ route('user.create', ['id' => $experiment->id, 'storing_test'])}}'" class="text-white bg-gray-400 border-0 py-2 px-4 focus:outline-none hover:bg-gray-500 rounded">Storing_Test</button>
-                                                <div class="rounded-full w-[30px] h-[30px] ml-4 mt-1 text-white bg-red-500"> <div class="flex justify-center mt-1">{{ $storing_testCounts[$experiment->id] }}</div> </div>
-                                            </div>
-                                            <div class='flex justify-center mt-2 mb-4'>
-                                                <button onclick="location.href='{{ route('user.create', ['id' => $experiment->id, 'antibacteria_test'])}}'" class="text-white bg-gray-400 border-0 py-2 px-4 focus:outline-none hover:bg-gray-500 rounded">Antibacteria_Test</button>
-                                                <div class="rounded-full w-[30px] h-[30px] ml-4 mt-1 text-white bg-red-500"> <div class="flex justify-center mt-1">{{ $antibacteria_testCounts[$experiment->id] }}</div> </div>
-                                            </div>
-                                            <div class='flex justify-center mt-2 mb-4'>
-                                                <button onclick="location.href='{{ route('user.create', ['id' => $experiment->id, 'note'])}}'" class="text-white bg-gray-400 border-0 py-2 px-4 focus:outline-none hover:bg-gray-500 rounded">Note</button>
-                                                <div class="rounded-full w-[30px] h-[30px] ml-4 mt-1 text-white bg-red-500"> <div class="flex justify-center mt-1">{{ $noteCounts[$experiment->id] }}</div> </div>
-                                            </div>
-                                        </div> --}}
+
                                     </div>
                                 @endforeach
                                 </div>
@@ -125,6 +100,5 @@
                 document.getElementById('delete_' + e.dataset.id).submit()
             }
         }
-
     </script>
 </x-app-layout>

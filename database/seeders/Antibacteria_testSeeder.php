@@ -10,9 +10,6 @@ use Illuminate\Support\Facades\Hash;
 
 class Antibacteria_testSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         DB::table('antibacteria_tests')->insert([

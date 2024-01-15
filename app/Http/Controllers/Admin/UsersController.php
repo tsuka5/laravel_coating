@@ -20,7 +20,7 @@ class UsersController extends Controller
      * Display a listing of the resource.
      */
 
-    public function __construct()  //コントローラーでのバリデーション
+    public function __construct() 
     {
         $this->middleware('auth:admin');
     }
@@ -28,6 +28,7 @@ class UsersController extends Controller
     public function index()
     {
         $users = User::select('id', 'name', 'email', 'created_at')
+        ->orderBy('created_at','desc')
         ->paginate(5);
        
         return view('admin.users.index', compact('users'));
@@ -45,27 +46,20 @@ class UsersController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request) //フォームに入力した値がRequestクラスにありそれをインスタンス化する役割
+    public function store(Request $request) 
     {
-        // $request->name;
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'confirmed', 'min:8'],
         ]);
 
-        // User::create([
-        //     'name' => $request->name,
-        //     'email' => $request->email,
-        //     'password' => Hash::make($request->password),
-        // ]);
-
-        $affiliation = new User;
-        $affiliation->name = $request->name;
-        $affiliation->affiliation_id = $request->affiliation;
-        $affiliation->email = $request->email;
-        $affiliation->password = $request->password;
-        $affiliation->save();
+        $user = new User;
+        $user->name = $request->name;
+        $user->affiliation_id = $request->affiliation;
+        $user->email = $request->email;
+        $user->password = $request->password;
+        $user->save();
 
         return redirect()->route('admin.users.index')
         ->with(['message'=>'Registration Complete',
@@ -75,10 +69,6 @@ class UsersController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -113,7 +103,7 @@ class UsersController extends Controller
      */
     public function destroy(string $id)
     {
-        User::findOrFail($id)->delete(); //ソフトデリート
+        User::findOrFail($id)->delete(); 
 
         return redirect()
         ->route('admin.users.index')

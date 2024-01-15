@@ -13,7 +13,8 @@
                         <div class="container px-5 mx-auto">
                             <x-flash-message status="session('status')" />
                             <div class='flex justify-end mb-4'>
-                                <button onclick="location.href='{{ route('admin.users.create') }}'" class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">Register</button>
+                                <button onclick="location.href='{{ route('admin.users.create') }}'" class="text-white
+                                 bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">Register</button>
                             </div>
                           <div class="lg:w-2/3 w-full mx-auto overflow-auto">
                             <table class="table-auto w-full text-left whitespace-no-wrap">
@@ -33,14 +34,15 @@
                                         <td class="px-4 py-3">{{ $user->email }}</td>
                                         <td class="px-4 py-3">{{ $user->created_at->diffForHumans() }}</td>
                                         <td class="px-4 py-3">
-                                            <button onclick="location.href='{{ route('admin.users.edit', ['user' => $user->id])}}'" class="text-white bg-indigo-400 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-500 rounded">Edit</button>
+                                            <button onclick="location.href='{{ route('admin.users.edit', ['user' => $user->id])}}'" class="text-white
+                                                 bg-indigo-400 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-500 rounded">Edit</button>
                                         </td>
                                         <form id="delete_{{ $user->id }}" method="post" action="{{ route('admin.users.destroy', ['user' => $user->id ])}}">
                                             @csrf
                                             @method('delete') 
-                                            {{-- リソースコントローラに渡す時だけ必要になる。それ以外はそれぞれのメソッドに合わせる。 --}}
                                             <td class="px-4 py-3">
-                                                <a href="#" data-id="{{ $user->id }}" onclick="deletePost(this)" class="text-white bg-red-400 border-0 py-2 px-4 focus:outline-none hover:bg-red-500 rounded">Delete</a>
+                                                <a href="#" data-id="{{ $user->id }}" onclick="deletePost(this)" class="text-white
+                                                     bg-red-400 border-0 py-2 px-4 focus:outline-none hover:bg-red-500 rounded">Delete</a>
                                             </td>
                                         </form>
                                     </tr>
@@ -52,17 +54,6 @@
                         </div>
                         </div>
                       </section>
-                    {{-- エロクアント
-                    @foreach ($e_all as $e_user)
-                    {{ $e_user->name }}
-                    {{ $e_user->created_at->diffForHumans() }}
-                    @endforeach
-                    <br>
-                    クエリビルダ
-                    @foreach ($q_get as $q_user)
-                    {{ $q_user->name }}
-                    {{ Carbon\Carbon::parse($q_user->created_at)->diffForHumans() }}
-                    @endforeach --}}
                 </div>
             </div>
         </div>
@@ -74,6 +65,5 @@
                 document.getElementById('delete_' + e.dataset.id).submit()
             }
         }
-
     </script>
 </x-app-layout>

@@ -37,10 +37,7 @@ class ProfileController extends Controller
 
     public function index()
     {
-
         $userInformation = Auth::user();
-
-        // $experiments = Experiment::where('user_id', Auth::user()->id)->get();
         $experiments = Experiment::where('user_id', Auth::user()->id)->orderby('id', 'desc')->paginate(4);
 
         $materialCounts = [];
