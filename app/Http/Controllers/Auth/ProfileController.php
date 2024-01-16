@@ -77,19 +77,18 @@ class ProfileController extends Controller
         $bacteria_list = Bacteria_detail::orderby('name','asc')->get();
         $antibacteria_test_list = Antibacteria_test_type::orderby('name','asc')->get();
 
-        // $id を使用して必要な処理を行う
         if ($formType === 'material') {
-            return view('user.profile.material_create', compact('id', 'materials_list', 'ph_materials_list'));
+            return view('user.profile.additional_create', compact('id', 'materials_list', 'ph_materials_list', 'formType'));
         } elseif ($formType === 'film_condition') {
-            return view('user.profile.film_condition_create', ['id'=>$id]);
+            return view('user.profile.additional_create', compact('id', 'formType'));
         } elseif ($formType === 'charactaristic_test') {
-            return view('user.profile.charactaristic_test_create', ['id'=>$id]);
+            return view('user.profile.additional_create', compact('id', 'formType'));
         } elseif ($formType === 'storing_test') {
-            return view('user.profile.storing_test_create', compact('id', 'fruits_list'));
+            return view('user.profile.additional_create', compact('id', 'fruits_list', 'formType'));
         } elseif ($formType === 'antibacteria_test') {
-            return view('user.profile.antibacteria_test_create', compact('id', 'bacteria_list', 'fruits_list', 'antibacteria_test_list'));
+            return view('user.profile.additional_create', compact('id', 'bacteria_list', 'fruits_list', 'antibacteria_test_list', 'formType'));
         } elseif ($formType === 'note') {
-            return view('user.profile.note_create', compact('id'));
+            return view('user.profile.additional_create', compact('id', 'formType'));
         } 
 }
 
@@ -322,18 +321,9 @@ class ProfileController extends Controller
         
         }
 
-
-       
-
         return redirect()->route('user.profile.index')
         ->with(['message'=>'Registration Complete',
         'status'=>'info'] );
-
-       
-
-        //save()を使わないとcreateでは同じフォーム内のインスタンスを使うことができなかった。
-
-       
     }
 
 

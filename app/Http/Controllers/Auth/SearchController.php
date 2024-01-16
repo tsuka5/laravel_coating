@@ -21,13 +21,8 @@ use Illuminate\Database\Eloquent\Builder;
 
 class SearchController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    
-     public function index(Request $request)
+         public function index(Request $request)
      {
-
         $keyword = $request->input('keyword');
         $material = $request->input('material');
         $bacterium = $request->input('bacterium');
@@ -35,7 +30,6 @@ class SearchController extends Controller
         $ph_material = $request->input('ph_material');
         $antibacteria_test_type = $request->input('antibacteria_test_type');
 
-        //一旦全部のデータをとる
         $selected_materials = Material_detail::query();
         $selected_bacteria = Bacteria_detail::query();
         $selected_fruits = Fruit_detail::query();
@@ -125,13 +119,11 @@ class SearchController extends Controller
 
             $selected_experiments = $selected_experiments->paginate(10);
     
-
         $materials_list = Material::select('material_id')->distinct()->get();
         $fruits_list = Storing_test::select('storing_fruit_id')->distinct()->get();
         $bacteria_list = Antibacteria_test::select('bacteria_id')->distinct()->get();
         $phMaterial_list = Material::select('ph_material_id')->distinct()->get();
         $antibacteriaTypeTest_list = Antibacteria_test::select('test_id')->distinct()->get();
-
     
         return view('user.search.index', compact(
             'materials_list', 'bacteria_list', 'fruits_list', 'phMaterial_list', 'antibacteriaTypeTest_list',
@@ -139,26 +131,6 @@ class SearchController extends Controller
         ));
  
         } 
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         $materials_list = Material_detail::orderby('name', 'asc')->get();
@@ -181,35 +153,5 @@ class SearchController extends Controller
                     'charactaristic_tests','storing_tests','antibacteria_tests', 'materials_list',
                     'ph_materials_list', 'fruits_list', 'bacteria_list', 'antibacteria_test_list','notes'));
 
-        // $experiment = Experiment::findOrFail($id);
-        // $materials = Material::where('experiment_id', $id)->get();
-        // $film_conditions = Film_condition::where('experiment_id', $id)->get();
-        
-        
-        // return view('user.search.show', compact('experiment', 'materials','film_conditions'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 }

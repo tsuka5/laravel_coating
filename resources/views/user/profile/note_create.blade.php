@@ -78,33 +78,4 @@
       </div>
   </div>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const dynamicFieldsContainer = document.getElementById('dynamicFields');
-        const addDynamicGroupButton = document.getElementById('addDynamicGroup');
-        const submitButton = document.getElementById('submitForm');
-        
-        addDynamicGroupButton.addEventListener('click', function() {
-            // フォームグループのコンテナを作成
-            const groupContainer = document.createElement('div');
-            
-            // フォームフィールドを3つ追加
-            for (let i = 1; i <= 3; i++) {
-                const newField = document.createElement('input');
-                newField.type = 'text';
-                newField.name = 'dynamic_field[]';
-                newField.placeholder = '動的なフィールド ' + i;
-                groupContainer.appendChild(newField);
-            }
-            
-            dynamicFieldsContainer.appendChild(groupContainer);
-        });
-
-        // Submitボタンをクリックしたときの処理
-        submitButton.addEventListener('click', function() {
-            // フォームをサブミット
-            document.querySelector('form').submit();
-        });
-    });
-</script>
 </x-app-layout>

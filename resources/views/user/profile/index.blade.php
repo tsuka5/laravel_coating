@@ -14,6 +14,7 @@
                             <x-flash-message status="session('status')" />
                             <div class='flex justify-center mt-4 mb-4'>
                                 <button onclick="location.href='{{ route('user.create.experiment') }}'" class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">Data_Entry</button>
+
                             </div>
                         <div class="lg:w-2/3 w-full mx-auto overflow-auto">
                            

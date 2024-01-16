@@ -18,39 +18,42 @@
                           <form method="post" enctype="multipart/form-data" action="{{ route('user.profile.update', ['profile' => $experiment->id]) }}">
                             @method('PUT')  
                             @csrf
-
-                            {{-- experimentのEdit --}}
                             
                             <div class="m-2">
                               <div class="flex flex-wrap">
                                 <div class="p-2 w-1/2 mx-auto">
                                   <div class="relative">
                                     <label for="title" class="leading-7 text-sm text-gray-600">Title</label>
-                                    <input type="text" id="title" name="title" value="{{ $experiment->title }}" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                    <input type="text" id="title" name="title" value="{{ $experiment->title }}" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300
+                                     focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                   </div>
                                 </div>
                                 <div class="p-2 w-1/2 mx-auto">
                                   <div class="relative">
                                     <label for="name" class="leading-7 text-sm text-gray-600">Name</label>
-                                    <input type="text" id="name" name="name" value="{{ $experiment->name }}" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                    <input type="text" id="name" name="name" value="{{ $experiment->name }}" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300
+                                     focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                   </div>
                                 </div>
                                 <div class="p-2 w-1/2 mx-auto">
                                   <div class="relative"> 
                                     <label for="date" class="leading-7 text-sm text-gray-600">Date</label>
-                                    <input type="date" id="date" name="date" value="{{ $experiment->date }}" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                    <input type="date" id="date" name="date" value="{{ $experiment->date }}" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300
+                                     focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                   </div>
                                 </div>
                                 <div class="p-2 w-1/2 mx-auto">
                                     <div class="relative">
                                       <label for="paper_name" class="leading-7 text-sm text-gray-600">Paper</label>
-                                      <input type="text" id="paper_name" name="paper_name" value="{{ $experiment->paper_name }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                      <input type="text" id="paper_name" name="paper_name" value="{{ $experiment->paper_name }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300
+                                       focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                     </div>
                                 </div>
                                 <div class="p-2 w-1/2 mx-auto">
                                   <div class="relative">
                                     <label for="paper_url" class="leading-7 text-sm text-gray-600">Paper URL</label>
-                                    <input type="text" id="paper_url" name="paper_url" value="{{ $experiment->paper_url }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                    <input type="text" id="paper_url" name="paper_url" value="{{ $experiment->paper_url }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300
+                                     focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                   </div>
                                 </div>
                               </div>
@@ -70,7 +73,8 @@
                                 <div class="p-2 w-1/2 mx-auto">
                                   <div class="relative">
                                       <label for="material_name" class="leading-7 text-sm text-gray-600">Name</label>
-                                      <select name="material_name[{{ $material->id }}]" data-toggle="select" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                      <select name="material_name[{{ $material->id }}]" data-toggle="select" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300
+                                         focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                         <option value="{{ $material->material_detail->name}}">{{$material->material_detail->name}} </option>
                                         @foreach ($materials_list as $selected_material)
                                         <option value="{{ $selected_material->name }}"> {{ $selected_material->name }}</option>
@@ -82,7 +86,8 @@
                                 <div class="p-2 w-1/2 mx-auto">
                                     <div class="relative">
                                         <label for="concentration" class="leading-7 text-sm text-gray-600">Concentration</label>
-                                        <input type="number" name="concentration[{{ $material->id }}]" value="{{ $material->concentration }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                                        <input type="number" name="concentration[{{ $material->id }}]" value="{{ $material->concentration }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300
+                                         focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                                             id="concentration">
                                     </div>
                                 </div>
@@ -90,7 +95,8 @@
                                 <div class="p-2 w-1/2 mx-auto">
                                     <div class="relative">
                                         <label for="ph_adjustment" class="leading-7 text-sm text-gray-600">ph Adjustment (Yes or No)</label>
-                                        <select name="ph_adjustment" data-toggle="select" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                        <select name="ph_adjustment" data-toggle="select" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300
+                                         focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                           <option value="{{ $material->ph_adjustment }}">
                                             @if ( $material->ph_adjustment == 1)
                                               Yes
@@ -107,7 +113,8 @@
                                 <div class="p-2 w-1/2 mx-auto">
                                   <div class="relative">
                                       <label for="ph_material" class="leading-7 text-sm text-gray-600">Material Name for ph Adjustment</label>
-                                      <select name="ph_material[{{ $material->id }}]" data-toggle="select" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                      <select name="ph_material[{{ $material->id }}]" data-toggle="select" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2
+                                         focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                         <option value="{{ isset($material->ph_material_detail) ? $material->ph_material_detail->name : '' }}">
                                           @if ($material->ph_material_id == null)
                                             Nothing
@@ -125,7 +132,8 @@
                                 <div class="p-2 w-1/2 mx-auto">
                                     <div class="relative">
                                         <label for="ph_purpose" class="leading-7 text-sm text-gray-600">pH purpose</label>
-                                        <input type="number" name="ph_purpose[{{ $material->id }}]" value="{{ $material->ph_purpose }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                                        <input type="number" name="ph_purpose[{{ $material->id }}]" value="{{ $material->ph_purpose }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500
+                                         focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                                             id="ph_pu">
                                     </div>
                                 </div> 

@@ -27,7 +27,6 @@
                                     <div class="relative">
                                         <label for="bacteria_name" class="leading-7 text-sm text-gray-600">Bacteria Name </label>
                                         <select name="bacteria_name" data-toggle="select" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                          {{-- <option value="">Select bacteria</option> --}}
                                           @foreach ($bacteria_list as $selected_bacterium)
                                           <option value="{{ $selected_bacterium->name }}"> {{ $selected_bacterium->name }}</option>
                                           @endforeach
@@ -38,7 +37,6 @@
                                     <div class="relative">
                                         <label for="fruit_name" class="leading-7 text-sm text-gray-600">Fruit or Vegetable </label>
                                         <select name="fruit_name" data-toggle="select" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                          {{-- <option value="">Select fruit or vegetable</option> --}}
                                           @foreach ($fruits_list as $selected_fruit)
                                           <option value="{{ $selected_fruit->name }}"> {{ $selected_fruit->name }}</option>
                                           @endforeach
@@ -49,7 +47,6 @@
                                     <div class="relative">
                                         <label for="test_type" class="leading-7 text-sm text-gray-600">Test Type </label>
                                         <select name="test_name" data-toggle="select" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                          {{-- <option value="">Select test type</option> --}}
                                           @foreach ($antibacteria_test_list as $selected_test)
                                           <option value="{{ $selected_test->name }}"> {{ $selected_test->name }}</option>
                                           @endforeach
