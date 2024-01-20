@@ -133,12 +133,6 @@ class SearchController extends Controller
         } 
     public function show(string $id)
     {
-        $materials_list = Material_detail::orderby('name', 'asc')->get();
-        $ph_materials_list = Ph_material_detail::orderby('name', 'asc')->get();
-        $fruits_list = Fruit_detail::orderby('name', 'asc')->get();
-        $bacteria_list = Bacteria_detail::orderby('name','asc')->get();
-        $antibacteria_test_list = Antibacteria_test_type::orderby('name','asc')->get();
-
         $experiment = Experiment::findOrFail($id);
         $materials = Material::where('experiment_id', $id)->get();
         $film_conditions = Film_condition::where('experiment_id', $id)->get();
@@ -146,12 +140,8 @@ class SearchController extends Controller
         $storing_tests = Storing_test::where('experiment_id', $id)->get();
         $antibacteria_tests = Antibacteria_test::where('experiment_id', $id)->get();
         $notes = Note::where('experiment_id', $id)->get();
-        
-        
-
+      
         return view('user.search.show', compact('experiment', 'materials','film_conditions',
-                    'charactaristic_tests','storing_tests','antibacteria_tests', 'materials_list',
-                    'ph_materials_list', 'fruits_list', 'bacteria_list', 'antibacteria_test_list','notes'));
-
+                    'charactaristic_tests','storing_tests','antibacteria_tests','notes'));
     }
 }

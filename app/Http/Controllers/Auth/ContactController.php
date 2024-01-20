@@ -41,18 +41,6 @@ class ContactController extends Controller
         return view('user.contact.index', compact('contacts'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-
-    public function create($formType)
-    {
-        
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)  
     {
         $contact = new Contact();
@@ -65,13 +53,8 @@ class ContactController extends Controller
         return redirect()->route('user.contact.index')
         ->with(['message'=>'Transmission Complete',
         'status'=>'info'] );
-       
     }
 
-
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         $contact = Contact_reply::where("user_contact_id", $id)->first();
@@ -80,43 +63,4 @@ class ContactController extends Controller
         
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        // $experiment = Experiment::findOrFail($id);
-        // $materials = Material::where('experiment_id', $id)->get();
-        // $film_conditions = Film_condition::where('experiment_id', $id)->get();
-        // $charactaristic_tests = Charactaristic_test::where('experiment_id', $id)->get();
-        // $storing_tests = Storing_test::where('experiment_id', $id)->get();
-        // $antibacteria_tests = Antibacteria_test::where('experiment_id', $id)->get();
-        
-        
-
-        // return view('user.profile.edit', compact('experiment', 'materials','film_conditions',
-        //             'charactaristic_tests','storing_tests','antibacteria_tests'));
-   
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-     
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        // Experiment::findOrFail($id)->delete(); 
-
-        // return redirect()
-        // ->route('user.contact.index')
-        // ->with(['message'=>'Delete Complete',
-        // 'status'=>'alert']);
-    }
 }

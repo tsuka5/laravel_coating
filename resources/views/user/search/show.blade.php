@@ -14,7 +14,7 @@
                     <section class="text-gray-600 body-font relative">
                         <div class="container px-5 mx-auto">
                             <div class="flex flex-col text-center w-full mb-4 mt-12">
-                            <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Experiment</h1>
+                              <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Experiment</h1>
                             </div>
                             <div class="lg:w-1/2 md:w-2/3 mx-auto">
                                 <div class="container">
@@ -22,65 +22,74 @@
                                         <div class="p-2 w-1/2 mx-auto">
                                             <div class="relative">
                                                 <label for="title" class="leading-7 text-sm text-gray-600">Title</label>
-                                                <div class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">{{ $experiment->title }}</div>
+                                                <div class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500
+                                                 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 
+                                                 transition-colors duration-200 ease-in-out">{{ $experiment->title }}</div>
                                             </div>
                                         </div>
                                         <div class="p-2 w-1/2 mx-auto">
                                             <div class="relative">
                                                 <label for="name" class="leading-7 text-sm text-gray-600">Name</label>
-                                                <div class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">{{ $experiment->name }}</div>
+                                                <div class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500
+                                                 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 
+                                                 transition-colors duration-200 ease-in-out">{{ $experiment->name }}</div>
                                             </div>
                                         </div>
                                         <div class="p-2 w-1/2 mx-auto">
                                             <div class="relative"> 
                                                 <label for="date" class="leading-7 text-sm text-gray-600">Date</label>
-                                                <div class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">{{ $experiment->date }}</div>
+                                                <div class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500
+                                                 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8
+                                                  transition-colors duration-200 ease-in-out">{{ $experiment->date }}</div>
                                             </div>
                                         </div>
                                         <div class="p-2 w-1/2 mx-auto">
                                             <div class="relative">
                                                 <label for="paper_name" class="leading-7 text-sm text-gray-600">Paper</label>
-                                                <div class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">{{ $experiment->paper_name }}</div>
+                                                <div class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500
+                                                 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 
+                                                 transition-colors duration-200 ease-in-out">{{ $experiment->paper_name }}</div>
                                             </div>
                                         </div>
                                         <div class="p-2 w-1/2 mx-auto">
                                             <div class="relative">
                                               <label for="paper_url" class="leading-7 text-sm text-gray-600">Paper URL</label>
-                                              <div class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">{{ $experiment->paper_url }}</div>
+                                              <div class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500
+                                               focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8
+                                                transition-colors duration-200 ease-in-out">{{ $experiment->paper_url }}</div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <HR>
-                        
-    
-                                
+                       
                                 <div class="flex flex-col text-center w-full mb-4 mt-12">
                                     <h4 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Materials</h4>
                                 </div>
-    
-                                
                                 @foreach ($materials as $material)
-                             
                                 <div class="flex flex-wrap">
                                   <div class="p-2 w-1/2 mx-auto">
                                     <div class="relative">
                                         <label for="material_name" class="leading-7 text-sm text-gray-600">Name</label>
-                                        <div class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">{{ $material->material_detail->name}}</div>
+                                        <div class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500
+                                         focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 
+                                         transition-colors duration-200 ease-in-out">{{ $material->material_detail->name}}</div>
                                     </div>
                                   </div>
-                            
                                   <div class="p-2 w-1/2 mx-auto">
                                       <div class="relative">
                                           <label for="concentration" class="leading-7 text-sm text-gray-600">Concentration</label>
-                                          <div class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">{{ $material->concentration }}</div>
+                                          <div class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500
+                                           focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8
+                                            transition-colors duration-200 ease-in-out">{{ $material->concentration }}</div>
                                       </div>
                                   </div>
-                  
                                   <div class="p-2 w-1/2 mx-auto">
                                       <div class="relative">
                                           <label for="ph_adjustment" class="leading-7 text-sm text-gray-600">ph Adjustment (Yes or No)</label>
-                                          <div class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                          <div class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500
+                                           focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8
+                                            transition-colors duration-200 ease-in-out">
                                             @if ( $material->ph_adjustment == 1)
                                                 Yes
                                               @else
@@ -89,11 +98,12 @@
                                           </div>
                                       </div>
                                   </div>
-                  
                                   <div class="p-2 w-1/2 mx-auto">
                                     <div class="relative">
                                         <label for="ph_material" class="leading-7 text-sm text-gray-600">Material Name for ph Adjustment</label>
-                                          <div class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                          <div class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500
+                                           focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8
+                                            transition-colors duration-200 ease-in-out">
                                             @if ($material->ph_material_id == null)
                                               Nothing
                                             @else
@@ -102,11 +112,12 @@
                                           </div>
                                     </div>
                                   </div>
-                  
                                   <div class="p-2 w-1/2 mx-auto">
                                       <div class="relative">
                                           <label for="ph_purpose" class="leading-7 text-sm text-gray-600">pH purpose</label>
-                                          <div class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">{{ $material->ph_purpose }}</div>
+                                          <div class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500
+                                           focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 
+                                           transition-colors duration-200 ease-in-out">{{ $material->ph_purpose }}</div>
                                       </div>
                                   </div> 
                                 </div>
