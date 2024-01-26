@@ -11,8 +11,9 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     {{-- <p class="text-xl">You're logged in!<br><br> --}}
                     <p class="text-xl">This is Web Database for Edible Coating!</p><br>
-
-                    <p class="text-xl">You can do a lot of things here<br><br>
+                    <p class="text-xl">This database was released on Dec.22, 2023.</p><br>
+                    <p class="text-xl">This database was created by Manaka Takahashi and Tsukasa Ozaki at Poostharvest Science lab., faculty of Agriculture, Kyushu University.</p><br>
+                    <p class="text-xl">You can do a lot of things here.<br><br>
 
                     <p class="text-lg">
                     ・You can register/edit/delete your experiment data.<br>

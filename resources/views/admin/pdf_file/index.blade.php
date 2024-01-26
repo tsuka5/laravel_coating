@@ -35,7 +35,8 @@
                                       <label for="pdf_file_path" class="leading-7 text-sm text-gray-600">PDF file</label>
                                       <input type="file" id="pdf_file_path" name="pdf_file_path" class="w-full bg-gray-100 
                                       bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2
-                                       focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                       focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors 
+                                       duration-200 ease-in-out">
                                     </div>
                                 </div>
                               </div>
@@ -57,9 +58,12 @@
                               <table class="table-auto w-full">
                                 <thead>
                                   <tr>
-                                    <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">Date</th>
-                                    <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">Name</th>
-                                    <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl"></th>
+                                    <th class="px-4 py-3 title-font tracking-wider font-medium 
+                                    text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">Date</th>
+                                    <th class="px-4 py-3 title-font tracking-wider font-medium 
+                                    text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">Name</th>
+                                    <th class="px-4 py-3 title-font tracking-wider font-medium 
+                                    text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl"></th>
                                   </tr>
                                 </thead>
                                 <tbody>
@@ -67,10 +71,13 @@
                                       <tr>
                                           <td class="px-4 py-3">{{ $uploadedFile->created_at }}</td>
                                           <td class="px-4 py-3">{{ $uploadedFile->name }}</td>
-                                          <form id="delete_{{ $uploadedFile->id }}" method="post" action="{{ route('admin.pdf.destroy', ['pdf' => $uploadedFile->id ])}}">
+                                          <form id="delete_{{ $uploadedFile->id }}" method="post" 
+                                            action="{{ route('admin.pdf.destroy', ['pdf' => $uploadedFile->id ])}}">
                                             @csrf
                                             <td class="px-4 py-3">
-                                                <a href="#" data-id="{{ $uploadedFile->id }}" onclick="deletePost(this)" class="text-white bg-red-400 border-0 py-2 px-4 focus:outline-none hover:bg-red-500 rounded">Delete</a>
+                                                <a href="#" data-id="{{ $uploadedFile->id }}" 
+                                                  onclick="deletePost(this)" class="text-white bg-red-400 border-0
+                                                   py-2 px-4 focus:outline-none hover:bg-red-500 rounded">Delete</a>
                                             </td>
                                         </form>
                                       </tr>

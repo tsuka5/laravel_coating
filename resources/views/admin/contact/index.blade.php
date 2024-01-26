@@ -43,7 +43,8 @@
                                   </td>
                                   <td class="px-4 py-3">
                                     @if( $contact->reply )
-                                    <a href="{{ route('admin.contact.show', ['id' => $contact->id]) }}" class="font-medium text-indigo-500 text-sm">Replied</a>
+                                    <a href="{{ route('admin.contact.show', ['id' => $contact->id]) }}" 
+                                      class="font-medium text-indigo-500 text-sm">Replied</a>
                                     @else
                                     <div class="font-midium text-red-500 text-sm"> Unreplied</div>
                                     @endif

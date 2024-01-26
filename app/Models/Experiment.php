@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\User;
 use App\Models\Film_condition;
 use App\Models\Charactaristic_test;
@@ -13,8 +14,11 @@ use App\Models\Material;
 use App\Models\Additive;
 use App\Models\Note;
 
+
 class experiment extends Model
 {
+    use HasFactory;
+    
     public $timestamps = false; 
 
     protected $fillable = [
