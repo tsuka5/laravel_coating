@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Experiment; 
+use App\Models\Material_composition;
 use App\Models\Film_condition; 
 use App\Models\Charactaristic_test; 
 use App\Models\Material;
@@ -37,36 +38,69 @@ class ProfileController extends Controller
 
     public function index()
     {
-        $userInformation = Auth::user();
-        $experiments = Experiment::where('user_id', Auth::user()->id)->orderby('id', 'desc')->paginate(4);
-
+        // $userInformation = Auth::user();
+        $experiments = Experiment::where('user_id', Auth::user()->id)->orderby('id', 'desc')->paginate(2);
+        // $your_experiments = Experiment::where('user_id', Auth::user()->id)->pluck('id');
+        // $compositions = Material_Composition::whereIn('experiment_id', $your_experiments)->orderby('id', 'desc')->paginate(4);
+        // $experiment = Experiment::find(1);
+        // $materialCompositions = $experiment->material_composition;
+        // dd($materialCompositions);
+        $compositions = [];
         $materialCounts = [];
         $film_conditionCounts = [];
         $charactaristic_testCounts = [];
         $storing_testCounts = [];
         $antibacteria_testCounts = [];
         $noteCounts = [];
+        $materials = [];
+
 
         foreach ($experiments as $experiment) {
-            $materialCounts[$experiment->id] = Material::where('experiment_id', $experiment->id)->count();
-            $film_conditionCounts[$experiment->id] = Film_condition::where('experiment_id', $experiment->id)->count();
-            $charactaristic_testCounts[$experiment->id] = Charactaristic_test::where('experiment_id', $experiment->id)->count();
-            $storing_testCounts[$experiment->id] = Storing_test::where('experiment_id', $experiment->id)->count();
-            $antibacteria_testCounts[$experiment->id] = Antibacteria_test::where('experiment_id', $experiment->id)->count();
-            $noteCounts[$experiment->id] = Note::where('experiment_id', $experiment->id)->count();
-            
+            $compositions[$experiment->id] = Material_Composition::where('experiment_id', $experiment->id)->orderby('id', 'asc')->get();
+            foreach($compositions[$experiment->id] as $composition) {
+                // dd($composition->id);
+                $materialCounts[$composition->id] = Material::where('composition_id', $composition->id)->count();
+                $film_conditionCounts[$composition->id] = Film_condition::where('composition_id', $composition->id)->count();
+                $charactaristic_testCounts[$composition->id] = Charactaristic_test::where('composition_id', $composition->id)->count();
+                $storing_testCounts[$composition->id] = Storing_test::where('composition_id', $composition->id)->count();
+                $antibacteria_testCounts[$composition->id] = Antibacteria_test::where('composition_id', $composition->id)->count();
+                $noteCounts[$composition->id] = Note::where('composition_id', $composition->id)->count();   
+                $materials[$composition->id] = Material::where('composition_id', $composition->id)->get();
+            }
         }
+
+        // dd($compositions);
+        
+
+        // foreach ($compositions as $composition) {
+        //     $materialCounts[$composition->id] = Material::where('composition_id', $composition->id)->count();
+        //     $film_conditionCounts[$composition->id] = Film_condition::where('composition_id', $composition->id)->count();
+        //     $charactaristic_testCounts[$composition->id] = Charactaristic_test::where('composition_id', $composition->id)->count();
+        //     $storing_testCounts[$composition->id] = Storing_test::where('composition_id', $composition->id)->count();
+        //     $antibacteria_testCounts[$composition->id] = Antibacteria_test::where('composition_id', $composition->id)->count();
+        //     $noteCounts[$composition->id] = Note::where('composition_id', $composition->id)->count();           
+        // }
        
-        return view('user.profile.index', compact('userInformation','experiments','materialCounts','film_conditionCounts',
-            'charactaristic_testCounts','storing_testCounts','antibacteria_testCounts', 'noteCounts'));
+        return view('user.profile.index', compact('experiments', 'compositions','materialCounts','film_conditionCounts',
+            'charactaristic_testCounts','storing_testCounts','antibacteria_testCounts', 'noteCounts', 'materials'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function createExperiment()
+    public function createExperiment($type)
     {
-        return view('user.profile.create');
+        return view('user.profile.create', compact('type'));
+    }
+
+    public function createComposition($experiment_id)
+    {
+        $composition = new Material_composition;
+        $composition-> experiment_id =  $experiment_id;   
+        $composition->save();
+        return redirect()->route('user.profile.index')
+        ->with(['message'=>'Create Composition Complete',
+        'status'=>'info'] );;
     }
 
     public function create($id, $formType)
@@ -116,6 +150,13 @@ class ProfileController extends Controller
             $experiment->paper_name = $request->paper_name;        
             $experiment->paper_url = $request->paper_url;        
             $experiment->save();
+
+            $latest_experiment_id = Experiment::orderBy('id', 'desc')->first()->id;
+
+            $composition = new Material_composition;
+            $composition-> experiment_id =  $latest_experiment_id;   
+            $composition->save();
+            
         }elseif($request->formType === 'material'){
             $request->validate([
                 'concentration' =>['numeric', 'nullable'],
@@ -124,9 +165,9 @@ class ProfileController extends Controller
             ]);
 
             $material = new Material;
-            $material-> experiment_id = $request->id;
+            $material-> composition_id = $request->id;
             $materialDetail = Material_detail::select('id')->where('name', $request->material_name)->first();
-            $material->material_id = $materialDetail->id;
+            $material-> material_id = $materialDetail->id;
             $material-> concentration = $request->concentration;
             $material-> ph_adjustment = $request->ph_adjustment;
             if(!empty($request->ph_material)){
@@ -147,7 +188,7 @@ class ProfileController extends Controller
             ]);
 
             $film_condition = new Film_condition;
-            $film_condition-> experiment_id = $request->id;
+            $film_condition-> composition_id = $request->id;
             $film_condition-> casting_amount = $request->casting_amount;
             $film_condition-> petri_dish_area = $request->petri_dish_area;
             $film_condition-> degas_temperature = $request->degas_temperature;
@@ -196,7 +237,7 @@ class ProfileController extends Controller
             $filePath_clsm = $clsmImage ? $clsmImage->store('images', 'public') : null;
 
             $charactaristic_test = new Charactaristic_test;
-            $charactaristic_test-> experiment_id = $request->id;
+            $charactaristic_test-> composition_id = $request->id;
             $charactaristic_test-> ph = $request->ph;
             $charactaristic_test-> temperature = $request->temperature;
             $charactaristic_test-> shear_rate = $request->shear_rate;
@@ -259,7 +300,7 @@ class ProfileController extends Controller
             $filePath_clsm = $clsmImage ? $clsmImage->store('images', 'public') : null;
 
             $storing_test = new Storing_test;
-            $storing_test-> experiment_id = $request->id;
+            $storing_test-> composition_id = $request->id;
             $fruitDetail = Fruit_detail::select('id')->where('name', $request->fruit_name)->first();
             $storing_test-> storing_fruit_id = $fruitDetail->id;
             $storing_test-> storing_temperature = $request->storing_temperature;
@@ -291,7 +332,7 @@ class ProfileController extends Controller
                 'mic' => ['numeric', 'nullable'],
             ]);
             $antibacteria_test = new Antibacteria_test;
-            $antibacteria_test-> experiment_id = $request->id;
+            $antibacteria_test-> composition_id = $request->id;
             $bacteriaDetail = Bacteria_detail::select('id')->where('name', $request->bacteria_name)->first();
             $antibacteria_test-> bacteria_id = $bacteriaDetail->id;
             $fruitDetail = Fruit_detail::select('id')->where('name', $request->fruit_name)->first();
@@ -332,7 +373,18 @@ class ProfileController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $experiment_id = Material_composition::select('experiment_id')->where('id', $id)->firstOrFail()->experiment_id;
+
+        $experiment = Experiment::findOrFail($experiment_id);
+        $materials = Material::where('composition_id', $id)->get();
+        $film_conditions = Film_condition::where('composition_id', $id)->get();
+        $charactaristic_tests = Charactaristic_test::where('composition_id', $id)->get();
+        $storing_tests = Storing_test::where('composition_id', $id)->get();
+        $antibacteria_tests = Antibacteria_test::where('composition_id', $id)->get();
+        $notes = Note::where('composition_id', $id)->get();
+      
+        return view('user.profile.show', compact('experiment', 'materials','film_conditions',
+                    'charactaristic_tests','storing_tests','antibacteria_tests','notes'));
     }
 
     /**
@@ -346,16 +398,19 @@ class ProfileController extends Controller
         $bacteria_list = Bacteria_detail::orderby('name','asc')->get();
         $antibacteria_test_list = Antibacteria_test_type::orderby('name','asc')->get();
 
-        $experiment = Experiment::findOrFail($id);
-        $materials = Material::where('experiment_id', $id)->get();
-        $film_conditions = Film_condition::where('experiment_id', $id)->get();
-        $charactaristic_tests = Charactaristic_test::where('experiment_id', $id)->get();
-        $storing_tests = Storing_test::where('experiment_id', $id)->get();
-        $antibacteria_tests = Antibacteria_test::where('experiment_id', $id)->get();
-        $notes = Note::where('experiment_id', $id)->get();
+        $experiment_id = Material_composition::select('experiment_id')->where('id', $id)->firstOrFail()->experiment_id;
+
+        $experiment = Experiment::findOrFail($experiment_id);
+        $composition = Material_composition::findOrFail($id);
+        $materials = Material::where('composition_id', $id)->get();
+        $film_conditions = Film_condition::where('composition_id', $id)->get();
+        $charactaristic_tests = Charactaristic_test::where('composition_id', $id)->get();
+        $storing_tests = Storing_test::where('composition_id', $id)->get();
+        $antibacteria_tests = Antibacteria_test::where('composition_id', $id)->get();
+        $notes = Note::where('composition_id', $id)->get();
         
 
-        return view('user.profile.edit', compact('experiment', 'materials','film_conditions',
+        return view('user.profile.edit', compact('experiment','composition', 'materials','film_conditions',
                     'charactaristic_tests','storing_tests','antibacteria_tests', 'materials_list',
                     'ph_materials_list', 'fruits_list', 'bacteria_list', 'antibacteria_test_list',
                     'notes'));
@@ -367,7 +422,9 @@ class ProfileController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $experiment = Experiment::findOrFail($id);
+        $experiment_id = Material_composition::select('experiment_id')->where('id', $id)->firstOrFail()->experiment_id;
+
+        $experiment = Experiment::findOrFail($experiment_id);
         $experiment->title = $request->title;
         $experiment->name = $request->name;
         $experiment->date = $request->date;
@@ -375,9 +432,13 @@ class ProfileController extends Controller
         $experiment->paper_url = $request->paper_url;        
         $experiment->save();
 
-        $materials = Material::where('experiment_id', $id)->get();
+        $composition = Material_composition::findOrFail($id);
+            $composition-> experiment_id =  $experiment_id;   
+            $composition->save();
+
+        $materials = Material::where('composition_id', $id)->get();
         foreach($materials as $material) {
-            $material-> experiment_id = $id;
+            $material-> composition_id = $id;
             $materialDetail = Material_detail::select('id')->where('name', $request->input("material_name.$material->id"))->first();
             $material-> material_id = $materialDetail->id;
             $material-> concentration = $request->input("concentration.$material->id");
@@ -390,9 +451,9 @@ class ProfileController extends Controller
             $material->save();
         }
 
-        $filmconditions = Film_condition::where('experiment_id', $id)->get();
+        $filmconditions = Film_condition::where('composition_id', $id)->get();
         foreach($filmconditions as $film_condition) {
-            $film_condition-> experiment_id = $id;
+            $film_condition-> composition_id = $id;
             $film_condition-> casting_amount = $request->input("casting_amount.$film_condition->id");
             $film_condition-> petri_dish_area = $request->input("petri_dish_area.$film_condition->id");
             $film_condition-> degas_temperature = $request->input("degas_temperature.$film_condition->id");
@@ -403,7 +464,7 @@ class ProfileController extends Controller
         }
 
 
-        $charactaristictests = Charactaristic_test::where('experiment_id', $id)->get();
+        $charactaristictests = Charactaristic_test::where('composition_id', $id)->get();
         foreach($charactaristictests as $charactaristic_test) {
             $afmImage = $request->file("afm.{$charactaristic_test->id}");
             $semImage = $request->file("sem.{$charactaristic_test->id}");
@@ -438,7 +499,7 @@ class ProfileController extends Controller
                 $filePath_clsm = $previousClsmValue ? $previousClsmValue : null;
             }
 
-            $charactaristic_test-> experiment_id = $id;
+            $charactaristic_test-> composition_id = $id;
             $charactaristic_test-> ph = $request->input("ph.$charactaristic_test->id");
             $charactaristic_test-> temperature = $request->input("temperature.$charactaristic_test->id");
             $charactaristic_test-> shear_rate = $request->input("shear_rate.$charactaristic_test->id");
@@ -464,7 +525,7 @@ class ProfileController extends Controller
             $charactaristic_test->save();
         }
 
-        $storingtests = Storing_test::where('experiment_id', $id)->get();
+        $storingtests = Storing_test::where('composition_id', $id)->get();
         foreach($storingtests as $storing_test) {
             $afmImage = $request->file("s-afm.{$storing_test->id}");
             $semImage = $request->file("s-sem.{$storing_test->id}");
@@ -499,7 +560,7 @@ class ProfileController extends Controller
                 $filePath_clsm = $previousClsmValue ? $previousClsmValue : null;
             }
 
-            $storing_test-> experiment_id = $id;
+            $storing_test-> composition_id = $id;
             $fruitDetail = Fruit_detail::select('id')->where('name', $request->input("storing_fruit_name.$storing_test->id"))->first();
             $storing_test-> storing_fruit_id = $fruitDetail->id;
             $storing_test-> storing_temperature = $request->input("storing_temperature.$storing_test->id");
@@ -525,9 +586,9 @@ class ProfileController extends Controller
             $storing_test->save();
         }
 
-        $antibacteriatests = Antibacteria_test::where('experiment_id', $id)->get();
+        $antibacteriatests = Antibacteria_test::where('composition_id', $id)->get();
         foreach($antibacteriatests as $antibacteria_test) {
-            $antibacteria_test-> experiment_id = $id;
+            $antibacteria_test-> composition_id = $id;
             $bacteriaDetail = Bacteria_detail::select('id')->where('name', $request->input("bacteria_name.$antibacteria_test->id"))->first();
             $antibacteria_test-> bacteria_id = $bacteriaDetail->id;
             $fruitDetail = Fruit_detail::select('id')->where('name', $request->input("antibacteria_fruit_name.$antibacteria_test->id"))->first();
@@ -541,7 +602,7 @@ class ProfileController extends Controller
 
         }
 
-        $notes = Note::where('experiment_id', $id)->get();
+        $notes = Note::where('composition_id', $id)->get();
         foreach($notes as $note) {
             $img1 = $request->file("img1.{$note->id}");
             $img2 = $request->file("img2.{$note->id}");
@@ -571,7 +632,7 @@ class ProfileController extends Controller
             }
             
 
-            $note-> experiment_id = $id;
+            $note-> composition_id = $id;
             $note-> note = $request->input("note.$note->id");
             $note-> img1 = $filePath_img1;
             $note-> img2 = $filePath_img2;
@@ -592,6 +653,15 @@ class ProfileController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
+    {
+        Material_composition::findOrFail($id)->delete(); 
+
+        return redirect()
+        ->route('user.profile.index')
+        ->with(['message'=>'Delete Complete',
+        'status'=>'alert']);
+    }
+    public function destroyExperiment(string $id)
     {
         Experiment::findOrFail($id)->delete(); 
 

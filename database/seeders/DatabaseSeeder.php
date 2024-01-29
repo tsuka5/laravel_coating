@@ -8,6 +8,7 @@ use App\Models\Admin;
 use Illuminate\Database\Seeder;
 use App\Models\Experiment;
 use App\Models\Material;
+use App\Models\Material_composition;
 use App\Models\Film_condition;
 use App\Models\Charactaristic_test;
 use App\Models\Storing_test;
@@ -29,9 +30,10 @@ class DatabaseSeeder extends Seeder
             PhMaterialDetailSeeder::class,
             AntibactriaTestTypeSeeder::class,
             ExperimentSeeder::class,
+            MaterialCompositionSeeder::class,
             MaterialSeeder::class,
-            // Film_conditionSeeder::class,
-            // Charactaristic_testSeeder::class,
+            Film_conditionSeeder::class,
+            Charactaristic_testSeeder::class,
             Antibacteria_testSeeder::class,
             Storing_testSeeder::class,
             AdminSeeder::class,
@@ -40,14 +42,15 @@ class DatabaseSeeder extends Seeder
 
         
 
-        Experiment::factory()->count(13)->create();
+        // Experiment::factory()->count(15)->create();
 
-        $experiment_count = Experiment::count();
-
-        Material::factory()->count(30)->create();
-        Film_condition::factory()->count($experiment_count)->create();
-        Charactaristic_test::factory()->count($experiment_count)->create();
-        Storing_test::factory()->count(15)->create();
-        Antibacteria_test::factory()->count(15)->create();
+        // Material_composition::factory()->count(30)->create();
+        // $composition_count = Material_composition::count();
+        
+        // Material::factory()->count(30)->create();
+        // Film_condition::factory()->count($composition_count)->create();
+        // Charactaristic_test::factory()->count($composition_count)->create();
+        // Storing_test::factory()->count(15)->create();
+        // Antibacteria_test::factory()->count(15)->create();
     }
 }

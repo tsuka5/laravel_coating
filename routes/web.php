@@ -25,8 +25,11 @@ Route::middleware('auth:users')->group(function () {
     Route::resource('profile', ProfileController::class)
     ->middleware(['auth:users', 'verified']);
     Route::get('profile/create/{id}/{form_type}', [ProfileController::class,'create'])->name('create');
-    Route::get('profile/create',[ProfileController::class,'createExperiment'])->name('create.experiment');
+    Route::get('profile/create/{type}',[ProfileController::class,'createExperiment'])->name('create.experiment');
     Route::post('profile', [ProfileController::class, 'store'])->name('store');
+    Route::get('profile/show/{id}', [ProfileController::class,'show'])->name('profile.show');
+    Route::delete('profile/deleteExperiment/{id}', [ProfileController::class, 'destroyExperiment'])->name('profile.destroy.experiment');
+    Route::post('profile/create_composition/{experiment_id}', [ProfileController::class, 'createComposition'])->name('profile.create.composition');
 
     //detailについて
     Route::get('detail/index', [DetailController::class, 'index'])->name('detail.index');

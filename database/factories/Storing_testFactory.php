@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Storing_test;
-use App\Models\Experiment;
+use App\Models\Material_composition;
 use App\Models\Fruit_detail;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -16,14 +16,14 @@ class Storing_testFactory extends Factory
 
     public function definition(): array
     {
-        $experiments_id = Experiment::pluck('id')->toArray();
+        $compositions_id = Material_composition::pluck('id')->toArray();
         $fruits_id = Fruit_detail::pluck('id')->toArray();        
         
-        $experiment_id = $experiments_id[random_int(0, count($experiments_id) - 1)];
+        $composition_id = $compositions_id[random_int(0, count($compositions_id) - 1)];
         $fruit_id = $fruits_id[random_int(0, count($fruits_id) - 1)];
         
         return [
-            'experiment_id' => $experiment_id,
+            'composition_id' => $composition_id,
             'storing_fruit_id' => $fruit_id,
             'storing_temperature' => $this->faker->optional()->randomFloat($nbMaxDecimals = 1, $min = 0, $max = 40 ),
             'storing_humidity' => $this->faker->optional()->randomFloat($nbMaxDecimals = 1, $min = 0, $max = 100),

@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\User;
+use App\Models\Material_composition;
 use App\Models\Film_condition;
 use App\Models\Charactaristic_test;
 use App\Models\Storing_test;
 use App\Models\Material;
-use App\Models\Additive;
 use App\Models\Note;
 
 
@@ -34,33 +34,29 @@ class experiment extends Model
     {
         return $this->belongsTo(User::class);
     }
-    public function film_condition(): HasMany
+    public function material_composition(): HasMany
     {
-        return $this->hasMany(Film_condition::class);
+        return $this->hasMany(Material_composition::class);
     }
-    public function charactaristic_test(): HasMany
-    {
-        return $this->hasMany(Charactaristic_test::class);
-    }
-    public function storing_test(): HasMany
-    {
-        return $this->hasMany(Storing_test::class);
-    }
-    public function antibacteria_test(): HasMany
-    {
-        return $this->hasMany(Antibacteria_test::class);
-    }
-    public function material(): HasMany
-    {
-        return $this->hasMany(Material::class);
-    }
-    public function additive(): HasMany
-    {
-        return $this->hasMany(Additive::class);
-    }
-    public function memo(): HasMany
-    {
-        return $this->hasMany(Note::class);
-    }
+    // public function charactaristic_test(): HasMany
+    // {
+    //     return $this->hasMany(Charactaristic_test::class);
+    // }
+    // public function storing_test(): HasMany
+    // {
+    //     return $this->hasMany(Storing_test::class);
+    // }
+    // public function antibacteria_test(): HasMany
+    // {
+    //     return $this->hasMany(Antibacteria_test::class);
+    // }
+    // public function material(): HasMany
+    // {
+    //     return $this->hasMany(Material::class);
+    // }
+    // public function memo(): HasMany
+    // {
+    //     return $this->hasMany(Note::class);
+    // }
 }
 

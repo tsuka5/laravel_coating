@@ -17,7 +17,7 @@ class NoteSeeder extends Seeder
     {
         DB::table('notes')->insert([
             [
-                'experiment_id' => '1',
+                'composition_id' => '1',
                 'note' => 'oaki tsukasa',
                 'img1' => null,
                 'img2' => null,
@@ -25,7 +25,7 @@ class NoteSeeder extends Seeder
                 'img4' => null
             ],
             [
-                'experiment_id' => '2',
+                'composition_id' => '2',
                 'note' => 'oaki tsukasa',
                 'img1' => null,
                 'img2' => null,
@@ -33,7 +33,7 @@ class NoteSeeder extends Seeder
                 'img4' => null
             ],
             [
-                'experiment_id' => '3',
+                'composition_id' => '3',
                 'note' => 'oaki tsukasa',
                 'img1' => null,
                 'img2' => null,

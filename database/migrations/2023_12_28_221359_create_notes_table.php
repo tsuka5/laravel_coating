@@ -13,7 +13,11 @@ class CreateNotesTable extends Migration
     {
         Schema::create('notes', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('experiment_id');
+            $table->bigInteger('composition_id');
+            // ->references('id')->on('material_compositions')
+            // ->constrained()
+            // ->onUpdate('cascade')
+            // ->onDelete('cascade');
             $table->text('note')->nullable();
             $table->text('img1')->nullable();
             $table->text('img2')->nullable();

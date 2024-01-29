@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Models\Experiment;
+use App\Models\Material_composition;
 
 
 
@@ -23,7 +23,7 @@ class Charactaristic_test extends Model
 
 
     protected $fillable = [
-        'experiment_id',
+        'composition_id',
         'ph',
         'temperature',
         'shear_rate',
@@ -48,9 +48,9 @@ class Charactaristic_test extends Model
         'clsm'
     ];
 
-    public function experiment(): BelongsTo
+    public function material_composition(): BelongsTo
     {
-        return $this->belongsTo(Experiment::class);
+        return $this->belongsTo(Material_composition::class);
     }
 
  

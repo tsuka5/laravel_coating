@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Experiment; 
+use App\Models\Material_composition;
 use App\Models\Film_condition; 
 use App\Models\Charactaristic_test; 
 use App\Models\Storing_test;
@@ -35,7 +36,7 @@ class SearchController extends Controller
         $selected_fruits = Fruit_detail::query();
         $selected_phMaterials = Ph_material_detail::query();
         $selected_antibacteriaTestTypes = Antibacteria_test_type::query();
-        $selected_experiments = Experiment::query();
+        $selected_compositions = Material_composition::query();
 
         if(!empty($keyword)){
             $selected_materials->where('name', 'LIKE', "%{$keyword}%");
@@ -86,60 +87,81 @@ class SearchController extends Controller
         } else {
             $selected_antibacteriaTestTypes = [];
         }
+        if(empty($selected_materials) && empty($selected_bacteria) && empty($selected_fruits) && empty($selected_phMaterials) && empty($selected_antibacteriaTestTypes)) {
+            $selected_compositions = [];
+        }
+
         foreach($selected_materials as $selected_material){
             $material = Material::where('material_id', $selected_material->id)->first();
             if($material){
-                $selected_experiments->where('id', $material->experiment_id);
+                $selected_compositions->where('id', $material->composition_id);
             }
         }
         foreach($selected_bacteria as $selected_bacterium){
             $bacteria = Antibacteria_test::where('bacteria_id', $selected_bacterium->id)->first();
             if($bacteria){
-                $selected_experiments->orWhere('id', $bacteria->experiment_id);
+                $selected_compositions->orWhere('id', $bacteria->composition_id);
             }
         }
         foreach($selected_fruits as $selected_fruit){
             $fruit = Storing_test::where('storing_fruit_id', $selected_fruit->id)->first();
             if($fruit){
-                $selected_experiments->orWhere('id', $fruit->experiment_id);
+                $selected_compositions->orWhere('id', $fruit->composition_id);
             }
         }
         foreach($selected_phMaterials as $selected_phMaterial){
             $phMaterial = Material::where('ph_material_id', $selected_phMaterial->id)->first();
             if($phMaterial){
-                $selected_experiments->orWhere('id', $phMaterial->experiment_id);
+                $selected_compositions->orWhere('id', $phMaterial->composition_id);
             }
         }
         foreach($selected_antibacteriaTestTypes as $selected_antibacteriaTestType){
             $antibacteriaTestType = Antibacteria_test::where('test_id', $selected_antibacteriaTestType->id)->first();
             if($antibacteriaTestType){
-                $selected_experiments->orWhere('id', $antibacteriaTestType->experiment_id);
+                $selected_compositions->orWhere('id', $antibacteriaTestType->composition_id);
             }
         }
+        if(!empty($selected_compositions))
+            $selected_compositions = $selected_compositions->paginate(5);
 
-            $selected_experiments = $selected_experiments->paginate(10);
+        $materials=[];
+        $fruits = [];
+        $bacteria = [];
+
+        foreach($selected_compositions as $composition){
+            $materials[$composition->id] = Material::where('composition_id', $composition->id)->get();
+            $fruits[$composition->id] = Storing_test::where('composition_id', $composition->id)->get();
+            $bacteria[$composition->id] = Antibacteria_test::where('composition_id', $composition->id)->get();
+        }
     
         $materials_list = Material::select('material_id')->distinct()->get();
         $fruits_list = Storing_test::select('storing_fruit_id')->distinct()->get();
         $bacteria_list = Antibacteria_test::select('bacteria_id')->distinct()->get();
         $phMaterial_list = Material::select('ph_material_id')->distinct()->get();
         $antibacteriaTypeTest_list = Antibacteria_test::select('test_id')->distinct()->get();
-    
+
+        
+        // return view('user.search.index', compact(
+        //     'materials_list', 'bacteria_list', 'fruits_list', 'phMaterial_list', 'antibacteriaTypeTest_list',
+        //     'selected_compositions','keyword', 
+        // ));
         return view('user.search.index', compact(
             'materials_list', 'bacteria_list', 'fruits_list', 'phMaterial_list', 'antibacteriaTypeTest_list',
-            'selected_experiments','keyword'
+            'selected_compositions','keyword', 'materials', 'fruits', 'bacteria'
         ));
  
         } 
     public function show(string $id)
     {
-        $experiment = Experiment::findOrFail($id);
-        $materials = Material::where('experiment_id', $id)->get();
-        $film_conditions = Film_condition::where('experiment_id', $id)->get();
-        $charactaristic_tests = Charactaristic_test::where('experiment_id', $id)->get();
-        $storing_tests = Storing_test::where('experiment_id', $id)->get();
-        $antibacteria_tests = Antibacteria_test::where('experiment_id', $id)->get();
-        $notes = Note::where('experiment_id', $id)->get();
+        $experiment_id = Material_composition::select('experiment_id')->where('id', $id)->firstOrFail()->experiment_id;
+
+        $experiment = Experiment::findOrFail($experiment_id);
+        $materials = Material::where('composition_id', $id)->get();
+        $film_conditions = Film_condition::where('composition_id', $id)->get();
+        $charactaristic_tests = Charactaristic_test::where('composition_id', $id)->get();
+        $storing_tests = Storing_test::where('composition_id', $id)->get();
+        $antibacteria_tests = Antibacteria_test::where('composition_id', $id)->get();
+        $notes = Note::where('composition_id', $id)->get();
       
         return view('user.search.show', compact('experiment', 'materials','film_conditions',
                     'charactaristic_tests','storing_tests','antibacteria_tests','notes'));

@@ -1,7 +1,7 @@
 <?php
 
 namespace Database\Factories;
-use App\Models\Experiment;
+use App\Models\Material_composition;
 use App\Models\Material;
 use App\Models\Material_detail;
 use App\Models\Ph_material_detail;
@@ -16,16 +16,16 @@ class MaterialFactory extends Factory
 
     public function definition(): array
     {
-        $experiments_id = Experiment::pluck('id')->toArray();
+        $compositions_id = Material_composition::pluck('id')->toArray();
         $materials_id = Material_detail::pluck('id')->toArray();        
         $ph_materials_id =Ph_material_detail::pluck('id')->toArray();        
         
-        $experiment_id = $experiments_id[random_int(0, count($experiments_id) - 1)];
+        $composition_id = $compositions_id[random_int(0, count($compositions_id) - 1)];
         $material_id = $materials_id[random_int(0, count($materials_id) - 1)];
         $ph_material_id = $ph_materials_id[random_int(0, count($ph_materials_id) - 1)];
         
         return [
-            'experiment_id' => $experiment_id,
+            'composition_id' => $composition_id,
             'material_id' => $material_id,
             'concentration' => $this->faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 1),
             'ph_adjustment' => $this->faker->boolean,

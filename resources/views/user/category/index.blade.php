@@ -6,9 +6,9 @@
     </x-slot>
     
     {{-- <div class="lg:w-1/4 md:w-1/2 w-full px-4 mx-auto mt-6"> --}}
-        <div class="lg:w-1/2 w-full px-4 mx-auto mt-6">
+        <div class="lg:w-2/3 w-full px-4 mt-3 mb-3 mx-auto border-2 border-gray-400 bg-white rounded-lg">
             <x-flash-message status="session('status')" />
-            <div class="flex xl:flex-nowrap md:flex-nowrap lg:flex-wrap flex-wrap justify-center">
+            <div class="p-3 flex xl:flex-nowrap md:flex-nowrap lg:flex-wrap flex-wrap justify-center">
                 {{-- <div class="flex xl:flex-nowrap md:flex-nowrap lg:flex-wrap flex-wrap justify-center items-end md:justify-start"> --}}
                     <form action="{{ route('user.category.index') }}" method="GET">
                 <div class = "flex-col justify-start">
@@ -103,15 +103,15 @@
                         </tbody>
                       </table>
 
-                    <div>
+                    <div class="flex justify-center">
                         <input type="submit" value="Search" class="lg:mt-2 xl:mt-4 flex-shrink-0 inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
                     </div>
                 </div>
             </form>
             </div>
     </div>
-                       
-
+    @if(empty($selected_materials) && empty($selected_bacteria) && empty($selected_fruits) && empty($selected_phMaterials) && empty($antibacteriaTestType)) 
+    @else
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
@@ -120,24 +120,26 @@
                     
                         <div class="container px-5 mx-auto">
                             
-                        <div class="lg:w-2/3 w-full mx-auto overflow-auto">
-                            <table class="table-auto w-full text-left whitespace-no-wrap">
+                        <div class="w-full mx-auto overflow-auto border-2 border-gray-400 bg-white rounded-lg">
+                            <table class="table-auto w-full text-left whitespace-no-wrap ">
                             <thead>
                                 <tr>
-                                <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">Category</th>
-                                <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Name</th>
-                                <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br"></th>
-                                <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br"></th>
+                                    <th class="px-4 py-3 title-font tracking-wider font-medium text-white text-lg bg-gray-400 border w-1/6 text-center">Category</th>
+                                    <th class="px-4 py-3 title-font tracking-wider font-medium text-white text-lg bg-gray-400 border w-1/6 text-center">Name</th>
+                                    <th class="px-4 py-3 title-font tracking-wider font-medium text-white text-lg bg-gray-400 border w-1/3 text-center">Characteristic</th>
+                                {{-- <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br"></th> --}}
+                                {{-- <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br"></th> --}}
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($selected_materials as $material)
                                     <tr>
-                                        <td class="px-4 py-3">Material</td>
-                                        <td class="px-4 py-3">{{ $material->name }}</td>
-                                        <td class="px-4 py-3">
-                                            <button onclick="location.href='{{ route('user.category.show', ['category_type' => 'material', 'id' => $material->id ])}}'" class="text-white bg-gray-400 border-0 py-2 px-4 focus:outline-none hover:bg-gray-500 rounded">Detail</button>
-                                        </td>
+                                        <td class="px-4 py-3 border w-1/6 text-center">Material</td>
+                                        <td class="px-4 py-3 border w-1/6 text-center">{{ $material->name }}</td>
+                                        <td class="px-4 py-3 border w-1/3 text-center">{{ $material->charactaristic }}</td>
+                                        {{-- <td class="px-4 py-3">
+                                            <button onclick="location.href='{{ route('user.category.edit', ['category_type' => 'material', 'id' => $material->id ])}}'" class="text-white bg-gray-400 border-0 py-2 px-4 focus:outline-none hover:bg-gray-500 rounded">Edit</button>
+                                        </td> --}}
                                         
                                     </tr>
                                 @endforeach
@@ -145,11 +147,12 @@
                             <tbody>
                                 @foreach ($selected_bacteria as $bacterium)
                                     <tr>
-                                        <td class="px-4 py-3">Bacteria</td>
-                                        <td class="px-4 py-3">{{ $bacterium->name }}</td>
-                                        <td class="px-4 py-3">
+                                        <td class="px-4 py-3 border w-1/6 text-center">Bacteria</td>
+                                        <td class="px-4 py-3 border w-1/6 text-center">{{ $bacterium->name }}</td>
+                                        <td class="px-4 py-3 border w-1/3 text-center">{{ $bacterium->charactaristic }}</td>
+                                        {{-- <td class="px-4 py-3">
                                             <button onclick="location.href='{{ route('user.category.show', ['category_type' => 'bacteria', 'id' => $bacterium->id ])}}'" class="text-white bg-gray-400 border-0 py-2 px-4 focus:outline-none hover:bg-gray-500 rounded">Detail</button>
-                                        </td>
+                                        </td> --}}
                                         
                                     </tr>
                                 @endforeach
@@ -157,11 +160,12 @@
                             <tbody>
                                 @foreach ($selected_fruits as $fruit)
                                     <tr>
-                                        <td class="px-4 py-3">Fruit and Vegitable</td>
-                                        <td class="px-4 py-3">{{ $fruit->name }}</td>
-                                        <td class="px-4 py-3">
+                                        <td class="px-4 py-3 border w-1/6 text-center">Fruit and Vegitable</td>
+                                        <td class="px-4 py-3 border w-1/6 text-center">{{ $fruit->name }}</td>
+                                        <td class="px-4 py-3 border w-1/3 text-center">{{ $fruit->charactaristic }}</td>
+                                        {{-- <td class="px-4 py-3">
                                             <button onclick="location.href='{{ route('user.category.show', ['category_type' => 'fruit', 'id' => $fruit->id ])}}'" class="text-white bg-gray-400 border-0 py-2 px-4 focus:outline-none hover:bg-gray-500 rounded">Detail</button>
-                                        </td>
+                                        </td> --}}
                                         
                                     </tr>
                                 @endforeach
@@ -169,11 +173,12 @@
                             <tbody>
                                 @foreach ($selected_phMaterials as $phMaterial)
                                     <tr>
-                                        <td class="px-4 py-3">pH Material</td>
-                                        <td class="px-4 py-3">{{ $phMaterial->name }}</td>
-                                        <td class="px-4 py-3">
+                                        <td class="px-4 py-3 border w-1/6 text-center">pH Material</td>
+                                        <td class="px-4 py-3 border w-1/6 text-center">{{ $phMaterial->name }}</td>
+                                        <td class="px-4 py-3 border w-1/3 text-center">{{ $phMaterial->charactaristic }}</td>
+                                        {{-- <td class="px-4 py-3">
                                             <button onclick="location.href='{{ route('user.category.show', ['category_type' => 'phMaterial', 'id' => $phMaterial->id ])}}'" class="text-white bg-gray-400 border-0 py-2 px-4 focus:outline-none hover:bg-gray-500 rounded">Detail</button>
-                                        </td>
+                                        </td> --}}
                                         
                                     </tr>
                                 @endforeach
@@ -183,9 +188,10 @@
                                     <tr>
                                         <td class="px-4 py-3">Antibacteria Test Type</td>
                                         <td class="px-4 py-3">{{ $antibacteriaTestType->name }}</td>
-                                        <td class="px-4 py-3">
+                                        <td class="px-4 py-3">{{ $antibacteriaTestType->name }}</td>
+                                        {{-- <td class="px-4 py-3">
                                             <button onclick="location.href='{{ route('user.category.show', ['category_type' => 'antibacteriaTestType', 'id' => $antibacteriaTestType->id ])}}'" class="text-white bg-gray-400 border-0 py-2 px-4 focus:outline-none hover:bg-gray-500 rounded">Detail</button>
-                                        </td>
+                                        </td> --}}
                                         
                                     </tr>
                                 @endforeach
@@ -200,4 +206,5 @@
             </div>
         </div>
     </div> 
+    @endif
 </x-app-layout>

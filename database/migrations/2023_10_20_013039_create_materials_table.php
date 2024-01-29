@@ -15,7 +15,8 @@ class CreateMaterialsTable extends Migration
 
         Schema::create('materials', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('experiment_id')
+            $table->foreignId('composition_id')
+            ->references('id')->on('material_compositions')
             ->constrained()
             ->onUpdate('cascade')
             ->onDelete('cascade');

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use App\Models\Experiment;
+use App\Models\Material_composition;
 
 
 
@@ -24,7 +24,7 @@ class Antibacteria_test extends Model
 
 
     protected $fillable = [
-        'experiment_id',
+        'composition_id',
         'bacteria_id',
         'antibacteria_fruit_id',
         'test_id',
@@ -33,9 +33,9 @@ class Antibacteria_test extends Model
         'mic',
     ];
 
-    public function experiment(): BelongsTo
+    public function material_composition(): BelongsTo
     {
-        return $this->belongsTo(Experiment::class);
+        return $this->belongsTo(Material_composition::class);
     }
     public function bacteria_detail(): HasOne
     {

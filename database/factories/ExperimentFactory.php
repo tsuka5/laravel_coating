@@ -25,7 +25,7 @@ class ExperimentFactory extends Factory
             'name' => $this->faker->name,
             'date' => $this->faker->dateTimeBetween(),
             'paper_name' => $this->faker->sentence,
-            'paper_url' => $this->faker->url(),
+            'paper_url' => $this->faker->optional()->url(),
         ];
     }
 }

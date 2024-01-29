@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Antibacteria_test;
-use App\Models\Experiment;
+use App\Models\Material_composition;
 use App\Models\Fruit_detail;
 use App\Models\Bacteria_detail;
 use App\Models\Antibacteria_test_type;
@@ -18,18 +18,18 @@ class Antibacteria_testFactory extends Factory
 
     public function definition(): array
     {
-        $experiments_id = Experiment::pluck('id')->toArray();
+        $compositions_id = Material_composition::pluck('id')->toArray();
         $fruits_id = Fruit_detail::pluck('id')->toArray();    
         $bacteria_id = Bacteria_detail::pluck('id')->toArray();
         $tests_id = Antibacteria_test_type::pluck('id')->toArray();
         
-        $experiment_id = $experiments_id[random_int(0, count($experiments_id) - 1)];
+        $composition_id = $compositions_id[random_int(0, count($compositions_id) - 1)];
         $fruit_id = $fruits_id[random_int(0, count($fruits_id) - 1)];
         $bacterium_id = $bacteria_id[random_int(0, count($bacteria_id) - 1)];
         $test_id = $tests_id[random_int(0, count($tests_id) - 1)];
         
         return [
-            'experiment_id' => $experiment_id,
+            'composition_id' => $composition_id,
             'bacteria_id' => $bacterium_id,
             'antibacteria_fruit_id' => $fruit_id,
             'test_id' => $test_id,

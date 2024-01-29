@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Experiment;
+use App\Models\Material_composition;
 use App\Models\Film_condition;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Arr;
@@ -15,10 +15,10 @@ class Film_conditionFactory extends Factory
 
     public function definition(): array
     {
-        $experiments_id = Experiment::pluck('id')->toArray();
+        $compositions_id = Material_composition::pluck('id')->toArray();
                 
         return [
-            'experiment_id' => $this->faker->unique()->numberBetween(1, count($experiments_id)),
+            'composition_id' => $this->faker->unique()->numberBetween(1, count($compositions_id)),
             'casting_amount' => $this->faker->optional()->randomFloat($nbMaxDecimals = 1, $min = 0, $max = 100),
             'petri_dish_area' => $this->faker->optional()->randomFloat($nbMaxDecimals = 1, $min = 0, $max = 100),
             'degas_temperature' => $this->faker->optional()->randomFloat($nbMaxDecimals = 1, $min = 0, $max = 60),

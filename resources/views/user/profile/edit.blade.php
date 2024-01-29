@@ -15,7 +15,7 @@
                         </div>
                         <div class="lg:w-1/2 md:w-2/3 mx-auto">
                           <x-input-error :messages="$errors->all()" class="mb-4"  />
-                          <form method="post" enctype="multipart/form-data" action="{{ route('user.profile.update', ['profile' => $experiment->id]) }}">
+                          <form method="post" enctype="multipart/form-data" action="{{ route('user.profile.update', ['profile' => $composition->id]) }}">
                             @method('PUT')  
                             @csrf
                             

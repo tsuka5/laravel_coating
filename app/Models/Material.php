@@ -5,7 +5,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use App\Models\Experiment;
+use App\Models\Material_composition;
+use App\Models\Material_detail;
+use App\Models\Ph_material_detail;
 
 
 class Material extends Model
@@ -15,7 +17,7 @@ class Material extends Model
     public $timestamps = false; 
 
     protected $fillable = [
-        'experiment_id',
+        'composition_id',
         'material_id',
         'concentration',
         'ph_adjustment',
@@ -23,9 +25,9 @@ class Material extends Model
         'ph_purpose',
     ];
 
-    public function experiment(): BelongsTo
+    public function material_composition(): BelongsTo
     {
-        return $this->belongsTo(Experiment::class);
+        return $this->belongsTo(Material_composition::class, 'id', 'composition_id' );
     }
     public function material_detail(): HasOne
     {

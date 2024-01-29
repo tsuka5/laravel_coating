@@ -14,7 +14,7 @@ class Antibacteria_testSeeder extends Seeder
     {
         DB::table('antibacteria_tests')->insert([
             [
-                'experiment_id' => '1',
+                'composition_id' => '1',
                 'bacteria_id' => '1',
                 'antibacteria_fruit_id' => '2',
                 'test_id' => '1',
@@ -22,7 +22,7 @@ class Antibacteria_testSeeder extends Seeder
                 'mic' => '9.7'
             ],
             [
-                'experiment_id' => '2',
+                'composition_id' => '2',
                 'bacteria_id' => '2',
                 'antibacteria_fruit_id' => '1',
                 'test_id' => '1',
@@ -30,7 +30,7 @@ class Antibacteria_testSeeder extends Seeder
                 'mic' => '9.7'
             ],
             [
-                'experiment_id' => '3',
+                'composition_id' => '3',
                 'bacteria_id' => '3',
                 'antibacteria_fruit_id' => '2',
                 'test_id' => '1',

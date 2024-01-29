@@ -17,7 +17,7 @@ class MaterialSeeder extends Seeder
     {
         DB::table('materials')->insert([
             [
-                'experiment_id' => '1',
+                'composition_id' => '1',
                 'material_id' => '1',
                 'concentration' => '0.3',
                 'ph_adjustment' => '1',
@@ -25,7 +25,7 @@ class MaterialSeeder extends Seeder
                 'ph_purpose' => '8.0'
             ],
             [
-                'experiment_id' => '2',
+                'composition_id' => '2',
                 'material_id' => '1',
                 'concentration' => '0.3',
                 'ph_adjustment' => '0',
@@ -33,7 +33,7 @@ class MaterialSeeder extends Seeder
                 'ph_purpose' => null
             ],
             [
-                'experiment_id' => '2',
+                'composition_id' => '2',
                 'material_id' => '3',
                 'concentration' => '0.3',
                 'ph_adjustment' => '1',
@@ -41,7 +41,7 @@ class MaterialSeeder extends Seeder
                 'ph_purpose' => '7.0'
             ],
             [
-                'experiment_id' => '3',
+                'composition_id' => '3',
                 'material_id' => '2',
                 'concentration' => '0.3',
                 'ph_adjustment' => '1',

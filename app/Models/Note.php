@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Models\Experiment;
+use App\Models\Material_composition;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Note extends Model
@@ -22,7 +22,7 @@ class Note extends Model
 
 
     protected $fillable = [
-        'experiment_id',
+        'composition_id',
         'note',
         'img1',
         'img2',
@@ -30,8 +30,8 @@ class Note extends Model
         'img4',
     ];
 
-    public function experiment(): BelongsTo
+    public function material_composition(): BelongsTo
     {
-        return $this->belongsTo(Experiment::class);
+        return $this->belongsTo(Material_composition::class);
     }
 }

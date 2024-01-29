@@ -17,7 +17,7 @@ class Charactaristic_testSeeder extends Seeder
     {
         DB::table('charactaristic_tests')->insert([
             [
-                'experiment_id' => '1',
+                'composition_id' => '1',
                 'ph' => '5.6',
                 'temperature' => '10.4',
                 'shear_rate' => '2.4',
@@ -42,7 +42,7 @@ class Charactaristic_testSeeder extends Seeder
                 'clsm' => null
             ],
             [
-                'experiment_id' => '2',
+                'composition_id' => '2',
                 'ph' => '5.6',
                 'temperature' => '10.4',
                 'shear_rate' => '2.4',
@@ -67,7 +67,7 @@ class Charactaristic_testSeeder extends Seeder
                 'clsm' => null
             ],
             [
-                'experiment_id' => '3',
+                'composition_id' => '3',
                 'ph' => '5.6',
                 'temperature' => '10.4',
                 'shear_rate' => '2.4',

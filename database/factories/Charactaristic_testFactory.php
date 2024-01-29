@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Experiment;
+use App\Models\Material_composition;
 use App\Models\Charactaristic_test;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Arr;
@@ -16,10 +16,10 @@ class Charactaristic_testFactory extends Factory
 
     public function definition(): array
     {
-        $experiments_id = Experiment::pluck('id')->toArray();
+        $compositions_id = Material_composition::pluck('id')->toArray();
         
         return [
-            'experiment_id' => $this->faker->unique()->randomElement($experiments_id),
+            'composition_id' => $this->faker->unique()->randomElement($compositions_id),
             'ph' => $this->faker->optional()->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 1),
             'temperature' => $this->faker->optional()->randomFloat($nbMaxDecimals = 1, $min = 0, $max = 40),
             'shear_rate' => $this->faker->optional()->randomFloat($nbMaxDecimals = 1, $min = 0, $max = 100),
