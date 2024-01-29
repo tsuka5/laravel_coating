@@ -136,7 +136,7 @@ class ProfileController extends Controller
         if($request->formType === 'experiment'){
             $request->validate([
                 'title' => ['required', 'string', 'max:255','unique:experiments'], 
-                'name' => ['required', 'string', 'max:255'],
+                'name' => ['nullable', 'string', 'max:255'],
                 'date' => ['required','date'],
                 'paper_name' => ['string', 'max:255','nullable'],
                 'paper_url' => ['string', 'max:255','nullable'],

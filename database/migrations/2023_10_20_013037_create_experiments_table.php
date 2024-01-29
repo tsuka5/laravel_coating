@@ -19,7 +19,7 @@ class CreateExperimentsTable extends Migration
             ->constrained()
             ->onUpdate('cascade');
             $table->text('title');
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->date('date');
             $table->text('paper_name')->nullable();
             $table->text('paper_url')->nullable();
