@@ -87,7 +87,8 @@ class SearchController extends Controller
         } else {
             $selected_antibacteriaTestTypes = [];
         }
-        if(empty($selected_materials) && empty($selected_bacteria) && empty($selected_fruits) && empty($selected_phMaterials) && empty($selected_antibacteriaTestTypes)) {
+        if(empty($selected_materials) && empty($selected_bacteria) && empty($selected_fruits) &&
+         empty($selected_phMaterials) && empty($selected_antibacteriaTestTypes)) {
             $selected_compositions = [];
         }
 

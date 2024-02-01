@@ -113,9 +113,7 @@
                                     <th class="px-4 py-3 title-font tracking-wider font-medium text-white text-lg bg-gray-400 border w-1/3 text-center">Composition</th>
                                     <th class="px-4 py-3 title-font tracking-wider font-medium text-white text-lg bg-gray-400 border w-1/5 text-center">Fruit or Vesitable</th>
                                     <th class="px-4 py-3 title-font tracking-wider font-medium text-white text-lg bg-gray-400 border w-1/6 text-center">Bacteria</th>
-                                    {{-- <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Paper</th> --}}
                                     <th class="px-4 py-3 title-font tracking-wider font-medium bg-gray-400"></th>
-                                    {{-- <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br"></th> --}}
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-gray-400">

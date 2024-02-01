@@ -37,7 +37,7 @@
                                 </div>
                                 <div class="p-2 w-1/2 mx-auto">
                                   <div class="relative">
-                                    <label for="concentration" class="leading-7 text-sm text-gray-600">Concentration (%)</label>
+                                    <label for="concentration" class="leading-7 text-sm text-gray-600">Concentration (% (w/w))</label>
                                     <input type="number" id="concentration" name="concentration" value="{{ old('concentration') }}" step="0.01" placeholder="ex: 0.80" required class="w-full bg-gray-100 bg-opacity-50 rounded border
                                      border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                   </div>
@@ -352,19 +352,19 @@
                                 <div class="p-2 w-1/2 mx-auto">
                                     <div class="relative">
                                       <label for="l" class="leading-7 text-sm text-gray-600">L*</label>
-                                      <input type="number" id="l" name="l" value="{{ old('l') }}" step=0.1 placeholder="ex: 28.6" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                      <input type="number" id="l" name="l" value="{{ old('l') }}" step=0.01 placeholder="ex: 28.6" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                     </div>
                                 </div>
                                 <div class="p-2 w-1/2 mx-auto">
                                     <div class="relative">
                                       <label for="a" class="leading-7 text-sm text-gray-600">a*</label>
-                                      <input type="number" id="a" name="a" value="{{ old('a') }}" step="0.1" placeholder="ex: 34.1" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                      <input type="number" id="a" name="a" value="{{ old('a') }}" step="0.01" placeholder="ex: 34.1" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                     </div>
                                 </div>
                                 <div class="p-2 w-1/2 mx-auto">
                                   <div class="relative">
                                     <label for="b" class="leading-7 text-sm text-gray-600">b*</label>
-                                    <input type="number" id="b" name="b" value="{{ old('b') }}" step="0.1" placeholder="ex: 19.0" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                    <input type="number" id="b" name="b" value="{{ old('b') }}" step="0.01" placeholder="ex: 19.0" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                   </div>
                                 </div>
                                 <div class="p-2 w-1/2 mx-auto">

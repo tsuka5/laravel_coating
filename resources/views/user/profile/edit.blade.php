@@ -60,16 +60,17 @@
                             </div>
                             <HR>
 
+                              @php
+                                $material_number = 1;
+                              @endphp
+                             
+                             @foreach ($materials as $material)
 
-                              
                               <div class="flex flex-col text-center w-full mb-4 mt-12">
-                                <h4 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Materials</h4>
+                                <h4 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Materials : {{$material_number}}</h4>
                               </div>
 
-                             
-                              @foreach ($materials as $material)
-                             
-                              <div class="flex flex-wrap">
+                              <div class="flex flex-wrap"> 
                                 <div class="p-2 w-1/2 mx-auto">
                                   <div class="relative">
                                       <label for="material_name" class="leading-7 text-sm text-gray-600">Name</label>
@@ -139,6 +140,9 @@
                                 </div> 
                               </div>
                               <HR>
+                              @php
+                                $material_number += 1;
+                              @endphp
                               @endforeach
 
                             <div class="flex flex-col text-center w-full mb-4 mt-12">
@@ -333,11 +337,11 @@
                               <HR>
                               @endforeach
 
-
-                            <div class="flex flex-col text-center w-full mb-4 mt-12">
-                              <h4 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Storing Test</h4>
-                          </div>
                           @foreach ($storing_tests as $storing_test)
+                          <div class="flex flex-col text-center w-full mb-4 mt-12">
+                              <h4 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Storing Test : Day{{$storing_test->storing_day}}</h4>
+                          </div>
+                          
                           <div class="m-2">
                             <div class="flex flex-wrap">
                               <div class="p-2 w-1/2 mx-auto">
@@ -366,7 +370,7 @@
                               <div class="p-2 w-1/2 mx-auto">
                                 <div class="relative">
                                     <label for="storing_day" class="leading-7 text-sm text-gray-600">Storing day</label>
-                                    <input type="number" id="storing_day" name="storing_day[{{ $storing_test->id}}]" value="{{ $storing_test->storing_day }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                    <input type="number" id="storing_day" name="storing_day[{{ $storing_test->id}}]" value="{{ $storing_test->storing_day }}" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                 </div>
                               </div>
                               <div class="p-2 w-1/2 mx-auto">

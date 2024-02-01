@@ -38,13 +38,7 @@ class ProfileController extends Controller
 
     public function index()
     {
-        // $userInformation = Auth::user();
         $experiments = Experiment::where('user_id', Auth::user()->id)->orderby('id', 'desc')->paginate(2);
-        // $your_experiments = Experiment::where('user_id', Auth::user()->id)->pluck('id');
-        // $compositions = Material_Composition::whereIn('experiment_id', $your_experiments)->orderby('id', 'desc')->paginate(4);
-        // $experiment = Experiment::find(1);
-        // $materialCompositions = $experiment->material_composition;
-        // dd($materialCompositions);
         $compositions = [];
         $materialCounts = [];
         $film_conditionCounts = [];
@@ -54,11 +48,9 @@ class ProfileController extends Controller
         $noteCounts = [];
         $materials = [];
 
-
         foreach ($experiments as $experiment) {
             $compositions[$experiment->id] = Material_Composition::where('experiment_id', $experiment->id)->orderby('id', 'asc')->get();
             foreach($compositions[$experiment->id] as $composition) {
-                // dd($composition->id);
                 $materialCounts[$composition->id] = Material::where('composition_id', $composition->id)->count();
                 $film_conditionCounts[$composition->id] = Film_condition::where('composition_id', $composition->id)->count();
                 $charactaristic_testCounts[$composition->id] = Charactaristic_test::where('composition_id', $composition->id)->count();
@@ -68,18 +60,6 @@ class ProfileController extends Controller
                 $materials[$composition->id] = Material::where('composition_id', $composition->id)->get();
             }
         }
-
-        // dd($compositions);
-        
-
-        // foreach ($compositions as $composition) {
-        //     $materialCounts[$composition->id] = Material::where('composition_id', $composition->id)->count();
-        //     $film_conditionCounts[$composition->id] = Film_condition::where('composition_id', $composition->id)->count();
-        //     $charactaristic_testCounts[$composition->id] = Charactaristic_test::where('composition_id', $composition->id)->count();
-        //     $storing_testCounts[$composition->id] = Storing_test::where('composition_id', $composition->id)->count();
-        //     $antibacteria_testCounts[$composition->id] = Antibacteria_test::where('composition_id', $composition->id)->count();
-        //     $noteCounts[$composition->id] = Note::where('composition_id', $composition->id)->count();           
-        // }
        
         return view('user.profile.index', compact('experiments', 'compositions','materialCounts','film_conditionCounts',
             'charactaristic_testCounts','storing_testCounts','antibacteria_testCounts', 'noteCounts', 'materials'));
@@ -131,8 +111,6 @@ class ProfileController extends Controller
      */
     public function store(Request $request)  
     {
-       
-
         if($request->formType === 'experiment'){
             $request->validate([
                 'title' => ['required', 'string', 'max:255','unique:experiments'], 

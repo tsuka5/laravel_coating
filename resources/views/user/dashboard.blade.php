@@ -9,16 +9,9 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{-- <p class="text-xl">You're logged in!<br><br> --}}
                     <p class="text-xl">This is Web Database for Edible Coating!</p><br>
                     <p class="text-xl">This database was released on Dec.22, 2023.</p><br>
                     <p class="text-xl">This database was created by Manaka Takahashi and Tsukasa Ozaki at Poostharvest Science lab., faculty of Agriculture, Kyushu University.</p><br>
-                    <p class="text-xl">You can do a lot of things here.<br><br>
-
-                    <p class="text-lg">
-                    ・You can register/edit/delete your experiment data.<br>
-                    ・You can search experiment data of coating.<br><br>
-                    {{-- ・You can edit csv files.<br></p><br> --}}
                     @if(!empty($pdfFile))
                     <p class="text-xl">If you have any questions about how to use this web database, <br>
                         please click on the link below, which describes how to use the web database</p><br>
@@ -51,9 +44,7 @@
                                     <th class="px-4 py-3 title-font tracking-wider font-medium text-white text-lg bg-indigo-400 border w-1/3 text-center">Composition</th>
                                     <th class="px-4 py-3 title-font tracking-wider font-medium text-white text-lg bg-indigo-400 border w-1/5 text-center">Fruit or Vesitable</th>
                                     <th class="px-4 py-3 title-font tracking-wider font-medium text-white text-lg bg-indigo-400 border w-1/6 text-center">Bacteria</th>
-                                    {{-- <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Paper</th> --}}
                                     <th class="px-4 py-3 title-font tracking-wider font-medium bg-indigo-400"></th>
-                                    {{-- <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br"></th> --}}
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-gray-400">

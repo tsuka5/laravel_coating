@@ -4,7 +4,7 @@
             Your Profile
         </h2>
     </x-slot>
-    <div class="mb-2 py-12">
+    <div class="mb-2 py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="justify-center p-6 text-gray-900 dark:text-gray-100">
@@ -17,7 +17,6 @@
                                 <div class="flex justify-center">
                                     <p class="underline">Please Start here</p>
                                 </div>
-                                {{-- <div class="border-2 border-gray-500"> --}}
                                 <div class="flex">
                                     <div class="flex justify-center p-3">
                                         <button onclick="location.href='{{ route('user.create.experiment', ['experiment']) }}'" class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg w-80">Your Experiment Data Entry</button>
@@ -51,7 +50,6 @@
                                             <p>Paper: {{$experiment->title}}<p>
                                         </div>
                                     @endif
-
                                     @php
                                         $number = 1;
                                     @endphp
@@ -60,7 +58,6 @@
 
                                             <div class="w-1/4 flex-col items-center divide-y divide-gray-500 ">
                                                 <div class="flex justify-center bg-gray-100">
-                                                    {{-- <p class="underline"> --}}
                                                     <p>
                                                         Composition:{{$number}}
                                                     </p>
@@ -121,7 +118,6 @@
                                         @endphp
                                     @endforeach
                                 <div class="flex justify-center">
-                                    {{-- {{dd($experiment->id)}} --}}
                                     <form method="post" action="{{ route('user.profile.create.composition', ['experiment_id'=> $experiment->id]) }}">
                                     @csrf
                                         <button otype="submit" class="my-4 h-9 text-white bg-indigo-400 border-0 py-2 px-4 focus:outline-none
