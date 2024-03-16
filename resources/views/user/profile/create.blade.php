@@ -21,7 +21,7 @@
                         </div>
                         <div class="lg:w-1/2 md:w-2/3 mx-auto">
                           <x-input-error :messages="$errors->all()" class="mb-4"  />
-                          <form method="post" action="{{ route('user.store', ['formType'=>'experiment']) }}">
+                          <form method="post" action="{{ route('user.store.experiment', ['formType' => 'experiment']) }}">
                             @csrf
                             <div class="m-2">
                               <div class="p-2 w-1/2 mx-auto">
@@ -64,7 +64,7 @@
                         </div>
                         <div class="lg:w-1/2 md:w-2/3 mx-auto">
                           <x-input-error :messages="$errors->all()" class="mb-4"  />
-                          <form method="post" action="{{ route('user.store', ['formType'=>'experiment']) }}">
+                          <form method="post" action="{{ route('user.store.experiment', ['formType' => 'paper']) }}">
                             @csrf
                             <div class="m-2">
                               <div class="p-2 w-1/2 mx-auto">

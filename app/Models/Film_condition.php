@@ -7,7 +7,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Models\Material_composition;
+use App\Models\Experiment;
 
 
 
@@ -34,9 +34,9 @@ class Film_condition extends Model
         'drying_time',
     ];
 
-    public function material_composition(): BelongsTo
+    public function Experiment(): BelongsTo
     {
-        return $this->belongsTo(Material_composition::class);
+        return $this->belongsTo(Experiment::class);
     }
 
  

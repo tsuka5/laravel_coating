@@ -37,6 +37,8 @@ class SearchController extends Controller
         $selected_phMaterials = Ph_material_detail::query();
         $selected_antibacteriaTestTypes = Antibacteria_test_type::query();
         $selected_compositions = Material_composition::query();
+        // $selected_experiments = Experiment::query();
+
 
         if(!empty($keyword)){
             $selected_materials->where('name', 'LIKE', "%{$keyword}%");
@@ -90,6 +92,7 @@ class SearchController extends Controller
         if(empty($selected_materials) && empty($selected_bacteria) && empty($selected_fruits) &&
          empty($selected_phMaterials) && empty($selected_antibacteriaTestTypes)) {
             $selected_compositions = [];
+            // $selected_experiments = [];
         }
 
         foreach($selected_materials as $selected_material){
@@ -122,6 +125,7 @@ class SearchController extends Controller
                 $selected_compositions->orWhere('id', $antibacteriaTestType->composition_id);
             }
         }
+        
         if(!empty($selected_compositions))
             $selected_compositions = $selected_compositions->paginate(5);
 
@@ -152,13 +156,53 @@ class SearchController extends Controller
         ));
  
         } 
-    public function show(string $id)
+
+        public function experimentIndex($experiment_id)
+        {
+            $experiment = Experiment::where('id', $experiment_id)->first();
+            $film_condition = Film_condition::where('experiment_id', $experiment_id )->get();
+            $film_condition_data = $film_condition->first();
+            $materials = [];
+            $storings_tests = [];
+            $bacteria_tests = []; 
+            $characteristic_tests = [];
+            $characteristic_tests_data = [];
+            $charactaristic_testCounts = [];
+    
+    
+    
+            $materials_list = Material_detail::orderby('name', 'asc')->get();
+            $ph_materials_list = Ph_material_detail::orderby('name', 'asc')->get();
+            $fruits_list = Fruit_detail::orderby('name', 'asc')->get();
+            $bacteria_list = Bacteria_detail::orderby('name','asc')->get();
+            $antibacteria_test_list = Antibacteria_test_type::orderby('name','asc')->get();
+    
+    
+            $compositions = Material_Composition::where('experiment_id', $experiment->id)->orderby('id', 'asc')->get();
+    
+            foreach($compositions as $composition) {
+                $materials[$composition->id] = Material::where('composition_id', $composition->id)->get();
+                $storing_tests[$composition->id] = Storing_test::where('composition_id', $composition->id)->get();
+                $bacteria_tests[$composition->id] = Antibacteria_test::where('composition_id', $composition->id)->get();
+                $characteristic_tests[$composition->id] = Charactaristic_test::where('composition_id', $composition->id)->get();
+                $charactaristic_testCounts[$composition->id] = Charactaristic_test::where('composition_id', $composition->id)->count();
+    
+                // $characteristic_tests_data[$composition->id] = $characteristic_tests[$composition->id]->first();
+            }
+    
+            return view('user.search.experiment_show', compact('experiment','materials', 'compositions', 'storing_tests',
+                'bacteria_tests', 'characteristic_tests', 'characteristic_tests_data', 'film_condition', 'film_condition_data', 'materials_list', 'ph_materials_list',
+                'bacteria_list', 'fruits_list', 'antibacteria_test_list','charactaristic_testCounts'));
+        }
+
+
+    public function show($id)
     {
         $experiment_id = Material_composition::select('experiment_id')->where('id', $id)->firstOrFail()->experiment_id;
 
         $experiment = Experiment::findOrFail($experiment_id);
         $materials = Material::where('composition_id', $id)->get();
-        $film_conditions = Film_condition::where('composition_id', $id)->get();
+        $film_conditions = Film_condition::where('experiment_id', $experiment_id)->get();
         $charactaristic_tests = Charactaristic_test::where('composition_id', $id)->get();
         $storing_tests = Storing_test::where('composition_id', $id)->get();
         $antibacteria_tests = Antibacteria_test::where('composition_id', $id)->get();
@@ -166,5 +210,36 @@ class SearchController extends Controller
       
         return view('user.search.show', compact('experiment', 'materials','film_conditions',
                     'charactaristic_tests','storing_tests','antibacteria_tests','notes'));
+    }
+
+    public function experimentDetailshow($type, $id)
+    {
+
+        if($type == 'experiment'){
+            $experiment_id = $id;
+            $experiment = Experiment::findOrFail($id);
+            return view('user.search.experiment_show_detail', compact('type','experiment','experiment_id'));
+        }elseif($type == 'film_condition'){
+            $experiment_id = Film_condition::select('experiment_id')->where('id', $id)->first();
+            $film_condition = Film_condition::findOrFail($id);
+            return view('user.search.experiment_show_detail', compact('type', 'film_condition','experiment_id'));
+        }elseif($type == 'characteristic_test'){
+            $experiment_id = Material_composition::select('experiment_id')->where('id', $id)->first();
+            $characteristic_tests = Charactaristic_test::where('composition_id', $id)->get();
+            return view('user.search.experiment_show_detail', compact('type', 'characteristic_tests','experiment_id'));
+        }elseif($type == 'material'){
+            $experiment_id = Material_composition::select('experiment_id')->where('id', $id)->first();
+            $materials = Material::where('composition_id', $id)->get();
+            return view('user.search.experiment_show_detail', compact('type', 'materials','experiment_id'));
+        }elseif($type == 'storing_test'){
+            $experiment_id = Material_composition::select('experiment_id')->where('id', $id)->first();
+            $storing_tests = Storing_test::where('composition_id', $id)->get();
+            return view('user.search.experiment_show_detail', compact('type', 'storing_tests','experiment_id'));
+        }elseif($type == 'antibacteria_test'){
+            $experiment_id = Material_composition::select('experiment_id')->where('id', $id)->first();
+            $antibacteria_tests = Antibacteria_test::where('composition_id', $id)->get();
+            return view('user.search.experiment_show_detail', compact('type', 'antibacteria_tests','experiment_id'));
+        }
+
     }
 }

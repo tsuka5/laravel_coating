@@ -27,9 +27,17 @@ Route::middleware('auth:users')->group(function () {
     Route::get('profile/create/{id}/{form_type}', [ProfileController::class,'create'])->name('create');
     Route::get('profile/create/{type}',[ProfileController::class,'createExperiment'])->name('create.experiment');
     Route::post('profile', [ProfileController::class, 'store'])->name('store');
+    Route::post('profile/experimentStore', [ProfileController::class, 'storeExperiment'])->name('store.experiment');
     Route::get('profile/show/{id}', [ProfileController::class,'show'])->name('profile.show');
     Route::delete('profile/deleteExperiment/{id}', [ProfileController::class, 'destroyExperiment'])->name('profile.destroy.experiment');
     Route::post('profile/create_composition/{experiment_id}', [ProfileController::class, 'createComposition'])->name('profile.create.composition');
+    //experiment_registerについて
+    Route::get('profile/experiment/{experiment_id}', [ProfileController::class,'experimentIndex'])->name('experiment_register');
+    Route::delete('profile/experiment/{experiment_id}/{type}/{id}', [ProfileController::class, 'destroyData'])->name('destroy.data');
+    Route::get('profile/experiment/{editType}/{id}', [ProfileController::class, 'editExperiment'])->name('edit.experiment');
+    Route::put('profile/experiment/{editType}/{id}', [ProfileController::class, 'updateExperiment'])->name('update.experiment');
+
+    
 
     //detailについて
     Route::get('detail/index', [DetailController::class, 'index'])->name('detail.index');
@@ -39,6 +47,9 @@ Route::middleware('auth:users')->group(function () {
     //searchについて
     Route::resource('search', SearchController::class)
     ->middleware(['auth:users', 'verified']);
+    Route::get('search/experiment/{experiment_id}', [SearchController::class,'experimentIndex'])->name('experiment_show');
+    Route::get('search/experiment/{type}/{id}', [SearchController::class, 'experimentDetailShow'])->name('experiment_detail_show');
+
 
     //categoryについて
     Route::get('category/index', [CategoryController::class, 'index'])->name('category.index');
