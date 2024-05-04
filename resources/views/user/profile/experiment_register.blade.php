@@ -10,34 +10,54 @@
                 <div class="justify-center p-6 text-gray-900 dark:text-gray-100">
                     <section class="text-gray-600 body-font">
 
-                        <div class="container px-5 mx-auto">
+                        <div class="container mx-auto">
                             <x-flash-message status="session('status')" />
                         
-                        <div class="lg:w-2/3 w-full mx-auto overflow-auto">
-                                <div class="right-2">
-                                    <form  class="mt-1.5" id="delete_experiment_{{ $experiment->id }}" method="post" action="{{ route('user.destroy.data', ['experiment_id' => $experiment->id, 'type' =>'experiment', 'id' => $experiment->id ])}}">
-                                        @csrf
-                                        @method('delete')   
-                                        <a href="#" data-id="{{ $experiment->id }}" onclick="deletePost(this, 'experiment')" class="h-9 text-white bg-red-400 border-0 px-4 focus:outline-none
-                                            hover:bg-red-500 rounded">Delete_Experiment</a>
-                                    </form> 
-                                </div>
-                                <div class="flex justify-center border-2 border-gray-500 rounded divide-x divide-gray-500">
-                                @if ($experiment->paper_url === null)
-                                    <div class="flex justify-center border-2 bg-gray-200 p-3 w-3/4">
-                                        <p class="text-center p-2">Your Experiment : {{$experiment->title}}</p>
-                                    </div>
-                                @else
-                                    <div class="flex justify-center items-center border-2 bg-gray-200 w-3/4">
-                                        <div class="flex-col">
-                                            <p class="text-center p-2">Paper : {{$experiment->title}}<p>
-                                            {{-- <HR class="text-black">
-                                            <p class="text-center">{{$experiment->paper_url}}<p> --}}
-                                        </div>
-                                    </div>
-                                @endif
+                            <div class="lg:w-1/2 mx-auto">
                             
-                                    <div class="w-1/3">
+                                <form  class="mt-1.5" id="delete_experiment_{{ $experiment->id }}" method="post" action="{{ route('user.destroy.data', ['experiment_id' => $experiment->id, 'type' =>'experiment', 'id' => $experiment->id ])}}">
+                                    @csrf
+                                    @method('delete')   
+                                    <a href="#" data-id="{{ $experiment->id }}" onclick="deletePost(this, 'experiment')" class="h-9 text-white bg-red-400 border-0 px-4 focus:outline-none
+                                        hover:bg-red-500 rounded">Delete_Experiment</a>
+                                </form> 
+                            
+                            
+                                @if ($experiment->paper_url === null)
+                                <div class="flex flex-wrap">
+                                    <div class="w-1/2 border-2">
+                                        <p class="text-left">Name : {{$experiment->name}}</p>
+                                    </div>
+                                    <div class="w-1/2 border-2">
+                                        <p class="text-left">Date : {{$experiment->day}}</p>
+                                    </div>
+                                    <div class="w-full border-2">
+                                        <p class="text-left">Title : {{$experiment->title}}</p>
+                                    </div>
+                                    
+                                </div>
+                                @else
+                                <div class="flex flex-wrap border-2 border-gray-400">
+                                    <div class="w-1/2 border-b border-r-2 border-gray-400 pt-3 pl-2">
+                                        <p class="text-left">Name : {{$experiment->name}}</p>
+                                    </div>
+                                    <div class="w-1/2 border-b border-l-2 border-gray-400 pt-3 pl-2">
+                                        <p class="text-left">Date : {{$experiment->day}}</p>
+                                    </div>
+                                    <div class="w-full border-b border-t-2 border-gray-400 pt-3 pl-2">
+                                        <p class="text-left">Title : {{$experiment->title}}</p>
+                                    </div>
+                                    <div class="w-full border-b border-t-2 border-gray-400 pt-3 pl-2">
+                                        <p class="text-left">URL : {{$experiment->paper_url}}</p>
+                                    </div>
+                                </div>
+                                @endif
+                                
+                            
+                                {{-- <div class="lg:w-4/3 md:w-full w-3/4 mx-auto overflow-auto"> --}}
+
+                            
+                                    {{-- <div class="w-1/3">
                                         <button class="toggle-button p-1 underline w-full hover:text-indigo-400" data-target="condition_button" >
                                             Film Condition
                                         </button>
@@ -72,23 +92,26 @@
                                             </div>
                                             @endif
                                         </div>
-                                    </div>
-                                </div>
+                                    </div> --}}
                                 
-
+                                
+                                
 
                                 @php
                                     $number_composition = 1;
                                 @endphp
 
 
-                                <div class="lg:w-2/3 md:w-2/3 w-full mx-auto overflow-auto">
+                                
 
                                     @foreach($compositions as $composition) 
-                                    <div class="flex justify-center mt-2 p-1 w-full bg-gray-300 hover:bg-gray-400">
-                                        <button class="toggle-button text-white" data-target="composition_button{{$number_composition}}" >
+                                    <div class="flex justify-center mt-2 p-1 w-full bg-gray-400">
+                                        {{-- <button class="toggle-button text-white" data-target="composition_button{{$number_composition}}" >
                                             Composition:{{$number_composition}}
-                                        </button>
+                                        </button> --}}
+                                        <div class="text-white">
+                                            Composition:{{$number_composition}}
+                                        </div>
                                         
                                             <form  id="delete_composition_{{ $composition->id }}" method="post" action="{{ route('user.destroy.data', [ 'experiment_id' => $experiment->id, 'type' => 'composition', 'id' => $composition->id ])}}">
                                                 @csrf
@@ -98,7 +121,7 @@
                                             </form>
                                         
                                     </div> 
-                                    <div id="composition_button{{$number_composition}}" style="display: none;">
+                                    <div>
                                         <div class="border-2 border-gray-300">
 
                                             <div class="flex-col" style="display: flex; flex-direction: column;">
@@ -128,100 +151,100 @@
         
                                             {{-- {{$charactaristic_testCounts[$composition->id]}} --}}
 
+                                            
+
+
+
                                             <div class='flex-col'>
-                                                <div>
-                                                    <button class="toggle-button p-1 underline w-full bg-gray-200 hover:text-indigo-400" data-target="characteristic_button{{$number_composition}}" >
-                                                        characteristic Test
-                                                    </button>
-                                                    <div id="characteristic_button{{$number_composition}}" style="display: none;">
-                                                        @if($charactaristic_testCounts[$composition->id] !== 0)
-                                                            <table class="border flex justify-center">
-                                                                <tbody class="divide-y divide-gray-400">
-                                                                    @foreach($characteristic_tests[$composition->id] as $characteristic_test)
-                                                                        <tr>
-                                                                            <td class="px-2 py-2 text-center">
-                                                                                <div class="flex justify-center my-2">
-                                                                                    <button onclick="location.href='{{ route('user.edit.experiment', ['editType' => 'charactaristic_test', 'id' => $characteristic_test->id])}}'" class="h-9 text-white bg-indigo-400 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-500 rounded w-20">Edit</button>
-                                                                                </div> 
-                                                                            </td>
-                                                                            <td class="py-2 px-2 text-center">
-                                                                                <div class="flex justify-center my-2">
-                                                                                    <form  id="delete_characteristic_test_{{ $characteristic_test->id }}" method="post" action="{{ route('user.destroy.data', [ 'experiment_id' => $experiment->id, 'type' => 'characteristic_test', 'id' => $characteristic_test->id ])}}">
-                                                                                        @csrf
-                                                                                        @method('delete')  
-                                                                                        <a href="#" data-id="{{ $characteristic_test->id }}" onclick="deletePost(this, 'characteristic_test')" class="mb-2 h-9 text-white bg-red-400 border-0 py-2 px-4 focus:outline-none
-                                                                                            hover:bg-red-500 rounded">Delete</a>
-                                                                                    </form> 
-                                                                                </div>
-                                                                            </td>
-                                                                        </tr>
-                                                                    @endforeach
-                                                                </tbody>
-                                                            </table>
-                                                        @else
-                                                            <div class="p-1 flex justify-center">
-                                                                <button type="button" data-toggle="modal" data-target="#characteristic_test_{{$composition->id}}" class="text-black py-2 border-2 border-gray-400 hover:bg-gray-300 rounded px-4 p-1">Add_characteristic_test</button>                                            
-                                                            </div>
-                                                        @endif
+                                                @php
+                                                $number_material=1;
+                                                @endphp
+                                                <button class="toggle-button p-1 underline w-full bg-gray-200 hover:text-indigo-400" data-target="material_button_{{$number_composition}}" >
+                                                    Material
+                                                </button>
+                                                <div id="material_button_{{$number_composition}}" style="display: none;">
+
+                                                    @foreach($materials[$composition->id] as $material)
+                                                    <table class="border w-full">
+                                                        <tbody>
+                                                            
+                                                            <tr>
+                                                                <td class="w-3/5">
+                                                                    <p class="px-2 text-center mt-3"  style="word-wrap: break-word; max-width: 100%;">
+                                                                        {{$material->material_detail->name}}
+                                                                    </p>
+                                                                </td>
+                                                                <td class="mr-1 py-2 text-right w-1/5">
+                                                                    <div class="mr-2">
+                                                                        <button onclick="location.href='{{ route('user.edit.experiment', ['editType' => 'material', 'id' => $material->id])}}'" class="h-9 text-white bg-indigo-400 border-0 py-2 px-4 focus:outline-none
+                                                                            hover:bg-indigo-500 rounded w-20">Edit</button>
+                                                                    </div> 
+                                                                </td>
+                                                                <td class="px-2 py-2 text-right w-1/5">
+                                                                    <div>
+                                                                        
+                                                                        <form  id="delete_material_{{ $material->id }}" method="post" action="{{ route('user.destroy.data', [ 'experiment_id' =>$experiment->id, 'type' => 'material', 'id' => $material->id ])}}">
+                                                                            @csrf
+                                                                            @method('delete')  
+                                                                            <a href="#" data-id="{{ $material->id }}" onclick="deletePost(this, 'material')" class="mb-2 h-9 text-white bg-red-400 border-0 py-2 px-4 focus:outline-none
+                                                                                hover:bg-red-500 rounded">Delete</a>
+                                                                        </form> 
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        
+                                                        </tbody>
+                                                    </table>
+                                                    @php
+                                                        $number_material += 1;
+                                                    @endphp
+                                                    @endforeach
+                                                    <div class="p-1 flex justify-center">
+                                                        <button type="button" data-toggle="modal" data-target="#material_{{$composition->id}}" class="text-black px-4 py-2 border-2 border-gray-400 hover:bg-gray-300 rounded">Add_Mateial</button> 
                                                     </div>
                                                 </div>
-                                            
-                                                
-            
+                                            </div>
 
-
-
-
-
-                                                <div class="mt-2">
-                                                    @php
-                                                        $number_material=1;
-                                                    @endphp
-                                                    <button class="toggle-button p-1 underline w-full bg-gray-200 hover:text-indigo-400" data-target="material_button_{{$number_composition}}" >
-                                                        Material
-                                                    </button>
-                                                    <div id="material_button_{{$number_composition}}" style="display: none;">
-
-                                                        @foreach($materials[$composition->id] as $material)
-                                                        <table class="border w-full">
-                                                            <tbody>
-                                                                
-                                                                <tr>
-                                                                    <td class="w-3/5">
-                                                                        <p class="px-2 text-center mt-3"  style="word-wrap: break-word; max-width: 100%;">
-                                                                             {{$material->material_detail->name}}
-                                                                        </p>
-                                                                    </td>
-                                                                    <td class="mr-1 py-2 text-right w-1/5">
-                                                                        <div class="mr-2">
-                                                                            <button onclick="location.href='{{ route('user.edit.experiment', ['editType' => 'material', 'id' => $material->id])}}'" class="h-9 text-white bg-indigo-400 border-0 py-2 px-4 focus:outline-none
-                                                                                hover:bg-indigo-500 rounded w-20">Edit</button>
-                                                                        </div> 
-                                                                    </td>
-                                                                    <td class="px-2 py-2 text-right w-1/5">
-                                                                        <div>
-                                                                            
-                                                                            <form  id="delete_material_{{ $material->id }}" method="post" action="{{ route('user.destroy.data', [ 'experiment_id' =>$experiment->id, 'type' => 'material', 'id' => $material->id ])}}">
-                                                                                @csrf
-                                                                                @method('delete')  
-                                                                                <a href="#" data-id="{{ $material->id }}" onclick="deletePost(this, 'material')" class="mb-2 h-9 text-white bg-red-400 border-0 py-2 px-4 focus:outline-none
-                                                                                    hover:bg-red-500 rounded">Delete</a>
-                                                                            </form> 
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-                                                            
-                                                            </tbody>
-                                                        </table>
-                                                        @php
-                                                            $number_material += 1;
-                                                        @endphp
-                                                        @endforeach
-                                                        <div class="p-1 flex justify-center">
-                                                            <button type="button" data-toggle="modal" data-target="#material_{{$composition->id}}" class="text-black px-4 py-2 border-2 border-gray-400 hover:bg-gray-300 rounded">Add_Mateial</button> 
-                                                        </div>
+                                    
+                                                {{-- <div class="mt-2">
+                                                    <div>
+                                                        <button class="toggle-button p-1 underline w-full bg-gray-200 hover:text-indigo-400" data-target="characteristic_button{{$number_composition}}" >
+                                                            characteristic Test
+                                                        </button>
+                                                        <div id="characteristic_button{{$number_composition}}" style="display: none;">
+                                                            @if($charactaristic_testCounts[$composition->id] !== 0)
+                                                                <table class="border flex justify-center">
+                                                                    <tbody class="divide-y divide-gray-400">
+                                                                        @foreach($characteristic_tests[$composition->id] as $characteristic_test)
+                                                                            <tr>
+                                                                                <td class="px-2 py-2 text-center">
+                                                                                    <div class="flex justify-center my-2">
+                                                                                        <button onclick="location.href='{{ route('user.edit.experiment', ['editType' => 'charactaristic_test', 'id' => $characteristic_test->id])}}'" class="h-9 text-white bg-indigo-400 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-500 rounded w-20">Edit</button>
+                                                                                    </div> 
+                                                                                </td>
+                                                                                <td class="py-2 px-2 text-center">
+                                                                                    <div class="flex justify-center my-2">
+                                                                                        <form  id="delete_characteristic_test_{{ $characteristic_test->id }}" method="post" action="{{ route('user.destroy.data', [ 'experiment_id' => $experiment->id, 'type' => 'characteristic_test', 'id' => $characteristic_test->id ])}}">
+                                                                                            @csrf
+                                                                                            @method('delete')  
+                                                                                            <a href="#" data-id="{{ $characteristic_test->id }}" onclick="deletePost(this, 'characteristic_test')" class="mb-2 h-9 text-white bg-red-400 border-0 py-2 px-4 focus:outline-none
+                                                                                                hover:bg-red-500 rounded">Delete</a>
+                                                                                        </form> 
+                                                                                    </div>
+                                                                                </td>
+                                                                            </tr>
+                                                                        @endforeach
+                                                                    </tbody>
+                                                                </table>
+                                                            @else
+                                                                <div class="p-1 flex justify-center">
+                                                                    <button type="button" data-toggle="modal" data-target="#characteristic_test_{{$composition->id}}" class="text-black py-2 border-2 border-gray-400 hover:bg-gray-300 rounded px-4 p-1">Add_characteristic_test</button>                                            
+                                                                </div>
+                                                            @endif
                                                         </div>
                                                     </div>
+    
+                                                  
                                                 </div>
 
 
@@ -263,7 +286,7 @@
                                                         </table>
                                                         @endforeach
                                                         <div class="p-1 text-center">
-                                                            <button type="button" data-toggle="modal" data-target="#storing_test_{{$composition->id}}" class="text-black px-4 py-2 border-2 border-gray-400 hover:bg-gray-300 rounded">Add_days</button>                                          
+                                                            <button type="button" data-toggle="modal" data-target="#storing_test_{{$composition->id}}" class="text-black px-4 py-2 border-2 border-gray-400 hover:bg-gray-300 rounded">Add_days</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -387,7 +410,7 @@
                                                         </div>
                                                     </div>
                                                     </div>
-                                                </div>
+                                                </div>--}}
                                                 
 
 
@@ -414,20 +437,154 @@
                                                 
 
 
-                                        </div>
+                                        {{-- </div> --}}
                                         @php
                                             $number_composition += 1;
                                         @endphp
-                                    </div>
                                 </div>
+                            </div>
+                            
+                                
+                            
                                 @endforeach
                                 <div class="flex justify-center">
                                     <form method="post" action="{{ route('user.profile.create.composition', ['experiment_id'=> $experiment->id]) }}">
                                     @csrf
-                                        <button otype="submit" class="mt-4 h-9 text-white bg-green-400 border-0 py-2 px-4 focus:outline-none
+                                        <button otype="submit" class="my-6 h-9 text-white bg-green-400 border-0 py-2 px-4 focus:outline-none
                                             hover:bg-green-500 rounded">+Add Composition</button>
                                     </form>
                                 </div>
+
+                                    <div class="flex flex-wrap">
+                                        <div class="mt-2 w-1/2 border-2 border-gray-300">
+                                            <button class="p-1 underline w-full bg-gray-200 hover:text-indigo-400" >
+                                                Film Condition
+                                            </button>
+                                            <div>
+                                                
+                                                <div class="text-center">
+                                                    <a href="{{ route('user.export.excel', ['experiment_id' => $experiment->id, 'type' => 'storing_test']) }}" class="btn btn-primary m-2">Download Excel File</a>                                          
+                                                </div>
+                                                
+                                                <div class="p-2">
+                                                    <form action="{{ route('user.import.excel', ['type' => 'storing_test']) }}" method="post" enctype="multipart/form-data">
+                                                        @csrf
+                                                        <input type="file" name="file" id="file" required onchange="handleFileSelect(event)">
+                                                        <div class="flex justify-center">
+                                                            <button type="submit" id="upload-button" style="display: none;" class="p-2 m-2 text-white bg-red-500 border-0 focus:outline-none
+                                                            hover:bg-red-600 rounded">Upload Excel File</button>
+                                                        </div>
+                                                    </form>
+                                                </div> 
+
+                                                <div class="flex justify-center">
+                                                    <button type="submit" class="p-2 m-2 text-white bg-gray-500 border-0 focus:outline-none
+                                                    hover:bg-gray-600 rounded">Show Data</button>
+                                                </div>
+
+                                            
+                                                
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-2 w-1/2 border-2 border-gray-300">
+                                            <button class="p-1 underline w-full bg-gray-200 hover:text-indigo-400" >
+                                                Characteristic Test
+                                            </button>
+                                            <div>
+                                        
+                                                    
+                                                <div class="text-center">
+                                                    <a href="{{ route('user.export.excel', ['experiment_id' => $experiment->id, 'type' => 'storing_test']) }}" class="btn btn-primary m-2">Download Excel File</a>                                          
+                                                </div>
+                                            
+                                                <div class="p-2">
+                                                    <form action="{{ route('user.import.excel', ['type' => 'storing_test']) }}" method="post" enctype="multipart/form-data">
+                                                        @csrf
+                                                        <input type="file" name="file" id="characteristic_test_file" required onchange="handleFileSelect(event)">
+                                                        <div class="flex justify-center">
+                                                            <button type="submit" id="characteristic_upload_button" style="display: none;" class="p-2 m-2 text-white bg-red-500 border-0 focus:outline-none
+                                                            hover:bg-red-600 rounded">Upload Excel File</button>
+                                                        </div>
+                                                    </form>
+                                                </div> 
+
+                                                <div class="flex justify-center">
+                                                    <button type="submit" class="p-2 m-2 text-white bg-gray-500 border-0 focus:outline-none
+                                                    hover:bg-gray-600 rounded">Show Data</button>
+                                                </div>
+                                            
+                                                
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-2 w-1/2 border-2 border-gray-300">
+                                            <button class="p-1 underline w-full bg-gray-200 hover:text-indigo-400" >
+                                                Storing Test
+                                            </button>
+                                            <div>
+                                        
+                                                    
+                                                <div class="text-center">
+                                                    <a href="{{ route('user.export.excel', ['experiment_id' => $experiment->id, 'type' => 'storing_test']) }}" class="btn btn-primary m-2">Download Excel File</a>                                          
+                                                </div>
+                                            
+                                                <div class="p-2">
+                                                    <form action="{{ route('user.import.excel', ['type' => 'storing_test']) }}" method="post" enctype="multipart/form-data">
+                                                        @csrf
+                                                        <input type="file" name="file" id="storing_test_file" required onchange="handleFileSelect(event)">
+                                                        <div class="flex justify-center">
+                                                            <button type="submit" id="storing_upload_button" style="display: none;" class="p-2 m-2 text-white bg-red-500 border-0 focus:outline-none
+                                                            hover:bg-red-600 rounded">Upload Excel File</button>
+                                                        </div>
+                                                    </form>
+                                                </div> 
+
+                                                <div class="flex justify-center">
+                                                    <button type="submit" class="p-2 m-2 text-white bg-gray-500 border-0 focus:outline-none
+                                                    hover:bg-gray-600 rounded">Show Data</button>
+                                                </div>
+                                            
+                                                
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-2 w-1/2 border-2 border-gray-300">
+                                            <button class="p-1 underline w-full bg-gray-200 hover:text-indigo-400" >
+                                                Antibacteria Test
+                                            </button>
+                                            <div>
+                                        
+                                                    
+                                                <div class="text-center">
+                                                    <a href="{{ route('user.export.excel', ['experiment_id' => $experiment->id, 'type' => 'storing_test']) }}" class="btn btn-primary m-2">Download Excel File</a>                                          
+                                                </div>
+                                            
+                                                <div class="p-2">
+                                                    <form action="{{ route('user.import.excel', ['type' => 'storing_test']) }}" method="post" enctype="multipart/form-data">
+                                                        @csrf
+                                                        <input type="file" name="file" id="antibacteria_test_file" required onchange="handleFileSelect(event)">
+                                                        <div class="flex justify-center">
+                                                            <button type="submit" id="antibacteria_upload_button" style="display: none;" class="p-2 m-2 text-white bg-red-500 border-0 focus:outline-none
+                                                            hover:bg-red-600 rounded">Upload Excel File</button>
+                                                        </div>
+                                                    </form>
+                                                </div> 
+
+                                                <div class="flex justify-center">
+                                                    <button type="submit" class="p-2 m-2 text-white bg-gray-500 border-0 focus:outline-none
+                                                    hover:bg-gray-600 rounded">Show Data</button>
+                                                </div>
+                                            
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+
+
+
                                 <div class="p-1 text-center">
                                     <button type="button" onclick="location.href='{{ route('user.profile.index')}}'" class="my-2 h-9 text-white bg-gray-400 border-0 px-4 focus:outline-none
                                     hover:bg-gray-500 rounded">Back</button>
@@ -484,6 +641,27 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
+<script>
+
+    function handleFileSelect(event) {
+        var targetInput = event.target;
+        var targetButtonId = '';
+
+        if(targetInput.id === 'antibacteria_test_file') {
+            targetButtonId = 'antibacteria_upload_button';
+        }else if(targetInput.id === 'storing_test_file') {
+            targetButtonId = 'storing_upload_button';
+        }else if(targetInput.id === 'antibacteria_test_file') {
+            targetButtonId = 'antibacteria_upload_button';
+        }
+    
+        var uploadButton = document.getElementById(targetButtonId);
+        if(uploadButton){
+            uploadButton.style.display = 'block';
+        }
+    }
+</script>
+
 
 <!-- Bootstrap CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet">

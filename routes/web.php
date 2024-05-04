@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\SearchController;
 use App\Http\Controllers\Auth\DetailController;
 use App\Http\Controllers\Auth\CategoryController;
 use App\Http\Controllers\Auth\ContactController;
+use App\Http\Controllers\Auth\StoringTestExcelController; 
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -61,6 +62,13 @@ Route::middleware('auth:users')->group(function () {
     Route::get('contact/index', [ContactController::class, 'index'])->name('contact.index');
     Route::post('contact/index', [ContactController::class, 'store'])->name('contact.store');
     Route::get('contact/show/{id}', [ContactController::class, 'show'])->name('contact.show');
+
+    //ExcelOutputについて
+    Route::get('/export-excel/{experiment_id}/{type}', [StoringTestExcelController::class, 'export'])->name('export.excel');
+    //ExcelInputについて
+    Route::post('/inport-excel/{type}', [StoringTestExcelController::class, 'store'])->name('import.excel');
+
+
 });
 
 Route::get('/', function () {
