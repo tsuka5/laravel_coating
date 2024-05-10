@@ -59,6 +59,11 @@ class ProfileController extends Controller
 
         $compositions = Material_Composition::where('experiment_id', $experiment->id)->orderby('id', 'asc')->get();
 
+        $compositions_id = Material_Composition::where('experiment_id', $experiment->id)->pluck('id');
+        $characteristic_test = Charactaristic_test::whereIn('composition_id', $compositions_id)->get();
+        $storing_test = Storing_test::whereIn('composition_id', $compositions_id)->get();
+        
+
         foreach($compositions as $composition) {
             $materials[$composition->id] = Material::where('composition_id', $composition->id)->get();
             $storing_tests[$composition->id] = Storing_test::where('composition_id', $composition->id)->get();
@@ -69,8 +74,8 @@ class ProfileController extends Controller
             // $characteristic_tests_data[$composition->id] = $characteristic_tests[$composition->id]->first();
         }
 
-        return view('user.profile.experiment_register', compact('experiment','materials', 'compositions', 'storing_tests',
-            'bacteria_tests', 'characteristic_tests', 'characteristic_tests_data', 'film_condition', 'film_condition_data', 'materials_list', 'ph_materials_list',
+        return view('user.profile.experiment_register', compact('experiment','materials', 'compositions', 'storing_tests', 'storing_test',
+            'bacteria_tests', 'characteristic_tests', 'characteristic_test', 'characteristic_tests_data', 'film_condition', 'film_condition_data', 'materials_list', 'ph_materials_list',
             'bacteria_list', 'fruits_list', 'antibacteria_test_list','charactaristic_testCounts'));
     }
 
@@ -1062,13 +1067,16 @@ class ProfileController extends Controller
             Material::findOrFail($id)->delete(); 
         }
         elseif($type === 'characteristic_test'){
-            Charactaristic_test::findOrFail($id)->delete(); 
+            $composition_id = Material_composition::where('experiment_id', $id)->pluck('id');
+            Charactaristic_test::whereIn('composition_id', $composition_id)->delete();
         }
         elseif($type === 'material'){
             Material::findOrFail($id)->delete(); 
         }
         elseif($type === 'storing_test'){
-            Storing_test::findOrFail($id)->delete(); 
+            $composition_id = Material_composition::where('experiment_id', $id)->pluck('id');
+            Storing_test::whereIn('composition_id',$composition_id)->delete(); 
+            
         }
         elseif($type === 'bacteria_test'){
             Antibacteria_test::findOrFail($id)->delete(); 

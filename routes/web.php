@@ -6,6 +6,8 @@ use App\Http\Controllers\Auth\SearchController;
 use App\Http\Controllers\Auth\DetailController;
 use App\Http\Controllers\Auth\CategoryController;
 use App\Http\Controllers\Auth\ContactController;
+use App\Http\Controllers\Auth\TableShowController;
+use App\Http\Controllers\Auth\ChartShowController;
 use App\Http\Controllers\Auth\StoringTestExcelController; 
 use Illuminate\Support\Facades\Route;
 /*
@@ -67,6 +69,12 @@ Route::middleware('auth:users')->group(function () {
     Route::get('/export-excel/{experiment_id}/{type}', [StoringTestExcelController::class, 'export'])->name('export.excel');
     //ExcelInputについて
     Route::post('/inport-excel/{type}', [StoringTestExcelController::class, 'store'])->name('import.excel');
+
+    //TableShowについて
+    Route::get('show/table/{id}/{type}', [TableShowController::class,'show'])->name('show.table');
+    //ChartShowについて
+    Route::get('show/chart/{id}/{type}', [ChartShowController::class,'show'])->name('show.chart');
+
 
 
 });
