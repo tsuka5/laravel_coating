@@ -36,6 +36,7 @@ class Antibacteria_testFactory extends Factory
             'invivo_invitro' => $this->faker->boolean,
             'bacteria_concentration' => $this->faker->optional()->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 100000),
             'mic' => $this->faker->optional()->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 10000),
+            'colony_diameter' => $this->faker->optional()->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 10000),
         ];
     }
 }

@@ -157,8 +157,9 @@ class SearchController extends Controller
  
         } 
 
-        public function experimentIndex($experiment_id)
+        public function experimentIndex($composition_id)
         {
+            $experiment_id = Material_composition::where('id', $composition_id)->first()->experiment_id;
             $experiment = Experiment::where('id', $experiment_id)->first();
             $film_condition = Film_condition::where('experiment_id', $experiment_id )->get();
             $film_condition_data = $film_condition->first();
@@ -179,7 +180,12 @@ class SearchController extends Controller
     
     
             $compositions = Material_Composition::where('experiment_id', $experiment->id)->orderby('id', 'asc')->get();
+            
+            $compositions_id = Material_Composition::where('experiment_id', $experiment->id)->pluck('id');
+            $characteristic_test = Charactaristic_test::whereIn('composition_id', $compositions_id)->get();
+            $storing_test = Storing_test::whereIn('composition_id', $compositions_id)->get();
     
+
             foreach($compositions as $composition) {
                 $materials[$composition->id] = Material::where('composition_id', $composition->id)->get();
                 $storing_tests[$composition->id] = Storing_test::where('composition_id', $composition->id)->get();
@@ -190,8 +196,8 @@ class SearchController extends Controller
                 // $characteristic_tests_data[$composition->id] = $characteristic_tests[$composition->id]->first();
             }
     
-            return view('user.search.experiment_show', compact('experiment','materials', 'compositions', 'storing_tests',
-                'bacteria_tests', 'characteristic_tests', 'characteristic_tests_data', 'film_condition', 'film_condition_data', 'materials_list', 'ph_materials_list',
+            return view('user.search.experiment_show', compact('experiment','materials', 'compositions', 'storing_tests','storing_test',
+                'bacteria_tests', 'characteristic_tests', 'characteristic_test','characteristic_tests_data', 'film_condition', 'film_condition_data', 'materials_list', 'ph_materials_list',
                 'bacteria_list', 'fruits_list', 'antibacteria_test_list','charactaristic_testCounts'));
         }
 
@@ -240,6 +246,21 @@ class SearchController extends Controller
             $antibacteria_tests = Antibacteria_test::where('composition_id', $id)->get();
             return view('user.search.experiment_show_detail', compact('type', 'antibacteria_tests','experiment_id'));
         }
+
+    }
+
+    public function compareWholeData($type, $item)
+    {
+        if($type === 'characteristic_test'){
+            if($item === 'ph'){
+                $ph = [];
+                $ph = Charactaristic_test::pluck('ph', 'composition_id')->toArray();
+                return view('user.search.chart_show', compact('type', 'item', 'ph'));
+                            }
+        }
+        
+
+        return view('user.search.chart_show');
 
     }
 }

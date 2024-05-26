@@ -211,6 +211,7 @@ composition_count_list.forEach((composition_count, index) => {
 
 // グラフを作成する
 function createLineChart(chartId, datasets, title, labels) {
+   
     var ctx = document.getElementById(chartId).getContext('2d');
     return new Chart(ctx, {
         type: 'line', // グラフのタイプ
@@ -241,6 +242,7 @@ function createLineChart(chartId, datasets, title, labels) {
                 }
             }
         }
+
     });
 }
 

@@ -6,6 +6,49 @@
     </x-slot>
     
     <div class="lg:w-1/2 w-full px-4 mt-3 mb-3 mx-auto border-2 border-gray-400 bg-white rounded-lg">
+        <div class="text-center m-3">
+            <h1>Compare with Whole Data</h1>
+        </div>
+        <div class="flex justify-center mb-3 border-2 border-gray-400 lg:w-2/3 md:w-full mx-auto rounded-lg">
+
+            <div class="lg:w-2/3 md:w-full mx-auto flex flex-wrap">
+                <div class="w-1/2">
+                    <div class="flex justify-center">
+                        <button class="w-full p-2 m-2 text-white bg-blue-500 border-0 focus:outline-none
+                            hover:bg-blue-600 rounded">Film Condition</button>
+                    </div>
+                </div>
+                <div class="w-1/2">
+                    <div class="flex justify-center">
+                        <button class="w-full p-2 m-2 text-white bg-blue-500 border-0 focus:outline-none
+                            hover:bg-blue-600 rounded">Characteristic Test</button>
+                    </div>
+                </div>
+                <div class="w-1/2">
+                    <div class="flex justify-center">
+                        <button class="w-full p-2 m-2 text-white bg-blue-500 border-0 focus:outline-none
+                            hover:bg-blue-600 rounded">Storing Test</button>
+                    </div>
+                </div>
+                <div class="w-1/2">
+                    <div class="flex justify-center">
+                        <button class="w-full p-2 m-2 text-white bg-blue-500 border-0 focus:outline-none
+                            hover:bg-blue-600 rounded">Antibacteria Test</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button onclick="location.href='{{ route('user.compareWholeData', ['type' => 'characteristic_test', 'item' => 'ph'])}}'" class="p-2 m-2 text-white bg-blue-500 border-0 focus:outline-none
+        hover:bg-blue-600 rounded">
+            pH
+        </button>
+    </div>
+
+    <div class="lg:w-1/2 w-full px-4 mt-3 mb-3 mx-auto border-2 border-gray-400 bg-white rounded-lg">
+
+        <div class="text-center mt-3 mb-2">
+            <h1>Search Expeiment</h1>
+        </div>
         <div class="p-3 flex xl:flex-nowrap md:flex-nowrap lg:flex-wrap flex-wrap justify-center items-end md:justify-center">
         <form action="{{ route('user.search.index') }}" method="GET">
             <div class = "flex-col justify-start">
@@ -149,7 +192,7 @@
                                                         
                                             <td class="px-4 py-3 border text-center">
                                                 <div class="flex justify-center">
-                                                    <button onclick="location.href='{{ route('user.experiment_show', ['experiment_id' => $composition->experiment_id])}}'" class="text-white
+                                                    <button onclick="location.href='{{ route('user.experiment_show', ['composition_id' => $composition->id])}}'" class="text-white
                                                         bg-gray-400 border-0 py-2 px-4 focus:outline-none hover:bg-gray-500 rounded">Detail</button>
                                                 </div>
                                             </td>

@@ -39,16 +39,15 @@ class ProfileController extends Controller
     public function experimentIndex($experiment_id)
     {
         $experiment = Experiment::where('id', $experiment_id)->first();
-        $film_condition = Film_condition::where('experiment_id', $experiment_id )->get();
-        $film_condition_data = $film_condition->first();
+        // $film_condition = Film_condition::where('experiment_id', $experiment_id )->get();
+        // $film_condition_data = $film_condition->first();
         $materials = [];
+        $film_conditions = [];
         $storings_tests = [];
         $bacteria_tests = []; 
         $characteristic_tests = [];
         $characteristic_tests_data = [];
         $charactaristic_testCounts = [];
-
-
 
         $materials_list = Material_detail::orderby('name', 'asc')->get();
         $ph_materials_list = Ph_material_detail::orderby('name', 'asc')->get();
@@ -56,15 +55,16 @@ class ProfileController extends Controller
         $bacteria_list = Bacteria_detail::orderby('name','asc')->get();
         $antibacteria_test_list = Antibacteria_test_type::orderby('name','asc')->get();
 
-
         $compositions = Material_Composition::where('experiment_id', $experiment->id)->orderby('id', 'asc')->get();
 
         $compositions_id = Material_Composition::where('experiment_id', $experiment->id)->pluck('id');
+        $film_condition = Film_condition::whereIn('composition_id', $compositions_id)->get();
         $characteristic_test = Charactaristic_test::whereIn('composition_id', $compositions_id)->get();
         $storing_test = Storing_test::whereIn('composition_id', $compositions_id)->get();
         
 
         foreach($compositions as $composition) {
+            $film_conditions[$composition->id] = Film_condition::where('composition_id', $composition->id )->get();
             $materials[$composition->id] = Material::where('composition_id', $composition->id)->get();
             $storing_tests[$composition->id] = Storing_test::where('composition_id', $composition->id)->get();
             $bacteria_tests[$composition->id] = Antibacteria_test::where('composition_id', $composition->id)->get();
@@ -75,7 +75,7 @@ class ProfileController extends Controller
         }
 
         return view('user.profile.experiment_register', compact('experiment','materials', 'compositions', 'storing_tests', 'storing_test',
-            'bacteria_tests', 'characteristic_tests', 'characteristic_test', 'characteristic_tests_data', 'film_condition', 'film_condition_data', 'materials_list', 'ph_materials_list',
+            'bacteria_tests', 'characteristic_tests', 'characteristic_test', 'characteristic_tests_data', 'film_condition', 'film_conditions', 'materials_list', 'ph_materials_list',
             'bacteria_list', 'fruits_list', 'antibacteria_test_list','charactaristic_testCounts'));
     }
 
@@ -95,9 +95,10 @@ class ProfileController extends Controller
 
         foreach ($experiments as $experiment) {
             $compositions[$experiment->id] = Material_Composition::where('experiment_id', $experiment->id)->orderby('id', 'asc')->get();
-            $film_conditionCounts[$experiment->id] = Film_condition::where('experiment_id', $experiment->id)->count();
+            // $film_conditionCounts[$experiment->id] = Film_condition::where('experiment_id', $experiment->id)->count();
             foreach($compositions[$experiment->id] as $composition) {
                 $materialCounts[$composition->id] = Material::where('composition_id', $composition->id)->count();
+                $film_conditionCounts[$composition->id] = Film_condition::where('composition_id', $composition->id)->count();
                 $charactaristic_testCounts[$composition->id] = Charactaristic_test::where('composition_id', $composition->id)->count();
                 $storing_testCounts[$composition->id] = Storing_test::where('composition_id', $composition->id)->count();
                 $antibacteria_testCounts[$composition->id] = Antibacteria_test::where('composition_id', $composition->id)->count();
@@ -1064,7 +1065,9 @@ class ProfileController extends Controller
             Material_composition::findOrFail($id)->delete(); 
         }
         elseif($type === 'film_condition'){
-            Material::findOrFail($id)->delete(); 
+            // Material::findOrFail($id)->delete(); 
+            $composition_id = Material_composition::where('experiment_id', $id)->pluck('id');
+            Film_condition::whereIn('composition_id', $composition_id)->delete();
         }
         elseif($type === 'characteristic_test'){
             $composition_id = Material_composition::where('experiment_id', $id)->pluck('id');

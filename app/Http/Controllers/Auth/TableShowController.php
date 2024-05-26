@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 use App\Models\Material;
 use App\Models\Material_detail;
 use App\Models\Experiment;
-use App\Models\Fruit_detail;
+use App\Models\Film_condition;
 use App\Models\Material_composition;
 use App\Models\Storing_test;
 
@@ -28,22 +28,20 @@ class TableShowController extends Controller
     {
         $experiment = Experiment::where('id', $id)->first();
         
-        if($type === 'storing_test'){
-            $storings_tests = [];
-            $fruits_list = Fruit_detail::orderby('name', 'asc')->get();
-        
+        if($type === 'film_condition'){
+            $film_conditions = [];        
             $compositions = Material_Composition::where('experiment_id', $experiment->id)->orderby('id', 'asc')->get();
     
             $one_composition = Material_Composition::where('experiment_id', $experiment->id)->first();
-            $one_storing_test = Storing_test::where('composition_id', $one_composition->id)->first();
+            $one_film_condition = Film_condition::where('composition_id', $one_composition->id)->first();
            
     
             foreach($compositions as $composition) {
                 $materials[$composition->id] = Material::where('composition_id', $composition->id)->get();
-                $storing_tests[$composition->id] = Storing_test::where('composition_id', $composition->id)->get();
+                $film_conditions[$composition->id] = Film_condition::where('composition_id', $composition->id)->get();
             }
             // ビューにデータを渡す
-            return view('user.profile.storing_test_table_show', compact('experiment', 'storing_tests', 'compositions', 'materials', 'one_storing_test'));
+            return view('user.profile.film_condition_table_show', compact('experiment', 'film_conditions', 'compositions', 'materials', 'one_film_condition'));
             }
 
         // $storings_tests = [];

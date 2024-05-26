@@ -465,22 +465,23 @@
                                                 <div class="p-1 w-full text-center ml-5">
                                                     Film Condition
                                                 </div>
+                                                
                                                 <div class="my-1 mr-2">
-                                                    <form  id="delete_storing_test_{{ $experiment->id }}" method="post" action="{{ route('user.destroy.data', [ 'experiment_id' => $experiment->id, 'type' => 'storing_test', 'id' => $experiment->id ])}}">
+                                                    <form  id="delete_film_condition_{{ $experiment->id }}" method="post" action="{{ route('user.destroy.data', [ 'experiment_id' => $experiment->id, 'type' => 'film_condition', 'id' => $experiment->id ])}}">
                                                         @csrf
                                                         @method('delete')  
-                                                        <a href="#" data-id="{{ $experiment->id }}" onclick="deletePost(this, 'storing_test')" class="p-1 text-white bg-red-400 border-0 focus:outline-none text-xs text-center
+                                                        <a href="#" data-id="{{ $experiment->id }}" onclick="deletePost(this, 'film_condition')" class="p-1 text-white bg-red-400 border-0 focus:outline-none text-xs text-center
                                                             hover:bg-red-500 rounded">Delete</a>
                                                     </form> 
                                                 </div>
                                             </div>
 
-                                            {{-- @if($storing_test->isEmpty()) --}}
+                                            @if($film_condition->isEmpty())
                                             <div class="text-center">
-                                                <a href="{{ route('user.export.excel', ['experiment_id' => $experiment->id, 'type' => 'storing_test']) }}" class="btn btn-primary m-2">Download Format Excel File</a>                                          
+                                                <a href="{{ route('user.export.excel', ['experiment_id' => $experiment->id, 'type' => 'film_condition']) }}" class="btn btn-primary m-2">Download Format Excel File</a>                                          
                                             </div>
                                             <div class="p-2">
-                                                <form action="{{ route('user.import.excel', ['type' => 'storing_test']) }}" method="post" enctype="multipart/form-data">
+                                                <form action="{{ route('user.import.excel', ['type' => 'film_condition']) }}" method="post" enctype="multipart/form-data">
                                                     @csrf
                                                     <input type="file" name="file" id="film_condition_file" required onchange="handleFileSelect(event)">
                                                     <div class="flex justify-center">
@@ -489,17 +490,15 @@
                                                     </div>
                                                 </form>
                                             </div> 
-                                            {{-- @else
+                                            @else
                                             <div class="flex justify-center">
-                                                <button onclick="location.href='{{ route('user.show.table', ['id' => $experiment->id]) }}';"class="p-2 m-2 text-white bg-gray-500 border-0 focus:outline-none
+                                                <button onclick="location.href='{{ route('user.show.table', ['id' => $experiment->id, 'type' => 'film_condition']) }}';"class="p-2 m-2 text-white bg-gray-500 border-0 focus:outline-none
                                                     hover:bg-gray-600 rounded">Show Table</button>
-                                                <button onclick="location.href='{{ route('user.show.chart', ['id' => $experiment->id]) }}';"class="p-2 m-2 text-white bg-gray-500 border-0 focus:outline-none
-                                                    hover:bg-gray-600 rounded">Show Chart</button>
                                             </div>
                                             <div class="text-center">
-                                                <a href="{{ route('user.export.excel', ['experiment_id' => $experiment->id, 'type' => 'storing_test']) }}" class="btn btn-primary m-2">Download Now Data</a>                                          
+                                                <a href="{{ route('user.export.excel', ['experiment_id' => $experiment->id, 'type' => 'film_condition']) }}" class="btn btn-primary m-2">Download Now Data</a>                                          
                                             </div>
-                                            @endif --}}
+                                            @endif
                                         </div>
 
                                         <div class="w-1/2 border-2 border-gray-300">
@@ -533,8 +532,8 @@
                                             </div> 
                                             @else
                                             <div class="flex justify-center">
-                                                <button onclick="location.href='{{ route('user.show.table', ['id' => $experiment->id, 'type' => 'characteristic_test']) }}';"class="p-2 m-2 text-white bg-gray-500 border-0 focus:outline-none
-                                                    hover:bg-gray-600 rounded">Show Table</button>
+                                                {{-- <button onclick="location.href='{{ route('user.show.table', ['id' => $experiment->id, 'type' => 'characteristic_test']) }}';"class="p-2 m-2 text-white bg-gray-500 border-0 focus:outline-none
+                                                    hover:bg-gray-600 rounded">Show Table</button> --}}
                                                 <button onclick="location.href='{{ route('user.show.chart', ['id' => $experiment->id, 'type' => 'characteristic_test']) }}';"class="p-2 m-2 text-white bg-gray-500 border-0 focus:outline-none
                                                     hover:bg-gray-600 rounded">Show Chart</button>
                                             </div>
@@ -577,8 +576,8 @@
                                             </div> 
                                             @else
                                             <div class="flex justify-center">
-                                                <button onclick="location.href='{{ route('user.show.table', ['id' => $experiment->id, 'type' => 'storing_test']) }}';"class="p-2 m-2 text-white bg-gray-500 border-0 focus:outline-none
-                                                    hover:bg-gray-600 rounded">Show Table</button>
+                                                {{-- <button onclick="location.href='{{ route('user.show.table', ['id' => $experiment->id, 'type' => 'storing_test']) }}';"class="p-2 m-2 text-white bg-gray-500 border-0 focus:outline-none
+                                                    hover:bg-gray-600 rounded">Show Table</button> --}}
                                                 <button onclick="location.href='{{ route('user.show.chart', ['id' => $experiment->id, 'type' =>'storing_test']) }}';"class="p-2 m-2 text-white bg-gray-500 border-0 focus:outline-none
                                                     hover:bg-gray-600 rounded">Show Chart</button>
                                             </div>
@@ -706,6 +705,8 @@ document.addEventListener('DOMContentLoaded', function() {
             targetButtonId = 'storing_upload_button';
         }else if(targetInput.id === 'antibacteria_test_file') {
             targetButtonId = 'antibacteria_upload_button';
+        }else if(targetInput.id === 'film_condition_file') {
+            targetButtonId = 'film_condition_upload_button';
         }
     
         var uploadButton = document.getElementById(targetButtonId);

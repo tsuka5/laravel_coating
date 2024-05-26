@@ -16,13 +16,14 @@ use App\Models\Material_detail;
 use App\Models\Fruit_detail;
 use App\Models\Material_composition;
 use App\Models\Storing_test;
+use App\Models\Film_condition;
 
 
 use App\Http\Controllers\Controller;
 use App\Models\Charactaristic_test;
 use Illuminate\Http\Request;
 
-class StoringTestExcelController extends Controller
+class ExcelController extends Controller
 {
     public function export($experiment_id, $type)
     {
@@ -135,96 +136,169 @@ class StoringTestExcelController extends Controller
 
             return $response;
         }
-        elseif($type ==='characteristic_test'){
-    //２枚目以降のワークシートの枠組みを作成する
-    $sheet2_name = 'solution';
-    $sheet2 = new Worksheet($spreadsheet, $sheet2_name);
-    $spreadsheet->addSheet($sheet2, 1); 
-    $sheet3_name = 'film';
-    $sheet3 = new Worksheet($spreadsheet, $sheet3_name);
-    $spreadsheet->addSheet($sheet3, 2); 
+        elseif($type ==='film_condition'){
+       
+            //２枚目のワークシートの枠組みを作成する
+            $sheet2_name = 'film_condition';
+            $sheet2 = new Worksheet($spreadsheet, $sheet2_name);
+            $spreadsheet->addSheet($sheet2, 1);  
 
-    // 主にシート1のデータを設定
-    $sheet1->setCellvalue('A1', 'Experiment No.');
-    $sheet1->setCellValue('B1', $experiment_id);
-    $sheet1->setCellValue('A2', 'Characteristic Test');
+            // 主にシート1のデータを設定
+            $sheet1->setCellvalue('A1', 'Experiment No.');
+            $sheet1->setCellValue('B1', $experiment_id);
+            $sheet1->setCellValue('A2', 'Film Condition');
 
-    $composition_ids = Material_composition::where('experiment_id', $experiment_id)->get(['id']);
-    $composition_number = 1;
-    $composition_row = 4;
+            $composition_ids = Material_composition::where('experiment_id', $experiment_id)->get(['id']);
+            $composition_number = 1;
+            $composition_row = 4;
+            
+            foreach($composition_ids as $composition){
+                $composition_id = $composition->id;
+                $sheet1->setCellValue('A'.$composition_row, 'Composition:'.$composition_number);
+                $sheet1->setCellValue('A'.($composition_row+1), 'Material');
+                $sheet1->setCellValue('B'.($composition_row+1), 'Concentration(%)');
+                $sheet2->setCellValue('A'.($composition_number+2), 'composition:'.$composition_number);
+                $sheet2->setCellValue('B'.($composition_number+2), $composition_id);
+                //選択した材料組成の表示
+                $material_row = $composition_row+2;
+                $material_list = Material::where('composition_id', $composition_id)->get(['material_id']);
+
+                foreach($material_list as $material){
+                    $material_id = $material->material_id;
+                    $material_name = Material_detail::where('id', $material_id)->first()->name;
+                    $sheet1->setCellValue('A' . $material_row, $material_name);
+                    $material_concentration = Material::where('material_id', $material_id)->first()->concentration;
+                    $sheet1->setCellValue('B' . $material_row, $material_concentration);
+                    $material_row += 1;
+                }
+                $composition_row = $material_row + 1;
+                $composition_number++;
+            }
+
+            
+            //２枚目のワークシートの設定
+            $sheet2->setCellValue('A1', 'film_condition');
+            $columns = range('B','H');
+            $values = ['id','cating amount(ml)', 'petri dish area(cm^2)', 'degasting temperature(℃)', 'drying temperature(℃)', 'drying humidity(%RH)','drying time(h)'];
+            foreach ($columns as $index => $column) {
+                $sheet2->setCellValue($column . 2, $values[$index]);
+            }
+
+            //セルの横幅調整
+            $startColumn = 'A';
+            $endColumn = 'H';
+
+            foreach(range($startColumn, $endColumn) as $column){
+                $sheet1->getColumnDimension($column)->setAutoSize(true);
+                $sheet2->getColumnDimension($column)->setAutoSize(true);
+                $sheet2->getStyle('C:H')->getNumberFormat()->setFormatCode('0.0');
+                }
+                
+
+                // 出力設定
+                $writer = new Xlsx($spreadsheet);
+
+                $response = new StreamedResponse(function() use ($writer) {
+                    $writer->save('php://output');
+                }, 200, [
+                    'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                    'Content-Disposition' => 'attachment;filename="film_condition.xlsx"',
+                    'Cache-Control' => 'max-age=0',
+                ]);
     
-    foreach($composition_ids as $composition){
-        $composition_id = $composition->id;
-        $sheet1->setCellValue('A'.$composition_row, 'Composition:'.$composition_number);
-        $sheet1->setCellValue('A'.($composition_row+1), 'Material');
-        $sheet1->setCellValue('B'.($composition_row+1), 'Concentration(%)');
-        $sheet2->setCellValue('A'.($composition_number+2), 'composition:'.$composition_number);
-        $sheet3->setCellValue('A'.($composition_number+2), 'composition:'.$composition_number);
-        $sheet2->setCellValue('B'.($composition_number+2), $composition_id);
-        $sheet3->setCellValue('B'.($composition_number+2), $composition_id);
-        //選択した材料組成の表示
-        $material_row = $composition_row+2;
-        $material_list = Material::where('composition_id', $composition_id)->get(['material_id']);
-
-        foreach($material_list as $material){
-            $material_id = $material->material_id;
-            $material_name = Material_detail::where('id', $material_id)->first()->name;
-            $sheet1->setCellValue('A' . $material_row, $material_name);
-            $material_concentration = Material::where('material_id', $material_id)->first()->concentration;
-            $sheet1->setCellValue('B' . $material_row, $material_concentration);
-            $material_row += 1;
-        }
-        $composition_row = $material_row + 1;
-        $composition_number++;
+            return $response;
     }
-
-    $sheet1->setCellValue('D1', 'Temperature(℃)');
-    $sheet1->setCellValue('E1', 'Humidity(%RH)');
-
-
+            
+            elseif($type ==='characteristic_test'){
+                //２枚目以降のワークシートの枠組みを作成する
+                $sheet2_name = 'solution';
+                $sheet2 = new Worksheet($spreadsheet, $sheet2_name);
+                $spreadsheet->addSheet($sheet2, 1); 
+                $sheet3_name = 'film';
+                $sheet3 = new Worksheet($spreadsheet, $sheet3_name);
+                $spreadsheet->addSheet($sheet3, 2); 
     
-    //２枚目のワークシートの設定
-    $sheet2->setCellValue('A1', 'solution');
-    $columns = range('B','I');
-    $values = ['id','pH', 'viscosity', 'water solubility', 'wvp', 'contact angle','shear rate','shear stress'];
-    foreach ($columns as $index => $column) {
-        $sheet2->setCellValue($column . 2, $values[$index]);
-    }
-
-    //３枚目のワークシートの設定
-    $sheet3->setCellValue('A1', 'film');
-    $columns = range('B','I');
-    $values = ['id','tensile strength', 'eab', 'light transmittance', 'thickness', 'moisture content','d43','d32'];
-    foreach ($columns as $index => $column) {
-        $sheet3->setCellValue($column . 2, $values[$index]);
-    }
-
-    //セルの横幅調整
-    $startColumn = 'A';
-    $endColumn = 'I';
-
-    foreach(range($startColumn, $endColumn) as $column){
-        $sheet1->getColumnDimension($column)->setAutoSize(true);
-        $sheet1->getStyle('D:E')->getNumberFormat()->setFormatCode('0.0');
-        $sheet2->getColumnDimension($column)->setAutoSize(true);
-        $sheet2->getStyle('C:I')->getNumberFormat()->setFormatCode('0.0');
-        $sheet3->getColumnDimension($column)->setAutoSize(true);
-        $sheet3->getStyle('C:I')->getNumberFormat()->setFormatCode('0.0');            
-        }
-    }     
+                // 主にシート1のデータを設定
+                $sheet1->setCellvalue('A1', 'Experiment No.');
+                $sheet1->setCellValue('B1', $experiment_id);
+                $sheet1->setCellValue('A2', 'Characteristic Test');
     
-    // 出力設定
-    $writer = new Xlsx($spreadsheet);
+                $composition_ids = Material_composition::where('experiment_id', $experiment_id)->get(['id']);
+                $composition_number = 1;
+                $composition_row = 4;
+                
+                foreach($composition_ids as $composition){
+                    $composition_id = $composition->id;
+                    $sheet1->setCellValue('A'.$composition_row, 'Composition:'.$composition_number);
+                    $sheet1->setCellValue('A'.($composition_row+1), 'Material');
+                    $sheet1->setCellValue('B'.($composition_row+1), 'Concentration(%)');
+                    $sheet2->setCellValue('A'.($composition_number+2), 'composition:'.$composition_number);
+                    $sheet3->setCellValue('A'.($composition_number+2), 'composition:'.$composition_number);
+                    $sheet2->setCellValue('B'.($composition_number+2), $composition_id);
+                    $sheet3->setCellValue('B'.($composition_number+2), $composition_id);
+                    //選択した材料組成の表示
+                    $material_row = $composition_row+2;
+                    $material_list = Material::where('composition_id', $composition_id)->get(['material_id']);
+    
+                    foreach($material_list as $material){
+                        $material_id = $material->material_id;
+                        $material_name = Material_detail::where('id', $material_id)->first()->name;
+                        $sheet1->setCellValue('A' . $material_row, $material_name);
+                        $material_concentration = Material::where('material_id', $material_id)->first()->concentration;
+                        $sheet1->setCellValue('B' . $material_row, $material_concentration);
+                        $material_row += 1;
+                    }
+                    $composition_row = $material_row + 1;
+                    $composition_number++;
+                }
+    
+                $sheet1->setCellValue('D1', 'Temperature(℃)');
+                $sheet1->setCellValue('E1', 'Humidity(%RH)');
+    
+    
+                
+                //２枚目のワークシートの設定
+                $sheet2->setCellValue('A1', 'solution');
+                $columns = range('B','I');
+                $values = ['id','pH', 'viscosity(cP)', 'water solubility(%)', 'wvp', 'contact angle(°)','shear rate(1/s)','shear stress(Pa*s)'];
+                foreach ($columns as $index => $column) {
+                    $sheet2->setCellValue($column . 2, $values[$index]);
+                }
+    
+                //３枚目のワークシートの設定
+                $sheet3->setCellValue('A1', 'film');
+                $columns = range('B','I');
+                $values = ['id','tensile strength(MPa)', 'eab(%)', 'light transmittance(%)', 'thickness(mm)', 'moisture content(%)','d43(mm)','d32(mm)'];
+                foreach ($columns as $index => $column) {
+                    $sheet3->setCellValue($column . 2, $values[$index]);
+                }
+    
+                //セルの横幅調整
+                $startColumn = 'A';
+                $endColumn = 'I';
+    
+                foreach(range($startColumn, $endColumn) as $column){
+                    $sheet1->getColumnDimension($column)->setAutoSize(true);
+                    $sheet1->getStyle('D:E')->getNumberFormat()->setFormatCode('0.0');
+                    $sheet2->getColumnDimension($column)->setAutoSize(true);
+                    $sheet2->getStyle('C:I')->getNumberFormat()->setFormatCode('0.0');
+                    $sheet3->getColumnDimension($column)->setAutoSize(true);
+                    $sheet3->getStyle('C:I')->getNumberFormat()->setFormatCode('0.0');            
+                    }
+                }     
+                
+            // 出力設定
+            $writer = new Xlsx($spreadsheet);
 
-    $response = new StreamedResponse(function() use ($writer) {
-        $writer->save('php://output');
-    }, 200, [
-        'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-        'Content-Disposition' => 'attachment;filename="characteristic_test.xlsx"',
-        'Cache-Control' => 'max-age=0',
-    ]);
+            $response = new StreamedResponse(function() use ($writer) {
+                $writer->save('php://output');
+            }, 200, [
+                'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                'Content-Disposition' => 'attachment;filename="characteristic_test.xlsx"',
+                'Cache-Control' => 'max-age=0',
+            ]);
 
-    return $response;
+        return $response;
 }
         
 
@@ -286,6 +360,28 @@ class StoringTestExcelController extends Controller
         
                 }
             }
+        }
+        elseif($request->type === 'film_condition'){
+          
+            //シート1を得る
+            $sheet1 = $spreadsheet->getSheet(0);
+            //データの保存
+            $experiment_id = $sheet1->getCell('B1')->getvalue();
+            $sheet2 = $spreadsheet->getSheet(1);
+            $highestRow = $sheet2->getHighestRow();
+            //日付ごとにデータを保存する
+            for ($row = 3; $row <= $highestRow; $row++){
+                $characterisice_test = new Film_condition;
+                $characterisice_test-> composition_id = $sheet2->getCell('B'. $row)->getValue();
+                $characterisice_test-> casting_amount = $sheet2->getCell('C'. $row)->getValue();
+                $characterisice_test-> petri_dish_area = $sheet2->getCell('D'. $row)->getValue();
+                $characterisice_test-> degas_temperature = $sheet2->getCell('E'. $row)->getValue();
+                $characterisice_test-> drying_temperature = $sheet2->getCell('F'. $row)->getValue();
+                $characterisice_test-> drying_humidity = $sheet2->getCell('G'. $row)->getValue();
+                $characterisice_test-> drying_time = $sheet2->getCell('H'. $row)->getValue();
+                $characterisice_test->save();
+            }
+            // }
         }
         elseif($request->type === 'characteristic_test'){
           

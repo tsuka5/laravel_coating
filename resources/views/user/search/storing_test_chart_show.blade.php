@@ -4,7 +4,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            Characteristic Test Chart
+            Storing Test Chart
     </x-slot>
 
     <div class="py-12">
@@ -72,38 +72,28 @@
                             
 
                             <div class = "flex justify-center flex-wrap">
-                            {{-- pHのグラフ --}}
+                            {{-- 質量損失のグラフ --}}
+                                <canvas id="mass_loss_rate" width="400" height="400" class="m-10"></canvas>
+                                {{-- 色彩測定のグラフ --}}
+                                <canvas id="color_e" width="400" height="400" class="m-10"></canvas>
+                                {{-- pHのグラフ --}}
                                 <canvas id="ph" width="400" height="400" class="m-10"></canvas>
-                                {{-- 粘度のグラフ --}}
-                                <canvas id="viscosity" width="400" height="400" class="m-10"></canvas>
-                                {{-- 溶解度のグラフ --}}
-                                <canvas id="water_solubility" width="400" height="400" class="m-10"></canvas>
-                                {{-- 水透過性のグラフ --}}
-                                <canvas id="wvp" width="400" height="400" class="m-10"></canvas>
-                                {{-- 接触角のグラフ --}}
-                                <canvas id="contact_angle" width="400" height="400" class="m-10"></canvas>
-                                {{-- せん断速度のグラフ --}}
-                                <canvas id="shear_rate" width="400" height="400" class="m-10"></canvas>
-                                {{-- せん断応力のグラフ --}}
-                                <canvas id="shear_stress" width="400" height="400" class="m-10"></canvas>
-                                
-                                <canvas id="ts" width="400" height="400" class="m-10"></canvas>
-
-                                <canvas id="eab" width="400" height="400" class="m-10"></canvas>
-
-                                <canvas id="light_transmittance" width="400" height="400" class="m-10"></canvas>
-
-                                <canvas id="thickness" width="400" height="400" class="m-10"></canvas>
-
+                                {{-- 水分含有量のグラフ --}}
                                 <canvas id="moisture_content" width="400" height="400" class="m-10"></canvas>
-
-                                <canvas id="d43" width="400" height="400" class="m-10"></canvas>
-
-                                <canvas id="d32" width="400" height="400" class="m-10"></canvas>
+                                {{-- TAのグラフ --}}
+                                <canvas id="ta" width="400" height="400" class="m-10"></canvas>
+                                {{-- ビタミンC含有量のグラフ --}}
+                                <canvas id="vitamin_c" width="400" height="400" class="m-10"></canvas>
+                                {{-- 呼吸速度のグラフ --}}
+                                <canvas id="rr" width="400" height="400" class="m-10"></canvas>
                             </div>
 
+
+                            
+                                    
+                            
                             <div class="p-2 w-full flex justify-around mt-4">
-                              <button onclick="location.href='{{ route('user.experiment_register', ['experiment_id'=>$experiment->id]) }}'" class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded my-2">Back</button>
+                              <button onclick="location.href='{{ route('user.experiment_show', ['composition_id'=>$composition_id->id]) }}'" class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded my-2">Back</button>
                             </div>
                         </div>
                            
@@ -147,61 +137,83 @@ const borderColors = [
 
 // 変数をコントローラから受け取る
 const composition_count_list = @json($composition_count_list);
-const x_label = @json($x_label);
-const ph = @json($ph);
-const viscosity = @json($viscosity);
-const water_solubility = @json($water_solubility);
-const wvp = @json($wvp);
-const contact_angle = @json($contact_angle);
-const shear_rate = @json($shear_rate);
-const shear_stress = @json($shear_stress);
-const ts = @json($ts);
-const eab = @json($eab);
-const light_transmittance = @json($light_transmittance);
-const thickness = @json($thickness);
-const moisture_content = @json($moisture_content);
-const d43 = @json($d43);
-const d32 = @json($d32);
+const mass_loss_rates = @json($mass_loss_rates);
+console.log(mass_loss_rates);
+const color_es = @json($color_es);
+const phs = @json($phs);
+const moisture_contents = @json($moisture_contents);
+const tas = @json($tas);
+const vitamin_cs = @json($vitamin_cs);
+const days = @json($days);
+const rrs = @json($rrs);
+
+// データセットの配列を作る
+const mass_loss_rates_datasets = [];
+const color_es_datasets = [];
+const phs_datasets = [];
+const moisture_contents_datasets = [];
+const tas_datasets = [];
+const vitamin_c_datasets = [];
+const rr_datasets = [];
 
 
-function createDataset(label, data, colorIndex) {
-    return {
-        label: label,
-        data: data,
-        backgroundColor: colors[colorIndex % colors.length],
-        borderColor: borderColors[colorIndex % borderColors.length],
+composition_count_list.forEach((composition_count, index) => {
+    mass_loss_rates_datasets.push({
+        label: `composition: ${composition_count}`,
+        data: mass_loss_rates[index],
+        backgroundColor: colors[index % colors.length],
+        borderColor: borderColors[index % borderColors.length],
         borderWidth: 1
-    };
-}
-const ph_datasets = createDataset('pH', ph, 0);
-const viscosity_datasets = createDataset('viscosity', viscosity, 1);
-const water_solubility_datasets = createDataset('water solubility', water_solubility, 2);
-const wvp_datasets = createDataset('wvp', wvp, 3);
-const contact_angle_datasets = createDataset('contact_angle', contact_angle, 4);
-const shear_rate_datasets = createDataset('shear_rate', shear_rate, 5);
-const shear_stress_datasets = createDataset('shear_stress', shear_stress, 6);
-const ts_datasets = createDataset('ts', ts, 7);
-const eab_datasets = createDataset('eab', eab, 8);
-const light_transmittance_datasets = createDataset('light_transmittance', light_transmittance, 9);
-const thickness_datasets = createDataset('thickness', thickness, 10);
-const moisture_content_datasets = createDataset('moisture_content', moisture_content, 11);
-const d43_datasets = createDataset('d43', d43, 12);
-const d32_datasets = createDataset('d32', d32, 13);
-
-
+    });
+    color_es_datasets.push({
+        label: `composition: ${composition_count}`,
+        data: color_es[index],
+        backgroundColor: colors[index % colors.length],
+        borderColor: borderColors[index % borderColors.length],
+        borderWidth: 1
+    });
+    phs_datasets.push({
+        label: `composition: ${composition_count}`,
+        data: phs[index],
+        backgroundColor: colors[index % colors.length],
+        borderColor: borderColors[index % borderColors.length],
+        borderWidth: 1
+    });
+    moisture_contents_datasets.push({
+        label: `composition: ${composition_count}`,
+        data: moisture_contents[index],
+        backgroundColor: colors[index % colors.length],
+        borderColor: borderColors[index % borderColors.length],
+        borderWidth: 1
+    });
+    tas_datasets.push({
+        label: `composition: ${composition_count}`,
+        data: tas[index],
+        backgroundColor: colors[index % colors.length],
+        borderColor: borderColors[index % borderColors.length],
+        borderWidth: 1
+    });
+    vitamin_c_datasets.push({
+        label: `composition: ${composition_count}`,
+        data: vitamin_cs[index],
+        backgroundColor: colors[index % colors.length],
+        borderColor: borderColors[index % borderColors.length],
+        borderWidth: 1
+    });
+    rr_datasets.push({
+        label: `composition: ${composition_count}`,
+        data: rrs[index],
+        backgroundColor: colors[index % colors.length],
+        borderColor: borderColors[index % borderColors.length],
+        borderWidth: 1
+    });
+});
 
 // グラフを作成する
-function createBarChart(chartId, datasets, title, labels) {
+function createLineChart(chartId, datasets, title, labels) {
     var ctx = document.getElementById(chartId).getContext('2d');
-    //データの最大値を計算
-    const maxValue = datasets.reduce((max, dataset) => {
-        const datasetMax = Math.max(...dataset.data);
-        return datasetMax > max ? datasetMax : max;
-    }, 0);
-    
-    
     return new Chart(ctx, {
-        type: 'bar', // グラフのタイプ
+        type: 'line', // グラフのタイプ
         data: {
             labels: labels, // x軸ラベル
             datasets: datasets  //データセット配列
@@ -209,19 +221,9 @@ function createBarChart(chartId, datasets, title, labels) {
         options: {
             responsive: false,
             maintainAspectRatio: false,
-            
             scales: {
                 y: {
-                    beginAtZero: true,
-                    max: maxValue * 1.1,
-                    grid: {
-                        display: false,
-                    }
-                },
-                x: {
-                    grid:{
-                        display: false
-                    }
+                    beginAtZero: true
                 }
             },
             plugins: {
@@ -241,21 +243,14 @@ function createBarChart(chartId, datasets, title, labels) {
         }
     });
 }
-console.log(ph_datasets);
-var phChart = createBarChart('ph', [ph_datasets], 'pH', x_label);
-var viscosityChart = createBarChart('viscosity', [viscosity_datasets], 'Viscosity (cP)', x_label);
-var waterSolubilityChart = createBarChart('water_solubility', [water_solubility_datasets], 'Water Solubility (%)', x_label);
-var wvpChart = createBarChart('wvp', [wvp_datasets], 'wvp', x_label);
-var contactAngleChart = createBarChart('contact_angle', [contact_angle_datasets], 'Contact Angle (°)', x_label);
-var shearRateChart = createBarChart('shear_rate', [shear_rate_datasets], 'Shear Rate (1/s)', x_label);
-var shearStressChart = createBarChart('shear_stress', [shear_stress_datasets], 'Shear Stress (Pa*s)', x_label);
-var tsChart = createBarChart('ts', [ts_datasets], 'Tensile Strength (MPa)', x_label);
-var eabChart = createBarChart('eab', [eab_datasets], 'EAB (%)', x_label);
-var lightTransmittanceChart = createBarChart('light_transmittance', [light_transmittance_datasets], 'Light Transmittance (%)', x_label);
-var thicknessChart = createBarChart('thickness', [thickness_datasets], 'Thickness (mm)', x_label);
-var moistureContentChart = createBarChart('moisture_content', [moisture_content_datasets], 'Moisture Content (%)', x_label);
-var d43Chart = createBarChart('d43', [d43_datasets], 'D43 (mm)', x_label);
-var d32Chart = createBarChart('d32', [d32_datasets], 'D32 (mm)', x_label);
+
+var massLossRateChart = createLineChart('mass_loss_rate', mass_loss_rates_datasets, 'Mass Loss Rate(%)', days);
+var colorTestChart = createLineChart('color_e', color_es_datasets, 'Color Test (ΔE)', days);
+var pHChart = createLineChart('ph', phs_datasets, 'pH', days);
+var moistureContentChart = createLineChart('moisture_content', moisture_contents_datasets, 'Moistrue Content(%)', days);
+var taChart = createLineChart('ta', tas_datasets, 'TA(%)', days);
+var vitaminCChart = createLineChart('vitamin_c', vitamin_c_datasets, 'Vitamin C(%)', days);
+var rrChart = createLineChart('rr', rr_datasets, 'RR (mgCO^2/(kg*h))', days);
 
 </script>
 

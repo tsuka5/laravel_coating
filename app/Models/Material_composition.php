@@ -28,10 +28,10 @@ class Material_composition extends Model
     {
         return $this->belongsTo(Experiment::class);
     }
-    // public function film_condition(): HasMany
-    // {
-    //     return $this->hasMany(Film_condition::class);
-    // }
+    public function film_condition(): HasMany
+    {
+        return $this->hasMany(Film_condition::class);
+    }
     public function charactaristic_test(): HasMany
     {
         return $this->hasMany(Charactaristic_test::class);

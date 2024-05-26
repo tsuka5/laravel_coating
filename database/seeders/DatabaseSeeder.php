@@ -42,15 +42,15 @@ class DatabaseSeeder extends Seeder
 
         
 
-        // Experiment::factory()->count(15)->create();
+        Experiment::factory()->count(15)->create();
 
-        // Material_composition::factory()->count(30)->create();
-        // $composition_count = Material_composition::count();
+        Material_composition::factory()->count(30)->create();
+        $composition_count = Material_composition::count();
         
-        // Material::factory()->count(30)->create();
-        // Film_condition::factory()->count($composition_count)->create();
-        // Charactaristic_test::factory()->count($composition_count)->create();
-        // Storing_test::factory()->count(15)->create();
-        // Antibacteria_test::factory()->count(15)->create();
+        Material::factory()->count(30)->create();
+        Film_condition::factory()->count($composition_count)->create();
+        Charactaristic_test::factory()->count($composition_count)->create();
+        Storing_test::factory()->count(15)->create();
+        Antibacteria_test::factory()->count(15)->create();
     }
 }

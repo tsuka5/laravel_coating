@@ -17,7 +17,7 @@ class Film_conditionSeeder extends Seeder
     {
         DB::table('film_conditions')->insert([
             [
-                'experiment_id' => '1',
+                'composition_id' => '1',
                 'casting_amount' => '1.8',
                 'petri_dish_area' => '0.8',
                 'degas_temperature' => '2.0',
@@ -26,7 +26,7 @@ class Film_conditionSeeder extends Seeder
                 'drying_time' => '28.9',
             ],
             [
-                'experiment_id' => '2',
+                'composition_id' => '2',
                 'casting_amount' => '1.8',
                 'petri_dish_area' => '0.8',
                 'degas_temperature' => '2.0',
@@ -35,7 +35,7 @@ class Film_conditionSeeder extends Seeder
                 'drying_time' => '28.9',
             ],
             [
-                'experiment_id' => '3',
+                'composition_id' => '3',
                 'casting_amount' => '1.8',
                 'petri_dish_area' => '0.8',
                 'degas_temperature' => '2.0',

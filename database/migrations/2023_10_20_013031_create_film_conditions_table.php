@@ -15,7 +15,7 @@ class CreateFilmConditionsTable extends Migration
 
         Schema::create('film_conditions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('experiment_id')
+            $table->foreignId('composition_id')
             ->references('id')->on('material_compositions')
             ->constrained()
             ->onUpdate('cascade')

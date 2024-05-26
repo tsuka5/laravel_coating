@@ -26,6 +26,7 @@ class CreateAntibacteriaTestsTable extends Migration
             $table->boolean('invivo_invitro')->nullable();
             $table->float('bacteria_concentration')->nullable();
             $table->float('mic')->nullable();
+            $table->float('colony_diameter')->nullable();
         });
 
         Schema::enableForeignKeyConstraints();

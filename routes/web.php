@@ -8,7 +8,7 @@ use App\Http\Controllers\Auth\CategoryController;
 use App\Http\Controllers\Auth\ContactController;
 use App\Http\Controllers\Auth\TableShowController;
 use App\Http\Controllers\Auth\ChartShowController;
-use App\Http\Controllers\Auth\StoringTestExcelController; 
+use App\Http\Controllers\Auth\ExcelController; 
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -50,8 +50,11 @@ Route::middleware('auth:users')->group(function () {
     //searchについて
     Route::resource('search', SearchController::class)
     ->middleware(['auth:users', 'verified']);
-    Route::get('search/experiment/{experiment_id}', [SearchController::class,'experimentIndex'])->name('experiment_show');
+    Route::get('search/experiment/{composition_id}', [SearchController::class,'experimentIndex'])->name('experiment_show');
     Route::get('search/experiment/{type}/{id}', [SearchController::class, 'experimentDetailShow'])->name('experiment_detail_show');
+    Route::get('search/{type}/{item}', [SearchController::class, 'compareWholeData'])->name('compareWholeData');
+    Route::get('everyone_show/chart/{id}/{type}', [ChartShowController::class,'everyone_show'])->name('everyone_show.chart');
+
 
 
     //categoryについて
@@ -66,9 +69,9 @@ Route::middleware('auth:users')->group(function () {
     Route::get('contact/show/{id}', [ContactController::class, 'show'])->name('contact.show');
 
     //ExcelOutputについて
-    Route::get('/export-excel/{experiment_id}/{type}', [StoringTestExcelController::class, 'export'])->name('export.excel');
+    Route::get('/export-excel/{experiment_id}/{type}', [ExcelController::class, 'export'])->name('export.excel');
     //ExcelInputについて
-    Route::post('/inport-excel/{type}', [StoringTestExcelController::class, 'store'])->name('import.excel');
+    Route::post('/inport-excel/{type}', [ExcelController::class, 'store'])->name('import.excel');
 
     //TableShowについて
     Route::get('show/table/{id}/{type}', [TableShowController::class,'show'])->name('show.table');

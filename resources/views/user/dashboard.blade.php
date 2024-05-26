@@ -91,7 +91,7 @@
                                                             
                                                 <td class="px-4 py-3 border">
                                                     <div class="flex justify-center">
-                                                        <button onclick="location.href='{{ route('user.experiment_show', ['experiment_id' => $composition->experiment_id])}}'" class="text-white
+                                                        <button onclick="location.href='{{ route('user.experiment_show', ['composition_id' => $composition->id])}}'" class="text-white
                                                             bg-gray-400 border-0 py-2 px-4 focus:outline-none hover:bg-gray-500 rounded">Detail</button>
                                                     </div>
                                                 </td>
