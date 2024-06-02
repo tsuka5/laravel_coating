@@ -88,17 +88,38 @@
                                       </select>                    
                                   </div>
                                 </div>
+                                
+                                <div class="p-2 w-1/2 mx-auto">
+                                  <div class="relative">
+                                      <label for="solvent_name" class="leading-7 text-sm text-gray-600">Name</label>
+                                      <select name="solvent_name" data-toggle="select" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300
+                                         focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                        <option value="{{ $material->solvent_detail->name}}">{{$material->solvent_detail->name}} </option>
+                                        @foreach ($solvents_list as $selected_solvent)
+                                        <option value="{{ $selected_solvent->name }}"> {{ $selected_solvent->name }}</option>
+                                        @endforeach
+                                      </select>                    
+                                  </div>
+                                </div>
                           
                                 <div class="p-2 w-1/2 mx-auto">
-                                    <div class="relative">
-                                        <label for="concentration" class="leading-7 text-sm text-gray-600">Concentration</label>
-                                        <input type="number" name="concentration" value="{{ $material->concentration }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300
-                                         focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                                            id="concentration">
-                                    </div>
+                                  <div class="relative">
+                                      <label for="solvent_concentration" class="leading-7 text-sm text-gray-600">Solvent_Concentration</label>
+                                      <input type="number" name="solvent_concentration" value="{{ $material->solvent_concentration }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300
+                                       focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                                          id="solvent_concentration">
+                                  </div>
                                 </div>
-                
                                 <div class="p-2 w-1/2 mx-auto">
+                                  <div class="relative">
+                                      <label for="concentration" class="leading-7 text-sm text-gray-600">Concentration</label>
+                                      <input type="number" name="concentration" value="{{ $material->concentration }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300
+                                      focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                                          id="concentration">
+                                  </div>
+                                </div> 
+          
+                                {{-- <div class="p-2 w-1/2 mx-auto">
                                     <div class="relative">
                                         <label for="ph_adjustment" class="leading-7 text-sm text-gray-600">ph Adjustment (Yes or No)</label>
                                         <select name="ph_adjustment" data-toggle="select" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300
@@ -114,10 +135,10 @@
                                           <option value="0">No</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
                 
 
-                                <div class="p-2 w-1/2 mx-auto">
+                                {{-- <div class="p-2 w-1/2 mx-auto">
                                   <div class="relative">
                                       <label for="ph_material" class="leading-7 text-sm text-gray-600">Material Name for ph Adjustment</label>
                                       <select name="ph_material" data-toggle="select" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2
@@ -143,7 +164,7 @@
                                          focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                                             id="ph_pu">
                                     </div>
-                                </div> 
+                                </div>  --}}
                               </div>
                               <div class="p-2 w-full flex justify-around mt-4">
                                 <button type="button" onclick="location.href='{{ route('user.experiment_register', ['experiment_id'=>$experiment_id->experiment_id]) }}'" class="bg-gray-200 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">Back</button>
@@ -365,7 +386,7 @@
                           @elseif($editType == 'storing_test')
 
                           <div class="flex flex-col text-center w-full mb-4 mt-12">
-                              <h4 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Storing Test : Day{{$storing_test->storing_day}}</h4>
+                              <h4 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Storing Test Basic Information</h4>
                           </div>
                           <x-input-error :messages="$errors->all()" class="mb-4"  />
                             <form method="post" enctype="multipart/form-data" action="{{ route('user.update.experiment', ['editType' => $editType, 'id' => $id]) }}">
@@ -377,7 +398,7 @@
                               <div class="p-2 w-1/2 mx-auto">
                                 <div class="relative">
                                     <label for="fruit_name" class="leading-7 text-sm text-gray-600">Fruits or Vegitable </label>
-                                    <select name="storing_fruit_nam" data-toggle="select" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                    <select name="storing_fruit_name" data-toggle="select" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                       <option value="{{ $storing_test->fruit_detail->name }}">{{ $storing_test->fruit_detail->name}}</option>
                                       @foreach ($fruits_list as $selected_fruit)
                                       <option value="{{ $selected_fruit->name }}"> {{ $selected_fruit->name }}</option>
@@ -403,7 +424,7 @@
                                     <input type="number" id="storing_day" name="storing_da" value="{{ $storing_test->storing_day }}" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                 </div>
                               </div>
-                              <div class="p-2 w-1/2 mx-auto">
+                              {{-- <div class="p-2 w-1/2 mx-auto">
                                 <div class="relative"> 
                                     <label for="mass_loss_rate" class="leading-7 text-sm text-gray-600">Mass Loss Rate (%)</label>
                                     <input type="number" id="mass_loss_rate" name="mass_loss_rat" value="{{ $storing_test->mass_loss_rate }}" step=0.01 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
@@ -509,11 +530,18 @@
                                     <img src="{{ asset('storage/'.$storing_test->clsm) }}" alt="" style="max-width: 200px; max-height: 200px;">
                                     <input type" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                 </div>
+                              </div> --}}
+                              <div class="p-2 w-1/2 mx-auto">
+                                <div class="relative">
+                                    <label for="memo" class="leading-7 text-sm text-gray-600">Memo (%)</label>
+                                    <input type="text" id="memo" name="memo" value="{{ $storing_test->memo }}" step="0.001" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                </div>
                               </div>
+
                             </div>
                           </div>
                           <div class="p-2 w-full flex justify-around mt-4">
-                            <button type="button" onclick="location.href='{{ route('user.experiment_register', ['experiment_id'=>$experiment_id->experiment_id]) }}'" class="bg-gray-200 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">Back</button>
+                            <button type="button" onclick="location.href='{{ route('user.experiment_register', ['experiment_id'=>$storing_test->experiment_id]) }}'" class="bg-gray-200 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">Back</button>
                             <button type="submit" class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">Update</button>
                           </div>
                         </form>

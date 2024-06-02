@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
-// use Illuminate\Database\Eloquent\Relations\BelongsTo;
-// use App\Models\Experiment;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use App\Models\User;
 
 
 
@@ -29,10 +29,10 @@ class Affiliation extends Model
     
     ];
 
-    // public function experiment(): BelongsTo
-    // {
-    //     return $this->belongsTo(Experiment::class);
-    // }
+    public function user(): HasOne
+    {
+        return $this->hasOne(User::class, 'affiliation_id', 'id');
+    }
 
  
 }

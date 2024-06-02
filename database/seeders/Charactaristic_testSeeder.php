@@ -19,14 +19,8 @@ class Charactaristic_testSeeder extends Seeder
             [
                 'composition_id' => '1',
                 'ph' => '5.6',
-                'temperature' => '10.4',
-                'shear_rate' => '2.4',
-                'shear_stress' => '3.5',
-                'rotation_speed' => '1000',
-                'viscosity' => '1.8',
                 'mc' => '33.3',
                 'ws' => '23.5',
-                'wvp' => '12.3',
                 'thickness' => '20.9',
                 'ca' => '5.9',
                 'ts' => '43.2',
@@ -39,19 +33,14 @@ class Charactaristic_testSeeder extends Seeder
                 'sem' => null,
                 'dsc' => null,
                 'ftir' => null,
-                'clsm' => null
+                'clsm' => null,
+                'memo' => 'memoです'
             ],
             [
                 'composition_id' => '2',
                 'ph' => '5.6',
-                'temperature' => '10.4',
-                'shear_rate' => '2.4',
-                'shear_stress' => '3.5',
-                'rotation_speed' => '1000',
-                'viscosity' => '1.8',
                 'mc' => '33.3',
                 'ws' => '23.5',
-                'wvp' => '12.3',
                 'thickness' => '20.9',
                 'ca' => '5.9',
                 'ts' => '43.2',
@@ -64,19 +53,14 @@ class Charactaristic_testSeeder extends Seeder
                 'sem' => null,
                 'dsc' => null,
                 'ftir' => null,
-                'clsm' => null
+                'clsm' => null,
+                'memo' => 'memoです'
             ],
             [
                 'composition_id' => '3',
                 'ph' => '5.6',
-                'temperature' => '10.4',
-                'shear_rate' => '2.4',
-                'shear_stress' => '3.5',
-                'rotation_speed' => '1000',
-                'viscosity' => '1.8',
                 'mc' => '33.3',
                 'ws' => '23.5',
-                'wvp' => '12.3',
                 'thickness' => '20.9',
                 'ca' => '5.9',
                 'ts' => '43.2',
@@ -89,7 +73,8 @@ class Charactaristic_testSeeder extends Seeder
                 'sem' => null,
                 'dsc' => null,
                 'ftir' => null,
-                'clsm' => null
+                'clsm' => null,
+                'memo' => 'memoです'
             ],
 
 

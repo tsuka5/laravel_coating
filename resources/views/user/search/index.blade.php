@@ -137,8 +137,8 @@
         </form>
         </div>
     </div>
-
-    @if(!empty($selected_compositions))
+    {{-- {{dd($selected_experiments)}} --}}
+    @if(!empty($selected_experiments))
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
@@ -147,7 +147,7 @@
                     
                         <div class="container px-5 mx-auto ">
                             <x-flash-message status="session('status')" />
-                            {{ $selected_compositions->links()}}    
+                            {{ $selected_experiments->links()}}    
                         <div class="w-full mx-auto overflow-auto border-2 border-gray-400 bg-white rounded-lg">
                             <table class="table-auto w-full text-left whitespace-no-wrap">
                                 <thead>
@@ -160,22 +160,22 @@
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-gray-400">
-                                    @foreach ($selected_compositions as $composition)
+                                    @foreach ($selected_experiments as $experiment)
                                         <tr>
                                             <td class="px-4 py-3 border text-center">
                                                     <p  style="word-wrap: break-word; max-width: 100%;">
-                                                        {{$composition->experiment->title}}
+                                                        {{$experiment->title}}
                                                     </p>
                                             </td>
                                             <td class="px-4 py-3 border text-center">
-                                                @foreach($materials[$composition->id] as $material)
+                                                @foreach($materials[$experiment->id] as $material)
                                                     <p  style="word-wrap: break-word; max-width: 100%;">
                                                         {{$material->material_detail->name}} : {{($material->concentration)}}
                                                     </p>
                                                 @endforeach
                                             </td>
                                             <td class="px-4 py-3 border text-center">
-                                                @foreach($fruits[$composition->id] as $fruit)
+                                                @foreach($fruits[$experiment->id] as $fruit)
                                                 <p  style="word-wrap: break-word; max-width: 100%;">
                                                     {{$fruit->fruit_detail->name}} <br> 
                                                 </p>
@@ -183,7 +183,7 @@
                                                 @endforeach
                                             </td>
                                             <td class="px-4 py-3 border text-center">
-                                                @foreach($bacteria[$composition->id] as $bacterium)
+                                                @foreach($bacteria[$experiment->id] as $bacterium)
                                                 <p style="word-wrap: break-word; max-width: 100%;">
                                                     {{$bacterium->bacteria_detail->name}} <br> 
                                                 </p>
@@ -192,7 +192,7 @@
                                                         
                                             <td class="px-4 py-3 border text-center">
                                                 <div class="flex justify-center">
-                                                    <button onclick="location.href='{{ route('user.experiment_show', ['composition_id' => $composition->id])}}'" class="text-white
+                                                    <button onclick="location.href='{{ route('user.experiment_show', ['experiment_id' => $experiment->id])}}'" class="text-white
                                                         bg-gray-400 border-0 py-2 px-4 focus:outline-none hover:bg-gray-500 rounded">Detail</button>
                                                 </div>
                                             </td>

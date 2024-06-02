@@ -138,13 +138,13 @@
                                                             <p class="text-black border-2 bg-red-100 border-gray-400 text-center rounded mx-2 my-1">{{$material->material_detail->name}}</p>
                                                         </div> 
                                                         @endforeach
-                                                        @foreach($fruits[$composition->id] as $fruit) 
+                                                        @foreach($fruits[$experiment->id] as $fruit) 
                                                         <div>
                                                             <p class="text-black border-2 bg-green-100 border-gray-400 text-center rounded mx-2 my-1">{{$fruit->fruit_detail->name}}</p>
                                                         </div> 
                                                         @break
                                                         @endforeach
-                                                        @foreach($bacteria[$composition->id] as $bacterium) 
+                                                        @foreach($bacteria[$experiment->id] as $bacterium) 
                                                         <div>
                                                             <p class="text-black border-2 bg-yellow-100 border-gray-400 text-center rounded mx-2 my-1">{{$bacterium->bacteria_detail->name}}</p>
                                                         </div> 

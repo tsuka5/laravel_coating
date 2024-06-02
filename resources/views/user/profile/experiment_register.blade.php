@@ -13,7 +13,7 @@
                         <div class="container mx-auto">
                             <x-flash-message status="session('status')" />
                         
-                            <div class="lg:w-1/2 mx-auto">
+                            <div class="lg:w-2/3 mx-auto">
 
                                 <div class="flex justify-center mt-2 p-1 w-full bg-gray-400">
                                     <div class="text-white mt-1 mr-4">
@@ -137,15 +137,7 @@
                                                             @endforeach
                                                             
                                                             
-                                                            {{-- @foreach($storing_tests[$composition->id] as $storing_test)
-                                                            @if(!empty($storing_test))
-                                                            <div class="bg-gray-300 w-full text-center">
-                                                                <p>Friut or vegitable</p>
-                                                            </div>
-                                                                <p class="ml-2 text-center">Fruit or vegitable : {{$storing_test->fruit_detail->name}}</p>
-                                                                @break
-                                                            @endif
-                                                            @endforeach --}}
+                                                          
                                                         
                                                         
                                                         </div>
@@ -252,66 +244,26 @@
                                                                 </div>
                                                             @endif
                                                         </div>
-                                                    </div>
+                                                    </div> 
     
                                                   
-                                                </div>
+                                                </div> --}}
 
 
                                             
-                                                <div class="mt-2">
-                                                    <button class="toggle-button p-1 underline w-full bg-gray-200 hover:text-indigo-400" data-target="storing_test_button_{{$number_composition}}" >
-                                                        Storing Test
-                                                    </button>
-                                                    <div id="storing_test_button_{{$number_composition}}" style="display: none;">
-                                                        @foreach($storing_tests[$composition->id] as $storing_test)
-                                                        <table class="border w-full">
-                                                            <tbody>
-                                                                
-                                                                <tr>
-                                                                    <td class="w-3/5">
-                                                                        <p class="px-2 text-center mt-3" style="word-wrap: break-word; max-width: 100%;">
-                                                                            Day{{$storing_test->storing_day}} 
-                                                                        </p>
-                                                                    </td>
-                                                                    <td class="px-2 text-center">
-                                                                        <div class="my-2 w-1/5">
-                                                                            <button onclick="location.href='{{ route('user.edit.experiment', ['editType' => 'storing_test', 'id' => $storing_test->id])}}'" class="h-9 text-white bg-indigo-400 border-0 py-2 px-4 focus:outline-none
-                                                                                hover:bg-indigo-500 rounded w-20">Edit</button>
-                                                                        </div> 
-                                                                    </td>
-                                                                    <td class="px-2 text-center">
-                                                                        <div class="w-1/5">
-                                                                            <form id="delete_storing_test_{{ $storing_test->id }}" method="post" action="{{ route('user.destroy.data', [ 'experiment_id' =>$experiment->id, 'type' => 'storing_test', 'id' => $storing_test->id ])}}">
-                                                                                @csrf
-                                                                                @method('delete')  
-                                                                                <a href="#" data-id="{{ $storing_test->id }}" onclick="deletePost(this, 'storing_test')" class="mb-2 h-9 text-white bg-red-400 border-0 py-2 px-4 focus:outline-none
-                                                                                    hover:bg-red-500 rounded">Delete</a>
-                                                                            </form> 
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-                                                            
-                                                            </tbody>
-                                                        </table>
-                                                        @endforeach
-                                                        <div class="p-1 text-center">
-                                                            <button type="button" data-toggle="modal" data-target="#storing_test_{{$composition->id}}" class="text-black px-4 py-2 border-2 border-gray-400 hover:bg-gray-300 rounded">Add_days</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
                                                 
                                                     
                                             
 
 
-                                                <div class="mt-2">
+                                                {{-- <div class="mt-2">
                                                     <button class="toggle-button p-1 underline w-full bg-gray-200 hover:text-indigo-400" data-target="antibacteria_test_button_{{$number_composition}}" >
                                                         Antibacteria Test
                                                     </button>
                                                     <div id="antibacteria_test_button_{{$number_composition}}" style="display: none;">
 
-                                                        @foreach($bacteria_tests[$composition->id] as $bacteria_test)
+                                                        @if($bacteria_test)
+
                                                         <table class="border w-full">
                                                             <tbody>
                                                                 
@@ -320,6 +272,7 @@
                                                                         <p  style="word-wrap: break-word; max-width: 100%;">
                                                                         {{$bacteria_test->bacteria_detail->name}}
                                                                         </p>
+                                                                    
                                                                     </td>
                                                                     <td class="px-2 py-2 text-center">
                                                                         <div class="my-2 w-1/5">
@@ -341,15 +294,15 @@
                                                             
                                                             </tbody>
                                                         </table>
-                                                        @endforeach
                                                         <div class="p-1 text-center">
+                                                        @endif
                                                             <button type="button" data-toggle="modal" data-target="#antibacteria_test_{{$composition->id}}" class="text-black py-2 px-4 border-2 border-gray-400 hover:bg-gray-300 rounded">Add_Antibacteria_Test</button>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div> --}}
                                                 
 
-                                                <div class="modal fade" id="characteristic_test_{{$composition->id}}" tabindex="-1" aria-labelledby="characteristicTestLabel" aria-hidden="true">
+                                                {{-- <div class="modal fade" id="characteristic_test_{{$composition->id}}" tabindex="-1" aria-labelledby="characteristicTestLabel" aria-hidden="true">
                                                     <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
@@ -379,7 +332,7 @@
                                                         </div>
                                                     </div>
                                                     </div>
-                                                </div>
+                                                </div> --}}
 
 
 
@@ -394,7 +347,7 @@
                                                         </button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            @include('layouts.create_form', ['formType' => 'storing_test', 'id' => $composition->id])
+                                                            @include('layouts.create_form', ['formType' => 'storing_test', 'id' => $experiment->id])
                                                         </div>
                                                     </div>
                                                     </div>
@@ -415,7 +368,7 @@
                                                         </div>
                                                     </div>
                                                     </div>
-                                                </div>--}}
+                                                </div>
                                                 
 
                                                 @foreach($compositions as $composition)
@@ -433,7 +386,7 @@
                                                         </div>
                                                     </div>
                                                     </div>
-                                                </div>
+                                                {{-- </div> --}}
 
 
                                         {{-- </div> --}}
@@ -476,7 +429,7 @@
                                                 </div>
                                             </div>
 
-                                            @if($film_condition->isEmpty())
+                                            @if(!$film_condition)
                                             <div class="text-center">
                                                 <a href="{{ route('user.export.excel', ['experiment_id' => $experiment->id, 'type' => 'film_condition']) }}" class="btn btn-primary m-2">Download Format Excel File</a>                                          
                                             </div>
@@ -496,7 +449,7 @@
                                                     hover:bg-gray-600 rounded">Show Table</button>
                                             </div>
                                             <div class="text-center">
-                                                <a href="{{ route('user.export.excel', ['experiment_id' => $experiment->id, 'type' => 'film_condition']) }}" class="btn btn-primary m-2">Download Now Data</a>                                          
+                                                <a href="{{ route('user.edit_export.excel', ['experiment_id' => $experiment->id, 'type' => 'film_condition']) }}" class="btn btn-primary m-2">Download Now Data</a>                                          
                                             </div>
                                             @endif
                                         </div>
@@ -538,7 +491,7 @@
                                                     hover:bg-gray-600 rounded">Show Chart</button>
                                             </div>
                                             <div class="text-center">
-                                                <a href="{{ route('user.export.excel', ['experiment_id' => $experiment->id, 'type' => 'chacteristic_test']) }}" class="btn btn-primary m-2">Download Now Data</a>                                          
+                                                <a href="{{ route('user.edit_export.excel', ['experiment_id' => $experiment->id, 'type' => 'characteristic_test']) }}" class="btn btn-primary m-2">Download Now Data</a>                                          
                                             </div>
                                             @endif
                                         </div>
@@ -550,17 +503,89 @@
                                                     Storing Test
                                                 </div>
                                                 <div class="my-1 mr-2">
-                                                    <form  id="delete_storing_test_{{ $experiment->id }}" method="post" action="{{ route('user.destroy.data', [ 'experiment_id' => $experiment->id, 'type' => 'storing_test', 'id' => $experiment->id ])}}">
+                                                    <form  id="delete_multiple_test_{{ $experiment->id }}" method="post" action="{{ route('user.destroy.data', [ 'experiment_id' => $experiment->id, 'type' => 'multiple_test', 'id' => $experiment->id ])}}">
                                                         @csrf
                                                         @method('delete')  
-                                                        <a href="#" data-id="{{ $experiment->id }}" onclick="deletePost(this, 'storing_test')" class="p-1 text-white bg-red-400 border-0 focus:outline-none text-xs text-center
+                                                        <a href="#" data-id="{{ $experiment->id }}" onclick="deletePost(this, 'multiple_test')" class="p-1 text-white bg-red-400 border-0 focus:outline-none text-xs text-center
                                                             hover:bg-red-500 rounded">Delete</a>
                                                     </form> 
                                                 </div>
                                             </div>
                                     
+                                            <div class="mt-2">
+                                            @if(!$storing_test)
+                                             
+                                                <div class="p-1 text-center">
+                                                    <button type="button" data-toggle="modal" data-target="#storing_test_{{$composition->id}}" class="toggle-button p-2 m-2 text-white bg-gray-500 border-0 focus:outline-none hover:bg-gray-600 rounded">Basic Information</button>
+                                                </div>
+
+                                                <div class="text-center">
+                                                    <a href="{{ route('user.export.excel', ['experiment_id' => $experiment->id, 'type' => 'storing_test']) }}" class="btn btn-primary m-2">Download Format Excel File</a>                                          
+                                                </div>
+                                                <div class="p-2">
+                                                    <form action="{{ route('user.import.excel', ['type' => 'storing_test']) }}" method="post" enctype="multipart/form-data">
+                                                        @csrf
+                                                        <input type="file" name="file" id="storing_test_file" required onchange="handleFileSelect(event)">
+                                                        <div class="flex justify-center">
+                                                            <button type="submit" id="storing_upload_button" style="display: none;" class="p-2 m-2 text-white bg-red-500 border-0 focus:outline-none
+                                                            hover:bg-red-600 rounded">Upload Excel File</button>
+                                                        </div>
+                                                    </form>
+                                                </div> 
+    
+                                            @else
+                                                <div class="flex justify-center">
+                                                    <button class="toggle-button p-2 m-2 text-white bg-gray-500 border-0 focus:outline-none hover:bg-gray-600 rounded" data-target="storing_test_button_{{$number_composition}}" >
+                                                    Basic Information
+                                                    </button>
+                                                </div>
+                                                
+                                                <div id="storing_test_button_{{$number_composition}}" style="display: none;">
+                                                    {{-- <div class="p-1 text-center">
+                                                        <button type="button" data-toggle="modal" data-target="#storing_test_{{$composition->id}}" class="toggle-button p-2 m-2 text-white bg-gray-500 border-0 focus:outline-none hover:bg-gray-600 rounded">Basic Information</button>
+                                                    </div> --}}
+                                                    
+                                                    <table class="border w-full">
+                                                        <tbody>
+                                                            <tr class="flex justify-center">
+                                                                <td class="px-2 text-center">
+                                                                    <div class="w-1/5 my-1">
+                                                                        <button onclick="location.href='{{ route('user.edit.experiment', ['editType' => 'storing_test', 'id' => $storing_test->id])}}'" class="h-9 text-white bg-indigo-400 border-0 py-2 px-4 focus:outline-none
+                                                                            hover:bg-indigo-500 rounded w-20">Edit</button>
+                                                                    </div> 
+                                                                </td>
+                                                                <td class="px-2 text-center">
+                                                                    <div class="w-1/5 my-2">
+                                                                        <form id="delete_storing_test_{{ $storing_test->id }}" method="post" action="{{ route('user.destroy.data', [ 'experiment_id' =>$experiment->id, 'type' => 'storing_test', 'id' => $storing_test->id ])}}">
+                                                                            @csrf
+                                                                            @method('delete')  
+                                                                            <a href="#" data-id="{{ $storing_test->id }}" onclick="deletePost(this, 'storing_test')" class="mb-2 h-9 text-white bg-red-400 border-0 py-2 px-4 focus:outline-none
+                                                                                hover:bg-red-500 rounded">Delete</a>
+                                                                        </form> 
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        
+                                                        </tbody>
+                                                    </table>
+                                                </div> 
                                             
-                                            @if($storing_test->isEmpty())
+                                          
+                                            {{-- <div class="text-center">
+                                                <a href="{{ route('user.export.excel', ['experiment_id' => $experiment->id, 'type' => 'storing_test']) }}" class="btn btn-primary m-2">Download Format Excel File</a>                                          
+                                            </div>
+                                            <div class="p-2">
+                                                <form action="{{ route('user.import.excel', ['type' => 'storing_test']) }}" method="post" enctype="multipart/form-data">
+                                                    @csrf
+                                                    <input type="file" name="file" id="storing_test_file" required onchange="handleFileSelect(event)">
+                                                    <div class="flex justify-center">
+                                                        <button type="submit" id="storing_upload_button" style="display: none;" class="p-2 m-2 text-white bg-red-500 border-0 focus:outline-none
+                                                        hover:bg-red-600 rounded">Upload Excel File</button>
+                                                    </div>
+                                                </form>
+                                            </div>  --}}
+                                            {{-- {{dd($multiple_test)}} --}}
+                                            @if(empty($multiple_test))
                                             <div class="text-center">
                                                 <a href="{{ route('user.export.excel', ['experiment_id' => $experiment->id, 'type' => 'storing_test']) }}" class="btn btn-primary m-2">Download Format Excel File</a>                                          
                                             </div>
@@ -582,11 +607,14 @@
                                                     hover:bg-gray-600 rounded">Show Chart</button>
                                             </div>
                                             <div class="text-center">
-                                                <a href="{{ route('user.export.excel', ['experiment_id' => $experiment->id, 'type' => 'storing_test']) }}" class="btn btn-primary m-2">Download Now Data</a>                                          
+                                                <a href="{{ route('user.edit_export.excel', ['experiment_id' => $experiment->id, 'type' => 'storing_test']) }}" class="btn btn-primary m-2">Download Now Data</a>                                          
                                             </div>
                                             @endif
-                                    
+                                            @endif
                                         </div>
+                                        </div>
+                                    
+                                        
                                         
 
                                         <div class="mt-2 w-1/2 border-2 border-gray-300">
@@ -604,7 +632,53 @@
                                                 </div>
                                             </div>
 
-                                            {{-- @if($storing_test->isEmpty()) --}}
+                                            <div class="mt-2">
+                                                <div class="flex justify-center">
+                                                    <button class="toggle-button p-2 m-2 text-white bg-gray-500 border-0 focus:outline-none hover:bg-gray-600 rounded" data-target="antibacteria_test_button_{{$number_composition}}" >
+                                                        Basic Information
+                                                    </button>
+                                                </div>
+                                                <div id="antibacteria_test_button_{{$number_composition}}" style="display: none;">
+
+                                                    @if($bacteria_test)
+
+                                                    <table class="border w-full">
+                                                        <tbody>
+                                                            
+                                                            <tr>
+                                                                <td class="px-2 py-2 text-center w-3/5">
+                                                                    <p  style="word-wrap: break-word; max-width: 100%;">
+                                                                    {{$bacteria_test->bacteria_detail->name}}
+                                                                    </p>
+                                                                
+                                                                </td>
+                                                                <td class="px-2 py-2 text-center">
+                                                                    <div class="my-2 w-1/5">
+                                                                        <button onclick="location.href='{{ route('user.edit.experiment', ['editType' => 'antibacteria_test', 'id' => $bacteria_test->id])}}'" class="h-9 text-white bg-indigo-400 border-0 py-2 px-4 focus:outline-none
+                                                                            hover:bg-indigo-500 rounded w-20">Edit</button>
+                                                                    </div> 
+                                                                </td>
+                                                                <td class="px-2 py-2 text-center">
+                                                                    <div class="my-2 w-1/5">
+                                                                        <form id="delete_bacteria_test_{{ $bacteria_test->id }}" method="post" action="{{ route('user.destroy.data', [ 'experiment_id' =>$experiment->id, 'type' => 'bacteria_test', 'id' => $bacteria_test->id ])}}">
+                                                                            @csrf
+                                                                            @method('delete')  
+                                                                            <a href="#" data-id="{{ $bacteria_test->id }}" onclick="deletePost(this, 'bacteria_test')" class="mb-2 h-9 text-white bg-red-400 border-0 py-2 px-4 focus:outline-none
+                                                                                hover:bg-red-500 rounded">Delete</a>
+                                                                        </form> 
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        
+                                                        </tbody>
+                                                    </table>
+                                                    <div class="p-1 text-center">
+                                                    @endif
+                                                        <button type="button" data-toggle="modal" data-target="#antibacteria_test_{{$composition->id}}" class="text-black py-2 px-4 border-2 border-gray-400 hover:bg-gray-300 rounded">Add_Antibacteria_Test</button>
+                                                    </div>
+                                                </div>
+                                            
+
                                             <div class="text-center">
                                                 <a href="{{ route('user.export.excel', ['experiment_id' => $experiment->id, 'type' => 'storing_test']) }}" class="btn btn-primary m-2">Download Format Excel File</a>                                          
                                             </div>

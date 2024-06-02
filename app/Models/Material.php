@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\Material_composition;
 use App\Models\Material_detail;
+use App\Models\Solvent_detail;
 use App\Models\Ph_material_detail;
 
 
@@ -20,22 +21,29 @@ class Material extends Model
         'composition_id',
         'material_id',
         'concentration',
+        'solvent_id',
+        'solvent_concentration',
         'ph_adjustment',
         'ph_material_id',
         'ph_purpose',
+        'memo'
     ];
 
     public function material_composition(): BelongsTo
     {
-        return $this->belongsTo(Material_composition::class, 'id', 'composition_id' );
+        return $this->belongsTo(Material_composition::class, 'composition_id', 'id' );
     }
-    public function material_detail(): HasOne
+    public function material_detail(): BelongsTo
     {
-        return $this->hasOne(Material_detail::class, 'id', 'material_id');
+        return $this->belongsTo(Material_detail::class, 'material_id', 'id');
     }
-    public function ph_material_detail(): HasOne
+    public function solvent_detail(): BelongsTo
     {
-        return $this->hasOne(Ph_material_detail::class, 'id', 'ph_material_id');
+        return $this->belongsTo(Solvent_detail::class, 'solvent_id', 'id');
+    }
+    public function ph_material_detail(): BelongsTo
+    {
+        return $this->belongsTo(Ph_material_detail::class, 'ph_material_id', 'id');
     }
 }
 

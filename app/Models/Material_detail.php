@@ -31,9 +31,9 @@ class Material_detail extends Model
         'charactaristic'
     ];
 
-    public function material(): BelongsTo
+    public function material(): HasOne
     {
-        return $this->belongsTo(Material::class, 'id', 'material_id' );
+        return $this->hasOne(Material::class, 'material_id', 'id');
     }
 
  

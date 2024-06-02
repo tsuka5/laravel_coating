@@ -29,10 +29,10 @@ class DashboardController extends Controller
 
     foreach($experiments as $experiment){
         $compositions[$experiment->id] = Material_composition::where('experiment_id', $experiment->id)->get();
+        $fruits[$experiment->id] = Storing_test::where('experiment_id', $experiment->id)->first();
+        $bacteria[$experiment->id] = Antibacteria_test::where('experiment_id', $experiment->id)->first();
         foreach($compositions[$experiment->id] as $composition){
             $materials[$composition->id] = Material::where('composition_id', $composition->id)->get();
-            $fruits[$composition->id] = Storing_test::where('composition_id', $composition->id)->get();
-            $bacteria[$composition->id] = Antibacteria_test::where('composition_id', $composition->id)->get();
         }
     }
     // $selected_compositions = Material_composition::orderby('id','desc')->paginate(5);

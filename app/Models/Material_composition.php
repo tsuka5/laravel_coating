@@ -6,13 +6,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use App\Models\Experiment;
 use App\Models\Material;
 use App\Models\Film_condition;
 use App\Models\Charactaristic_test;
-use App\Models\Storing_test;
+use App\Models\Storing_multiple_test;
 use App\Models\Antibacteria_test;
 use App\Models\Note;
+use Database\Seeders\Storing_multiple_testSeeder;
 
 class Material_composition extends Model
 {
@@ -26,30 +28,38 @@ class Material_composition extends Model
 
     public function experiment(): BelongsTo
     {
-        return $this->belongsTo(Experiment::class);
+        return $this->belongsTo(Experiment::class, 'experiment_id', 'id');
     }
-    public function film_condition(): HasMany
+    public function viscosity_test(): HasMany
     {
-        return $this->hasMany(Film_condition::class);
+        return $this->hasMany(Viscosity_test::class, 'composition_id', 'id');
     }
-    public function charactaristic_test(): HasMany
+    public function wvp_test(): HasMany
     {
-        return $this->hasMany(Charactaristic_test::class);
+        return $this->hasMany(Wvp_test::class, 'composition_id', 'id');
     }
-    public function storing_test(): HasMany
+    public function tga_test(): HasMany
     {
-        return $this->hasMany(Storing_test::class);
-    }
-    public function antibacteria_test(): HasMany
-    {
-        return $this->hasMany(Antibacteria_test::class);
+        return $this->hasMany(Tga_test::class, 'composition_id', 'id');
     }
     public function material(): Hasmany
     {
-        return $this->hasMany(Material::class, 'id', 'composition_id' );
+        return $this->hasMany(Material::class, 'composition_id', 'id');
     }
     public function note(): HasMany
     {
         return $this->hasMany(Note::class);
+    }
+    public function colony_test(): HasMany
+    {
+        return $this->hasMany(Colony_test::class, 'composition_id', 'id');
+    }
+    public function enzyme_value(): HasMany
+    {
+        return $this->hasMany(Enzyme_value::class, 'composition_id', 'id');
+    }
+    public function storing_multiple_test(): HasMany
+    {
+        return $this->hasMany(Storing_multiple_test::class, 'composition_id', 'id');
     }
 }

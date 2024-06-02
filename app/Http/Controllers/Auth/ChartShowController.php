@@ -17,7 +17,11 @@ use App\Models\Experiment;
 use App\Models\Fruit_detail;
 use App\Models\Material_composition;
 use App\Models\Storing_test;
+use App\Models\Storing_multiple_test;
+use App\Models\enzyme_value;
 use App\Models\Charactaristic_test;
+use App\Models\Viscosity_test;
+use App\Models\Wvp_test;
 
 
 use App\Http\Controllers\Controller;
@@ -60,25 +64,25 @@ class ChartShowController extends Controller
                 $rr = [];
                 
                 $materials[$composition->id] = Material::where('composition_id', $composition->id)->get();
-                $storing_tests[$composition->id] = Storing_test::where('composition_id', $composition->id)->get();
+                $multiple_tests[$composition->id] = Storing_multiple_test::where('composition_id', $composition->id)->get();
                 $composition_count_list[] = $composition_count_number;
     
                 //日にちの取得
                 if(empty($days)){
-                    $storing_days[$composition->id] = $storing_tests[$composition->id]->pluck('storing_day')->all();
+                    $storing_days[$composition->id] = $multiple_tests[$composition->id]->pluck('day')->all();
                     if ($storing_days[$composition->id] !== null) {  
                         $days[] = $storing_days[$composition->id];  
                     }
                 }
-                //質量損失の取得
-                foreach($storing_tests[$composition->id] as $test) {
-                    $mass_loss_rate[] = $test->mass_loss_rate;
-                    $color_e[] = $test->e;
-                    $ph[] = $test->ph;
-                    $moisture_content[] = $test->moisture_content;
-                    $ta[] = $test->ta;
-                    $vitamin_c[] = $test->vitamin_c;
-                    $rr[] = $test->rr;
+                //質量損失などの取得
+                foreach($multiple_tests[$composition->id] as $multiple_test) {
+                    $mass_loss_rate[] = $multiple_test->mass_loss_rate;
+                    $color_e[] = $multiple_test->e;
+                    $ph[] = $multiple_test->ph;
+                    $moisture_content[] = $multiple_test->moisture_content;
+                    $ta[] = $multiple_test->ta;
+                    $vitamin_c[] = $multiple_test->vitamin_c;
+                    $rr[] = $multiple_test->rr;
                     }
                 $mass_loss_rates[$composition_count_number] = $mass_loss_rate;
                 $color_es[$composition_count_number] = $color_e;
@@ -88,11 +92,9 @@ class ChartShowController extends Controller
                 $vitamin_cs[$composition_count_number] = $vitamin_c;
                 $rrs[$composition_count_number] = $rr;
                 
-            
-    
                 $composition_count_number += 1;
             }
-    
+            // dd($days);
             $days = $days[0];
             // ビューにデータを渡す
             return view('user.profile.storing_test_chart_show', compact('experiment','compositions', 'fruit_detail', 'materials', 'composition_count_list',
@@ -101,13 +103,15 @@ class ChartShowController extends Controller
         elseif($type === 'characteristic_test'){            
             
             //配列の初期化
+            $temperature = [];
+            $humidities = [];
             $ph = [];
-            $viscosity = [];
+            $viscosities = [];
             $water_solubility = [];
-            $wvp = [];
+            $wvps = [];
             $contact_angle = [];
-            $shear_rate = [];
-            $shear_stress = [];
+            $shear_rates = [];
+            $shear_stresses = [];
             $ts = [];
             $eab = [];
             $light_transmittance = [];
@@ -130,26 +134,73 @@ class ChartShowController extends Controller
     
                 //各値の取得
                 $ph[] = $characteristic_tests[$composition->id]-> ph;
-                $viscosity[] = $characteristic_tests[$composition->id]-> viscosity;
                 $water_solubility[] = $characteristic_tests[$composition->id]-> ws;
-                $wvp[] = $characteristic_tests[$composition->id]-> wvp;
                 $contact_angle[] = $characteristic_tests[$composition->id]-> ca;
-                $shear_rate[] = $characteristic_tests[$composition->id]-> shear_rate;
-                $shear_stress[] = $characteristic_tests[$composition->id]-> shear_stress;
                 $ts[] = $characteristic_tests[$composition->id]-> ts;
                 $eab[] = $characteristic_tests[$composition->id]-> eab;
                 $light_transmittance[] = $characteristic_tests[$composition->id]-> light_transmittance;
                 $thickness[] = $characteristic_tests[$composition->id]-> thickness;
                 $moisture_content[] = $characteristic_tests[$composition->id]-> mc;
                 $d43[] = $characteristic_tests[$composition->id]-> d43;
-                $d32[] = $characteristic_tests[$composition->id]-> d32;           
-           
+                $d32[] = $characteristic_tests[$composition->id]-> d32;    
+                
+                //配列の初期化
+                $viscosity = [];
+                $shear_stress = [];
+                $wvp = [];
+                $viscosity_tests[$composition->id] = Viscosity_test::where('composition_id', $composition->id)->get();
+                $wvp_tests[$composition->id] = Wvp_test::where('composition_id', $composition->id)->get();
+
+                //温度の取得
+                if(empty($temperature)){
+                    $viscosity_temperature[$composition->id] = $viscosity_tests[$composition->id]->pluck('temperature')->all();
+                    if ($viscosity_temperature[$composition->id] !== null) {  
+                        $temperature[] = $viscosity_temperature[$composition->id];  
+                    }
+                }
+                //せん断速度の取得
+                if(empty($shear_rates)){
+                    $shear_rate[$composition->id] = $viscosity_tests[$composition->id]->pluck('shear_rate')->all();
+                    if ($shear_rate[$composition->id] !== null) {  
+                        $shear_rates[] = $shear_rate[$composition->id];  
+                    }
+                }
+                //湿度の取得
+                if(empty($humidities)){
+                    $humidity[$composition->id] = $wvp_tests[$composition->id]->pluck('humidity')->all();
+                    if ($humidity[$composition->id] !== null) {  
+                        $humidities[] = $humidity[$composition->id];  
+                    }
+
+                }
+
+                //粘度などの取得
+                foreach($viscosity_tests[$composition->id] as $viscosity_test) {
+                    $viscosity[] = $viscosity_test->viscosity;
+                    $shear_stress[] = $viscosity_test->shear_stress;
+                    }
+                
+                //wvpの取得
+                foreach($wvp_tests[$composition->id] as $wvp_test) {
+                    $wvp[] = $wvp_test->wvp;
+                    }
+
+
+                $viscosities[$composition_count_number] = $viscosity;
+                $shear_stresses[$composition_count_number] = $shear_stress;
+                $wvps[$composition_count_number] = $wvp;
+                
+
                 $composition_count_number += 1;
-            }
     
+            }
+            // dd($temperature);
+            $temperature = $temperature[0];
+            $humidities = $humidities[0];
+            $shear_rates = $shear_rates[0];
             // ビューにデータを渡す
             return view('user.profile.characteristic_test_chart_show', compact('experiment','compositions', 'materials', 'composition_count_list','x_label',
-            'ph', 'viscosity', 'water_solubility', 'wvp', 'contact_angle', 'shear_rate', 'shear_stress', 'ts', 'eab', 'light_transmittance',
+            'ph', 'viscosities', 'water_solubility', 'wvps', 'contact_angle', 'shear_rates', 'shear_stresses', 'ts', 'eab', 'light_transmittance','temperature','humidities',
             'thickness', 'moisture_content', 'd43', 'd32'));
 
         }
@@ -158,8 +209,7 @@ class ChartShowController extends Controller
     {
         $experiment = Experiment::where('id', $id)->first();
         $compositions = Material_composition::where('experiment_id', $id)->get();
-        $composition_id = $compositions->first();
-        
+
         if($type === 'storing_test'){
             $fruit_detail = Fruit_detail::get();
             
@@ -190,25 +240,25 @@ class ChartShowController extends Controller
                 $rr = [];
                 
                 $materials[$composition->id] = Material::where('composition_id', $composition->id)->get();
-                $storing_tests[$composition->id] = Storing_test::where('composition_id', $composition->id)->get();
+                $multiple_tests[$composition->id] = Storing_multiple_test::where('composition_id', $composition->id)->get();
                 $composition_count_list[] = $composition_count_number;
     
                 //日にちの取得
                 if(empty($days)){
-                    $storing_days[$composition->id] = $storing_tests[$composition->id]->pluck('storing_day')->all();
+                    $storing_days[$composition->id] = $multiple_tests[$composition->id]->pluck('day')->all();
                     if ($storing_days[$composition->id] !== null) {  
                         $days[] = $storing_days[$composition->id];  
                     }
                 }
-                //質量損失の取得
-                foreach($storing_tests[$composition->id] as $test) {
-                    $mass_loss_rate[] = $test->mass_loss_rate;
-                    $color_e[] = $test->e;
-                    $ph[] = $test->ph;
-                    $moisture_content[] = $test->moisture_content;
-                    $ta[] = $test->ta;
-                    $vitamin_c[] = $test->vitamin_c;
-                    $rr[] = $test->rr;
+                //質量損失などの取得
+                foreach($multiple_tests[$composition->id] as $multiple_test) {
+                    $mass_loss_rate[] = $multiple_test->mass_loss_rate;
+                    $color_e[] = $multiple_test->e;
+                    $ph[] = $multiple_test->ph;
+                    $moisture_content[] = $multiple_test->moisture_content;
+                    $ta[] = $multiple_test->ta;
+                    $vitamin_c[] = $multiple_test->vitamin_c;
+                    $rr[] = $multiple_test->rr;
                     }
                 $mass_loss_rates[$composition_count_number] = $mass_loss_rate;
                 $color_es[$composition_count_number] = $color_e;
@@ -218,26 +268,26 @@ class ChartShowController extends Controller
                 $vitamin_cs[$composition_count_number] = $vitamin_c;
                 $rrs[$composition_count_number] = $rr;
                 
-            
-    
                 $composition_count_number += 1;
             }
-    
+            // dd($days);
             $days = $days[0];
             // ビューにデータを渡す
             return view('user.search.storing_test_chart_show', compact('experiment','compositions', 'fruit_detail', 'materials', 'composition_count_list',
-            'mass_loss_rates','color_es','phs','moisture_contents','tas','vitamin_cs','rrs', 'days', 'composition_id'));
+            'mass_loss_rates','color_es','phs','moisture_contents','tas','vitamin_cs','rrs', 'days'));
         }
         elseif($type === 'characteristic_test'){            
             
             //配列の初期化
+            $temperature = [];
+            $humidities = [];
             $ph = [];
-            $viscosity = [];
+            $viscosities = [];
             $water_solubility = [];
-            $wvp = [];
+            $wvps = [];
             $contact_angle = [];
-            $shear_rate = [];
-            $shear_stress = [];
+            $shear_rates = [];
+            $shear_stresses = [];
             $ts = [];
             $eab = [];
             $light_transmittance = [];
@@ -260,30 +310,207 @@ class ChartShowController extends Controller
     
                 //各値の取得
                 $ph[] = $characteristic_tests[$composition->id]-> ph;
-                $viscosity[] = $characteristic_tests[$composition->id]-> viscosity;
                 $water_solubility[] = $characteristic_tests[$composition->id]-> ws;
-                $wvp[] = $characteristic_tests[$composition->id]-> wvp;
                 $contact_angle[] = $characteristic_tests[$composition->id]-> ca;
-                $shear_rate[] = $characteristic_tests[$composition->id]-> shear_rate;
-                $shear_stress[] = $characteristic_tests[$composition->id]-> shear_stress;
                 $ts[] = $characteristic_tests[$composition->id]-> ts;
                 $eab[] = $characteristic_tests[$composition->id]-> eab;
                 $light_transmittance[] = $characteristic_tests[$composition->id]-> light_transmittance;
                 $thickness[] = $characteristic_tests[$composition->id]-> thickness;
                 $moisture_content[] = $characteristic_tests[$composition->id]-> mc;
                 $d43[] = $characteristic_tests[$composition->id]-> d43;
-                $d32[] = $characteristic_tests[$composition->id]-> d32;           
-           
+                $d32[] = $characteristic_tests[$composition->id]-> d32;    
+                
+                //配列の初期化
+                $viscosity = [];
+                $shear_stress = [];
+                $wvp = [];
+                $viscosity_tests[$composition->id] = Viscosity_test::where('composition_id', $composition->id)->get();
+                $wvp_tests[$composition->id] = Wvp_test::where('composition_id', $composition->id)->get();
+
+                //温度の取得
+                if(empty($temperature)){
+                    $viscosity_temperature[$composition->id] = $viscosity_tests[$composition->id]->pluck('temperature')->all();
+                    if ($viscosity_temperature[$composition->id] !== null) {  
+                        $temperature[] = $viscosity_temperature[$composition->id];  
+                    }
+                }
+                //せん断速度の取得
+                if(empty($shear_rates)){
+                    $shear_rate[$composition->id] = $viscosity_tests[$composition->id]->pluck('shear_rate')->all();
+                    if ($shear_rate[$composition->id] !== null) {  
+                        $shear_rates[] = $shear_rate[$composition->id];  
+                    }
+                }
+                //湿度の取得
+                if(empty($humidities)){
+                    $humidity[$composition->id] = $wvp_tests[$composition->id]->pluck('humidity')->all();
+                    if ($humidity[$composition->id] !== null) {  
+                        $humidities[] = $humidity[$composition->id];  
+                    }
+
+                }
+
+                //粘度などの取得
+                foreach($viscosity_tests[$composition->id] as $viscosity_test) {
+                    $viscosity[] = $viscosity_test->viscosity;
+                    $shear_stress[] = $viscosity_test->shear_stress;
+                    }
+                
+                //wvpの取得
+                foreach($wvp_tests[$composition->id] as $wvp_test) {
+                    $wvp[] = $wvp_test->wvp;
+                    }
+
+
+                $viscosities[$composition_count_number] = $viscosity;
+                $shear_stresses[$composition_count_number] = $shear_stress;
+                $wvps[$composition_count_number] = $wvp;
+                
+
                 $composition_count_number += 1;
-            }
     
+            }
+            // dd($temperature);
+            $temperature = $temperature[0];
+            $humidities = $humidities[0];
+            $shear_rates = $shear_rates[0];
             // ビューにデータを渡す
             return view('user.search.characteristic_test_chart_show', compact('experiment','compositions', 'materials', 'composition_count_list','x_label',
-            'ph', 'viscosity', 'water_solubility', 'wvp', 'contact_angle', 'shear_rate', 'shear_stress', 'ts', 'eab', 'light_transmittance',
-            'thickness', 'moisture_content', 'd43', 'd32', 'composition_id'));
+            'ph', 'viscosities', 'water_solubility', 'wvps', 'contact_angle', 'shear_rates', 'shear_stresses', 'ts', 'eab', 'light_transmittance','temperature','humidities',
+            'thickness', 'moisture_content', 'd43', 'd32'));
 
         }
     }
+    // public function everyone_show(string $id, $type)
+    // {
+    //     $experiment = Experiment::where('id', $id)->first();
+    //     $compositions = Material_composition::where('experiment_id', $id)->get();
+    //     $composition_id = $compositions->first();
+        
+    //     if($type === 'storing_test'){
+    //         $fruit_detail = Fruit_detail::get();
+            
+    //         // 結果を格納する配列の初期化
+    //         $days = [];
+    //         $mass_loss_rates = [];
+    //         $color_es = [];
+    //         $phs = [];
+    //         $moisture_contents = [];
+    //         $materials = [];
+    //         $tas = [];
+    //         $vitamin_cs = [];
+    //         $rrs = [];
+        
+    //         $composition_count_list = [];
+    //         $composition_count_number = 0;
+    
+    //         // 各composition_idに対してStoring_testのデータを取得し、配列に追加
+    //         foreach ($compositions as $composition) {
+    
+    //             //配列の初期化
+    //             $mass_loss_rate = [];
+    //             $color_e = [];
+    //             $ph = [];
+    //             $moisture_content = [];
+    //             $ta = [];
+    //             $vitamin_c = [];
+    //             $rr = [];
+                
+    //             $materials[$composition->id] = Material::where('composition_id', $composition->id)->get();
+    //             $storing_tests[$composition->id] = Storing_test::where('composition_id', $composition->id)->get();
+    //             $composition_count_list[] = $composition_count_number;
+    
+    //             //日にちの取得
+    //             if(empty($days)){
+    //                 $storing_days[$composition->id] = $storing_tests[$composition->id]->pluck('storing_day')->all();
+    //                 if ($storing_days[$composition->id] !== null) {  
+    //                     $days[] = $storing_days[$composition->id];  
+    //                 }
+    //             }
+    //             //質量損失の取得
+    //             foreach($storing_tests[$composition->id] as $test) {
+    //                 $mass_loss_rate[] = $test->mass_loss_rate;
+    //                 $color_e[] = $test->e;
+    //                 $ph[] = $test->ph;
+    //                 $moisture_content[] = $test->moisture_content;
+    //                 $ta[] = $test->ta;
+    //                 $vitamin_c[] = $test->vitamin_c;
+    //                 $rr[] = $test->rr;
+    //                 }
+    //             $mass_loss_rates[$composition_count_number] = $mass_loss_rate;
+    //             $color_es[$composition_count_number] = $color_e;
+    //             $phs[$composition_count_number] = $ph;
+    //             $moisture_contents[$composition_count_number] = $moisture_content;
+    //             $tas[$composition_count_number] = $ta;
+    //             $vitamin_cs[$composition_count_number] = $vitamin_c;
+    //             $rrs[$composition_count_number] = $rr;
+                
+            
+    
+    //             $composition_count_number += 1;
+    //         }
+    
+    //         $days = $days[0];
+    //         // ビューにデータを渡す
+    //         return view('user.search.storing_test_chart_show', compact('experiment','compositions', 'fruit_detail', 'materials', 'composition_count_list',
+    //         'mass_loss_rates','color_es','phs','moisture_contents','tas','vitamin_cs','rrs', 'days', 'composition_id'));
+    //     }
+    //     elseif($type === 'characteristic_test'){            
+            
+    //         //配列の初期化
+    //         $ph = [];
+    //         $viscosity = [];
+    //         $water_solubility = [];
+    //         $wvp = [];
+    //         $contact_angle = [];
+    //         $shear_rate = [];
+    //         $shear_stress = [];
+    //         $ts = [];
+    //         $eab = [];
+    //         $light_transmittance = [];
+    //         $thickness = [];
+    //         $moisture_content = [];
+    //         $d43 = [];
+    //         $d32 = [];
+    //         $x_label = [];
+
+        
+    //         $composition_count_list = [];
+    //         $composition_count_number = 0;
+    
+    //         // 各composition_idに対してCharacteristic_testのデータを取得し、配列に追加
+    //         foreach ($compositions as $composition) {
+    //             $materials[$composition->id] = Material::where('composition_id', $composition->id)->get();
+    //             $characteristic_tests[$composition->id] = Charactaristic_test::where('composition_id', $composition->id)->first();
+    //             $composition_count_list[] = $composition_count_number + 1;
+    //             $x_label[] = 'composition:' . $composition_count_number+1;
+    
+    //             //各値の取得
+    //             $ph[] = $characteristic_tests[$composition->id]-> ph;
+    //             $viscosity[] = $characteristic_tests[$composition->id]-> viscosity;
+    //             $water_solubility[] = $characteristic_tests[$composition->id]-> ws;
+    //             $wvp[] = $characteristic_tests[$composition->id]-> wvp;
+    //             $contact_angle[] = $characteristic_tests[$composition->id]-> ca;
+    //             $shear_rate[] = $characteristic_tests[$composition->id]-> shear_rate;
+    //             $shear_stress[] = $characteristic_tests[$composition->id]-> shear_stress;
+    //             $ts[] = $characteristic_tests[$composition->id]-> ts;
+    //             $eab[] = $characteristic_tests[$composition->id]-> eab;
+    //             $light_transmittance[] = $characteristic_tests[$composition->id]-> light_transmittance;
+    //             $thickness[] = $characteristic_tests[$composition->id]-> thickness;
+    //             $moisture_content[] = $characteristic_tests[$composition->id]-> mc;
+    //             $d43[] = $characteristic_tests[$composition->id]-> d43;
+    //             $d32[] = $characteristic_tests[$composition->id]-> d32;           
+           
+    //             $composition_count_number += 1;
+    //         }
+    
+    //         // ビューにデータを渡す
+    //         return view('user.search.characteristic_test_chart_show', compact('experiment','compositions', 'materials', 'composition_count_list','x_label',
+    //         'ph', 'viscosity', 'water_solubility', 'wvp', 'contact_angle', 'shear_rate', 'shear_stress', 'ts', 'eab', 'light_transmittance',
+    //         'thickness', 'moisture_content', 'd43', 'd32', 'composition_id'));
+
+    //     }
+    // }
         
         
     //     $fruit_detail = Fruit_detail::get();

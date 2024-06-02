@@ -15,8 +15,6 @@ class experiment extends Model
 {
     use HasFactory;
     
-    public $timestamps = false; 
-
     protected $fillable = [
         'user_id',
         'title',
@@ -28,35 +26,27 @@ class experiment extends Model
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
     public function material_composition(): HasMany
     {
-        return $this->hasMany(Material_composition::class);
+        return $this->hasMany(Material_composition::class, 'experiment_id', 'id');
     }
     public function film_condition(): HasOne
     {
         return $this->hasOne(Film_condition::class);
     }
-    // public function charactaristic_test(): HasMany
-    // {
-    //     return $this->hasMany(Charactaristic_test::class);
-    // }
-    // public function storing_test(): HasMany
-    // {
-    //     return $this->hasMany(Storing_test::class);
-    // }
-    // public function antibacteria_test(): HasMany
-    // {
-    //     return $this->hasMany(Antibacteria_test::class);
-    // }
-    // public function material(): HasMany
-    // {
-    //     return $this->hasMany(Material::class);
-    // }
-    // public function memo(): HasMany
-    // {
-    //     return $this->hasMany(Note::class);
-    // }
+    public function charactaristic_test(): HasMany
+    {
+        return $this->hasMany(Charactaristic_test::class);
+    }
+    public function storing_test(): HasMany
+    {
+        return $this->hasMany(Storing_test::class);
+    }
+    public function antibacteria_test(): HasMany
+    {
+        return $this->hasMany(Antibacteria_test::class);
+    }
 }
 

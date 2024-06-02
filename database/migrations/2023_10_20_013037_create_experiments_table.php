@@ -23,6 +23,7 @@ class CreateExperimentsTable extends Migration
             $table->date('date');
             $table->text('paper_name')->nullable();
             $table->text('paper_url')->nullable();
+            $table->timestamps();
         });
 
         Schema::enableForeignKeyConstraints();

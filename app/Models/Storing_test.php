@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Models\Material_composition;
+use App\Models\Experiment;
 use App\Models\Fruit_detail;
 
 
@@ -26,38 +26,27 @@ class Storing_test extends Model
 
 
     protected $fillable = [
-        'composition_id',
+        'experiment_id',
         'storing_fruit_id',
         'storing_temperature',
         'storing_humidity',
         'storing_day',
-        'mass_loss_rate',
-        'l',
-        'a',
-        'b',
-        'e',
-        'ph',
-        'tss',
-        'hardness',
-        'moisture_content',
-        'ta',
-        'vitamin_c',
-        'rr',
         'sem',
         'clsm',
         'afm',
         'ftir',
-        'dsc'
+        'dsc',
+        'memo'
 
     ];
 
-    public function material_composition(): BelongsTo
+    public function Experiment(): BelongsTo
     {
-        return $this->belongsTo(Material_composition::class);
+        return $this->belongsTo(Experiment::class);
     }
-    public function fruit_detail(): HasOne
+    public function fruit_detail(): BelongsTo
     {
-        return $this->hasOne(fruit_detail::class, 'id', 'storing_fruit_id');
+        return $this->BelongsTo(fruit_detail::class, 'storing_fruit_id', 'id');
     }
 
 }

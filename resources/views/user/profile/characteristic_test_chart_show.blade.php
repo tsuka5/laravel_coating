@@ -72,20 +72,18 @@
                             
 
                             <div class = "flex justify-center flex-wrap">
-                            {{-- pHのグラフ --}}
-                                <canvas id="ph" width="400" height="400" class="m-10"></canvas>
                                 {{-- 粘度のグラフ --}}
                                 <canvas id="viscosity" width="400" height="400" class="m-10"></canvas>
-                                {{-- 溶解度のグラフ --}}
-                                <canvas id="water_solubility" width="400" height="400" class="m-10"></canvas>
                                 {{-- 水透過性のグラフ --}}
                                 <canvas id="wvp" width="400" height="400" class="m-10"></canvas>
-                                {{-- 接触角のグラフ --}}
-                                <canvas id="contact_angle" width="400" height="400" class="m-10"></canvas>
-                                {{-- せん断速度のグラフ --}}
-                                <canvas id="shear_rate" width="400" height="400" class="m-10"></canvas>
                                 {{-- せん断応力のグラフ --}}
                                 <canvas id="shear_stress" width="400" height="400" class="m-10"></canvas>
+                                {{-- pHのグラフ --}}
+                                <canvas id="ph" width="400" height="400" class="m-10"></canvas>
+                                {{-- 溶解度のグラフ --}}
+                                <canvas id="water_solubility" width="400" height="400" class="m-10"></canvas>
+                                {{-- 接触角のグラフ --}}
+                                <canvas id="contact_angle" width="400" height="400" class="m-10"></canvas>
                                 
                                 <canvas id="ts" width="400" height="400" class="m-10"></canvas>
 
@@ -149,12 +147,15 @@ const borderColors = [
 const composition_count_list = @json($composition_count_list);
 const x_label = @json($x_label);
 const ph = @json($ph);
-const viscosity = @json($viscosity);
+const viscosity = @json($viscosities);
+console.log(viscosity);
+const temperature = @json($temperature);
+const humidity = @json($humidities);
 const water_solubility = @json($water_solubility);
-const wvp = @json($wvp);
+const wvp = @json($wvps);
 const contact_angle = @json($contact_angle);
-const shear_rate = @json($shear_rate);
-const shear_stress = @json($shear_stress);
+const shear_rate = @json($shear_rates);
+const shear_stress = @json($shear_stresses);
 const ts = @json($ts);
 const eab = @json($eab);
 const light_transmittance = @json($light_transmittance);
@@ -163,6 +164,74 @@ const moisture_content = @json($moisture_content);
 const d43 = @json($d43);
 const d32 = @json($d32);
 
+const viscosity_datasets = [];
+const shear_stress_datasets = [];
+const wvp_datasets = [];
+
+composition_count_list.forEach((composition_count, index) => {
+    viscosity_datasets.push({
+        label: `composition: ${composition_count}`,
+        data: viscosity[index],
+        backgroundColor: colors[index % colors.length],
+        borderColor: borderColors[index % borderColors.length],
+        borderWidth: 1
+    });
+    shear_stress_datasets.push({
+        label: `composition: ${composition_count}`,
+        data: shear_stress[index],
+        backgroundColor: colors[index % colors.length],
+        borderColor: borderColors[index % borderColors.length],
+        borderWidth: 1
+    });
+    wvp_datasets.push({
+        label: `composition: ${composition_count}`,
+        data: wvp[index],
+        backgroundColor: colors[index % colors.length],
+        borderColor: borderColors[index % borderColors.length],
+        borderWidth: 1
+    });
+});
+
+
+function createLineChart(chartId, datasets, title, labels) {
+   
+   var ctx = document.getElementById(chartId).getContext('2d');
+   return new Chart(ctx, {
+       type: 'line', // グラフのタイプ
+       data: {
+           labels: labels, // x軸ラベル
+           datasets: datasets  //データセット配列
+       },
+       options: {
+           responsive: false,
+           maintainAspectRatio: false,
+           scales: {
+               y: {
+                   beginAtZero: true
+               }
+           },
+           plugins: {
+               title: {
+                   display: true,
+                   text: title,
+                   font: {
+                       size: 16
+                   },
+                   padding: {
+                       top: 20,
+                       bottom: 30
+                   },
+                   color: '#111'
+               }
+           }
+       }
+
+   });
+}
+console.log(temperature);
+var viscosityChart = createLineChart('viscosity', viscosity_datasets, 'Viscosity(cP)', temperature);
+var shear_stressChart = createLineChart('shear_stress', shear_stress_datasets, 'Shear Stress', shear_rate);
+var wvpChart = createLineChart('wvp', wvp_datasets, 'Wvp', humidity);
 
 function createDataset(label, data, colorIndex) {
     return {
@@ -174,12 +243,12 @@ function createDataset(label, data, colorIndex) {
     };
 }
 const ph_datasets = createDataset('pH', ph, 0);
-const viscosity_datasets = createDataset('viscosity', viscosity, 1);
+// const viscosity_datasets = createDataset('viscosity', viscosity, 1);
 const water_solubility_datasets = createDataset('water solubility', water_solubility, 2);
-const wvp_datasets = createDataset('wvp', wvp, 3);
+// const wvp_datasets = createDataset('wvp', wvp, 3);
 const contact_angle_datasets = createDataset('contact_angle', contact_angle, 4);
-const shear_rate_datasets = createDataset('shear_rate', shear_rate, 5);
-const shear_stress_datasets = createDataset('shear_stress', shear_stress, 6);
+// const shear_rate_datasets = createDataset('shear_rate', shear_rate, 5);
+// const shear_stress_datasets = createDataset('shear_stress', shear_stress, 6);
 const ts_datasets = createDataset('ts', ts, 7);
 const eab_datasets = createDataset('eab', eab, 8);
 const light_transmittance_datasets = createDataset('light_transmittance', light_transmittance, 9);
@@ -243,12 +312,12 @@ function createBarChart(chartId, datasets, title, labels) {
 }
 console.log(ph_datasets);
 var phChart = createBarChart('ph', [ph_datasets], 'pH', x_label);
-var viscosityChart = createBarChart('viscosity', [viscosity_datasets], 'Viscosity (cP)', x_label);
+// var viscosityChart = createBarChart('viscosity', [viscosity_datasets], 'Viscosity (cP)', x_label);
 var waterSolubilityChart = createBarChart('water_solubility', [water_solubility_datasets], 'Water Solubility (%)', x_label);
-var wvpChart = createBarChart('wvp', [wvp_datasets], 'wvp', x_label);
+// var wvpChart = createBarChart('wvp', [wvp_datasets], 'wvp', x_label);
 var contactAngleChart = createBarChart('contact_angle', [contact_angle_datasets], 'Contact Angle (°)', x_label);
-var shearRateChart = createBarChart('shear_rate', [shear_rate_datasets], 'Shear Rate (1/s)', x_label);
-var shearStressChart = createBarChart('shear_stress', [shear_stress_datasets], 'Shear Stress (Pa*s)', x_label);
+// var shearRateChart = createBarChart('shear_rate', [shear_rate_datasets], 'Shear Rate (1/s)', x_label);
+// var shearStressChart = createBarChart('shear_stress', [shear_stress_datasets], 'Shear Stress (Pa*s)', x_label);
 var tsChart = createBarChart('ts', [ts_datasets], 'Tensile Strength (MPa)', x_label);
 var eabChart = createBarChart('eab', [eab_datasets], 'EAB (%)', x_label);
 var lightTransmittanceChart = createBarChart('light_transmittance', [light_transmittance_datasets], 'Light Transmittance (%)', x_label);

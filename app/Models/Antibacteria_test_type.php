@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 // use App\Models\Experiment;
 
 
@@ -30,9 +30,9 @@ class Antibacteria_test_type extends Model
     
     ];
 
-    public function antibacteria_test(): BelongsTo
+    public function antibacteria_test(): HasOne
     {
-        return $this->belongsTo(Antibacteria_test::class, 'id', 'test_id' );
+        return $this->HasOne(Antibacteria_test::class, 'test_id', 'id');
     }
 
  

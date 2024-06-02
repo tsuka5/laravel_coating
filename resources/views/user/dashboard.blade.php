@@ -68,30 +68,23 @@
                                                     @endforeach
                                                 </td>
                                                 <td class="px-4 py-3 border w-1/6 text-center">
-                                                    @foreach ($compositions[$experiment->id] as $composition)
-                                                        @foreach($fruits[$composition->id] as $fruit)
+                                                    @if($fruits[$experiment->id])
                                                         <p  style="word-wrap: break-word; max-width: 100%;">
-                                                            {{$fruit->fruit_detail->name}} <br> 
+                                                            {{$fruits[$experiment->id]->fruit_detail->name}} <br> 
                                                         </p>
-                                                        @break
-                                                        @endforeach
-                                                    @break
-                                                    @endforeach
+                                                    @endif
                                                 </td>
                                                 <td class="px-4 py-3 border w-1/6 text-center">
-                                                    @foreach ($compositions[$experiment->id] as $composition)
-                                                        @foreach($bacteria[$composition->id] as $bacterium)
+                                                    @if($bacteria[$experiment->id])
                                                         <p  style="word-wrap: break-word; max-width: 100%;">
-                                                            {{$bacterium->bacteria_detail->name}} <br> 
+                                                            {{$bacteria[$experiment->id]->bacteria_detail->name}} <br> 
                                                         </p>
-                                                        @endforeach
-                                                    @break
-                                                    @endforeach
+                                                    @endif
                                                 </td>
                                                             
                                                 <td class="px-4 py-3 border">
                                                     <div class="flex justify-center">
-                                                        <button onclick="location.href='{{ route('user.experiment_show', ['composition_id' => $composition->id])}}'" class="text-white
+                                                        <button onclick="location.href='{{ route('user.experiment_show', ['experiment_id' => $experiment->id])}}'" class="text-white
                                                             bg-gray-400 border-0 py-2 px-4 focus:outline-none hover:bg-gray-500 rounded">Detail</button>
                                                     </div>
                                                 </td>

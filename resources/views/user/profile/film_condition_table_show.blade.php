@@ -70,36 +70,49 @@
                             </div>
                             {{-- {{dd($one_film_condition->casting_amount)}} --}}
                             <div class = "flex justify-center flex-wrap">
-                                @if(isset($one_film_condition->casting_amount) && $one_film_condition->casting_amount !== null)
+                                {{-- @if(isset($film_condition->casting_amount) && $film_condition->casting_amount !== null) --}}
                              
-                                @php
+                                {{-- @php
                                 $number_composition = 1;
-                                @endphp
+                                @endphp --}}
                                 <div class="flex flex-row overflow-x-auto">
                                     <div class="container mx-auto mt-8 items-col">
                                         <div class="mt-4 mb-2">
-                                            <h2 class="text-xl font-bold text-gray-900 text-center">Casting Amount</h2>
+                                            <h2 class="text-xl font-bold text-gray-900 text-center">Film Condition</h2>
                                         </div>
                                         <table class="table-auto bg-white shadow-md rounded-lg overflow-hidden">
                                             <thead class="bg-gray-500 text-white">
                                                 <tr>
-                                                    @foreach($compositions as $composition)
-                                                    <th class="text-center py-3 px-4 uppercase font-semibold text-sm border-r">Composition:{{$number_composition}}</th>
-                                                    @php
-                                                        $number_composition += 1;
-                                                    @endphp
-                                                    @endforeach
+                                                    <th class="text-center py-3 px-4 uppercase font-semibold text-sm border-r">Casting Amount</th>
+                                                    <th class="text-center py-3 px-4 uppercase font-semibold text-sm border-r">Petri Dish Area</th>
+                                                    <th class="text-center py-3 px-4 uppercase font-semibold text-sm border-r">Degasting Temperature</th>
+                                                    <th class="text-center py-3 px-4 uppercase font-semibold text-sm border-r">Drying Temperature</th>
+                                                    <th class="text-center py-3 px-4 uppercase font-semibold text-sm border-r">Drying Humidity</th>
+                                                    <th class="text-center py-3 px-4 uppercase font-semibold text-sm border-r">Drying Time</th>
+                                                   
                                                 </tr>
                                             </thead>
                                             <tbody class="text-gray-700 border-b border-gray-600">
                                                 <tr>
-                                                    @foreach($compositions as $composition)
-                                                        @foreach($film_conditions[$composition->id] as $film_condition)
-                                                            <td class="text-center py-3 px-4 border-r border-gray-400">
-                                                                {{$film_condition->casting_amount}}
-                                                            </td>
-                                                        @endforeach    
-                                                    @endforeach
+                                                    <td class="text-center py-3 px-4 border-r border-gray-400">
+                                                        {{$film_condition->casting_amount}}
+                                                    </td>
+                                                    <td class="text-center py-3 px-4 border-r border-gray-400">
+                                                        {{$film_condition->petri_dish_area}}
+                                                    </td>
+                                                    <td class="text-center py-3 px-4 border-r border-gray-400">
+                                                        {{$film_condition->degas_temperature}}
+                                                    </td>
+                                                    <td class="text-center py-3 px-4 border-r border-gray-400">
+                                                        {{$film_condition->drying_temperature}}
+                                                    </td>
+                                                    <td class="text-center py-3 px-4 border-r border-gray-400">
+                                                        {{$film_condition->drying_humidity}}
+                                                    </td>
+                                                    <td class="text-center py-3 px-4 border-r border-gray-400">
+                                                        {{$film_condition->drying_time}}
+                                                    </td>
+                                                        
                                                 </tr>
                                                 
                                             </tbody>
@@ -107,8 +120,8 @@
                                         </table>
                                     </div>
                                 </div>
-                            @endif
-                            @if(isset($one_film_condition->petri_dish_area) && $one_film_condition->petri_dish_area !== null)
+                            {{-- @endif
+                            @if(isset($film_condition->petri_dish_area) && $film_condition->petri_dish_area !== null)
                              
                             @php
                             $number_composition = 1;
@@ -146,7 +159,7 @@
                                 </div>
                             </div>
                         @endif
-                        @if(isset($one_film_condition->degas_temperature) && $one_film_condition->degas_temperature !== null)
+                        @if(isset($film_condition->degas_temperature) && $film_condition->degas_temperature !== null)
                              
                         @php
                         $number_composition = 1;
@@ -298,7 +311,7 @@
                     </table>
                 </div>
             </div>
-        @endif
+        @endif --}}
 
                                                        
 

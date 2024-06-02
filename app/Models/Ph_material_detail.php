@@ -32,7 +32,7 @@ class Ph_material_detail extends Model
 
     public function material(): BelongsTo
     {
-        return $this->belongsTo(Material::class, 'id', 'ph_material_id');
+        return $this->belongsTo(Material::class, 'ph_material_id', 'id');
     }
 
  

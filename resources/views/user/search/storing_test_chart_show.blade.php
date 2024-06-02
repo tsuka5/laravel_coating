@@ -93,7 +93,7 @@
                                     
                             
                             <div class="p-2 w-full flex justify-around mt-4">
-                              <button onclick="location.href='{{ route('user.experiment_show', ['composition_id'=>$composition_id->id]) }}'" class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded my-2">Back</button>
+                              <button onclick="location.href='{{ route('user.experiment_show', ['experiment_id'=>$experiment->id]) }}'" class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded my-2">Back</button>
                             </div>
                         </div>
                            
@@ -208,9 +208,11 @@ composition_count_list.forEach((composition_count, index) => {
         borderWidth: 1
     });
 });
-
+console.log(days);
+console.log(mass_loss_rates_datasets);
 // グラフを作成する
 function createLineChart(chartId, datasets, title, labels) {
+   
     var ctx = document.getElementById(chartId).getContext('2d');
     return new Chart(ctx, {
         type: 'line', // グラフのタイプ
@@ -241,6 +243,7 @@ function createLineChart(chartId, datasets, title, labels) {
                 }
             }
         }
+
     });
 }
 

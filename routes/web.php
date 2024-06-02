@@ -50,10 +50,11 @@ Route::middleware('auth:users')->group(function () {
     //searchについて
     Route::resource('search', SearchController::class)
     ->middleware(['auth:users', 'verified']);
-    Route::get('search/experiment/{composition_id}', [SearchController::class,'experimentIndex'])->name('experiment_show');
+    Route::get('search/experiment/{experiment_id}', [SearchController::class,'experimentIndex'])->name('experiment_show');
     Route::get('search/experiment/{type}/{id}', [SearchController::class, 'experimentDetailShow'])->name('experiment_detail_show');
     Route::get('search/{type}/{item}', [SearchController::class, 'compareWholeData'])->name('compareWholeData');
     Route::get('everyone_show/chart/{id}/{type}', [ChartShowController::class,'everyone_show'])->name('everyone_show.chart');
+    Route::get('everyone_show/table/{id}/{type}', [TableShowController::class,'everyone_show'])->name('everyone_show.table');
 
 
 
@@ -72,7 +73,8 @@ Route::middleware('auth:users')->group(function () {
     Route::get('/export-excel/{experiment_id}/{type}', [ExcelController::class, 'export'])->name('export.excel');
     //ExcelInputについて
     Route::post('/inport-excel/{type}', [ExcelController::class, 'store'])->name('import.excel');
-
+    //ExcelEditOutputについて
+    Route::get('/edit-excel/{experiment_id}/{type}', [ExcelController::class, 'edit_export'])->name('edit_export.excel');
     //TableShowについて
     Route::get('show/table/{id}/{type}', [TableShowController::class,'show'])->name('show.table');
     //ChartShowについて

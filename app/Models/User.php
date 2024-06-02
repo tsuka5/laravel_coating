@@ -8,6 +8,9 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Models\Affiliation;
+use App\Models\Experiment;
 use App\Models\Contact;
 
 
@@ -50,11 +53,16 @@ class User extends Authenticatable
 
     public function experiment(): HasOne
     {
-        return $this->hasOne(Experiment::class);
+        return $this->hasOne(Experiment::class, 'user_id', 'id');
     }
 
-    public function contact(): HasOne
+    public function affiliation(): BelongsTo
     {
-        return $this->hasOne(Contact::class);
+        return $this->BelongsTo(Affiliation::class, 'affiliation_id', 'id');
+    }
+
+    public function contact(): BelongsTo
+    {
+        return $this->belongsTo(Contact::class, 'contact_id', 'id');
     }
 }

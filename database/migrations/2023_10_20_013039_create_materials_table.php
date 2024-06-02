@@ -22,9 +22,12 @@ class CreateMaterialsTable extends Migration
             ->onDelete('cascade');
             $table->bigInteger('material_id')->nullable();
             $table->float('concentration')->nullable();
+            $table->bigInteger('solvent_id')->nullable();
+            $table->float('solvent_concentration')->nullable();
             $table->boolean('ph_adjustment')->nullable();
             $table->bigInteger('ph_material_id')->nullable();
             $table->float('ph_purpose')->nullable();
+            $table->text('memo')->nullable();
         });
 
         Schema::enableForeignKeyConstraints();

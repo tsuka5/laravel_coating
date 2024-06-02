@@ -22,49 +22,52 @@
                 </select>                    
               </div>
             </div>
-            <p class="text-red-500">If you don't see the material in this list, please add it here.</p>
+           
+            <p class="text-red-500">If you don't see the material in this list, please add it here</p>
+            <div class="p-2 w-full flex justify-around">
+              <button type="button" onclick="location.href='{{ route('user.category.create', ['categoryType'=>'material']) }}'" class="bg-gray-200 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded">Add</button>
+            </div>
+
+
+            <div class="p-2 mx-auto">
+              <div class="relative">
+                <label for="solvent_name" class="leading-7 text-sm text-gray-600">Solvent Name</label>
+                <select id="solvent_name" name="solvent_name" data-toggle="select" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500
+                  focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                  <option value="">Select solvent</option>
+                  @foreach ($solvents_list as $selected_solvent)
+                  <option value="{{ $selected_solvent->name }}"> {{ $selected_solvent->name }}</option>
+                  @endforeach
+                </select>                    
+              </div>
+            </div>
+           
+            <p class="text-red-500">If you don't see the solvent in this list, please add it here</p>
             <div class="p-2 w-full flex justify-around">
               <button type="button" onclick="location.href='{{ route('user.category.create', ['categoryType'=>'material']) }}'" class="bg-gray-200 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded">Add</button>
             </div>
 
             <div class="p-2 mx-auto">
               <div class="relative">
-                <label for="concentration" class="leading-7 text-sm text-gray-600">Concentration (% (w/w))</label>
+                <label for="solvent_concentration" class="leading-7 text-sm text-gray-600">Solvent Concentration (% (w/w))</label>
+                <input id="solvent_concentration" type="number" name="solvent_concentration" value="{{ old('solvent_concentration') }}" step="0.01" placeholder="ex: 0.80" required class="w-full bg-gray-100 bg-opacity-50 rounded border
+                  border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+              </div>
+            </div>
+
+            <div class="p-2 mx-auto">
+              <div class="relative">
+                <label for="concentration" class="leading-7 text-sm text-gray-600">The Percentage of Material in the Solvent (% (w/w))</label>
                 <input id="concentration" type="number" name="concentration" value="{{ old('concentration') }}" step="0.01" placeholder="ex: 0.80" required class="w-full bg-gray-100 bg-opacity-50 rounded border
                   border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
               </div>
             </div>
-            <div class="p-2 mx-auto">
-              <div class="relative">
-                <label for="ph_adjustment" class="leading-7 text-sm text-gray-600">ph Adjustment (Yes or No)</label>
-                <select id="ph_adjustment" name="ph_adjustment" data-toggle="select" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2
-                  focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                  <option value="0">No</option>
-                  <option value="1">Yes</option>
-                </select>
+
+            
             </div>
-            </div>
-            <div class="p-2 mx-auto">
-              <label class="leading-7 text-sm text-gray-600">Material Name for ph Adjustment</label>
-              <select name="ph_material" data-toggle="select" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2
-              ] focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                <option value="">Select material</option>
-                @foreach ($ph_materials_list as $selected_material)
-                <option value="{{ $selected_material->name }}"> {{ $selected_material->name }}</option>
-                @endforeach
-              </select>                    
-            </div>
-            <p class="text-red-500">If you don't see the material for ph adjustment in this list, please add it here.</p>
-            <div class="p-2 w-full flex justify-around">
-              <button type="button" onclick="location.href='{{ route('user.category.create', ['categoryType'=>'phMaterial']) }}'" class="bg-gray-200 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded">Add</button>
-            </div>
-            <div class="p-2 mx-auto">
-              <div class="relative">
-                <label for="ph_purpose" class="leading-7 text-sm text-gray-600">ph purpose</label>
-                <input id="ph_purpose" type="number" name="ph_purpose" value="{{ old('ph_purpose') }}" step="0.01" placeholder="ex:6.0" class="w-full bg-gray-100 bg-opacity-50 rounded border
-                  border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-              </div>
-            </div>
+           
+            
+            
           
             <div class="p-2 w-full flex justify-around mt-4">
               {{-- <button type="button" onclick="location.href='{{ route('user.profile.index') }}'" class="bg-gray-200 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">Back</button> --}}
@@ -308,7 +311,7 @@
       <x-input-error :messages="$errors->all()" class="mb-4"  />
         <form method="post" enctype="multipart/form-data" action="{{ route('user.store', ['id'=>$id, 'formType'=>'storing_test', 'experiment_id'=>$experiment->id]) }}">
           @csrf
-
+          {{-- {{dd($experiment)}} --}}
           <div class="m-2">
           <div class="flex flex-wrap">
             <div class="p-2 mx-auto">
@@ -344,6 +347,12 @@
               </div>
             </div>
             <div class="p-2 mx-auto">
+              <div class="relative">
+                  <label for="memo" class="leading-7 text-sm text-gray-600">memo </label>
+                  <input id="memo" type="text" name="memo" value="{{ old('memo') }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+              </div>
+            </div>
+            {{-- <div class="p-2 mx-auto">
               <div class="relative"> 
                   <label for="mass_loss_rate" class="leading-7 text-sm text-gray-600">Mass Loss Rate (%)</label>
                   <input id="mass_loss_rate" type="number" name="mass_loss_rate" value="{{ old('mass_loss_rate') }}"placeholder="ex: 3" step="0.1" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
@@ -444,7 +453,7 @@
                   <label for="clsm" class="leading-7 text-sm text-gray-600">CLSM</label>
                   <input id="clsm" type="file" name="clsm" value="{{ old('clsm') }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
               </div>
-            </div>
+            </div> --}}
 
 
 

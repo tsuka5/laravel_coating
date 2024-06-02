@@ -208,7 +208,8 @@ composition_count_list.forEach((composition_count, index) => {
         borderWidth: 1
     });
 });
-
+console.log(days);
+console.log(mass_loss_rates_datasets);
 // グラフを作成する
 function createLineChart(chartId, datasets, title, labels) {
    

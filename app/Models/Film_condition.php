@@ -32,11 +32,12 @@ class Film_condition extends Model
         'drying_temperature',
         'drying_humidity',
         'drying_time',
+        'memo'
     ];
 
     public function material_composition(): BelongsTo
     {
-        return $this->belongsTo(Material_composition::class);
+        return $this->belongsTo(Material_composition::class, 'composition_id', 'id');
     }
 
  

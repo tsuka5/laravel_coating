@@ -138,7 +138,7 @@ const barChart = new Chart(ctx, {
             }
     }
 });
-const experimentRoute = @json(route('user.experiment_show', ['composition_id' => 'PLACEHOLDER']));
+const experimentRoute = @json(route('user.experiment_show', ['experiment_id' => 'PLACEHOLDER']));
 ctx.canvas.onclick = function (event) {
     const points = barChart.getElementsAtEventForMode(event, 'nearest', {intersect: true}, true);
     if(points.length) {
@@ -210,7 +210,7 @@ ctx.canvas.onclick = function (event) {
 //             }
 //     }
 // });
-// const experimentRoute = @json(route('user.experiment_show', ['composition_id' => 'PLACEHOLDER']));
+// const experimentRoute = @json(route('user.experiment_show', ['experiment_id' => 'PLACEHOLDER']));
 // ctx.canvas.onclick = function (event) {
 //     const points = scatterChart.getElementsAtEventForMode(event, 'nearest', {intersect: true}, true);
 //     if(points.length) {

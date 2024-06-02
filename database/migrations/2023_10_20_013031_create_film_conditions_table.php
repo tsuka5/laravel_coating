@@ -15,8 +15,8 @@ class CreateFilmConditionsTable extends Migration
 
         Schema::create('film_conditions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('composition_id')
-            ->references('id')->on('material_compositions')
+            $table->foreignId('experiment_id')
+            ->references('id')->on('experiments')
             ->constrained()
             ->onUpdate('cascade')
             ->onDelete('cascade');
@@ -26,6 +26,7 @@ class CreateFilmConditionsTable extends Migration
             $table->float('drying_temperature')->nullable();
             $table->float('drying_humidity')->nullable();
             $table->float('drying_time')->nullable();
+            $table->text('memo')->nullable();
         });
 
         Schema::enableForeignKeyConstraints();

@@ -15,8 +15,8 @@ class CreateAntibacteriaTestsTable extends Migration
 
         Schema::create('antibacteria_tests', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('composition_id')
-            ->references('id')->on('material_compositions')
+            $table->foreignId('experiment_id')
+            ->references('id')->on('experiments')
             ->constrained()
             ->onUpdate('cascade')
             ->onDelete('cascade');
@@ -26,7 +26,6 @@ class CreateAntibacteriaTestsTable extends Migration
             $table->boolean('invivo_invitro')->nullable();
             $table->float('bacteria_concentration')->nullable();
             $table->float('mic')->nullable();
-            $table->float('colony_diameter')->nullable();
         });
 
         Schema::enableForeignKeyConstraints();

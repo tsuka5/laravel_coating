@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use App\Models\Storing_test;
 
 // use App\Models\Experiment;
@@ -31,19 +31,16 @@ class Fruit_detail extends Model
         'charactaristic'
     ];
 
-    public function storing_test(): BelongsTo
+    public function storing_test(): HasOne
     {
-        return $this->belongsTo(storing_test::class, 'id', 'storing_fruit_id' );
+        return $this->hasOne(storing_test::class, 'storing_fruit_id', 'id' );
     }
-    public function antibacteria_test(): BelongsTo
+    public function antibacteria_test(): HasOne
     {
-        return $this->belongsTo(Antibacteria_test::class, 'id', 'antibacteria_fruit_id' );
+        return $this->hasOne(Antibacteria_test::class, 'antibacteria_fruit_id', 'id' );
     }
 
-    // public function experiment(): BelongsTo
-    // {
-    //     return $this->belongsTo(Experiment::class);
-    // }
+ 
 
  
 }

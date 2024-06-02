@@ -20,33 +20,45 @@ class MaterialSeeder extends Seeder
                 'composition_id' => '1',
                 'material_id' => '1',
                 'concentration' => '0.3',
+                'solvent_id' => '1',
+                'solvent_concentration' => '100',
                 'ph_adjustment' => '1',
                 'ph_material_id' => '1',
-                'ph_purpose' => '8.0'
+                'ph_purpose' => '8.0',
+                'memo' => 'memoです'
             ],
             [
                 'composition_id' => '2',
                 'material_id' => '1',
                 'concentration' => '0.3',
+                'solvent_id' => '1',
+                'solvent_concentration' => '100',
                 'ph_adjustment' => '0',
                 'ph_material_id' => null,
-                'ph_purpose' => null
+                'ph_purpose' => null,
+                'memo' => 'memoです'
             ],
             [
                 'composition_id' => '2',
                 'material_id' => '3',
                 'concentration' => '0.3',
+                'solvent_id' => '1',
+                'solvent_concentration' => '100',
                 'ph_adjustment' => '1',
                 'ph_material_id' => '2',
-                'ph_purpose' => '7.0'
+                'ph_purpose' => '7.0',
+                'memo' => 'memoです'
             ],
             [
                 'composition_id' => '3',
                 'material_id' => '2',
                 'concentration' => '0.3',
+                'solvent_id' => '1',
+                'solvent_concentration' => '100',
                 'ph_adjustment' => '1',
                 'ph_material_id' => '1',
-                'ph_purpose' => '8.0'
+                'ph_purpose' => '8.0',
+                'memo' => 'memoです'
             ],
                    
 

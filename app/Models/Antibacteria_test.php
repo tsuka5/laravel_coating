@@ -6,7 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use App\Models\Material_composition;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\Experiment;
+use App\Models\Colony_test;
+use App\Models\Bacteria_detail;
+use App\Models\Antibacteria_test_type;
 
 
 
@@ -24,7 +28,7 @@ class Antibacteria_test extends Model
 
 
     protected $fillable = [
-        'composition_id',
+        'experiment_id',
         'bacteria_id',
         'antibacteria_fruit_id',
         'test_id',
@@ -33,21 +37,21 @@ class Antibacteria_test extends Model
         'mic',
     ];
 
-    public function material_composition(): BelongsTo
+    public function Experiment(): BelongsTo
     {
-        return $this->belongsTo(Material_composition::class);
+        return $this->belongsTo(Experiment::class);
     }
-    public function bacteria_detail(): HasOne
+    public function bacteria_detail(): BelongsTo
     {
-        return $this->hasOne(Bacteria_detail::class, 'id', 'bacteria_id');
+        return $this->belongsTo(Bacteria_detail::class, 'bacteria_id', 'id');
     }
-    public function fruit_detail(): HasOne
+    public function fruit_detail(): BelongsTo
     {
-        return $this->hasOne(Fruit_detail::class, 'id', 'antibacteria_fruit_id');
+        return $this->belongsTo(Fruit_detail::class, 'antibacteria_fruit_id', 'id');
     }
-    public function antibacteria_test_type(): HasOne
+    public function antibacteria_test_type(): BelongsTo
     {
-        return $this->hasOne(Antibacteria_test_type::class, 'id', 'test_id');
+        return $this->belongsTo(Antibacteria_test_type::class, 'test_id', 'id');
     }
 
 

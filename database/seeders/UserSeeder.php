@@ -114,6 +114,13 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('pF5Ezt4s'),
                 'created_at' => '2023/12/21 11:11:11'
             ],    
+            [
+                'name' => 'lim hoyoung',
+                'email' => 'dlaghdud10@gmail.com',
+                'affiliation_id' => '1',
+                'password' => Hash::make('dlatnekf10!'),
+                'created_at' => '2023/12/21 11:11:11'
+            ],    
    
             
                

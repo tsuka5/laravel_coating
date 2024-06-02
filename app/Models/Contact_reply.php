@@ -35,7 +35,7 @@ class Contact_reply extends Model
 
     public function admin(): BelongsTo
     {
-        return $this->belongsTo(Admin::class);
+        return $this->belongsTo(Admin::class, 'adimin_id', 'id');
     }
     public function contact(): BelongsTo
     {
