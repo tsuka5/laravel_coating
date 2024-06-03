@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 
 
-class solvent_detail extends Model
+class Solvent_detail extends Model
 {
     use HasApiTokens, HasFactory, Notifiable;
 
