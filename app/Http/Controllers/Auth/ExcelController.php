@@ -40,25 +40,58 @@ class ExcelController extends Controller
         $sheet1 -> setTitle('home');
 
         $composition_count = Material_composition::where('experiment_id', $experiment_id)->count();
-    
+        
+        function generateColumnNames_export() {
+            $columns = [];
+            for ($i = 0; $i < 2; $i++) {  // A to ZZ
+                foreach (range('A', 'Z') as $first) {
+                    if ($i == 0) {
+                        $columns[] = $first;
+                    } else {
+                        foreach (range('A', 'Z') as $second) {
+                            $columns[] = $first . $second;
+                        }
+                    }
+                }
+            }
+            return $columns;
+        }
+        $column_list = generateColumnNames_export();
+
+
 
         if($type === 'storing_test'){
 
-            function generateColumnList($end) {
-                $columns = [];
-                for ($i = 1; $i <= $end; $i++) {
-                    $column = '';
-                    $current = $i;
-                    while ($current > 0) {
-                        $current--; // 1-based index
-                        $column = chr($current % 26 + 65) . $column;
-                        $current = intval($current / 26);
-                    }
-                    $columns[] = $column;
-                }
-                return $columns;
-            }
-                       
+            // function generateColumnList($end) {
+            //     $columns = [];
+            //     for ($i = 1; $i <= $end; $i++) {
+            //         $column = '';
+            //         $current = $i;
+            //         while ($current > 0) {
+            //             $current--; // 1-based index
+            //             $column = chr($current % 26 + 65) . $column;
+            //             $current = intval($current / 26);
+            //         }
+            //         $columns[] = $column;
+            //     }
+            //     return $columns;
+            // }
+            // function generateColumnNames() {
+            //     $columns = [];
+            //     for ($i = 0; $i < 2; $i++) {  // A to ZZ
+            //         foreach (range('A', 'Z') as $first) {
+            //             if ($i == 0) {
+            //                 $columns[] = $first;
+            //             } else {
+            //                 foreach (range('A', 'Z') as $second) {
+            //                     $columns[] = $first . $second;
+            //                 }
+            //             }
+            //         }
+            //     }
+            //     return $columns;
+            // }
+                           
 
             $sheet2_name = 'multiple_test';
             $sheet2 = new Worksheet($spreadsheet, $sheet2_name);
@@ -88,7 +121,7 @@ class ExcelController extends Controller
             $composition_ids = Material_composition::where('experiment_id', $experiment_id)->get(['id']);
             $composition_number = 1;
             $composition_row = 4;
-            $column_list = generateColumnList(78); // A-Z, AA-AZ
+            // $column_list = generateColumnNames();
             $multiple_composition_start = 0;
             $enzyme_composition_start = 0;
 
@@ -279,10 +312,23 @@ class ExcelController extends Controller
                 $composition_start_solution = 3;
                 $viscosity_composition_start = 0;
                 $wvp_composition_start = 0;
-                $column_list = array_merge(
-                    range('A', 'Z'), 
-                    range('AA', 'AZ')
-                );
+                // function generateColumnNames() {
+                //     $columns = [];
+                //     for ($i = 0; $i < 2; $i++) {  // A to ZZ
+                //         foreach (range('A', 'Z') as $first) {
+                //             if ($i == 0) {
+                //                 $columns[] = $first;
+                //             } else {
+                //                 foreach (range('A', 'Z') as $second) {
+                //                     $columns[] = $first . $second;
+                //                 }
+                //             }
+                //         }
+                //     }
+                //     return $columns;
+                // }
+                // $column_list = generateColumnNames();
+
                 // $column_list = range('A', 'Z');
 
                 // dd($column_list);
@@ -370,7 +416,7 @@ class ExcelController extends Controller
     public function store(Request $request)
     {
 
-        function generateColumnNames() {
+        function generateColumnNames_store() {
             $columns = [];
             for ($i = 0; $i < 2; $i++) {  // A to ZZ
                 foreach (range('A', 'Z') as $first) {
@@ -398,7 +444,7 @@ class ExcelController extends Controller
 
         $spreadsheet = IOFactory::load($filePath);
 
-        $column_list = generateColumnNames();
+        $column_list = generateColumnNames_store();
 
         if($request->type === 'storing_test'){
             //シート1を得る
@@ -558,23 +604,40 @@ class ExcelController extends Controller
         $sheet1 -> setTitle('home');
 
         $composition_count = Material_composition::where('experiment_id', $experiment_id)->count();
-    
+        
+        function generateColumnNames_edit() {
+            $columns = [];
+            for ($i = 0; $i < 2; $i++) {  // A to ZZ
+                foreach (range('A', 'Z') as $first) {
+                    if ($i == 0) {
+                        $columns[] = $first;
+                    } else {
+                        foreach (range('A', 'Z') as $second) {
+                            $columns[] = $first . $second;
+                        }
+                    }
+                }
+            }
+            return $columns;
+        }
+        $column_list = generateColumnName_edit();
+
 
         if($type === 'storing_test'){
-            function generateColumnList($end) {
-                $columns = [];
-                for ($i = 1; $i <= $end; $i++) {
-                    $column = '';
-                    $current = $i;
-                    while ($current > 0) {
-                        $current--; // 1-based index
-                        $column = chr($current % 26 + 65) . $column;
-                        $current = intval($current / 26);
-                    }
-                    $columns[] = $column;
-                }
-                return $columns;
-            }
+            // function generateColumnList($end) {
+            //     $columns = [];
+            //     for ($i = 1; $i <= $end; $i++) {
+            //         $column = '';
+            //         $current = $i;
+            //         while ($current > 0) {
+            //             $current--; // 1-based index
+            //             $column = chr($current % 26 + 65) . $column;
+            //             $current = intval($current / 26);
+            //         }
+            //         $columns[] = $column;
+            //     }
+            //     return $columns;
+            // }
                        
 
             $sheet2_name = 'multiple_test';
@@ -605,7 +668,7 @@ class ExcelController extends Controller
             $composition_ids = Material_composition::where('experiment_id', $experiment_id)->get(['id']);
             $composition_number = 1;
             $composition_row = 4;
-            $column_list = generateColumnList(78); // A-Z, AA-AZ
+            // $column_list = generateColumnList(78); // A-Z, AA-AZ
             $multiple_composition_start = 0;
             $enzyme_composition_start = 0;
 
@@ -819,21 +882,21 @@ class ExcelController extends Controller
                 setColumns($sheet2, range('H', 'O'), ['id', 'tensile strength', 'eab', 'light transmittance', 'thickness', 'moisture content', 'd43', 'd32'], 2);
 
                 //A~AZまでの配列を作成
-                function generateColumnList($end) {
-                    $columns = [];
-                    for ($i = 1; $i <= $end; $i++) {
-                        $column = '';
-                        $current = $i;
-                        while ($current > 0) {
-                            $current--; // 1-based index
-                            $column = chr($current % 26 + 65) . $column;
-                            $current = intval($current / 26);
-                        }
-                        $columns[] = $column;
-                    }
-                    return $columns;
-                }
-                $column_list = generateColumnList(78); 
+                // function generateColumnList($end) {
+                //     $columns = [];
+                //     for ($i = 1; $i <= $end; $i++) {
+                //         $column = '';
+                //         $current = $i;
+                //         while ($current > 0) {
+                //             $current--; // 1-based index
+                //             $column = chr($current % 26 + 65) . $column;
+                //             $current = intval($current / 26);
+                //         }
+                //         $columns[] = $column;
+                //     }
+                //     return $columns;
+                // }
+                // $column_list = generateColumnList(78); 
     
                 $composition_ids = Material_composition::where('experiment_id', $experiment_id)->get(['id']);
                 
