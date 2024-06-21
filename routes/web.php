@@ -34,6 +34,7 @@ Route::middleware('auth:users')->group(function () {
     Route::get('profile/show/{id}', [ProfileController::class,'show'])->name('profile.show');
     Route::delete('profile/deleteExperiment/{id}', [ProfileController::class, 'destroyExperiment'])->name('profile.destroy.experiment');
     Route::post('profile/create_composition/{experiment_id}', [ProfileController::class, 'createComposition'])->name('profile.create.composition');
+    Route::post('profile/create_composition/{experiment_id}/{composition_id}', [ProfileController::class, 'createCopy'])->name('profile.create.copy_composition');
     //experiment_registerについて
     Route::get('profile/experiment/{experiment_id}', [ProfileController::class,'experimentIndex'])->name('experiment_register');
     Route::delete('profile/experiment/{experiment_id}/{type}/{id}', [ProfileController::class, 'destroyData'])->name('destroy.data');

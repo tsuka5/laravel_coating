@@ -74,19 +74,26 @@ class ProfileController extends Controller
         //実験の結果を取得
         $characteristic_test = Charactaristic_test::whereIn('composition_id', $compositions_id)->get();
     
-
-        foreach($compositions as $composition) {
-            // $film_conditions[$composition->id] = Film_condition::where('composition_id', $composition->id )->get();
-            $materials[$composition->id] = Material::where('composition_id', $composition->id)->get();
-            $multiple_tests[$composition->id] = Storing_multiple_test::where('composition_id', $composition->id)->get();
-            $multiple_test = Storing_multiple_test::where('composition_id', $composition->id)->first();
-            // $storing_tests[$composition->id] = Storing_test::where('composition_id', $composition->id)->get();
-            // $bacteria_tests[$composition->id] = Antibacteria_test::where('composition_id', $composition->id)->get();
-            $characteristic_tests[$composition->id] = Charactaristic_test::where('composition_id', $composition->id)->get();
-            $charactaristic_testCounts[$composition->id] = Charactaristic_test::where('composition_id', $composition->id)->count();
+        $multiple_test = null;
+        // dd($compositions);
+        if($compositions->isNotEmpty()){
+            foreach($compositions as $composition) {
+                // $film_conditions[$composition->id] = Film_condition::where('composition_id', $composition->id )->get();
+                $materials[$composition->id] = Material::where('composition_id', $composition->id)->get();
+                $multiple_tests[$composition->id] = Storing_multiple_test::where('composition_id', $composition->id)->get();
+                $multiple_test = Storing_multiple_test::where('composition_id', $composition->id)->first();
+                // $storing_tests[$composition->id] = Storing_test::where('composition_id', $composition->id)->get();
+                // $bacteria_tests[$composition->id] = Antibacteria_test::where('composition_id', $composition->id)->get();
+                $characteristic_tests[$composition->id] = Charactaristic_test::where('composition_id', $composition->id)->get();
+                $charactaristic_testCounts[$composition->id] = Charactaristic_test::where('composition_id', $composition->id)->count();
+            }  
+        } else {
+            $materials = collect();
+            $multiple_tests = collect();
+            $multiple_test = null;
+            $characteristic_tests = collect();
+            $characteristic_testCounts = collect();
         }
-
-
         // dd($multiple_tests);
         
 
@@ -139,7 +146,30 @@ class ProfileController extends Controller
     {
         return view('user.profile.create', compact('type'));
     }
+    
+    public function createCopy($experiment_id, $composition_id)
+    {
+        $composition = new Material_composition;
+        $composition->experiment_id = $experiment_id;
+        $composition->save();
 
+        $current_composition_id = Material_composition::latest('id')->first();
+
+        $copy_materials = Material::where('composition_id', $composition_id)->get();
+
+        foreach($copy_materials as $c_material){
+            $material = new Material;
+            $material->composition_id = $current_composition_id->id;
+            $material-> material_id = $c_material->material_id;
+            $material-> solvent_id = $c_material->solvent_id;
+            $material->concentration = $c_material->concentration;
+            $material-> solvent_concentration = $c_material->solvent_concentration;
+            $material->save();
+        }
+        return redirect()->route('user.experiment_register', compact('experiment_id'))
+        ->with(['message'=>'Create Composition Complete', 'status'=>'info'] );;
+
+    }
     public function createComposition($experiment_id)
     {
         $composition = new Material_composition;
