@@ -59,140 +59,115 @@ class ExcelController extends Controller
         $column_list = generateColumnNames_export();
 
 
+        if($type === 'storing_test'){         
+         
 
-        if($type === 'storing_test'){
-
-            // function generateColumnList($end) {
-            //     $columns = [];
-            //     for ($i = 1; $i <= $end; $i++) {
-            //         $column = '';
-            //         $current = $i;
-            //         while ($current > 0) {
-            //             $current--; // 1-based index
-            //             $column = chr($current % 26 + 65) . $column;
-            //             $current = intval($current / 26);
-            //         }
-            //         $columns[] = $column;
-            //     }
-            //     return $columns;
-            // }
-            // function generateColumnNames() {
-            //     $columns = [];
-            //     for ($i = 0; $i < 2; $i++) {  // A to ZZ
-            //         foreach (range('A', 'Z') as $first) {
-            //             if ($i == 0) {
-            //                 $columns[] = $first;
-            //             } else {
-            //                 foreach (range('A', 'Z') as $second) {
-            //                     $columns[] = $first . $second;
-            //                 }
-            //             }
-            //         }
-            //     }
-            //     return $columns;
-            // }
-                           
-
-            $sheet2_name = 'multiple_test';
-            $sheet2 = new Worksheet($spreadsheet, $sheet2_name);
-            $spreadsheet->addSheet($sheet2, 1);  
-
-            $sheet3_name = 'enzyme_test';
-            $sheet3 = new Worksheet($spreadsheet, $sheet3_name);
-            $spreadsheet->addSheet($sheet3, 2);  
-
-            // データをシートに設定
-            $storing_test = Storing_test::where('experiment_id', $experiment_id)->first();
-            $fruit_name = Fruit_detail::where('id', $storing_test->storing_fruit_id)->first();
-            //組成の数に影響を受けないデータ
-            $sheet1->setCellvalue('A1', 'Experiment No.');
-            $sheet1->setCellValue('B1', $experiment_id);
-            $sheet1->setCellValue('A2', 'Composition Count');
-            $sheet1->setCellValue('B2', $composition_count);
-            $sheet1->setCellValue('E1', 'Temperature(℃)');
-            $sheet1->setCellValue('E2', $storing_test->storing_temperature);
-            $sheet1->setCellValue('F1', 'Storing Humidity(%RH)');
-            $sheet1->setCellValue('F2', $storing_test->storing_humidity);
-            $sheet1->setCellValue('D1', 'Fruit name');
-            $sheet1->setCellValue('D2', $fruit_name->name);
-            $sheet2->setCellValue('A1', 'Multiple Storing test');
-            $sheet3->setCellValue('A1', 'Enzyme test');
-            //組成の数に影響を受けるデータ
-            $composition_ids = Material_composition::where('experiment_id', $experiment_id)->get(['id']);
-            $composition_number = 1;
-            $composition_row = 4;
-            // $column_list = generateColumnNames();
-            $multiple_composition_start = 0;
-            $enzyme_composition_start = 0;
-
-            foreach($composition_ids as $composition){
-                $composition_id = $composition->id;
-                //homeの設定
-                $sheet1->setCellValue('A'.$composition_row, 'Composition:'.$composition_number);
-                $sheet1->setCellValue('A'.($composition_row+1), 'Material');
-                $sheet1->setCellValue('B'.($composition_row+1), 'Concentration(%)');
-                // multiple_testの設定
-                $sheet2->setCellValue($column_list[$multiple_composition_start] . '3', 'composition:'.$composition_number);
-                $sheet2->setCellValue($column_list[$multiple_composition_start+1] . '3', 'id=');
-                $sheet2->setCellValue($column_list[$multiple_composition_start+2] . '3', $composition_id);
-                $multiple_columns = range($multiple_composition_start, $multiple_composition_start+14);
-                $multiple_values = ['Day', 'Mass loss rate(%)', 'L*', 'a*', 'b*','⊿E','pH','TSS','Hardness(N)','Moisture content(%)','TA(%)', 'Vitamin C(%)','Respirtry rate(mgCO^2/(kg*h)','Phenolic Content', 'memo'];
-                foreach ($multiple_columns as $index => $column) {
-                    $sheet2->setCellValue($column_list[$column] . '4', $multiple_values[$index]);
+                $sheet2_name = 'multiple_test';
+                $sheet2 = new Worksheet($spreadsheet, $sheet2_name);
+                $spreadsheet->addSheet($sheet2, 1);  
+    
+                $sheet3_name = 'enzyme_test';
+                $sheet3 = new Worksheet($spreadsheet, $sheet3_name);
+                $spreadsheet->addSheet($sheet3, 2);  
+    
+                // データをシートに設定
+                
+                $storing_test = Storing_test::where('experiment_id', $experiment_id)->first();
+                if (!$storing_test || !$storing_test->storing_fruit_id) {
+                    return response()->json(['error' => 'Please entry basic information first'], 400);
                 }
-                // //enzyme_testの設定
-                $sheet3->setCellValue($column_list[$enzyme_composition_start] . '3', 'composition:'.$composition_number);
-                $sheet3->setCellValue($column_list[$enzyme_composition_start+1] . '3', 'id=');
-                $sheet3->setCellValue($column_list[$enzyme_composition_start+2] . '3', $composition_id);
-                $enzyme_columns = range($enzyme_composition_start, $enzyme_composition_start+2);
-                $enzyme_values = ['Day','Enzyme Actibity', 'memo'];
-                foreach ($enzyme_columns as $index => $column) {
-                    $sheet3->setCellValue($column_list[$column] . '4', $enzyme_values[$index]);
-                }
-                //tgaは後で
-
-                //選択した材料組成の表示
-                $material_row = $composition_row+2;
-                $material_list = Material::where('composition_id', $composition_id)->get(['material_id']);
-
-                foreach($material_list as $material){
-                    $material_id = $material->material_id;
-                    $material_name = Material_detail::where('id', $material_id)->first()->name;
-                    $sheet1->setCellValue('A' . $material_row, $material_name);
-                    $material_concentration = Material::where('material_id', $material_id)->first()->concentration;
-                    $sheet1->setCellValue('B' . $material_row, $material_concentration);
-                    $material_row += 1;
-                }
-                $composition_row = $material_row + 1;
-                $composition_number++;
-                $multiple_composition_start = $multiple_composition_start + 16;
-                $enzyme_composition_start = $enzyme_composition_start + 4;
-            }     
-            //セルの横幅調整           
-            foreach($column_list as $column){
-                $sheet1->getColumnDimension($column)->setAutoSize(true);
-                // $sheet1->getStyle('D:E')->getNumberFormat()->setFormatCode('0.0');
-                $sheet2->getColumnDimension($column)->setAutoSize(true);
-                // $sheet2->getStyle('C:I')->getNumberFormat()->setFormatCode('0.0');
-                $sheet3->getColumnDimension($column)->setAutoSize(true);
-                // $sheet3->getStyle('C:I')->getNumberFormat()->setFormatCode('0.0'); 
-                }
-             
-              
+                $fruit_name = Fruit_detail::where('id', $storing_test->storing_fruit_id)->first();
+                //組成の数に影響を受けないデータ
+                $sheet1->setCellvalue('A1', 'Experiment No.');
+                $sheet1->setCellValue('B1', $experiment_id);
+                $sheet1->setCellValue('A2', 'Composition Count');
+                $sheet1->setCellValue('B2', $composition_count);
+                $sheet1->setCellValue('E1', 'Temperature(℃)');
+                $sheet1->setCellValue('E2', $storing_test->storing_temperature);
+                $sheet1->setCellValue('F1', 'Storing Humidity(%RH)');
+                $sheet1->setCellValue('F2', $storing_test->storing_humidity);
+                $sheet1->setCellValue('D1', 'Fruit name');
+                $sheet1->setCellValue('D2', $fruit_name->name);
+                $sheet2->setCellValue('A1', 'Multiple Storing test');
+                $sheet3->setCellValue('A1', 'Enzyme test');
+                //組成の数に影響を受けるデータ
+                $composition_ids = Material_composition::where('experiment_id', $experiment_id)->get(['id']);
+                $composition_number = 1;
+                $composition_row = 4;
+                // $column_list = generateColumnNames();
+                $multiple_composition_start = 0;
+                $enzyme_composition_start = 0;
+    
+                foreach($composition_ids as $composition){
+                    $composition_id = $composition->id;
+                    //homeの設定
+                    $sheet1->setCellValue('A'.$composition_row, 'Composition:'.$composition_number);
+                    $sheet1->setCellValue('A'.($composition_row+1), 'Material');
+                    $sheet1->setCellValue('B'.($composition_row+1), 'Concentration(%)');
+                    // multiple_testの設定
+                    $sheet2->setCellValue($column_list[$multiple_composition_start] . '3', 'composition:'.$composition_number);
+                    $sheet2->setCellValue($column_list[$multiple_composition_start+1] . '3', 'id=');
+                    $sheet2->setCellValue($column_list[$multiple_composition_start+2] . '3', $composition_id);
+                    $multiple_columns = range($multiple_composition_start, $multiple_composition_start+14);
+                    $multiple_values = ['Day', 'Mass loss rate(%)', 'L*', 'a*', 'b*','⊿E','pH','TSS','Hardness(N)','Moisture content(%)','TA(%)', 'Vitamin C(%)','Respirtry rate(mgCO^2/(kg*h)','Phenolic Content(mg GAE/L)', 'memo'];
+                    foreach ($multiple_columns as $index => $column) {
+                        $sheet2->setCellValue($column_list[$column] . '4', $multiple_values[$index]);
+                    }
+                    // //enzyme_testの設定
+                    $sheet3->setCellValue($column_list[$enzyme_composition_start] . '3', 'composition:'.$composition_number);
+                    $sheet3->setCellValue($column_list[$enzyme_composition_start+1] . '3', 'id=');
+                    $sheet3->setCellValue($column_list[$enzyme_composition_start+2] . '3', $composition_id);
+                    $enzyme_columns = range($enzyme_composition_start, $enzyme_composition_start+2);
+                    $enzyme_values = ['Day','Enzyme Actibity', 'memo'];
+                    foreach ($enzyme_columns as $index => $column) {
+                        $sheet3->setCellValue($column_list[$column] . '4', $enzyme_values[$index]);
+                    }
+                    //tgaは後で
+    
+                    //選択した材料組成の表示
+                    $material_row = $composition_row+2;
+                    $material_list = Material::where('composition_id', $composition_id)->get(['material_id']);
+    
+                    foreach($material_list as $material){
+                        $material_id = $material->material_id;
+                        $material_name = Material_detail::where('id', $material_id)->first()->name;
+                        $sheet1->setCellValue('A' . $material_row, $material_name);
+                        $material_concentration = Material::where('material_id', $material_id)->first()->concentration;
+                        $sheet1->setCellValue('B' . $material_row, $material_concentration);
+                        $material_row += 1;
+                    }
+                    $composition_row = $material_row + 1;
+                    $composition_number++;
+                    $multiple_composition_start = $multiple_composition_start + 16;
+                    $enzyme_composition_start = $enzyme_composition_start + 4;
+                }     
+                //セルの横幅調整           
+                foreach($column_list as $column){
+                    $sheet1->getColumnDimension($column)->setAutoSize(true);
+                    // $sheet1->getStyle('D:E')->getNumberFormat()->setFormatCode('0.0');
+                    $sheet2->getColumnDimension($column)->setAutoSize(true);
+                    // $sheet2->getStyle('C:I')->getNumberFormat()->setFormatCode('0.0');
+                    $sheet3->getColumnDimension($column)->setAutoSize(true);
+                    // $sheet3->getStyle('C:I')->getNumberFormat()->setFormatCode('0.0'); 
+                    }
+                 
+                  
+                
+                // 出力設定
+                $writer = new Xlsx($spreadsheet);
+    
+                $response = new StreamedResponse(function() use ($writer) {
+                    $writer->save('php://output');
+                }, 200, [
+                    'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                    'Content-Disposition' => 'attachment;filename="storing_test.xlsx"',
+                    'Cache-Control' => 'max-age=0',
+                ]);
+    
             
-            // 出力設定
-            $writer = new Xlsx($spreadsheet);
+            }
 
-            $response = new StreamedResponse(function() use ($writer) {
-                $writer->save('php://output');
-            }, 200, [
-                'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                'Content-Disposition' => 'attachment;filename="storing_test.xlsx"',
-                'Cache-Control' => 'max-age=0',
-            ]);
-
-            return $response;
-        }
+        
         elseif($type ==='film_condition'){
        
             //２枚目のワークシートの枠組みを作成する
@@ -299,7 +274,7 @@ class ExcelController extends Controller
                     $sheet2->setCellValue($column . 2, $values[$index]);
                 }
                 $columns = range('H','O');
-                $values = ['id','tensile strength', 'eab', 'light transmittance', 'thickness', 'moisture content', 'd43', 'd32'];
+                $values = ['id','tensile strength(MPa)', 'eab(%)', 'light transmittance(%)', 'thickness(mm)', 'moisture content(%)', 'd43(μm)', 'd32(μm)'];
                 foreach ($columns as $index => $column) {
                     $sheet2->setCellValue($column . 2, $values[$index]);
                 }
@@ -349,7 +324,7 @@ class ExcelController extends Controller
                     $sheet3->setCellValue($column_list[$viscosity_composition_start+1] . '3', 'id=');
                     $sheet3->setCellValue($column_list[$viscosity_composition_start+2] . '3', $composition_id);
                     $viscosity_columns = range($viscosity_composition_start, $viscosity_composition_start+5);
-                    $viscosity_values = ['temperature','viscosity(cP)', 'shear stress', 'shear rate', 'rotation speed', 'memo'];
+                    $viscosity_values = ['temperature(℃)','viscosity(cP)', 'shear stress(Pa)', 'shear rate(s^-1)', 'rotation speed(rpm)', 'memo'];
                     foreach ($viscosity_columns as $index => $column) {
                         $sheet3->setCellValue($column_list[$column] . '4', $viscosity_values[$index]);
                     }
@@ -358,7 +333,7 @@ class ExcelController extends Controller
                     $sheet4->setCellValue($column_list[$wvp_composition_start+1] . '3', 'id=');
                     $sheet4->setCellValue($column_list[$wvp_composition_start+2] . '3', $composition_id);
                     $wvp_columns = range($wvp_composition_start, $wvp_composition_start+3);
-                    $wvp_values = ['humidity','wvp', 'temperature', 'memo'];
+                    $wvp_values = ['humidity(%)','wvp(g/m²/day)', 'temperature(℃)', 'memo'];
                     foreach ($wvp_columns as $index => $column) {
                         $sheet4->setCellValue($column_list[$column] . '4', $wvp_values[$index]);
                     }
@@ -683,7 +658,7 @@ class ExcelController extends Controller
                 $sheet2->setCellValue($column_list[$multiple_composition_start+1] . '3', 'id=');
                 $sheet2->setCellValue($column_list[$multiple_composition_start+2] . '3', $composition_id);
                 $multiple_columns = range($multiple_composition_start, $multiple_composition_start+14);
-                $multiple_values = ['Day', 'Mass loss rate(%)', 'L*', 'a*', 'b*','⊿E','pH','TSS','Hardness(N)','Moisture content(%)','TA(%)', 'Vitamin C(%)','Respirtry rate(mgCO^2/(kg*h)','Phenolic Content', 'memo'];
+                $multiple_values = ['Day', 'Mass loss rate(%)', 'L*', 'a*', 'b*','⊿E','pH','TSS','Hardness(N)','Moisture content(%)','TA(%)', 'Vitamin C(%)','Respirtry rate(mgCO^2/(kg*h)','Phenolic Content(mg GAE/L)', 'memo'];
                 foreach ($multiple_columns as $index => $column) {
                     $sheet2->setCellValue($column_list[$column] . '4', $multiple_values[$index]);
                 }
@@ -879,7 +854,7 @@ class ExcelController extends Controller
 
                 // 2枚目のカラム設定
                 setColumns($sheet2, range('B', 'E'), ['id', 'pH', 'contact angle(°)', 'water solubility(%)'], 2);
-                setColumns($sheet2, range('H', 'O'), ['id', 'tensile strength', 'eab', 'light transmittance', 'thickness', 'moisture content', 'd43', 'd32'], 2);
+                setColumns($sheet2, range('H', 'O'), ['id', 'tensile strength(MPa)', 'eab(%)', 'light transmittance(%)', 'thickness(mm)', 'moisture content(%)', 'd43(μm)', 'd32(μm)'], 2);
 
                 //A~AZまでの配列を作成
                 // function generateColumnList($end) {

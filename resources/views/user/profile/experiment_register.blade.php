@@ -9,6 +9,11 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="justify-center p-6 text-gray-900 dark:text-gray-100">
                     <section class="text-gray-600 body-font">
+                        @if (session('error_message'))
+                            <div class="error-message">
+                                {{ session('error_message') }}
+                            </div>
+                        @endif
 
                         <div class="container mx-auto">
                             <x-flash-message status="session('status')" />
@@ -580,7 +585,7 @@
                                                     <button type="button" data-toggle="modal" data-target="#storing_test_{{$composition->id}}" class="toggle-button p-2 m-2 text-white bg-gray-500 border-0 focus:outline-none hover:bg-gray-600 rounded">Basic Information</button>
                                                 </div>
 
-                                                <div class="text-center">
+                                                {{-- <div class="text-center">
                                                     <a href="{{ route('user.export.excel', ['experiment_id' => $experiment->id, 'type' => 'storing_test']) }}" class="btn btn-primary m-2">Download Format Excel File</a>                                          
                                                 </div>
                                                 <div class="p-2">
@@ -592,7 +597,7 @@
                                                             hover:bg-red-600 rounded">Upload Excel File</button>
                                                         </div>
                                                     </form>
-                                                </div> 
+                                                </div>  --}}
     
                                             @else
                                                 <div class="flex justify-center">
@@ -609,14 +614,21 @@
                                                     <table class="border w-full">
                                                         <tbody>
                                                             <tr class="flex justify-center">
+                                                                <td class="mt-3 text-center w-2/5">
+                                                                    <p  style="word-wrap: break-word; max-width: 100%;">
+                                                                    {{$storing_test->fruit_detail->name}}
+                                                                    </p>
+                                                                
+                                                                </td>
+
                                                                 <td class="px-2 text-center">
-                                                                    <div class="w-1/5 my-1">
+                                                                    <div class="w-1/5 my-2">
                                                                         <button onclick="location.href='{{ route('user.edit.experiment', ['editType' => 'storing_test', 'id' => $storing_test->id])}}'" class="h-9 text-white bg-indigo-400 border-0 py-2 px-4 focus:outline-none
                                                                             hover:bg-indigo-500 rounded w-20">Edit</button>
                                                                     </div> 
                                                                 </td>
                                                                 <td class="px-2 text-center">
-                                                                    <div class="w-1/5 my-2">
+                                                                    <div class="w-1/5 my-3">
                                                                         <form id="delete_storing_test_{{ $storing_test->id }}" method="post" action="{{ route('user.destroy.data', [ 'experiment_id' =>$experiment->id, 'type' => 'storing_test', 'id' => $storing_test->id ])}}">
                                                                             @csrf
                                                                             @method('delete')  
@@ -647,9 +659,11 @@
                                             </div>  --}}
                                             {{-- {{dd($multiple_test)}} --}}
                                             @if(empty($multiple_test))
+                                    
                                             <div class="text-center">
                                                 <a href="{{ route('user.export.excel', ['experiment_id' => $experiment->id, 'type' => 'storing_test']) }}" class="btn btn-primary m-2">Download Format Excel File</a>                                          
                                             </div>
+                                            
                                             <div class="p-2">
                                                 <form action="{{ route('user.import.excel', ['type' => 'storing_test']) }}" method="post" enctype="multipart/form-data">
                                                     @csrf
@@ -787,6 +801,8 @@
             </div>
         </div>
     </div> 
+
+
 <script>
     function deletePost(e, type){
         'use strict'
