@@ -184,12 +184,30 @@
                                                 @endif
                                                 <div class="p-2">
                                                     <p class='text-center'> Used Materials </p>
+
                                                     @foreach($compositions[$experiment->id] as $composition)
-                                                        @foreach($materials[$composition->id] as $material) 
+                                                    @php
+                                                        $displayedMaterials = [];
+                                                    @endphp
+                                                    @foreach($compositions[$experiment->id] as $composition)
+                                                        @foreach($materials[$composition->id] as $material)
+                                                            @if (!in_array($material->material_detail->name, $displayedMaterials))
+                                                                <p class="text-black border-2 bg-red-100 border-gray-400 text-center rounded mx-2 my-1">
+                                                                    {{$material->material_detail->name}}
+                                                                </p>
+                                                                @php
+                                                                    $displayedMaterials[] = $material->material_detail->name;
+                                                                @endphp
+                                                            @endif
+                                                        @endforeach
+                                                    @endforeach
+                                              
+
+                                                        {{-- @foreach($materials[$composition->id] as $material) 
                                                         <div>
                                                             <p class="text-black border-2 bg-red-100 border-gray-400 text-center rounded mx-2 my-1">{{$material->material_detail->name}}</p>
                                                         </div> 
-                                                        @endforeach
+                                                        @endforeach --}}
                                                         @foreach($fruits[$experiment->id] as $fruit) 
                                                         <div>
                                                             <p class="text-black border-2 bg-green-100 border-gray-400 text-center rounded mx-2 my-1">{{$fruit->fruit_detail->name}}</p>

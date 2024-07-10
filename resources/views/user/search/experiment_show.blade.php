@@ -68,7 +68,7 @@
                                     <div class="flex justify-center flex-wrap lg:w-2/3 md:w-full mx-auto"> 
                                         @foreach($compositions as $composition)
                                         <div class="w-1/3">
-                                            <div class="flex justify-center mt-2 p-1 w-full bg-blue-300">
+                                            <div class="flex justify-center mt-2 p-1 w-full bg-gray-400">
                                                 <div class="text-white">
                                                     Composition:{{$number_composition}}
                                                 </div>
@@ -116,7 +116,7 @@
                                 {{-- 試験結果 --}}
                                 <div class="flex justify-center">
                                     <div class="lg:w-2/3 md:w-full mx-auto flex flex-wrap">
-                                        <div class="flex justify-center p-1 w-full bg-red-300">
+                                        <div class="flex justify-center p-1 w-full bg-gray-400">
                                             <div class="text-white">
                                                 Result 
                                             </div>
