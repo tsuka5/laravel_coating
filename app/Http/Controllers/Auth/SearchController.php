@@ -10,6 +10,8 @@ use App\Models\Material_composition;
 use App\Models\Film_condition; 
 use App\Models\Charactaristic_test; 
 use App\Models\Storing_test;
+use App\Models\Enzyme_test;
+use App\Models\Tga_test;
 use App\Models\Antibacteria_test;
 use App\Models\Material;
 use App\Models\Material_detail;
@@ -17,6 +19,9 @@ use App\Models\Fruit_detail;
 use App\Models\Bacteria_detail;
 use App\Models\Antibacteria_test_type;
 use App\Models\Ph_material_detail;
+use App\Models\Enzyme_detail;
+use App\Models\Substrate_detail;
+use App\Models\Gas_detail;
 use App\Models\Note;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -30,22 +35,29 @@ class SearchController extends Controller
     // dd($material);
     $bacterium = $request->input('bacterium');
     $fruit = $request->input('fruit');
-    $ph_material = $request->input('ph_material');
-    $antibacteria_test_type = $request->input('antibacteria_test_type');
+    // $ph_material = $request->input('ph_material');
+    // $antibacteria_test_type = $request->input('antibacteria_test_type');
+    $enzyme = $request->input('enzyme');
+    $substrate = $request->input('substrate');
+    $gas = $request->input('gas');
 
     $selected_materials = Material_detail::query();
     $selected_bacteria = Bacteria_detail::query();
     $selected_fruits = Fruit_detail::query();
-    $selected_phMaterials = Ph_material_detail::query();
-    $selected_antibacteriaTestTypes = Antibacteria_test_type::query();
+    // $selected_phMaterials = Ph_material_detail::query();
+    // $selected_antibacteriaTestTypes = Antibacteria_test_type::query();
+    $selected_enzymes = Enzyme_detail::query();
+    $selected_substrates = Substrate_detail::query();
+    $selected_gases = Gas_detail::query();
     $selected_experiments = Experiment::query();
 
     if(!empty($keyword)){
         $selected_materials->where('name', 'LIKE', "%{$keyword}%");
         $selected_bacteria->where('name', 'LIKE', "%{$keyword}%");
         $selected_fruits->where('name', 'LIKE', "%{$keyword}%");
-        $selected_phMaterials->where('name', 'LIKE', "%{$keyword}%");
-        $selected_antibacteriaTestTypes->where('name', 'LIKE', "%{$keyword}%");
+        $selected_enzymes->where('name', 'LIKE', "%{$keyword}%");
+        $selected_substrates->where('name', 'LIKE', "%{$keyword}%");
+        $selected_gases->where('name', 'LIKE', "%{$keyword}%");
     }
     if (!empty($material)) {
         $selected_materials->where('name', 'LIKE', "%{$material}%");
@@ -57,11 +69,14 @@ class SearchController extends Controller
     if (!empty($fruit)) {
         $selected_fruits->where('name', 'LIKE', "%{$fruit}%");
     }
-    if (!empty($ph_material)) {
-        $selected_phMaterials->where('name', 'LIKE', "%{$ph_material}%");
+    if (!empty($enzyme)) {
+        $selected_enzymes->where('name', 'LIKE', "%{$enzyme}%");
     }
-    if (!empty($antibacteria_test_type)) {
-        $selected_antibacteriaTestTypes->where('name', 'LIKE', "%{$antibacteria_test_type}%");
+    if (!empty($substrate)) {
+        $selected_substrates->where('name', 'LIKE', "%{$substrate}%");
+    }
+    if (!empty($gas)) {
+        $selected_gases->where('name', 'LIKE', "%{$gas}%");
     }
 
     if (!empty($keyword) || !empty($material)) {
@@ -80,29 +95,31 @@ class SearchController extends Controller
     } else {
         $selected_fruits = collect();
     }
-    if (!empty($keyword) || !empty($ph_material)) {
-        $selected_phMaterials = $selected_phMaterials->get();
+    if (!empty($keyword) || !empty($enzyme)) {
+        $selected_enzymes = $selected_enzymes->get();
     } else {
-        $selected_phMaterials = collect();
+        $selected_enzymes = collect();
     }
-    if (!empty($keyword) || !empty($antibacteria_test_type)) {
-        $selected_antibacteriaTestTypes = $selected_antibacteriaTestTypes->get();
+    if (!empty($keyword) || !empty($substrate)) {
+        $selected_substrates = $selected_substrates->get();
     } else {
-        $selected_antibacteriaTestTypes = collect();
+        $selected_substrates = collect();
+    }
+    if (!empty($keyword) || !empty($gas)) {
+        $selected_gases = $selected_gases->get();
+    } else {
+        $selected_gases = collect();
     }
 
     if($selected_materials->isEmpty() && $selected_bacteria->isEmpty() && $selected_fruits->isEmpty() &&
-        $selected_phMaterials->isEmpty() && $selected_antibacteriaTestTypes->isEmpty()) {
+        $selected_enzymes->isEmpty() && $selected_substrates->isEmpty() && $selected_gases->isEmpty()) {
             $selected_experiments = [];
         } else {
         foreach($selected_materials as $selected_material){
             $material = Material::where('material_id', $selected_material->id)->pluck('composition_id');
-            // dd($material);
             if($material){
                 $experiments_id = Material_Composition::whereIn('id', $material)->pluck('experiment_id');
-                // dd($experiments_id);
-                $selected_experiments->whereIn('id', $experiments_id);
-                // dd($selected_experiments);
+                $selected_experiments->orwhereIn('id', $experiments_id);
             }
         }
 
@@ -113,10 +130,30 @@ class SearchController extends Controller
                 $selected_experiments->orWhereIn('id', $bacteria);
             }
         }
+        // dd($selected_experiments);
+
         foreach($selected_fruits as $selected_fruit){
             $fruit = Storing_test::where('storing_fruit_id', $selected_fruit->id)->pluck('experiment_id');
             if($fruit){
                 $selected_experiments->orWhereIn('id', $fruit);
+            }
+        }
+        foreach($selected_enzymes as $selected_enzyme){
+            $enzyme = Enzyme_test::where('enzyme_id', $selected_enzyme->id)->pluck('experiment_id');
+            if($enzyme){
+                $selected_experiments->orWhereIn('id', $enzyme);
+            }
+        }
+        foreach($selected_substrates as $selected_substrate){
+            $substrate = Enzyme_test::where('substrate_id', $selected_substrate->id)->pluck('experiment_id');
+            if($substrate){
+                $selected_experiments->orWhereIn('id', $substrate);
+            }
+        }
+        foreach($selected_gases as $selected_gas){
+            $gas = Tga_test::where('gas_id', $selected_gas->id)->pluck('experiment_id');
+            if($gas){
+                $selected_experiments->orWhereIn('id', $gas);
             }
         }
         $selected_experiments = $selected_experiments->paginate(5);
@@ -127,6 +164,9 @@ class SearchController extends Controller
     $materials = [];
     $fruits = [];
     $bacteria = [];
+    $enzymes = [];
+    $substrates = [];
+    $gases = [];
 
     $composition_id=[];
 
@@ -135,211 +175,72 @@ class SearchController extends Controller
         $materials[$experiment->id] = Material::whereIn('composition_id', $composition_id[$experiment->id])->get();
         $fruits[$experiment->id] = Storing_test::where('experiment_id', $experiment->id)->get();
         $bacteria[$experiment->id] = Antibacteria_test::where('experiment_id', $experiment->id)->get();
+        $enzymes[$experiment->id] = Enzyme_test::where('experiment_id', $experiment->id)->get();
+        $substrates[$experiment->id] = Enzyme_test::where('experiment_id', $experiment->id)->get();
+        $gases[$experiment->id] = Tga_test::where('experiment_id', $experiment->id)->get();
     }
 
     $materials_list = Material::select('material_id')->distinct()->get();
     $fruits_list = Storing_test::select('storing_fruit_id')->distinct()->get();
     $bacteria_list = Antibacteria_test::select('bacteria_id')->distinct()->get();
-    $phMaterial_list = Material::select('ph_material_id')->distinct()->get();
-    $antibacteriaTypeTest_list = Antibacteria_test::select('test_id')->distinct()->get();
+    $enzymes_list = Enzyme_test::select('enzyme_id')->distinct()->get();
+    $substrates_list = Enzyme_test::select('substrate_id')->distinct()->get();
+    $gases_list = Tga_test::select('gas_id')->distinct()->get();
 
     return view('user.search.index', compact(
-        'materials_list', 'bacteria_list', 'fruits_list', 'phMaterial_list', 'antibacteriaTypeTest_list',
-        'selected_experiments', 'keyword', 'materials', 'fruits', 'bacteria'
+        'materials_list', 'bacteria_list', 'fruits_list', 'enzymes_list', 'substrates_list','gases_list',
+        'selected_experiments', 'keyword', 'materials', 'fruits', 'bacteria', 'enzymes', 'substrates', 'gases'
     ));
-}
+    }
+
+    public function experimentIndex($experiment_id)
+    {
+        // $experiment_id = Material_composition::where('id', $composition_id)->first()->experiment_id;
+        $experiment = Experiment::where('id', $experiment_id)->first();
+        // $film_condition = Film_condition::where('experiment_id', $experiment_id )->get();
+        // $film_condition_data = $film_condition->first();
+        $materials = [];
+        $film_conditions = [];
+        $storings_tests = [];
+        $bacteria_tests = []; 
+        $enzyme_tests = []; 
+        $substrate_tests = []; 
+        $tga_tests = []; 
+        $characteristic_tests = [];
+        $characteristic_tests_data = [];
+        $charactaristic_testCounts = [];
 
 
 
-    //      public function index(Request $request)
-    //  {
-    //     $keyword = $request->input('keyword');
-    //     $material = $request->input('material');
-    //     $bacterium = $request->input('bacterium');
-    //     $fruit = $request->input('fruit');
-    //     $ph_material = $request->input('ph_material');
-    //     $antibacteria_test_type = $request->input('antibacteria_test_type');
-
-    //     $selected_materials = Material_detail::query();
-    //     $selected_bacteria = Bacteria_detail::query();
-    //     $selected_fruits = Fruit_detail::query();
-    //     $selected_phMaterials = Ph_material_detail::query();
-    //     $selected_antibacteriaTestTypes = Antibacteria_test_type::query();
-    //     $selected_compositions = Material_composition::query();
-    //     $selected_experiments = Experiment::query();
+        $materials_list = Material_detail::orderby('name', 'asc')->get();
+        $fruits_list = Fruit_detail::orderby('name', 'asc')->get();
+        $bacteria_list = Bacteria_detail::orderby('name','asc')->get();
+        $enzyme_list = Enzyme_detail::orderby('name','asc')->get();
+        $substrate_list = Substrate_detail::orderby('name','asc')->get();
+        $gas_list = gas_detail::orderby('name','asc')->get();
 
 
-    //     if(!empty($keyword)){
-    //         $selected_materials->where('name', 'LIKE', "%{$keyword}%");
-    //         $selected_bacteria->where('name', 'LIKE', "%{$keyword}%");
-    //         $selected_fruits->where('name', 'LIKE', "%{$keyword}%");
-    //         $selected_phMaterials->where('name', 'LIKE', "%{$keyword}%");
-    //         $selected_antibacteriaTestTypes->where('name', 'LIKE', "%{$keyword}%");
-    //     }
-    //     if (!empty($material)) {
-    //         $selected_materials->where('name', 'LIKE', "%{$material}%");
-    //     }
-    //     if (!empty($bacterium)) {
-    //         $selected_bacteria->where('name', 'LIKE', "%{$bacterium}%");
-    //     }
-    //     if (!empty($fruit)) {
-    //         $selected_fruits->where('name', 'LIKE', "%{$fruit}%");
-    //     }
-    //     if (!empty($ph_material)) {
-    //         $selected_phMaterials->where('name', 'LIKE', "%{$ph_material}%");
-    //     }
-    //     if (!empty($antibacteria_test_type)) {
-    //         $selected_antibacteriaTestTypes->where('name', 'LIKE', "%{$antibacteria_test_type}%");
-    //     }
-
-    //     //絞ったデータをゲットする，もしインプットに値が入っていなければ，空にする
-    //     if (!empty($keyword) || !empty($material)) {
-    //         $selected_materials = $selected_materials->get();
-    //     } else {
-    //         $selected_materials = [];
-    //     }
-    //     if (!empty($keyword) || !empty($bacterium)) {
-    //         $selected_bacteria = $selected_bacteria->get();
-    //     } else {
-    //         $selected_bacteria = [];
-    //     }
-    //     if (!empty($keyword) || !empty($fruit)) {
-    //         $selected_fruits = $selected_fruits->get();
-    //     } else {
-    //         $selected_fruits = [];
-    //     }
-    //     if (!empty($keyword) || !empty($ph_material)) {
-    //         $selected_phMaterials = $selected_phMaterials->get();
-    //     } else {
-    //         $selected_phMaterials = [];
-    //     }
-    //     if (!empty($keyword) || !empty($antibacteria_test_type)) {
-    //         $selected_antibacteriaTestTypes = $selected_antibacteriaTestTypes->get();
-    //     } else {
-    //         $selected_antibacteriaTestTypes = [];
-    //     }
-    //     if(empty($selected_materials) && empty($selected_bacteria) && empty($selected_fruits) &&
-    //      empty($selected_phMaterials) && empty($selected_antibacteriaTestTypes)) {
-    //         $selected_experiments = [];
-    //         // $selected_experiments = [];
-    //     }
-
-    //     foreach($selected_materials as $selected_material){
-    //         $material = Material::where('material_id', $selected_material->id)->first();
-    //         if($material){
-    //             $selected_compositions->where('id', $material->composition_id)->first()->experiment_id;
-    //             $selected_experiments->where('id', $selected_compositions);
-    //         }
-    //     }
-    //     foreach($selected_bacteria as $selected_bacterium){
-    //         $bacteria = Antibacteria_test::where('bacteria_id', $selected_bacterium->id)->first();
-    //         // $experiment_id = $bacteria->experiment_id;
-    //         // $composition_id = Material_composition::where('experiment_id', $experiment_id)->first();
-    //         if($bacteria){
-    //             // $selected_experiments->orWhere('id', $composition_id->composition_id);
-    //             $selected_experiments->orWhere('id', $bacteria->experiment_id);
-    //         }
-    //     }
-    //     foreach($selected_fruits as $selected_fruit){
-    //         $fruit = Storing_test::where('storing_fruit_id', $selected_fruit->id)->first();
-    //         if($fruit){
-    //             // $selected_compositions->orWhere('id', $fruit->composition_id);
-    //             $selected_experiments->orWhere('id', $fruit->experiment_id);
-    //         }
-    //     }
-    //     // foreach($selected_phMaterials as $selected_phMaterial){
-    //     //     $phMaterial = Material::where('ph_material_id', $selected_phMaterial->id)->first();
-    //     //     if($phMaterial){
-    //     //         $selected_compositions->orWhere('id', $phMaterial->composition_id);
-    //     //     }
-    //     // }
-    //     // foreach($selected_antibacteriaTestTypes as $selected_antibacteriaTestType){
-    //     //     $antibacteriaTestType = Antibacteria_test::where('test_id', $selected_antibacteriaTestType->id)->first();
-    //     //     if($antibacteriaTestType){
-    //     //         $selected_compositions->orWhere('id', $antibacteriaTestType->composition_id);
-    //     //     }
-    //     // }
+        $compositions = Material_Composition::where('experiment_id', $experiment_id)->orderby('id', 'asc')->get();
         
-    //     // if(!empty($selected_compositions))
-    //     //     $selected_compositions = $selected_compositions->paginate(5);
-    //     if(!empty($selected_experiments))
-    //         $selected_experiments = $selected_experiments->paginate(5);
+        $compositions_id = Material_Composition::where('experiment_id', $experiment->id)->pluck('id');
+        $characteristic_test = Charactaristic_test::whereIn('composition_id', $compositions_id)->get();
+        $film_condition = Film_condition::where('experiment_id', $experiment_id)->get();
+        $storing_test = Storing_test::where('experiment_id', $experiment_id)->get();
+        $antibacteria_test = Antibacteria_test::where('experiment_id', $experiment_id)->get();
+        $enzyme_test = Enzyme_test::where('experiment_id', $experiment_id)->get();
+        $tga_test = Tga_test::where('experiment_id', $experiment_id)->get();
 
-    //     $materials=[];
-    //     $fruits = [];
-    //     $bacteria = [];
-
-    //     // foreach($selected_compositions as $composition){
-    //     //     $materials[$composition->id] = Material::where('composition_id', $composition->id)->get();
-    //     //     $fruits[$composition->id] = Storing_test::where('composition_id', $composition->id)->get();
-    //     //     $bacteria[$composition->id] = Antibacteria_test::where('composition_id', $composition->id)->get();
-    //     // }
-    //     foreach($selected_experiments as $experiment){
-    //         $materials[$experiment->id] = Material::where('composition_id', $experiment->id)->get();
-    //         $fruits[$experiment->id] = Storing_test::where('composition_id', $experiment->id)->get();
-    //         $bacteria[$experiment->id] = Antibacteria_test::where('composition_id', $experiment->id)->get();
-    //     }
-    
-    //     $materials_list = Material::select('material_id')->distinct()->get();
-    //     $fruits_list = Storing_test::select('storing_fruit_id')->distinct()->get();
-    //     $bacteria_list = Antibacteria_test::select('bacteria_id')->distinct()->get();
-    //     $phMaterial_list = Material::select('ph_material_id')->distinct()->get();
-    //     $antibacteriaTypeTest_list = Antibacteria_test::select('test_id')->distinct()->get();
-
-        
-    //     // return view('user.search.index', compact(
-    //     //     'materials_list', 'bacteria_list', 'fruits_list', 'phMaterial_list', 'antibacteriaTypeTest_list',
-    //     //     'selected_compositions','keyword', 
-    //     // ));
-    //     return view('user.search.index', compact(
-    //         'materials_list', 'bacteria_list', 'fruits_list', 'phMaterial_list', 'antibacteriaTypeTest_list',
-    //         'selected_compositions','keyword', 'materials', 'fruits', 'bacteria'
-    //     ));
- 
-    //     } 
-
-        public function experimentIndex($experiment_id)
-        {
-            // $experiment_id = Material_composition::where('id', $composition_id)->first()->experiment_id;
-            $experiment = Experiment::where('id', $experiment_id)->first();
-            // $film_condition = Film_condition::where('experiment_id', $experiment_id )->get();
-            // $film_condition_data = $film_condition->first();
-            $materials = [];
-            $film_conditions = [];
-            $storings_tests = [];
-            $bacteria_tests = []; 
-            $characteristic_tests = [];
-            $characteristic_tests_data = [];
-            $charactaristic_testCounts = [];
-    
-    
-    
-            $materials_list = Material_detail::orderby('name', 'asc')->get();
-            $ph_materials_list = Ph_material_detail::orderby('name', 'asc')->get();
-            $fruits_list = Fruit_detail::orderby('name', 'asc')->get();
-            $bacteria_list = Bacteria_detail::orderby('name','asc')->get();
-            $antibacteria_test_list = Antibacteria_test_type::orderby('name','asc')->get();
-    
-    
-            $compositions = Material_Composition::where('experiment_id', $experiment_id)->orderby('id', 'asc')->get();
-            
-            $compositions_id = Material_Composition::where('experiment_id', $experiment->id)->pluck('id');
-            $characteristic_test = Charactaristic_test::whereIn('composition_id', $compositions_id)->get();
-            $film_condition = Film_condition::where('experiment_id', $experiment_id)->get();
-            $storing_test = Storing_test::where('experiment_id', $experiment_id)->get();
-            $bacteria_test = Antibacteria_test::where('experiment_id', $experiment_id)->get();
-
-            foreach($compositions as $composition) {
-                $materials[$composition->id] = Material::where('composition_id', $composition->id)->get();
-                $characteristic_tests[$composition->id] = Charactaristic_test::where('composition_id', $composition->id)->get();
-                $charactaristic_testCounts[$composition->id] = Charactaristic_test::where('composition_id', $composition->id)->count();
-                // $characteristic_tests_data[$composition->id] = $characteristic_tests[$composition->id]->first();
-            }
-    
-            return view('user.search.experiment_show', compact('experiment','materials', 'compositions','storing_test',
-                'bacteria_test', 'characteristic_tests', 'characteristic_test','characteristic_tests_data', 'film_condition', 'materials_list', 'ph_materials_list',
-                'bacteria_list', 'fruits_list', 'antibacteria_test_list','charactaristic_testCounts'));
+        foreach($compositions as $composition) {
+            $materials[$composition->id] = Material::where('composition_id', $composition->id)->get();
+            $characteristic_tests[$composition->id] = Charactaristic_test::where('composition_id', $composition->id)->get();
+            $charactaristic_testCounts[$composition->id] = Charactaristic_test::where('composition_id', $composition->id)->count();
+            // $characteristic_tests_data[$composition->id] = $characteristic_tests[$composition->id]->first();
         }
+
+        return view('user.search.experiment_show', compact('experiment','materials', 'compositions','storing_test',
+            'antibacteria_test','enzyme_test','tga_test', 'characteristic_tests', 'characteristic_test','characteristic_tests_data', 'film_condition', 'materials_list', 'enzyme_list',
+            'substrate_list', 'gas_list','fruits_list', 'charactaristic_testCounts'));
+    }
 
 
     public function show($id)

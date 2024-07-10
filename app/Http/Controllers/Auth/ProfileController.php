@@ -16,15 +16,22 @@ use App\Models\Material_detail;
 use App\Models\Solvent_detail;
 use App\Models\Fruit_detail;
 use App\Models\Bacteria_detail;
-use App\Models\Ph_material_detail;
-use App\Models\Antibacteria_test_type;
+use App\Models\Enzyme_detail;
+use App\Models\Substrate_detail;
 use App\Models\Affiliation;
+use App\Models\Colony_test;
 use App\Models\Note;
 use App\Models\Storing_multiple_test;
+use App\Models\Tga_test;
+use App\Models\Tga_value;
 use App\Models\Enzyme_test;
 use App\Models\Enzyme_value;
+use App\Models\Growthcurve_test;
 use App\Models\Viscosity_test;
 use App\Models\Wvp_test;
+use App\Models\Cfu_test;
+use App\Models\Survivalrate_test;
+use App\Models\Gas_detail;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
@@ -57,10 +64,13 @@ class ProfileController extends Controller
 
         $materials_list = Material_detail::orderby('name', 'asc')->get();
         $solvents_list = Solvent_detail::orderby('name', 'asc')->get();
-        $ph_materials_list = Ph_material_detail::orderby('name', 'asc')->get();
+        // $ph_materials_list = Ph_material_detail::orderby('name', 'asc')->get();
         $fruits_list = Fruit_detail::orderby('name', 'asc')->get();
         $bacteria_list = Bacteria_detail::orderby('name','asc')->get();
-        $antibacteria_test_list = Antibacteria_test_type::orderby('name','asc')->get();
+        // $antibacteria_test_list = Antibacteria_test_type::orderby('name','asc')->get();
+        $enzymes_list = Enzyme_detail::orderby('name', 'asc')->get();
+        $substrates_list = Substrate_detail::orderby('name', 'asc')->get();
+        $gas_list = Gas_detail::orderby('name', 'asc')->get();
 
         $compositions = Material_Composition::where('experiment_id', $experiment->id)->orderby('id', 'asc')->get();
 
@@ -69,13 +79,37 @@ class ProfileController extends Controller
         //実験の条件を取得
         $film_condition = Film_condition::where('experiment_id', $experiment->id)->first();
         $storing_test = Storing_test::where('experiment_id', $experiment->id)->first();
-        $bacteria_test = Antibacteria_test::where('experiment_id', $experiment->id )->first();
+        $antibacteria_test = Antibacteria_test::where('experiment_id', $experiment->id )->first();
 
         //実験の結果を取得
         $characteristic_test = Charactaristic_test::whereIn('composition_id', $compositions_id)->get();
     
         $multiple_test = null;
         // dd($compositions);
+
+        $eager_composition_antibacteria = Material_composition::with(['colony_test', 'cfu_test', 'survivalrate_test', 'growthcurve_test'])
+                                                    ->whereIn('id', $compositions_id)
+                                                    ->get();
+        $antibacteria_tests_check = $eager_composition_antibacteria->isEmpty() || $eager_composition_antibacteria->every(function ($eager_composition_antibacteria) {
+            return $eager_composition_antibacteria->colony_test->isEmpty() &&
+                    $eager_composition_antibacteria->cfu_test->isEmpty() &&
+                    $eager_composition_antibacteria->survivalrate_test->isEmpty() &&
+                    $eager_composition_antibacteria->growthcurve_test->isEmpty();
+        });
+        
+        $eager_experiment_enzyme = Experiment::with(['enzyme_test.enzyme_detail'])->where('id', $experiment_id)->first();
+        $eager_composition_enzyme = Material_composition::with(['enzyme_value'])->whereIn('id', $compositions_id)->get();
+        $enzyme_value_check = $eager_composition_enzyme->isEmpty() || $eager_composition_enzyme->every(function ($eager_composition_enzyme){
+            return $eager_composition_enzyme->enzyme_value->isEmpty();
+        });
+
+        $eager_experiment_tga = Experiment::with(['tga_test.gas_detail'])->where('id', $experiment_id)->first();
+        $eager_composition_tga = Material_composition::with(['tga_value'])->whereIn('id', $compositions_id)->get();
+        $tga_value_check = $eager_composition_tga->isEmpty() || $eager_composition_tga->every(function ($eager_composition_tga){
+            return $eager_composition_tga->tga_value->isEmpty();
+        });
+
+        //あとでイーガーローディングで書き直す
         if($compositions->isNotEmpty()){
             foreach($compositions as $composition) {
                 // $film_conditions[$composition->id] = Film_condition::where('composition_id', $composition->id )->get();
@@ -83,7 +117,6 @@ class ProfileController extends Controller
                 $multiple_tests[$composition->id] = Storing_multiple_test::where('composition_id', $composition->id)->get();
                 $multiple_test = Storing_multiple_test::where('composition_id', $composition->id)->first();
                 // $storing_tests[$composition->id] = Storing_test::where('composition_id', $composition->id)->get();
-                // $bacteria_tests[$composition->id] = Antibacteria_test::where('composition_id', $composition->id)->get();
                 $characteristic_tests[$composition->id] = Charactaristic_test::where('composition_id', $composition->id)->get();
                 $charactaristic_testCounts[$composition->id] = Charactaristic_test::where('composition_id', $composition->id)->count();
             }  
@@ -98,8 +131,9 @@ class ProfileController extends Controller
         
 
         return view('user.profile.experiment_register', compact('experiment','materials', 'compositions', 'storing_test','multiple_tests','multiple_test',
-             'characteristic_tests', 'characteristic_test', 'characteristic_tests_data', 'film_condition', 'materials_list','bacteria_test',
-             'ph_materials_list', 'solvents_list', 'bacteria_list', 'fruits_list', 'antibacteria_test_list','charactaristic_testCounts'));
+             'characteristic_tests', 'characteristic_test', 'characteristic_tests_data', 'film_condition', 'materials_list','antibacteria_test',
+             'solvents_list', 'bacteria_list', 'fruits_list','enzymes_list','substrates_list','gas_list', 'charactaristic_testCounts', 'antibacteria_tests_check',
+             'eager_experiment_enzyme', 'eager_composition_enzyme', 'enzyme_value_check', 'eager_experiment_tga', 'eager_composition_tga', 'tga_value_check'));
     }
 
     public function index()
@@ -184,29 +218,28 @@ class ProfileController extends Controller
 
     }
 
-    public function create($id, $formType)
-    {
-        dd($formType);
-        $materials_list = Material_detail::orderby('name', 'asc')->get();
-        $ph_materials_list = Ph_material_detail::orderby('name', 'asc')->get();
-        $fruits_list = Fruit_detail::orderby('name', 'asc')->get();
-        $bacteria_list = Bacteria_detail::orderby('name','asc')->get();
-        $antibacteria_test_list = Antibacteria_test_type::orderby('name','asc')->get();
+//     public function create($id, $formType)
+//     {
+//         $materials_list = Material_detail::orderby('name', 'asc')->get();
+//         $fruits_list = Fruit_detail::orderby('name', 'asc')->get();
+//         $bacteria_list = Bacteria_detail::orderby('name','asc')->get();
 
-        if ($formType === 'material') {
-            return view('user.profile.additional_create', compact('id', 'materials_list', 'ph_materials_list', 'formType'));
-        } elseif ($formType === 'film_condition') {
-            return view('user.profile.additional_create', compact('id', 'formType'));
-        } elseif ($formType === 'charactaristic_test') {
-            return view('user.profile.additional_create', compact('id', 'formType'));
-        } elseif ($formType === 'storing_test') {
-            return view('user.profile.additional_create', compact('id', 'fruits_list', 'formType'));
-        } elseif ($formType === 'antibacteria_test') {
-            return view('user.profile.additional_create', compact('id', 'bacteria_list', 'fruits_list', 'antibacteria_test_list', 'formType'));
-        } elseif ($formType === 'note') {
-            return view('user.profile.additional_create', compact('id', 'formType'));
-        } 
-}
+//         if ($formType === 'material') {
+//             return view('user.profile.additional_create', compact('id', 'materials_list', 'formType'));
+//         } elseif ($formType === 'film_condition') {
+//             return view('user.profile.additional_create', compact('id', 'formType'));
+//         } elseif ($formType === 'charactaristic_test') {
+//             return view('user.profile.additional_create', compact('id', 'formType'));
+//         } elseif ($formType === 'storing_test') {
+//             return view('user.profile.additional_create', compact('id', 'fruits_list', 'formType'));
+//         } elseif ($formType === 'antibacteria_test') {
+//             return view('user.profile.additional_create', compact('id', 'bacteria_list', 'fruits_list', 'formType'));
+//         } elseif ($formType === 'enzyme_test') {
+//             return view('user.profile.additional_create', compact('id', 'bacteria_list', 'fruits_list', 'formType'));
+//         } elseif ($formType === 'note') {
+//             return view('user.profile.additional_create', compact('id', 'formType'));
+//         } 
+// }
 
     /**
      * Store a newly created resource in storage.
@@ -245,30 +278,6 @@ class ProfileController extends Controller
 
     public function store(Request $request)  
     {
-        // if($request->formType === 'experiment'){
-        //     $request->validate([
-        //         'title' => ['required', 'string', 'max:255','unique:experiments'], 
-        //         'name' => ['nullable', 'string', 'max:255'],
-        //         'date' => ['required','date'],
-        //         'paper_name' => ['string', 'max:255','nullable'],
-        //         'paper_url' => ['string', 'max:255','nullable'],
-        //     ]);
-
-        //     $experiment = new Experiment;
-        //     $experiment -> user_id = Auth::user()->id;
-        //     $experiment->title = $request->title;
-        //     $experiment->name = $request->name;
-        //     $experiment->date = $request->date;
-        //     $experiment->paper_name = $request->paper_name;        
-        //     $experiment->paper_url = $request->paper_url;        
-        //     $experiment->save();
-
-        //     $latest_experiment_id = Experiment::orderBy('id', 'desc')->first()->id;
-
-        //     $composition = new Material_composition;
-        //     $composition-> experiment_id =  $latest_experiment_id;   
-        //     $composition->save();
-            
         if($request->formType === 'material'){
             $request->validate([
                 'concentration' =>['numeric', 'nullable'],
@@ -363,11 +372,11 @@ class ProfileController extends Controller
             $charactaristic_test-> eab = $request->eab;
             $charactaristic_test-> light_transmittance = $request->light_transmittance;
             $charactaristic_test-> xrd = $request->xrd;
-            $charactaristic_test-> afm = $filePath_afm;
-            $charactaristic_test-> sem = $filePath_sem;
-            $charactaristic_test-> dsc = $filePath_dsc;
-            $charactaristic_test-> ftir = $filePath_ftir;
-            $charactaristic_test-> clsm = $filePath_clsm;
+            // $charactaristic_test-> afm = $filePath_afm;
+            // $charactaristic_test-> sem = $filePath_sem;
+            // $charactaristic_test-> dsc = $filePath_dsc;
+            // $charactaristic_test-> ftir = $filePath_ftir;
+            // $charactaristic_test-> clsm = $filePath_clsm;
             $charactaristic_test->save();
 
         }elseif($request->formType === 'storing_test'){
@@ -440,22 +449,70 @@ class ProfileController extends Controller
                 'invivo_invitro' => ['string', 'nullable'],
                 'bacteria_concentration' => ['numeric', 'nullable'],
                 'mic' => ['numeric', 'nullable'],
+                'memo' => ['string', 'nullable']
             ]);
             $antibacteria_test = new Antibacteria_test;
-            $antibacteria_test-> composition_id = $request->id;
-            // dd($request);
+            $antibacteria_test-> experiment_id = $request->experiment_id;
             $bacteriaDetail = Bacteria_detail::select('id')->where('name', $request->bacteria_name)->first();
-            // dd($bacteriaDetail);
             $antibacteria_test-> bacteria_id = $bacteriaDetail->id;
             $fruitDetail = Fruit_detail::select('id')->where('name', $request->fruit_name)->first();
             $antibacteria_test-> antibacteria_fruit_id = $fruitDetail->id;
-            $antibacteriaTestType = Antibacteria_test_type::select('id')->where('name', $request->test_name)->first();
-            $antibacteria_test->test_id = $antibacteriaTestType->id;
-            $antibacteria_test-> invivo_invitro = $request->invivo_invitro;
-            $antibacteria_test-> bacteria_concentration = $request->bacteria_concentration;
-            $antibacteria_test-> mic = $request->mic;
+            // $antibacteriaTestType = Antibacteria_test_type::select('id')->where('name', $request->test_name)->first();
+            // $antibacteria_test->test_id = $antibacteriaTestType->id;
+            // $antibacteria_test-> invivo_invitro = $request->invivo_invitro;
+            // $antibacteria_test-> bacteria_concentration = $request->bacteria_concentration;
+            // $antibacteria_test-> mic = $request->mic;
+            $antibacteria_test->memo = $request->memo;
             $antibacteria_test->save();
-        }else{
+        }elseif($request->formType === 'enzyme_test'){
+            $request->validate([
+                'enzyme_concentration' => ['string', 'nullable'],
+                'substrate_concentration' => ['numeric', 'nullable'],
+                'ph' => ['numeric', 'nullable'],
+                'temperature' => ['numeric', 'nullable'],
+                'volume' => ['numeric', 'nullable'],
+                'time' => ['numeric', 'nullable'],
+                'memo' => ['string', 'nullable']
+            ]);
+            $enzyme_test = new Enzyme_test;
+            $enzyme_test-> experiment_id = $request->experiment_id;
+            $enzymeDetail = Enzyme_detail::select('id')->where('name', $request->enzyme_name)->first();
+            $enzyme_test-> enzyme_id = $enzymeDetail->id;
+            $substrateDetail = Substrate_detail::select('id')->where('name', $request->substrate_name)->first();
+            $enzyme_test-> substrate_id = $substrateDetail->id;
+            $enzyme_test->enzyme_concentration = $request->enzyme_concentration;
+            $enzyme_test->substrate_concentration = $request->substrate_concentration;
+            $enzyme_test->ph = $request->ph;
+            $enzyme_test->temperature = $request->temperature;
+            $enzyme_test->volume = $request->valume;
+            $enzyme_test->time = $request->time;
+            $enzyme_test->memo = $request->memo;
+            $enzyme_test->save();
+
+        }elseif($request->formType === 'tga_test'){
+            $request->validate([
+                'flow_rate' => ['numeric', 'nullable'],
+                'start_temperature' => ['numeric', 'nullable'],
+                'end_temperature' => ['numeric', 'nullable'],
+                'tmeperature_range' => ['numeric', 'nullable'],
+                'heating_rate' => ['numeric', 'nullable'],
+                'memo' => ['string', 'nullable']
+        ]);
+        $tga_test = new Tga_test;
+        $tga_test-> experiment_id = $request->experiment_id;
+        $gasDetail = Gas_detail::select('id')->where('name', $request->gas_name)->first();
+        $tga_test-> gas_id = $gasDetail->id;
+        $tga_test->flow_rate = $request->flow_rate;
+        $tga_test->start_temperature = $request->start_temperature;
+        $tga_test->end_temperature = $request->end_temperature;
+        $tga_test->temperature_range = $request->temperature_range;
+        $tga_test->heating_rate = $request->heating_rate;
+        $tga_test->memo = $request->memo;
+        $tga_test->save();
+
+    }
+
+        else{
             $request->validate([
                 'note' => ['string', 'nullable'],
                 'img1' => ['string', 'nullable'],
@@ -513,10 +570,13 @@ class ProfileController extends Controller
     {
         $materials_list = Material_detail::orderby('name', 'asc')->get();
         $solvents_list = Solvent_detail::orderby('name', 'asc')->get();
-        $ph_materials_list = Ph_material_detail::orderby('name', 'asc')->get();
+        // $ph_materials_list = Ph_material_detail::orderby('name', 'asc')->get();
         $fruits_list = Fruit_detail::orderby('name', 'asc')->get();
         $bacteria_list = Bacteria_detail::orderby('name','asc')->get();
-        $antibacteria_test_list = Antibacteria_test_type::orderby('name','asc')->get();
+        // $antibacteria_test_list = Antibacteria_test_type::orderby('name','asc')->get();
+        $enzyme_list = Enzyme_detail::orderby('name', 'asc')->get();
+        $substrate_list = Substrate_detail::orderby('name', 'asc')->get();
+        $gas_list = Gas_detail::orderby('name', 'asc')->get();
       
         
         if ($editType === 'experiment') {
@@ -542,9 +602,13 @@ class ProfileController extends Controller
             return view('user.profile.edit_experiment', compact('id', 'storing_test', 'fruits_list', 'editType'));
         } elseif ($editType === 'antibacteria_test') {
             $antibacteria_test = Antibacteria_test::findOrFail($id);
-            $composition_id = Antibacteria_test::select('composition_id')->where('id',$id)->first();
-            $experiment_id = Material_composition::select('experiment_id')->where('id',$composition_id->composition_id)->first();
-            return view('user.profile.edit_experiment', compact('id', 'antibacteria_test',  'bacteria_list', 'fruits_list', 'antibacteria_test_list', 'editType', 'experiment_id'));
+            return view('user.profile.edit_experiment', compact('id', 'antibacteria_test',  'bacteria_list', 'fruits_list', 'editType'));
+        } elseif ($editType === 'enzyme_test') {
+            $enzyme_test = Enzyme_test::findOrFail($id);
+            return view('user.profile.edit_experiment', compact('id', 'enzyme_test',  'enzyme_list', 'substrate_list', 'editType'));
+        } elseif ($editType === 'tga_test') {
+            $tga_test = tga_test::findOrFail($id);
+            return view('user.profile.edit_experiment', compact('id', 'tga_test',  'gas_list', 'editType'));
         } elseif ($editType === 'note') {
             $note = Note::findOrFail($id);
             $composition_id = Note::select('composition_id')->where('id',$id)->first();
@@ -767,26 +831,45 @@ class ProfileController extends Controller
 
         elseif($request->editType === 'antibacteria_test'){
             $id = $request->id;
-
-            $composition_id = Antibacteria_test::select('composition_id')->where('id',$id)->first();
-            $experiment_id = Material_composition::select('experiment_id')->where('id',$composition_id->composition_id)->first();
-            $composition_id = $composition_id->composition_id;
-            $experiment_id = $experiment_id->experiment_id;
-
-
             $antibacteria_test = Antibacteria_test::findOrFail($id);
-            $antibacteria_test-> composition_id = $composition_id;
+            $experiment_id = $antibacteria_test->experiment_id;
             $bacteriaDetail = Bacteria_detail::select('id')->where('name', $request->bacteria_name)->first();
             $antibacteria_test-> bacteria_id = $bacteriaDetail->id;
             $fruitDetail = Fruit_detail::select('id')->where('name', $request->antibacteria_fruit_name)->first();
             $antibacteria_test-> antibacteria_fruit_id = $fruitDetail->id;
-            $antibacteriaTestType = Antibacteria_test_type::select('id')->where('name', $request->test_name)->first();
-            $antibacteria_test-> test_id = $antibacteriaTestType->id;
-            $antibacteria_test-> invivo_invitro = $request->invivo_invitro;
-            $antibacteria_test-> bacteria_concentration = $request->bacteria_concentration;
-            $antibacteria_test-> mic = $request->mic;
+            $antibacteria_test->memo = $request->memo;
             $antibacteria_test->save();
-
+        }
+        elseif($request->editType === 'enzyme_test'){
+            $id = $request->id;
+            $enzyme_test = Enzyme_test::findOrFail($id);
+            $experiment_id = $enzyme_test->experiment_id;
+            $enzymeDetail = enzyme_detail::select('id')->where('name', $request->enzyme_name)->first();
+            $enzyme_test-> enzyme_id = $enzymeDetail->id;
+            $substrateDetail = substrate_detail::select('id')->where('name', $request->substrate_name)->first();
+            $enzyme_test-> substrate_id = $substrateDetail->id;
+            $enzyme_test->enzyme_concentration = $request->enzyme_concentration;
+            $enzyme_test->substrate_concentration = $request->substrate_concentration;
+            $enzyme_test->ph = $request->ph;
+            $enzyme_test->temperature = $request->temperature;
+            $enzyme_test->volume = $request->volume;
+            $enzyme_test->time = $request->time;
+            $enzyme_test->memo = $request->memo;
+            $enzyme_test->save();
+        }
+        elseif($request->editType === 'tga_test'){
+            $id = $request->id;
+            $tga_test = tga_test::findOrFail($id);
+            $experiment_id = $tga_test->experiment_id;
+            $gasDetail = gas_detail::select('id')->where('name', $request->gas_name)->first();
+            $tga_test-> gas_id = $gasDetail->id;
+            $tga_test->flow_rate = $request->flow_rate;
+            $tga_test->start_temperature = $request->start_temperature;
+            $tga_test->end_temperature = $request->end_temperature;
+            $tga_test->temperature_range = $request->temperature_range;
+            $tga_test->heating_rate = $request->heating_rate;
+            $tga_test->memo = $request->memo;
+            $tga_test->save();
         }
 
  
@@ -796,268 +879,8 @@ class ProfileController extends Controller
         'status'=>'info']);
     }
     
-    // public function edit(string $id)
-    // {
-    //     $materials_list = Material_detail::orderby('name', 'asc')->get();
-    //     $ph_materials_list = Ph_material_detail::orderby('name', 'asc')->get();
-    //     $fruits_list = Fruit_detail::orderby('name', 'asc')->get();
-    //     $bacteria_list = Bacteria_detail::orderby('name','asc')->get();
-    //     $antibacteria_test_list = Antibacteria_test_type::orderby('name','asc')->get();
-
-    //     $experiment_id = Material_composition::select('experiment_id')->where('id', $id)->firstOrFail()->experiment_id;
-
-    //     $experiment = Experiment::findOrFail($experiment_id);
-    //     $composition = Material_composition::findOrFail($id);
-    //     $materials = Material::where('composition_id', $id)->get();
-    //     $film_conditions = Film_condition::where('experiment_id', $experiment_id)->get();
-    //     $charactaristic_tests = Charactaristic_test::where('composition_id', $id)->get();
-    //     $storing_tests = Storing_test::where('composition_id', $id)->get();
-    //     $antibacteria_tests = Antibacteria_test::where('composition_id', $id)->get();
-    //     $notes = Note::where('composition_id', $id)->get();
-        
-
-    //     return view('user.profile.edit', compact('experiment','composition', 'materials','film_conditions',
-    //                 'charactaristic_tests','storing_tests','antibacteria_tests', 'materials_list',
-    //                 'ph_materials_list', 'fruits_list', 'bacteria_list', 'antibacteria_test_list',
-    //                 'notes'));
-   
-    // }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    // public function update(Request $request, string $id)
-    // {
-    //     $experiment_id = Material_composition::select('experiment_id')->where('id', $id)->firstOrFail()->experiment_id;
-
-    //     $experiment = Experiment::findOrFail($experiment_id);
-    //     $experiment->title = $request->title;
-    //     $experiment->name = $request->name;
-    //     $experiment->date = $request->date;
-    //     $experiment->paper_name = $request->paper_name;
-    //     $experiment->paper_url = $request->paper_url;        
-    //     $experiment->save();
-
-    //     $composition = Material_composition::findOrFail($id);
-    //         $composition-> experiment_id =  $experiment_id;   
-    //         $composition->save();
-
-    //     $materials = Material::where('composition_id', $id)->get();
-    //     foreach($materials as $material) {
-    //         $material-> composition_id = $id;
-    //         $materialDetail = Material_detail::select('id')->where('name', $request->input("material_name.$material->id"))->first();
-    //         $material-> material_id = $materialDetail->id;
-    //         $material-> concentration = $request->input("concentration.$material->id");
-    //         $material-> ph_adjustment = $request->input("ph_adjustment.$material->id");
-    //         $phMaterialDetail = Ph_material_detail::select('id')->where('name', $request->input("ph_material.$material->id"))->first();
-    //         if($phMaterialDetail != null){
-    //             $material-> ph_material_id = $phMaterialDetail->id;
-    //         }
-    //         $material-> ph_purpose = $request->input("ph_purpose.$material->id");
-    //         $material->save();
-    //     }
-
-    //     $filmconditions = Film_condition::where('composition_id', $id)->get();
-    //     foreach($filmconditions as $film_condition) {
-    //         $film_condition-> experiment_id = $id;
-    //         $film_condition-> casting_amount = $request->input("casting_amount.$film_condition->id");
-    //         $film_condition-> petri_dish_area = $request->input("petri_dish_area.$film_condition->id");
-    //         $film_condition-> degas_temperature = $request->input("degas_temperature.$film_condition->id");
-    //         $film_condition-> drying_temperature = $request->input("drying_temperature.$film_condition->id");
-    //         $film_condition-> drying_humidity = $request->input("drying_humidity.$film_condition->id");
-    //         $film_condition-> drying_time = $request->input("drying_time.$film_condition->id");
-    //         $film_condition->save();
-    //     }
-
-
-    //     $charactaristictests = Charactaristic_test::where('composition_id', $id)->get();
-    //     foreach($charactaristictests as $charactaristic_test) {
-    //         $afmImage = $request->file("afm.{$charactaristic_test->id}");
-    //         $semImage = $request->file("sem.{$charactaristic_test->id}");
-    //         $dscImage = $request->file("dsc.{$charactaristic_test->id}");
-    //         $ftirImage = $request->file("ftir.{$charactaristic_test->id}");
-    //         $clsmImage = $request->file("clsm.{$charactaristic_test->id}");
  
-    //         $filePath_afm = $afmImage ? $afmImage->store('images', 'public') : null;
-    //         $filePath_sem = $semImage ? $semImage->store('images', 'public') : null;
-    //         $filePath_dsc = $dscImage ? $dscImage->store('images', 'public') : null;
-    //         $filePath_ftir = $ftirImage ? $ftirImage->store('images', 'public') : null;
-    //         $filePath_clsm = $clsmImage ? $clsmImage->store('images', 'public') : null;
 
-    //         if (!$afmImage){
-    //             $previousAfmValue = $charactaristic_test->afm;
-    //             $filePath_afm = $previousAfmValue ? $previousAfmValue : null;
-    //         }
-    //         if (!$semImage){
-    //             $previousSemValue = $charactaristic_test->sem;
-    //             $filePath_sem = $previousSemValue ? $previousSemValue : null;
-    //         }
-    //         if (!$dscImage){
-    //             $previousDscValue = $charactaristic_test->dsc;
-    //             $filePath_dsc = $previousDscValue ? $previousDscValue : null;
-    //         }
-    //         if (!$ftirImage){
-    //             $previousFtirValue = $charactaristic_test->ftir;
-    //             $filePath_ftir = $previousFtirValue ? $previousFtirValue : null;
-    //         }
-    //         if (!$clsmImage){
-    //             $previousClsmValue = $charactaristic_test->clsm;
-    //             $filePath_clsm = $previousClsmValue ? $previousClsmValue : null;
-    //         }
-
-    //         $charactaristic_test-> composition_id = $id;
-    //         $charactaristic_test-> ph = $request->input("ph.$charactaristic_test->id");
-    //         $charactaristic_test-> temperature = $request->input("temperature.$charactaristic_test->id");
-    //         $charactaristic_test-> shear_rate = $request->input("shear_rate.$charactaristic_test->id");
-    //         $charactaristic_test-> shear_stress = $request->input("shear_stress.$charactaristic_test->id");
-    //         $charactaristic_test-> rotation_speed = $request->input("rotation_speed.$charactaristic_test->id");
-    //         $charactaristic_test-> viscosity = $request->input("viscosity.$charactaristic_test->id");
-    //         $charactaristic_test-> mc = $request->input("mc.$charactaristic_test->id");
-    //         $charactaristic_test-> ws = $request->input("ws.$charactaristic_test->id");
-    //         $charactaristic_test-> wvp = $request->input("wvp.$charactaristic_test->id");
-    //         $charactaristic_test-> thickness = $request->input("thickness.$charactaristic_test->id");    
-    //         $charactaristic_test-> ca = $request->input("ca.$charactaristic_test->id");
-    //         $charactaristic_test-> ts = $request->input("ts.$charactaristic_test->id");
-    //         $charactaristic_test-> d43 = $request->input("d43.$charactaristic_test->id");
-    //         $charactaristic_test-> d32 = $request->input("d32.$charactaristic_test->id");
-    //         $charactaristic_test-> eab = $request->input("eab.$charactaristic_test->id");
-    //         $charactaristic_test-> light_transmittance = $request->input("light_transmittance.$charactaristic_test->id");
-    //         $charactaristic_test-> xrd = $request->input("xrd.$charactaristic_test->id");
-    //         $charactaristic_test-> afm = $filePath_afm;
-    //         $charactaristic_test-> sem = $filePath_sem;
-    //         $charactaristic_test-> dsc = $filePath_dsc;
-    //         $charactaristic_test-> ftir = $filePath_ftir;
-    //         $charactaristic_test-> clsm = $filePath_clsm;
-    //         $charactaristic_test->save();
-    //     }
-
-    //     $storingtests = Storing_test::where('composition_id', $id)->get();
-    //     foreach($storingtests as $storing_test) {
-    //         $afmImage = $request->file("s-afm.{$storing_test->id}");
-    //         $semImage = $request->file("s-sem.{$storing_test->id}");
-    //         $dscImage = $request->file("s-dsc.{$storing_test->id}");
-    //         $ftirImage = $request->file("s-ftir.{$storing_test->id}");
-    //         $clsmImage = $request->file("s-clsm.{$storing_test->id}");
- 
-    //         $filePath_afm = $afmImage ? $afmImage->store('images', 'public') : null;
-    //         $filePath_sem = $semImage ? $semImage->store('images', 'public') : null;
-    //         $filePath_dsc = $dscImage ? $dscImage->store('images', 'public') : null;
-    //         $filePath_ftir = $ftirImage ? $ftirImage->store('images', 'public') : null;
-    //         $filePath_clsm = $clsmImage ? $clsmImage->store('images', 'public') : null;
-
-    //         if (!$afmImage){
-    //             $previousAfmValue = $storing_test->afm;
-    //             $filePath_afm = $previousAfmValue ? $previousAfmValue : null;
-    //         }
-    //         if (!$semImage){
-    //             $previousSemValue = $storing_test->sem;
-    //             $filePath_sem = $previousSemValue ? $previousSemValue : null;
-    //         }
-    //         if (!$dscImage){
-    //             $previousDscValue = $storing_test->dsc;
-    //             $filePath_dsc = $previousDscValue ? $previousDscValue : null;
-    //         }
-    //         if (!$ftirImage){
-    //             $previousFtirValue = $storing_test->ftir;
-    //             $filePath_ftir = $previousFtirValue ? $previousFtirValue : null;
-    //         }
-    //         if (!$clsmImage){
-    //             $previousClsmValue = $storing_test->clsm;
-    //             $filePath_clsm = $previousClsmValue ? $previousClsmValue : null;
-    //         }
-
-    //         $storing_test-> composition_id = $id;
-    //         $fruitDetail = Fruit_detail::select('id')->where('name', $request->input("storing_fruit_name.$storing_test->id"))->first();
-    //         $storing_test-> storing_fruit_id = $fruitDetail->id;
-    //         $storing_test-> storing_temperature = $request->input("storing_temperature.$storing_test->id");
-    //         $storing_test-> storing_humidity = $request->input("storing_humidity.$storing_test->id");
-    //         $storing_test-> storing_day = $request->input("storing_day.$storing_test->id");
-    //         $storing_test-> mass_loss_rate = $request->input("mass_loss_rate.$storing_test->id");
-    //         $storing_test-> l = $request->input("l.$storing_test->id");
-    //         $storing_test-> a = $request->input("a.$storing_test->id");
-    //         $storing_test-> b = $request->input("b.$storing_test->id");
-    //         $storing_test-> e = $request->input("e.$storing_test->id");
-    //         $storing_test-> ph = $request->input("ph.$storing_test->id");
-    //         $storing_test-> tss = $request->input("tss.$storing_test->id");
-    //         $storing_test-> hardness = $request->input("hardness.$storing_test->id");
-    //         $storing_test-> moisture_content = $request->input("moisture_content.$storing_test->id");
-    //         $storing_test-> ta = $request->input("ta.$storing_test->id");
-    //         $storing_test-> vitamin_c = $request->input("vitamin_c.$storing_test->id");
-    //         $storing_test-> rr = $request->input("rr.$storing_test->id");
-    //         $storing_test-> afm = $filePath_afm;
-    //         $storing_test-> sem = $filePath_sem;
-    //         $storing_test-> dsc = $filePath_dsc;
-    //         $storing_test-> ftir = $filePath_ftir;
-    //         $storing_test-> clsm = $filePath_clsm;
-    //         $storing_test->save();
-    //     }
-
-    //     $antibacteriatests = Antibacteria_test::where('composition_id', $id)->get();
-    //     foreach($antibacteriatests as $antibacteria_test) {
-    //         $antibacteria_test-> composition_id = $id;
-    //         $bacteriaDetail = Bacteria_detail::select('id')->where('name', $request->input("bacteria_name.$antibacteria_test->id"))->first();
-    //         $antibacteria_test-> bacteria_id = $bacteriaDetail->id;
-    //         $fruitDetail = Fruit_detail::select('id')->where('name', $request->input("antibacteria_fruit_name.$antibacteria_test->id"))->first();
-    //         $antibacteria_test-> antibacteria_fruit_id = $fruitDetail->id;
-    //         $antibacteriaTestType = Antibacteria_test_type::select('id')->where('name', $request->input("test_name.$antibacteria_test->id"))->first();
-    //         $antibacteria_test-> test_id = $antibacteriaTestType->id;
-    //         $antibacteria_test-> invivo_invitro = $request->input("invivo_invitro.$antibacteria_test->id");
-    //         $antibacteria_test-> bacteria_concentration = $request->input("bacteria_concentration.$antibacteria_test->id");
-    //         $antibacteria_test-> mic = $request->input("mic.$antibacteria_test->id");
-    //         $antibacteria_test->save();
-
-    //     }
-
-    //     $notes = Note::where('composition_id', $id)->get();
-    //     foreach($notes as $note) {
-    //         $img1 = $request->file("img1.{$note->id}");
-    //         $img2 = $request->file("img2.{$note->id}");
-    //         $img3 = $request->file("img3.{$note->id}");
-    //         $img4 = $request->file("img4.{$note->id}");
- 
-    //         $filePath_img1 = $img1 ? $img1->store('images', 'public') : null;
-    //         $filePath_img2 = $img2 ? $img2->store('images', 'public') : null;
-    //         $filePath_img3 = $img3 ? $img3->store('images', 'public') : null;
-    //         $filePath_img4 = $img4 ? $img4->store('images', 'public') : null;
-
-    //         if (!$img1){
-    //             $previousImg1Value = $note->img1;
-    //             $filePath_img1 = $previousImg1Value ? $previousImg1Value : null;
-    //         }
-    //         if (!$img2){
-    //             $previousImg2Value = $note->img2;
-    //             $filePath_img2 = $previousImg2Value ? $previousImg2Value : null;
-    //         }
-    //         if (!$img3){
-    //             $previousImg3Value = $note->img3;
-    //             $filePath_img3 = $previousImg3Value ? $previousImg3Value : null;
-    //         }
-    //         if (!$img4){
-    //             $previousImg4Value = $note->img4;
-    //             $filePath_img4 = $previousImg4Value ? $previousImg4Value : null;
-    //         }
-            
-
-    //         $note-> composition_id = $id;
-    //         $note-> note = $request->input("note.$note->id");
-    //         $note-> img1 = $filePath_img1;
-    //         $note-> img2 = $filePath_img2;
-    //         $note-> img3 = $filePath_img3;
-    //         $note-> img4 = $filePath_img4;
-    //         $note->save();
-    //     }
-    //     // dd($notes);
-
- 
-    //     return redirect()
-    //     ->route('user.profile.index')
-    //     ->with(['message'=>'Update Complete',
-    //     'status'=>'info']);
-    // }
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         Material_composition::findOrFail($id)->delete(); 
@@ -1099,12 +922,33 @@ class ProfileController extends Controller
         }
         elseif($type === 'multiple_test'){
             $composition_id = Material_composition::where('experiment_id', $id)->pluck('id');
-            // dd($composition_id);
             Storing_multiple_test::whereIn('composition_id', $composition_id)->delete();
             Enzyme_value::whereIn('composition_id', $composition_id)->delete();
         }
-        elseif($type === 'bacteria_test'){
-            Antibacteria_test::findOrFail($id)->delete(); 
+        elseif($type === 'antibacteria_test'){
+            Antibacteria_test::where('experiment_id', $experiment_id)->delete();
+        }
+        elseif($type === 'enzyme_test'){
+            Enzyme_test::where('experiment_id', $experiment_id)->delete();
+        }
+        elseif($type === 'enzyme_value'){
+            $composition_id = Material_composition::where('experiment_id', $id)->pluck('id');
+            Enzyme_value::whereIn('composition_id', $composition_id)->delete();
+        }
+        elseif($type === 'tga_test'){
+            tga_test::where('experiment_id', $experiment_id)->delete();
+        }
+        elseif($type === 'tga_value'){
+            // dd($experiment_id);
+            $composition_id = Material_composition::where('experiment_id', $id)->pluck('id');
+            tga_value::whereIn('composition_id', $composition_id)->delete();
+        }
+        elseif($type === 'antibacteria_multiple_test'){
+            $composition_id = Material_composition::where('experiment_id', $id)->pluck('id');
+            Colony_test::whereIn('composition_id', $composition_id)->delete();
+            Cfu_test::whereIn('composition_id', $composition_id)->delete();
+            Survivalrate_test::whereIn('composition_id', $composition_id)->delete();
+            Growthcurve_test::whereIn('composition_id', $composition_id)->delete();
         }
         
         return redirect()

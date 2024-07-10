@@ -43,6 +43,20 @@
                                 </td>
                             </tr>
                             <tr>
+                                <td class="px-4 py-3">Solvents</td>
+                                <td class="px-4 py-3">
+                                    <select name="enzyme" data-toggle="select">
+                                        <option value="">Select</option>
+                                        @foreach ($solvents_list as $selected_solvent)
+                                        <option value="{{ $selected_solvent->name }}"> {{ $selected_solvent->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </td> 
+                                <td>
+                                    <button type="button" onclick="location.href='{{ route('user.category.create', ['categoryType'=>'solvent']) }}'" class="bg-gray-200 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded">Add</button>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td class="px-4 py-3">Bacteria</td>
                                 <td class="px-4 py-3">
                                     <select name="bacterium" data-toggle="select">
@@ -71,6 +85,49 @@
                                 </td>
                             </tr>
                             <tr>
+                                <td class="px-4 py-3">Enzymes</td>
+                                <td class="px-4 py-3">
+                                    <select name="emzyme" data-toggle="select">
+                                        <option value="">Select</option>
+                                        @foreach ($enzymes_list as $selected_enzyme)
+                                        <option value="{{ $selected_enzyme->name }}"> {{ $selected_enzyme->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </td> 
+                                <td>
+                                    <button type="button" onclick="location.href='{{ route('user.category.create', ['categoryType'=>'enzyme']) }}'" class="bg-gray-200 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded">Add</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-3">Substrate</td>
+                                <td class="px-4 py-3">
+                                    <select name="substrate" data-toggle="select">
+                                        <option value="">Select</option>
+                                        @foreach ($substrates_list as $selected_substrate)
+                                        <option value="{{ $selected_substrate->name }}"> {{ $selected_substrate->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </td> 
+                                <td>
+                                    <button type="button" onclick="location.href='{{ route('user.category.create', ['categoryType'=>'substrate']) }}'" class="bg-gray-200 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded">Add</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-3">Gas</td>
+                                <td class="px-4 py-3">
+                                    <select name="gas" data-toggle="select">
+                                        <option value="">Select</option>
+                                        @foreach ($gases_list as $selected_gas)
+                                        <option value="{{ $selected_gas->name }}"> {{ $selected_gas->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </td> 
+                                <td>
+                                    <button type="button" onclick="location.href='{{ route('user.category.create', ['categoryType'=>'gas']) }}'" class="bg-gray-200 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded">Add</button>
+                                </td>
+                            </tr>
+
+                            {{-- <tr>
                                 <td class="px-4 py-3">pH Materials</td>
                                 <td class="px-4 py-3">
                                     <select name="ph_material" data-toggle="select">
@@ -97,7 +154,7 @@
                                 <td>
                                     <button type="button" onclick="location.href='{{ route('user.category.create', ['categoryType'=>'antibacteriaTestType']) }}'" class="bg-gray-200 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded">Add</button>
                                 </td> 
-                            </tr>
+                            </tr> --}}
                           
         
                         </tbody>
@@ -110,7 +167,7 @@
             </form>
             </div>
     </div>
-    @if(empty($selected_materials) && empty($selected_bacteria) && empty($selected_fruits) && empty($selected_phMaterials) && empty($antibacteriaTestType)) 
+    @if(empty($selected_materials) && empty($selected_solvents) && empty($selected_bacteria) && empty($selected_fruits) && empty($selected_enzymes) && empty($selected_substrates) && empty($selected_gases)) 
     @else
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -145,6 +202,19 @@
                                 @endforeach
                             </tbody>
                             <tbody>
+                                @foreach ($selected_solvents as $solvent)
+                                    <tr>
+                                        <td class="px-4 py-3 border w-1/6 text-center">Solvent</td>
+                                        <td class="px-4 py-3 border w-1/6 text-center">{{ $solvent->name }}</td>
+                                        <td class="px-4 py-3 border w-1/3 text-center">{{ $solvent->charactaristic }}</td>
+                                        {{-- <td class="px-4 py-3">
+                                            <button onclick="location.href='{{ route('user.category.edit', ['category_type' => 'material', 'id' => $material->id ])}}'" class="text-white bg-gray-400 border-0 py-2 px-4 focus:outline-none hover:bg-gray-500 rounded">Edit</button>
+                                        </td> --}}
+                                        
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                            <tbody>
                                 @foreach ($selected_bacteria as $bacterium)
                                     <tr>
                                         <td class="px-4 py-3 border w-1/6 text-center">Bacteria</td>
@@ -171,31 +241,45 @@
                                 @endforeach
                             </tbody>
                             <tbody>
-                                @foreach ($selected_phMaterials as $phMaterial)
+                                @foreach ($selected_enzymes as $enzyme)
                                     <tr>
-                                        <td class="px-4 py-3 border w-1/6 text-center">pH Material</td>
-                                        <td class="px-4 py-3 border w-1/6 text-center">{{ $phMaterial->name }}</td>
-                                        <td class="px-4 py-3 border w-1/3 text-center">{{ $phMaterial->charactaristic }}</td>
+                                        <td class="px-4 py-3 border w-1/6 text-center">Enzyme</td>
+                                        <td class="px-4 py-3 border w-1/6 text-center">{{ $enzyme->name }}</td>
+                                        <td class="px-4 py-3 border w-1/3 text-center">{{ $enzyme->charactaristic }}</td>
                                         {{-- <td class="px-4 py-3">
-                                            <button onclick="location.href='{{ route('user.category.show', ['category_type' => 'phMaterial', 'id' => $phMaterial->id ])}}'" class="text-white bg-gray-400 border-0 py-2 px-4 focus:outline-none hover:bg-gray-500 rounded">Detail</button>
+                                            <button onclick="location.href='{{ route('user.category.show', ['category_type' => 'fruit', 'id' => $fruit->id ])}}'" class="text-white bg-gray-400 border-0 py-2 px-4 focus:outline-none hover:bg-gray-500 rounded">Detail</button>
                                         </td> --}}
                                         
                                     </tr>
                                 @endforeach
                             </tbody>
                             <tbody>
-                                @foreach ($selected_antibacteriaTestTypes as $antibacteriaTestType)
+                                @foreach ($selected_substrates as $substrate)
                                     <tr>
-                                        <td class="px-4 py-3">Antibacteria Test Type</td>
-                                        <td class="px-4 py-3">{{ $antibacteriaTestType->name }}</td>
-                                        <td class="px-4 py-3">{{ $antibacteriaTestType->name }}</td>
+                                        <td class="px-4 py-3 border w-1/6 text-center">Substrate</td>
+                                        <td class="px-4 py-3 border w-1/6 text-center">{{ $substrate->name }}</td>
+                                        <td class="px-4 py-3 border w-1/3 text-center">{{ $substrate->charactaristic }}</td>
                                         {{-- <td class="px-4 py-3">
-                                            <button onclick="location.href='{{ route('user.category.show', ['category_type' => 'antibacteriaTestType', 'id' => $antibacteriaTestType->id ])}}'" class="text-white bg-gray-400 border-0 py-2 px-4 focus:outline-none hover:bg-gray-500 rounded">Detail</button>
+                                            <button onclick="location.href='{{ route('user.category.show', ['category_type' => 'fruit', 'id' => $fruit->id ])}}'" class="text-white bg-gray-400 border-0 py-2 px-4 focus:outline-none hover:bg-gray-500 rounded">Detail</button>
                                         </td> --}}
                                         
                                     </tr>
                                 @endforeach
                             </tbody>
+                            <tbody>
+                                @foreach ($selected_gases as $gas)
+                                    <tr>
+                                        <td class="px-4 py-3 border w-1/6 text-center">Gas</td>
+                                        <td class="px-4 py-3 border w-1/6 text-center">{{ $gas->name }}</td>
+                                        <td class="px-4 py-3 border w-1/3 text-center">{{ $gas->charactaristic }}</td>
+                                        {{-- <td class="px-4 py-3">
+                                            <button onclick="location.href='{{ route('user.category.show', ['category_type' => 'fruit', 'id' => $fruit->id ])}}'" class="text-white bg-gray-400 border-0 py-2 px-4 focus:outline-none hover:bg-gray-500 rounded">Detail</button>
+                                        </td> --}}
+                                        
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                            
 
                             </table>
                             

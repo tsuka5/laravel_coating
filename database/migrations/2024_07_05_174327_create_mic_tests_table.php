@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTgaTestsTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,14 @@ class CreateTgaTestsTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('tga_tests', function (Blueprint $table) {
+        Schema::create('mic_tests', function (Blueprint $table) {
             $table->id();
             $table->foreignId('composition_id')
-            ->references('id')->on('material_compositions')
-            ->constrained()
+            ->constrained('material_compositions')
             ->onUpdate('cascade')
             ->onDelete('cascade');
-            $table->float('odt')->nullable();
-            $table->float('mdt')->nullable();
-            $table->float('edt')->nullable();
+            $table->float('concentration')->nullable();
+            $table->float('mic')->nullable();
             $table->text('memo')->nullable();
         });
 
@@ -35,6 +33,6 @@ class CreateTgaTestsTable extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tga_tests');
+        Schema::dropIfExists('mic_tests');
     }
 };

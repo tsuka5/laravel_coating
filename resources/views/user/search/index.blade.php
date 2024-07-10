@@ -36,12 +36,24 @@
                             hover:bg-blue-600 rounded">Antibacteria Test</button>
                     </div>
                 </div>
+                <div class="w-1/2">
+                    <div class="flex justify-center">
+                        <button class="w-full p-2 m-2 text-white bg-blue-500 border-0 focus:outline-none
+                            hover:bg-blue-600 rounded">Enzyme Test</button>
+                    </div>
+                </div>
+                <div class="w-1/2">
+                    <div class="flex justify-center">
+                        <button class="w-full p-2 m-2 text-white bg-blue-500 border-0 focus:outline-none
+                            hover:bg-blue-600 rounded">Tga Test</button>
+                    </div>
+                </div>
             </div>
         </div>
-        <button onclick="location.href='{{ route('user.compareWholeData', ['type' => 'characteristic_test', 'item' => 'ph'])}}'" class="p-2 m-2 text-white bg-blue-500 border-0 focus:outline-none
+        {{-- <button onclick="location.href='{{ route('user.compareWholeData', ['type' => 'characteristic_test', 'item' => 'ph'])}}'" class="p-2 m-2 text-white bg-blue-500 border-0 focus:outline-none
         hover:bg-blue-600 rounded">
             pH
-        </button>
+        </button> --}}
     </div>
 
     <div class="lg:w-1/2 w-full px-4 mt-3 mb-3 mx-auto border-2 border-gray-400 bg-white rounded-lg">
@@ -99,34 +111,42 @@
                                 <option value="{{ $selected_fruit->fruit_detail->name }}"> {{ $selected_fruit->fruit_detail->name }}</option>
                                 @endforeach
                             </select>                    
-          
                         </td> 
                     </tr>
                     <tr>
-                        <td class="px-4 py-3">pH Materials</td>
+                        <td class="px-4 py-3">Enzyme</td>
                         <td class="px-4 py-3">
-                            <select name="ph_material" data-toggle="select">
+                            <select name="enzyme" data-toggle="select">
                                 <option value="">Select</option>
-                                @foreach ($phMaterial_list as $selected_phMaterial)
-                                @if ($selected_phMaterial && $selected_phMaterial->ph_material_detail)
-                                    <option value="{{ $selected_phMaterial->ph_material_detail->name }}"> {{ $selected_phMaterial->ph_material_detail->name }}</option>
-                                @endif
+                                @foreach ($enzymes_list as $selected_enzyme)
+                                <option value="{{ $selected_enzyme->enzyme_detail->name }}"> {{ $selected_enzyme->enzyme_detail->name }}</option>
                                 @endforeach
                             </select>                    
                         </td> 
                     </tr>
                     <tr>
-                        <td class="px-4 py-3">Antibacteria Test Type</td>
+                        <td class="px-4 py-3">Substrate</td>
                         <td class="px-4 py-3">
-                            <select name="antibacteria_test_type" data-toggle="select">
+                            <select name="substrate" data-toggle="select">
                                 <option value="">Select</option>
-                                @foreach ($antibacteriaTypeTest_list as $selected_antibacteriaTypeTest)
-                                <option value="{{ $selected_antibacteriaTypeTest->antibacteria_test_type->name }}"> {{ $selected_antibacteriaTypeTest->antibacteria_test_type->name }}</option>
+                                @foreach ($substrates_list as $selected_substrate)
+                                <option value="{{ $selected_substrate->substrate_detail->name }}"> {{ $selected_substrate->substrate_detail->name }}</option>
                                 @endforeach
-                            </select>                            
+                            </select>                    
                         </td> 
                     </tr>
-                  
+                    <tr>
+                        <td class="px-4 py-3">Gas</td>
+                        <td class="px-4 py-3">
+                            <select name="gas" data-toggle="select">
+                                <option value="">Select</option>
+                                @foreach ($gases_list as $selected_gas)
+                                <option value="{{ $selected_gas->gas_detail->name }}"> {{ $selected_gas->gas_detail->name }}</option>
+                                @endforeach
+                            </select>                    
+                        </td> 
+                    </tr>
+                      
 
                 </tbody>
               </table>
@@ -156,6 +176,9 @@
                                     <th class="px-4 py-3 title-font tracking-wider font-medium text-white text-lg bg-gray-400 border w-1/3 text-center">Composition</th>
                                     <th class="px-4 py-3 title-font tracking-wider font-medium text-white text-lg bg-gray-400 border w-1/5 text-center">Fruit or Vesitable</th>
                                     <th class="px-4 py-3 title-font tracking-wider font-medium text-white text-lg bg-gray-400 border w-1/6 text-center">Bacteria</th>
+                                    <th class="px-4 py-3 title-font tracking-wider font-medium text-white text-lg bg-gray-400 border w-1/6 text-center">Enzyme</th>
+                                    <th class="px-4 py-3 title-font tracking-wider font-medium text-white text-lg bg-gray-400 border w-1/6 text-center">Substrate</th>
+                                    <th class="px-4 py-3 title-font tracking-wider font-medium text-white text-lg bg-gray-400 border w-1/6 text-center">Gas</th>
                                     <th class="px-4 py-3 title-font tracking-wider font-medium bg-gray-400"></th>
                                     </tr>
                                 </thead>
@@ -168,10 +191,18 @@
                                                     </p>
                                             </td>
                                             <td class="px-4 py-3 border text-center">
+                                                @php
+                                                    $displayedMaterials = [];
+                                                @endphp
                                                 @foreach($materials[$experiment->id] as $material)
-                                                    <p  style="word-wrap: break-word; max-width: 100%;">
-                                                        {{$material->material_detail->name}} : {{($material->concentration)}}
-                                                    </p>
+                                                    @if (!in_array($material->material_detail->name, $displayedMaterials))
+                                                        <p style="word-wrap: break-word; max-width: 100%;">
+                                                            {{$material->material_detail->name}}
+                                                        </p>
+                                                        @php
+                                                            $displayedMaterials[] = $material->material_detail->name;
+                                                        @endphp
+                                                    @endif
                                                 @endforeach
                                             </td>
                                             <td class="px-4 py-3 border text-center">
@@ -186,6 +217,27 @@
                                                 @foreach($bacteria[$experiment->id] as $bacterium)
                                                 <p style="word-wrap: break-word; max-width: 100%;">
                                                     {{$bacterium->bacteria_detail->name}} <br> 
+                                                </p>
+                                                @endforeach
+                                            </td>
+                                            <td class="px-4 py-3 border text-center">
+                                                @foreach($enzymes[$experiment->id] as $enzyme)
+                                                <p style="word-wrap: break-word; max-width: 100%;">
+                                                    {{$enzyme->enzyme_detail->name}} <br> 
+                                                </p>
+                                                @endforeach
+                                            </td>
+                                            <td class="px-4 py-3 border text-center">
+                                                @foreach($substrates[$experiment->id] as $substrate)
+                                                <p style="word-wrap: break-word; max-width: 100%;">
+                                                    {{$substrate->substrate_detail->name}} <br> 
+                                                </p>
+                                                @endforeach
+                                            </td>
+                                            <td class="px-4 py-3 border text-center">
+                                                @foreach($gases[$experiment->id] as $gas)
+                                                <p style="word-wrap: break-word; max-width: 100%;">
+                                                    {{$gas->gas_detail->name}} <br> 
                                                 </p>
                                                 @endforeach
                                             </td>

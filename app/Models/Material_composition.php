@@ -14,7 +14,13 @@ use App\Models\Charactaristic_test;
 use App\Models\Storing_multiple_test;
 use App\Models\Antibacteria_test;
 use App\Models\Note;
+use App\Models\Cfu_test;
+use App\Models\Tga_value;
+use App\Models\Survivalrate_test;
+use App\Models\Growthcurve_test;
+use App\Models\Mic_test;
 use Database\Seeders\Storing_multiple_testSeeder;
+
 
 class Material_composition extends Model
 {
@@ -38,9 +44,9 @@ class Material_composition extends Model
     {
         return $this->hasMany(Wvp_test::class, 'composition_id', 'id');
     }
-    public function tga_test(): HasMany
+    public function tga_value(): HasMany
     {
-        return $this->hasMany(Tga_test::class, 'composition_id', 'id');
+        return $this->hasMany(Tga_value::class, 'composition_id', 'id');
     }
     public function material(): Hasmany
     {
@@ -61,5 +67,21 @@ class Material_composition extends Model
     public function storing_multiple_test(): HasMany
     {
         return $this->hasMany(Storing_multiple_test::class, 'composition_id', 'id');
+    }
+    public function cfu_test(): HasMany
+    {
+        return $this->hasMany(Cfu_test::class, 'composition_id', 'id');
+    }
+    public function survivalrate_test(): HasMany
+    {
+        return $this->hasMany(Survivalrate_test::class, 'composition_id', 'id');
+    }
+    public function growthcurve_test(): HasMany
+    {
+        return $this->hasMany(growthcurve_test::class, 'composition_id', 'id');
+    }
+    public function mic_test(): HasMany
+    {
+        return $this->hasMany(Mic_test::class, 'composition_id', 'id');
     }
 }

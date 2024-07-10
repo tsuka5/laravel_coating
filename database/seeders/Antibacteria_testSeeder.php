@@ -20,6 +20,7 @@ class Antibacteria_testSeeder extends Seeder
                 'test_id' => '1',
                 'invivo_invitro' => '0',
                 'mic' => '9.7',
+                'memo' => 'testです'
             ],
             [
                 'experiment_id' => '2',
@@ -28,6 +29,7 @@ class Antibacteria_testSeeder extends Seeder
                 'test_id' => '1',
                 'invivo_invitro' => '0',
                 'mic' => '9.7',
+                'memo' => 'testです'
             ],
             [
                 'experiment_id' => '3',
@@ -36,6 +38,7 @@ class Antibacteria_testSeeder extends Seeder
                 'test_id' => '1',
                 'invivo_invitro' => '0',
                 'mic' => '9.7',
+                'memo' => 'testです'
             ],
 
 

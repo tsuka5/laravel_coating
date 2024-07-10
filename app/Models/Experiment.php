@@ -10,6 +10,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\User;
 use App\Models\Material_composition;
 use App\Models\Film_condition;
+use App\Models\Enzyme_test;
+use App\Models\Storing_test;
+use App\Models\Antibacteria_test;
+use App\Models\Tga_test;
 
 class experiment extends Model
 {
@@ -36,10 +40,7 @@ class experiment extends Model
     {
         return $this->hasOne(Film_condition::class);
     }
-    public function charactaristic_test(): HasMany
-    {
-        return $this->hasMany(Charactaristic_test::class);
-    }
+  
     public function storing_test(): HasMany
     {
         return $this->hasMany(Storing_test::class);
@@ -47,6 +48,14 @@ class experiment extends Model
     public function antibacteria_test(): HasMany
     {
         return $this->hasMany(Antibacteria_test::class);
+    }
+    public function tga_test(): HasMany
+    {
+        return $this->hasMany(Tga_test::class);
+    }
+    public function enzyme_test(): HasMany
+    {
+        return $this->hasMany(Enzyme_test::class);
     }
 }
 

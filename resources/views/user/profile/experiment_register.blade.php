@@ -37,29 +37,29 @@
                                 @if ($experiment->paper_url === null)
                                 <div class="flex flex-wrap">
                                     <div class="w-1/2 border-2">
-                                        <p class="text-left">Name : {{$experiment->name}}</p>
+                                        <p class="text-center">Name : {{$experiment->name}}</p>
                                     </div>
                                     <div class="w-1/2 border-2">
-                                        <p class="text-left">Date : {{$experiment->day}}</p>
+                                        <p class="text-center">Date : {{$experiment->day}}</p>
                                     </div>
                                     <div class="w-full border-2">
-                                        <p class="text-left">Title : {{$experiment->title}}</p>
+                                        <p class="text-center">Title : {{$experiment->title}}</p>
                                     </div>
                                     
                                 </div>
                                 @else
                                 <div class="flex flex-wrap border-2 border-gray-400">
                                     <div class="w-1/2 border-b border-r-2 border-gray-400 pt-3 pl-2">
-                                        <p class="text-left">Name : {{$experiment->name}}</p>
+                                        <p class="text-center">Name : {{$experiment->name}}</p>
                                     </div>
                                     <div class="w-1/2 border-b border-l-2 border-gray-400 pt-3 pl-2">
-                                        <p class="text-left">Date : {{$experiment->day}}</p>
+                                        <p class="text-center">Date : {{$experiment->day}}</p>
                                     </div>
                                     <div class="w-full border-b border-t-2 border-gray-400 pt-3 pl-2">
-                                        <p class="text-left">Title : {{$experiment->title}}</p>
+                                        <p class="text-center">Title : {{$experiment->title}}</p>
                                     </div>
                                     <div class="w-full border-b border-t-2 border-gray-400 pt-3 pl-2">
-                                        <p class="text-left">URL : {{$experiment->paper_url}}</p>
+                                        <p class="text-center">URL : {{$experiment->paper_url}}</p>
                                     </div>
                                 </div>
                                 @endif
@@ -435,8 +435,43 @@
                                                     </div>
                                                 </div>
                                                 @endif
-                                                
 
+                                                @if($compositions->isNotEmpty())
+                                                <div class="modal fade" id="enzyme_test_{{$composition->id}}" tabindex="-1" aria-labelledby="enzymeTestLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                        <h5 class="modal-title" id="enzymeTestLabel">Enzyme Test</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            @include('layouts.create_form', ['formType' => 'enzyme_test', 'id' => $composition->id])
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                @endif
+                                                
+                                                @if($compositions->isNotEmpty())
+                                                <div class="modal fade" id="tga_test_{{$composition->id}}" tabindex="-1" aria-labelledby="tgaTestLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                        <h5 class="modal-title" id="tgaTestLabel">tga Test</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            @include('layouts.create_form', ['formType' => 'tga_test', 'id' => $composition->id])
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                @endif
+                                                
                                                 @foreach($compositions as $composition)
                                                 <div class="modal fade" id="material_{{$composition->id}}" tabindex="-1" aria-labelledby="materialLabel" aria-hidden="true">
                                                     <div class="modal-dialog">
@@ -551,8 +586,6 @@
                                             </div> 
                                             @else
                                             <div class="flex justify-center">
-                                                {{-- <button onclick="location.href='{{ route('user.show.table', ['id' => $experiment->id, 'type' => 'characteristic_test']) }}';"class="p-2 m-2 text-white bg-gray-500 border-0 focus:outline-none
-                                                    hover:bg-gray-600 rounded">Show Table</button> --}}
                                                 <button onclick="location.href='{{ route('user.show.chart', ['id' => $experiment->id, 'type' => 'characteristic_test']) }}';"class="p-2 m-2 text-white bg-gray-500 border-0 focus:outline-none
                                                     hover:bg-gray-600 rounded">Show Chart</button>
                                             </div>
@@ -585,20 +618,6 @@
                                                     <button type="button" data-toggle="modal" data-target="#storing_test_{{$composition->id}}" class="toggle-button p-2 m-2 text-white bg-gray-500 border-0 focus:outline-none hover:bg-gray-600 rounded">Basic Information</button>
                                                 </div>
 
-                                                {{-- <div class="text-center">
-                                                    <a href="{{ route('user.export.excel', ['experiment_id' => $experiment->id, 'type' => 'storing_test']) }}" class="btn btn-primary m-2">Download Format Excel File</a>                                          
-                                                </div>
-                                                <div class="p-2">
-                                                    <form action="{{ route('user.import.excel', ['type' => 'storing_test']) }}" method="post" enctype="multipart/form-data">
-                                                        @csrf
-                                                        <input type="file" name="file" id="storing_test_file" required onchange="handleFileSelect(event)">
-                                                        <div class="flex justify-center">
-                                                            <button type="submit" id="storing_upload_button" style="display: none;" class="p-2 m-2 text-white bg-red-500 border-0 focus:outline-none
-                                                            hover:bg-red-600 rounded">Upload Excel File</button>
-                                                        </div>
-                                                    </form>
-                                                </div>  --}}
-    
                                             @else
                                                 <div class="flex justify-center">
                                                     <button class="toggle-button p-2 m-2 text-white bg-gray-500 border-0 focus:outline-none hover:bg-gray-600 rounded" data-target="storing_test_button_{{$number_composition}}" >
@@ -607,10 +626,7 @@
                                                 </div>
                                                 
                                                 <div id="storing_test_button_{{$number_composition}}" style="display: none;">
-                                                    {{-- <div class="p-1 text-center">
-                                                        <button type="button" data-toggle="modal" data-target="#storing_test_{{$composition->id}}" class="toggle-button p-2 m-2 text-white bg-gray-500 border-0 focus:outline-none hover:bg-gray-600 rounded">Basic Information</button>
-                                                    </div> --}}
-                                                    
+                                                
                                                     <table class="border w-full">
                                                         <tbody>
                                                             <tr class="flex justify-center">
@@ -643,21 +659,6 @@
                                                     </table>
                                                 </div> 
                                             
-                                          
-                                            {{-- <div class="text-center">
-                                                <a href="{{ route('user.export.excel', ['experiment_id' => $experiment->id, 'type' => 'storing_test']) }}" class="btn btn-primary m-2">Download Format Excel File</a>                                          
-                                            </div>
-                                            <div class="p-2">
-                                                <form action="{{ route('user.import.excel', ['type' => 'storing_test']) }}" method="post" enctype="multipart/form-data">
-                                                    @csrf
-                                                    <input type="file" name="file" id="storing_test_file" required onchange="handleFileSelect(event)">
-                                                    <div class="flex justify-center">
-                                                        <button type="submit" id="storing_upload_button" style="display: none;" class="p-2 m-2 text-white bg-red-500 border-0 focus:outline-none
-                                                        hover:bg-red-600 rounded">Upload Excel File</button>
-                                                    </div>
-                                                </form>
-                                            </div>  --}}
-                                            {{-- {{dd($multiple_test)}} --}}
                                             @if(empty($multiple_test))
                                     
                                             <div class="text-center">
@@ -676,8 +677,6 @@
                                             </div> 
                                             @else
                                             <div class="flex justify-center">
-                                                {{-- <button onclick="location.href='{{ route('user.show.table', ['id' => $experiment->id, 'type' => 'storing_test']) }}';"class="p-2 m-2 text-white bg-gray-500 border-0 focus:outline-none
-                                                    hover:bg-gray-600 rounded">Show Table</button> --}}
                                                 <button onclick="location.href='{{ route('user.show.chart', ['id' => $experiment->id, 'type' =>'storing_test']) }}';"class="p-2 m-2 text-white bg-gray-500 border-0 focus:outline-none
                                                     hover:bg-gray-600 rounded">Show Chart</button>
                                             </div>
@@ -690,55 +689,62 @@
                                         </div>
                                     
                                         
-                                        
-
                                         <div class="mt-2 w-1/2 border-2 border-gray-300">
+                            
                                             <div class="flex justify-center bg-gray-200">
                                                 <div class="p-1 w-full text-center ml-5">
                                                     Antibacteria Test
                                                 </div>
                                                 <div class="my-1 mr-2">
-                                                    <form  id="delete_storing_test_{{ $experiment->id }}" method="post" action="{{ route('user.destroy.data', [ 'experiment_id' => $experiment->id, 'type' => 'storing_test', 'id' => $experiment->id ])}}">
+                                                    <form  id="delete_antibacteria_multiple_test_{{ $experiment->id }}" method="post" action="{{ route('user.destroy.data', [ 'experiment_id' => $experiment->id, 'type' => 'antibacteria_multiple_test', 'id' => $experiment->id ])}}">
                                                         @csrf
                                                         @method('delete')  
-                                                        <a href="#" data-id="{{ $experiment->id }}" onclick="deletePost(this, 'storing_test')" class="p-1 text-white bg-red-400 border-0 focus:outline-none text-xs text-center
+                                                        <a href="#" data-id="{{ $experiment->id }}" onclick="deletePost(this, 'antibacteria_multiple_test')" class="p-1 text-white bg-red-400 border-0 focus:outline-none text-xs text-center
                                                             hover:bg-red-500 rounded">Delete</a>
                                                     </form> 
                                                 </div>
                                             </div>
-
+                                    
                                             <div class="mt-2">
+                                                @if(!$antibacteria_test)
+                                                <div class="p-1 text-center">
+                                                    <button type="button" data-toggle="modal" data-target="#antibacteria_test_{{$composition->id}}" class="toggle-button p-2 m-2 text-white bg-gray-500 border-0 focus:outline-none hover:bg-gray-600 rounded">Basic Information</button>
+                                                </div>
+
+                                                @elseif($antibacteria_test)
                                                 <div class="flex justify-center">
                                                     <button class="toggle-button p-2 m-2 text-white bg-gray-500 border-0 focus:outline-none hover:bg-gray-600 rounded" data-target="antibacteria_test_button_{{$number_composition}}" >
-                                                        Basic Information
+                                                    Basic Information
                                                     </button>
                                                 </div>
+                                                
                                                 <div id="antibacteria_test_button_{{$number_composition}}" style="display: none;">
-
-                                                    @if($bacteria_test)
-
+                                                
                                                     <table class="border w-full">
                                                         <tbody>
-                                                            
-                                                            <tr>
-                                                                <td class="px-2 py-2 text-center w-3/5">
+                                                            <tr class="flex justify-center">
+                                                                <td class="mt-3 text-center w-2/5">
                                                                     <p  style="word-wrap: break-word; max-width: 100%;">
-                                                                    {{$bacteria_test->bacteria_detail->name}}
+                                                                        {{$antibacteria_test->bacteria_detail->name}}
                                                                     </p>
-                                                                
+                                                                    {{-- <p  style="word-wrap: break-word; max-width: 100%;">
+                                                                        {{$antibacteria_test->fruit_detail->name}}
+                                                                    </p> --}}
+                                                                            
                                                                 </td>
-                                                                <td class="px-2 py-2 text-center">
-                                                                    <div class="my-2 w-1/5">
-                                                                        <button onclick="location.href='{{ route('user.edit.experiment', ['editType' => 'antibacteria_test', 'id' => $bacteria_test->id])}}'" class="h-9 text-white bg-indigo-400 border-0 py-2 px-4 focus:outline-none
+
+                                                                <td class="px-2 text-center">
+                                                                    <div class="w-1/5 my-2">
+                                                                        <button onclick="location.href='{{ route('user.edit.experiment', ['editType' => 'antibacteria_test', 'id' => $antibacteria_test->id])}}'" class="h-9 text-white bg-indigo-400 border-0 py-2 px-4 focus:outline-none
                                                                             hover:bg-indigo-500 rounded w-20">Edit</button>
                                                                     </div> 
                                                                 </td>
-                                                                <td class="px-2 py-2 text-center">
-                                                                    <div class="my-2 w-1/5">
-                                                                        <form id="delete_bacteria_test_{{ $bacteria_test->id }}" method="post" action="{{ route('user.destroy.data', [ 'experiment_id' =>$experiment->id, 'type' => 'bacteria_test', 'id' => $bacteria_test->id ])}}">
+                                                                <td class="px-2 text-center">
+                                                                    <div class="w-1/5 my-3">
+                                                                        <form id="delete_antibacteria_test_{{ $antibacteria_test->id }}" method="post" action="{{ route('user.destroy.data', [ 'experiment_id' =>$experiment->id, 'type' => 'antibacteria_test', 'id' => $antibacteria_test->id ])}}">
                                                                             @csrf
                                                                             @method('delete')  
-                                                                            <a href="#" data-id="{{ $bacteria_test->id }}" onclick="deletePost(this, 'bacteria_test')" class="mb-2 h-9 text-white bg-red-400 border-0 py-2 px-4 focus:outline-none
+                                                                            <a href="#" data-id="{{ $antibacteria_test->id }}" onclick="deletePost(this, 'antibacteria_test')" class="mb-2 h-9 text-white bg-red-400 border-0 py-2 px-4 focus:outline-none
                                                                                 hover:bg-red-500 rounded">Delete</a>
                                                                         </form> 
                                                                     </div>
@@ -747,39 +753,235 @@
                                                         
                                                         </tbody>
                                                     </table>
-                                                    <div class="p-1 text-center">
-                                                    @endif
-                                                    @if($compositions->isNotEmpty())
-                                                        <button type="button" data-toggle="modal" data-target="#antibacteria_test_{{$composition->id}}" class="text-black py-2 px-4 border-2 border-gray-400 hover:bg-gray-300 rounded">Add_Antibacteria_Test</button>
-                                                    @endif
-                                                    </div>
-                                                </div>
+                                                </div> 
                                             
-
+                                            
+                                            @if($antibacteria_tests_check)
                                             <div class="text-center">
-                                                <a href="{{ route('user.export.excel', ['experiment_id' => $experiment->id, 'type' => 'storing_test']) }}" class="btn btn-primary m-2">Download Format Excel File</a>                                          
+                                                <a href="{{ route('user.export.excel', ['experiment_id' => $experiment->id, 'type' => 'antibacteria_test']) }}" class="btn btn-primary m-2">Download Format Excel File</a>                                          
                                             </div>
+                                            
                                             <div class="p-2">
-                                                <form action="{{ route('user.import.excel', ['type' => 'storing_test']) }}" method="post" enctype="multipart/form-data">
+                                                <form action="{{ route('user.import.excel', ['type' => 'antibacteria_test']) }}" method="post" enctype="multipart/form-data">
                                                     @csrf
                                                     <input type="file" name="file" id="antibacteria_test_file" required onchange="handleFileSelect(event)">
                                                     <div class="flex justify-center">
-                                                        <button type="submit" id="antibacteria_test_upload_button" style="display: none;" class="p-2 m-2 text-white bg-red-500 border-0 focus:outline-none
+                                                        <button type="submit" id="antibacteria_upload_button" style="display: none;" class="p-2 m-2 text-white bg-red-500 border-0 focus:outline-none
                                                         hover:bg-red-600 rounded">Upload Excel File</button>
                                                     </div>
                                                 </form>
                                             </div> 
-                                            {{-- @else
+                                            @else($antibacteria_tests_check)
                                             <div class="flex justify-center">
-                                                <button onclick="location.href='{{ route('user.show.table', ['id' => $experiment->id]) }}';"class="p-2 m-2 text-white bg-gray-500 border-0 focus:outline-none
-                                                    hover:bg-gray-600 rounded">Show Table</button>
-                                                <button onclick="location.href='{{ route('user.show.chart', ['id' => $experiment->id]) }}';"class="p-2 m-2 text-white bg-gray-500 border-0 focus:outline-none
+                                                <button onclick="location.href='{{ route('user.show.chart', ['id' => $experiment->id, 'type' =>'antibacteria_test']) }}';"class="p-2 m-2 text-white bg-gray-500 border-0 focus:outline-none
                                                     hover:bg-gray-600 rounded">Show Chart</button>
                                             </div>
                                             <div class="text-center">
-                                                <a href="{{ route('user.export.excel', ['experiment_id' => $experiment->id, 'type' => 'storing_test']) }}" class="btn btn-primary m-2">Download Now Data</a>                                          
+                                                <a href="{{ route('user.edit_export.excel', ['experiment_id' => $experiment->id, 'type' => 'antibacteria_test']) }}" class="btn btn-primary m-2">Download Now Data</a>                                          
                                             </div>
-                                            @endif --}}
+                                            @endif
+                                            @endif
+                                        </div>
+                                        </div>
+
+                                        {{-- エンザイムテスト作成 --}}
+
+
+                                        <div class="mt-2 w-1/2 border-2 border-gray-300">
+                            
+                                            <div class="flex justify-center bg-gray-200">
+                                                <div class="p-1 w-full text-center ml-5">
+                                                    Enzyme Test
+                                                </div>
+                                                <div class="my-1 mr-2">
+                                                    <form  id="delete_enzyme_value_{{ $experiment->id }}" method="post" action="{{ route('user.destroy.data', [ 'experiment_id' => $experiment->id, 'type' => 'enzyme_value', 'id' => $experiment->id ])}}">
+                                                        @csrf
+                                                        @method('delete')  
+                                                        <a href="#" data-id="{{ $experiment->id }}" onclick="deletePost(this, 'enzyme_value')" class="p-1 text-white bg-red-400 border-0 focus:outline-none text-xs text-center
+                                                            hover:bg-red-500 rounded">Delete</a>
+                                                    </form> 
+                                                </div>
+                                            </div>
+                                    
+                                            <div class="mt-2">
+                                                {{-- {{dd($eager_experiment_enzyme)}} --}}
+                                            @if(empty($eager_experiment_enzyme->enzyme_test) || !$eager_experiment_enzyme->enzyme_test->first())
+                                             
+                                                <div class="p-1 text-center">
+                                                    <button type="button" data-toggle="modal" data-target="#enzyme_test_{{$composition->id}}" class="toggle-button p-2 m-2 text-white bg-gray-500 border-0 focus:outline-none hover:bg-gray-600 rounded">Basic Information</button>
+                                                </div>
+
+                                            @else
+                                                <div class="flex justify-center">
+                                                    <button class="toggle-button p-2 m-2 text-white bg-gray-500 border-0 focus:outline-none hover:bg-gray-600 rounded" data-target="enzyme_test_button_{{$number_composition}}" >
+                                                    Basic Information
+                                                    </button>
+                                                </div>
+                                                
+                                                <div id="enzyme_test_button_{{$number_composition}}" style="display: none;">
+                                                
+                                                    <table class="border w-full">
+                                                        <tbody>
+                                                            <tr class="flex justify-center">
+                                                                <td class="mt-3 text-center w-2/5">
+                                                                    <p  style="word-wrap: break-word; max-width: 100%;">
+                                                                    {{$eager_experiment_enzyme->enzyme_test->first()->enzyme_detail->name}}
+                                                                    </p>
+                                                                
+                                                                </td>
+
+                                                                <td class="px-2 text-center">
+                                                                    <div class="w-1/5 my-2">
+                                                                        <button onclick="location.href='{{ route('user.edit.experiment', ['editType' => 'enzyme_test', 'id' => $eager_experiment_enzyme->enzyme_test->first()->id])}}'" class="h-9 text-white bg-indigo-400 border-0 py-2 px-4 focus:outline-none
+                                                                            hover:bg-indigo-500 rounded w-20">Edit</button>
+                                                                    </div> 
+                                                                </td>
+                                                                <td class="px-2 text-center">
+                                                                    <div class="w-1/5 my-3">
+                                                                        <form id="delete_enzyme_test_{{ $eager_experiment_enzyme->enzyme_test->first()->id }}" method="post" action="{{ route('user.destroy.data', [ 'experiment_id' =>$experiment->id, 'type' => 'enzyme_test', 'id' => $eager_experiment_enzyme->enzyme_test->first()->id ])}}">
+                                                                            @csrf
+                                                                            @method('delete')  
+                                                                            <a href="#" data-id="{{ $eager_experiment_enzyme->enzyme_test->first()->id }}" onclick="deletePost(this, 'enzyme_test')" class="mb-2 h-9 text-white bg-red-400 border-0 py-2 px-4 focus:outline-none
+                                                                                hover:bg-red-500 rounded">Delete</a>
+                                                                        </form> 
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        
+                                                        </tbody>
+                                                    </table>
+                                                </div> 
+                                            
+                                            @if($enzyme_value_check)
+                                    
+                                            <div class="text-center">
+                                                <a href="{{ route('user.export.excel', ['experiment_id' => $experiment->id, 'type' => 'enzyme_test']) }}" class="btn btn-primary m-2">Download Format Excel File</a>                                          
+                                            </div>
+                                            
+                                            <div class="p-2">
+                                                <form action="{{ route('user.import.excel', ['type' => 'enzyme_test']) }}" method="post" enctype="multipart/form-data">
+                                                    @csrf
+                                                    <input type="file" name="file" id="enzyme_test_file" required onchange="handleFileSelect(event)">
+                                                    <div class="flex justify-center">
+                                                        <button type="submit" id="enzyme_upload_button" style="display: none;" class="p-2 m-2 text-white bg-red-500 border-0 focus:outline-none
+                                                        hover:bg-red-600 rounded">Upload Excel File</button>
+                                                    </div>
+                                                </form>
+                                            </div> 
+                                            @else
+                                            <div class="flex justify-center">
+                                                <button onclick="location.href='{{ route('user.show.chart', ['id' => $experiment->id, 'type' =>'enzyme_test']) }}';"class="p-2 m-2 text-white bg-gray-500 border-0 focus:outline-none
+                                                    hover:bg-gray-600 rounded">Show Chart</button>
+                                            </div>
+                                            <div class="text-center">
+                                                <a href="{{ route('user.edit_export.excel', ['experiment_id' => $experiment->id, 'type' => 'enzyme_test']) }}" class="btn btn-primary m-2">Download Now Data</a>                                          
+                                            </div>
+                                            @endif
+                                            @endif
+                                        </div>
+                                        </div>
+                                    
+
+
+
+
+                                        <div class="mt-2 w-1/2 border-2 border-gray-300">
+                            
+                                            <div class="flex justify-center bg-gray-200">
+                                                <div class="p-1 w-full text-center ml-5">
+                                                    Tga Test
+                                                </div>
+                                                <div class="my-1 mr-2">
+                                                    <form  id="delete_tga_value_{{ $experiment->id }}" method="post" action="{{ route('user.destroy.data', [ 'experiment_id' => $experiment->id, 'type' => 'tga_value', 'id' => $experiment->id ])}}">
+                                                        @csrf
+                                                        @method('delete')  
+                                                        <a href="#" data-id="{{ $experiment->id }}" onclick="deletePost(this, 'tga_value')" class="p-1 text-white bg-red-400 border-0 focus:outline-none text-xs text-center
+                                                            hover:bg-red-500 rounded">Delete</a>
+                                                    </form> 
+                                                </div>
+                                            </div>
+                                    
+                                            <div class="mt-2">
+                                                {{-- {{dd($eager_experiment_tga)}} --}}
+                                            @if(empty($eager_experiment_tga->tga_test) || !$eager_experiment_tga->tga_test->first())
+                                             
+                                                <div class="p-1 text-center">
+                                                    <button type="button" data-toggle="modal" data-target="#tga_test_{{$composition->id}}" class="toggle-button p-2 m-2 text-white bg-gray-500 border-0 focus:outline-none hover:bg-gray-600 rounded">Basic Information</button>
+                                                </div>
+
+                                            @else
+                                                <div class="flex justify-center">
+                                                    <button class="toggle-button p-2 m-2 text-white bg-gray-500 border-0 focus:outline-none hover:bg-gray-600 rounded" data-target="tga_test_button_{{$number_composition}}" >
+                                                    Basic Information
+                                                    </button>
+                                                </div>
+                                                
+                                                <div id="tga_test_button_{{$number_composition}}" style="display: none;">
+                                                
+                                                    <table class="border w-full">
+                                                        <tbody>
+                                                            <tr class="flex justify-center">
+                                                                <td class="mt-3 text-center w-2/5">
+                                                                    <p  style="word-wrap: break-word; max-width: 100%;">
+                                                                    {{$eager_experiment_tga->tga_test->first()->gas_detail->name}}
+                                                                    </p>
+                                                                
+                                                                </td>
+
+                                                                <td class="px-2 text-center">
+                                                                    <div class="w-1/5 my-2">
+                                                                        <button onclick="location.href='{{ route('user.edit.experiment', ['editType' => 'tga_test', 'id' => $eager_experiment_tga->tga_test->first()->id])}}'" class="h-9 text-white bg-indigo-400 border-0 py-2 px-4 focus:outline-none
+                                                                            hover:bg-indigo-500 rounded w-20">Edit</button>
+                                                                    </div> 
+                                                                </td>
+                                                                <td class="px-2 text-center">
+                                                                    <div class="w-1/5 my-3">
+                                                                        <form id="delete_tga_test_{{ $eager_experiment_tga->tga_test->first()->id }}" method="post" action="{{ route('user.destroy.data', [ 'experiment_id' =>$experiment->id, 'type' => 'tga_test', 'id' => $eager_experiment_tga->tga_test->first()->id ])}}">
+                                                                            @csrf
+                                                                            @method('delete')  
+                                                                            <a href="#" data-id="{{ $eager_experiment_tga->tga_test->first()->id }}" onclick="deletePost(this, 'tga_test')" class="mb-2 h-9 text-white bg-red-400 border-0 py-2 px-4 focus:outline-none
+                                                                                hover:bg-red-500 rounded">Delete</a>
+                                                                        </form> 
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        
+                                                        </tbody>
+                                                    </table>
+                                                </div> 
+                                            
+                                            @if($tga_value_check)
+                                    
+                                            <div class="text-center">
+                                                <a href="{{ route('user.export.excel', ['experiment_id' => $experiment->id, 'type' => 'tga_test']) }}" class="btn btn-primary m-2">Download Format Excel File</a>                                          
+                                            </div>
+                                            
+                                            <div class="p-2">
+                                                <form action="{{ route('user.import.excel', ['type' => 'tga_test']) }}" method="post" enctype="multipart/form-data">
+                                                    @csrf
+                                                    <input type="file" name="file" id="tga_test_file" required onchange="handleFileSelect(event)">
+                                                    <div class="flex justify-center">
+                                                        <button type="submit" id="tga_upload_button" style="display: none;" class="p-2 m-2 text-white bg-red-500 border-0 focus:outline-none
+                                                        hover:bg-red-600 rounded">Upload Excel File</button>
+                                                    </div>
+                                                </form>
+                                            </div> 
+                                            @else
+                                            <div class="flex justify-center">
+                                                <button onclick="location.href='{{ route('user.show.chart', ['id' => $experiment->id, 'type' =>'tga_test']) }}';"class="p-2 m-2 text-white bg-gray-500 border-0 focus:outline-none
+                                                    hover:bg-gray-600 rounded">Show Chart</button>
+                                            </div>
+                                            <div class="text-center">
+                                                <a href="{{ route('user.edit_export.excel', ['experiment_id' => $experiment->id, 'type' => 'tga_test']) }}" class="btn btn-primary m-2">Download Now Data</a>                                          
+                                            </div>
+                                            @endif
+                                            @endif
+                                        </div>
+                                        </div>
+
+
+
+                                       
                                         </div>
                                     </div>
                                 </div>
@@ -860,6 +1062,12 @@ document.addEventListener('DOMContentLoaded', function() {
             targetButtonId = 'antibacteria_upload_button';
         }else if(targetInput.id === 'film_condition_file') {
             targetButtonId = 'film_condition_upload_button';
+        }
+        else if(targetInput.id === 'enzyme_test_file') {
+            targetButtonId = 'enzyme_upload_button';
+        }
+        else if(targetInput.id === 'tga_test_file') {
+            targetButtonId = 'tga_upload_button';
         }
     
         var uploadButton = document.getElementById(targetButtonId);

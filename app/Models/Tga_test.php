@@ -1,12 +1,56 @@
 <?php
 
+// namespace App\Models;
+
+// use Illuminate\Database\Eloquent\Factories\HasFactory;
+// use Illuminate\Database\Eloquent\Model;
+// use Illuminate\Database\Eloquent\Relations\BelongsTo;
+// use Illuminate\Database\Eloquent\Relations\HasMany;
+// use App\Models\Material_composition;
+// use App\Models\Tga_value;
+
+
+
+// class Tga_test extends Model
+// {
+//     use HasFactory;
+
+//     public $timestamps = false; 
+
+   
+
+
+//     protected $fillable = [
+//         '_id',
+//         'odt',
+//         'mdt',
+//         'edt',
+//         'memo',
+//     ];
+
+//     public function material_composition(): BelongsTo
+//     {
+//         return $this->belongsTo(Material_composition::class, 'composition_id', 'id');
+//     }
+//     public function tga_value(): Hasmany
+//     {
+//         return $this->hasMany(Tga_value::class, 'tga_test_id', 'id');
+//     }
+//     public function gas_detail(): BelongsTo
+//     {
+//         return $this->belongsTo(Gas_detail::class, 'gas_id', 'id') ;
+//     }
+ 
+// }
+
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use App\Models\Material_composition;
+use App\Models\Experiment;
 use App\Models\Tga_value;
 
 
@@ -25,20 +69,19 @@ class Tga_test extends Model
 
 
     protected $fillable = [
-        'composition_id',
-        'odt',
-        'mdt',
-        'edt',
+        'experiment_id',
+        'gas_id',
+        'flow_rate',
+        'start_temperature',
+        'end_temperature',
+        'temperature_range',
+        'heating_rate',
         'memo',
     ];
 
-    public function material_composition(): BelongsTo
+    public function experiment(): BelongsTo
     {
-        return $this->belongsTo(Material_composition::class, 'composition_id', 'id');
-    }
-    public function tga_value(): Hasmany
-    {
-        return $this->hasMany(Tga_value::class, 'tga_test_id', 'id');
+        return $this->belongsTo(Experiment::class, 'experiment_id', 'id');
     }
     public function gas_detail(): BelongsTo
     {

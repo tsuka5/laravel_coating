@@ -10,7 +10,7 @@ use App\Models\Material_composition;
 
 
 
-class Colony_test extends Model
+class Growthcurve_test extends Model
 {
     use HasFactory;
 
@@ -27,7 +27,6 @@ class Colony_test extends Model
         'composition_id',
         'concentration',
         'day',
-        'colony_diameter',
         'memo',
         
     ];

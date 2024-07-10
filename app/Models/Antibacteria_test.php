@@ -35,6 +35,7 @@ class Antibacteria_test extends Model
         'invivo_invitro',
         'bacteria_concentration',
         'mic',
+        'memo'
     ];
 
     public function Experiment(): BelongsTo

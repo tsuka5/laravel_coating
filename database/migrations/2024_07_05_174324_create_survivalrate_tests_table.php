@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('colony_tests', function (Blueprint $table) {
+        Schema::create('survivalrate_tests', function (Blueprint $table) {
             $table->id();
             $table->foreignId('composition_id')
             ->constrained('material_compositions')
@@ -21,7 +21,7 @@ return new class extends Migration
             ->onDelete('cascade');
             $table->float('concentration')->nullable();
             $table->bigInteger('day')->nullable();
-            $table->float('colony_diameter')->nullable();
+            $table->float('survival_rate')->nullable();
             $table->text('memo')->nullable();
         });
 
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('colony_test');
+        Schema::dropIfExists('survivalrate_test');
     }
 };

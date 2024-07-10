@@ -58,13 +58,20 @@
                                                         </p>
                                                 </td>
                                                 <td class="px-4 py-3 border w-1/3 text-center">
+                                                    @php
+                                                        $displayedMaterials = [];
+                                                    @endphp
                                                     @foreach ($compositions[$experiment->id] as $composition)
                                                         @foreach($materials[$composition->id] as $material)
-                                                            <p  style="word-wrap: break-word; max-width: 100%;">
-                                                                {{$material->material_detail->name}} 
-                                                            </p>
+                                                            @if (!in_array($material->material_detail->name, $displayedMaterials))
+                                                                <p style="word-wrap: break-word; max-width: 100%;">
+                                                                    {{$material->material_detail->name}}
+                                                                </p>
+                                                                @php
+                                                                    $displayedMaterials[] = $material->material_detail->name;
+                                                                @endphp
+                                                            @endif
                                                         @endforeach
-                                                    @break
                                                     @endforeach
                                                 </td>
                                                 <td class="px-4 py-3 border w-1/6 text-center">

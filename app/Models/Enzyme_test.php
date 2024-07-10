@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Models\Material_composition;
+use App\Models\Experiment;
 use App\Models\Enzyme_detail;
 use App\Models\Substrate_detail;
 
@@ -28,7 +28,7 @@ class Enzyme_test extends Model
 
 
     protected $fillable = [
-        'composition_id',
+        'experiment_id',
         'enzyme_id',
         'enzyme_concentration',
         'substrate_id',
@@ -42,9 +42,9 @@ class Enzyme_test extends Model
 
     ];
 
-    public function Material_composition(): BelongsTo
+    public function experiment(): BelongsTo
     {
-        return $this->belongsTo(Material_composition::class, 'composition_id', 'id');
+        return $this->belongsTo(Experiment::class, 'experiment_id', 'id');
     }
     public function enzyme_detail(): BelongsTo
     {

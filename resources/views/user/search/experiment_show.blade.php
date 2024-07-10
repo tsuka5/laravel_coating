@@ -13,7 +13,7 @@
                         <div class="container mx-auto">
                             <x-flash-message status="session('status')" />
                         
-                            <div class="lg:w-1/2 mx-auto">
+                            <div class="w-2/3 mx-auto">
 
                                 <div class="flex justify-center mt-2 p-1 w-full bg-gray-400">
                                     <div class="text-white mt-1 ">
@@ -32,29 +32,29 @@
                                 @if ($experiment->paper_url === null)
                                 <div class="flex flex-wrap">
                                     <div class="w-1/2 border-2">
-                                        <p class="text-left">Name : {{$experiment->name}}</p>
+                                        <p class="text-center">Name : {{$experiment->name}}</p>
                                     </div>
                                     <div class="w-1/2 border-2">
-                                        <p class="text-left">Date : {{$experiment->day}}</p>
+                                        <p class="text-center">Date : {{$experiment->day}}</p>
                                     </div>
                                     <div class="w-full border-2">
-                                        <p class="text-left">Title : {{$experiment->title}}</p>
+                                        <p class="text-center">Title : {{$experiment->title}}</p>
                                     </div>
                                     
                                 </div>
                                 @else
                                 <div class="flex flex-wrap border-2 border-gray-400">
                                     <div class="w-1/2 border-b border-r-2 border-gray-400 pt-3 pl-2">
-                                        <p class="text-left">Name : {{$experiment->name}}</p>
+                                        <p class="text-center">Name : {{$experiment->name}}</p>
                                     </div>
                                     <div class="w-1/2 border-b border-l-2 border-gray-400 pt-3 pl-2">
-                                        <p class="text-left">Date : {{$experiment->day}}</p>
+                                        <p class="text-center">Date : {{$experiment->day}}</p>
                                     </div>
                                     <div class="w-full border-b border-t-2 border-gray-400 pt-3 pl-2">
-                                        <p class="text-left">Title : {{$experiment->title}}</p>
+                                        <p class="text-center">Title : {{$experiment->title}}</p>
                                     </div>
                                     <div class="w-full border-b border-t-2 border-gray-400 pt-3 pl-2">
-                                        <p class="text-left">URL : {{$experiment->paper_url}}</p>
+                                        <p class="text-center">URL : {{$experiment->paper_url}}</p>
                                     </div>
                                 </div>
                                 @endif
@@ -68,7 +68,7 @@
                                     <div class="flex justify-center flex-wrap lg:w-2/3 md:w-full mx-auto"> 
                                         @foreach($compositions as $composition)
                                         <div class="w-1/3">
-                                            <div class="flex justify-center mt-2 p-1 w-full bg-gray-400">
+                                            <div class="flex justify-center mt-2 p-1 w-full bg-blue-300">
                                                 <div class="text-white">
                                                     Composition:{{$number_composition}}
                                                 </div>
@@ -116,7 +116,7 @@
                                 {{-- 試験結果 --}}
                                 <div class="flex justify-center">
                                     <div class="lg:w-2/3 md:w-full mx-auto flex flex-wrap">
-                                        <div class="flex justify-center p-1 w-full bg-gray-400">
+                                        <div class="flex justify-center p-1 w-full bg-red-300">
                                             <div class="text-white">
                                                 Result 
                                             </div>
@@ -206,14 +206,78 @@
                                             </div>
 
                                             {{-- @if($storing_test->isEmpty()) --}}
+                                            @if($antibacteria_test->isEmpty())
                                             <div class="text-center">
                                                 No data
                                             </div>
-                                            <div class="p-2">
-                                                
-                                            </div> 
+                                            
+                                            @else
+                                            <div class="flex justify-center">
+                                                <button onclick="location.href='{{ route('user.everyone_show.chart', ['id' => $experiment->id, 'type' =>'antibacteria_test']) }}';"class="p-2 m-2 text-white bg-gray-500 border-0 focus:outline-none
+                                                    hover:bg-gray-600 rounded">Show Chart</button>
+                                            </div>
+                                            <div class="text-center">
+                                                <a href="{{ route('user.edit_export.excel', ['experiment_id' => $experiment->id, 'type' => 'antibacteria_test']) }}" class="btn btn-primary m-2">Download Now Data</a>                                          
+                                            </div>
+                                            @endif
+ 
                                            
                                         </div>
+
+                                        <div class="mt-2 w-1/2 border-2 border-gray-300">
+                                            <div class="flex justify-center bg-gray-200">
+                                                <div class="p-1 w-full text-center">
+                                                    Enzyme Test
+                                                </div>
+                                               
+                                            </div>
+
+                                            {{-- @if($storing_test->isEmpty()) --}}
+                                            @if($enzyme_test->isEmpty())
+                                            <div class="text-center">
+                                                No data
+                                            </div>
+                                            
+                                            @else
+                                            <div class="flex justify-center">
+                                                <button onclick="location.href='{{ route('user.everyone_show.chart', ['id' => $experiment->id, 'type' =>'enzyme_test']) }}';"class="p-2 m-2 text-white bg-gray-500 border-0 focus:outline-none
+                                                    hover:bg-gray-600 rounded">Show Chart</button>
+                                            </div>
+                                            <div class="text-center">
+                                                <a href="{{ route('user.edit_export.excel', ['experiment_id' => $experiment->id, 'type' => 'enzyme_test']) }}" class="btn btn-primary m-2">Download Now Data</a>                                          
+                                            </div>
+                                            @endif
+ 
+                                           
+                                        </div>
+                                        <div class="mt-2 w-1/2 border-2 border-gray-300">
+                                            <div class="flex justify-center bg-gray-200">
+                                                <div class="p-1 w-full text-center">
+                                                    Tga Test
+                                                </div>
+                                               
+                                            </div>
+
+                                            {{-- @if($storing_test->isEmpty()) --}}
+                                            @if($tga_test->isEmpty())
+                                            <div class="text-center">
+                                                No data
+                                            </div>
+                                            
+                                            @else
+                                            <div class="flex justify-center">
+                                                <button onclick="location.href='{{ route('user.everyone_show.chart', ['id' => $experiment->id, 'type' =>'tga_test']) }}';"class="p-2 m-2 text-white bg-gray-500 border-0 focus:outline-none
+                                                    hover:bg-gray-600 rounded">Show Chart</button>
+                                            </div>
+                                            <div class="text-center">
+                                                <a href="{{ route('user.edit_export.excel', ['experiment_id' => $experiment->id, 'type' => 'tga_test']) }}" class="btn btn-primary m-2">Download Now Data</a>                                          
+                                            </div>
+                                            @endif
+ 
+                                           
+                                        </div>
+
+
                                     </div>
                                 </div>
                                 </div>

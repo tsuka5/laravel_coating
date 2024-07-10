@@ -4,7 +4,8 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            Storing Test Chart
+            Tga Test Chart
+        </h2>
     </x-slot>
 
     <div class="py-12">
@@ -72,30 +73,12 @@
                             
 
                             <div class = "flex justify-center flex-wrap">
-                            {{-- 質量損失のグラフ --}}
+                                {{-- 酵素活性のグラフ --}}
                                 <canvas id="mass_loss_rate" width="400" height="400" class="m-10"></canvas>
-                                {{-- 色彩測定のグラフ --}}
-                                <canvas id="color_e" width="400" height="400" class="m-10"></canvas>
-                                {{-- 硬度のグラフ --}}
-                                <canvas id="hardness" width="400" height="400" class="m-10"></canvas>
-                                {{-- pHのグラフ --}}
-                                <canvas id="ph" width="400" height="400" class="m-10"></canvas>
-                                {{-- 水分含有量のグラフ --}}
-                                <canvas id="moisture_content" width="400" height="400" class="m-10"></canvas>
-                                {{-- TAのグラフ --}}
-                                <canvas id="ta" width="400" height="400" class="m-10"></canvas>
-                                {{-- ビタミンC含有量のグラフ --}}
-                                <canvas id="vitamin_c" width="400" height="400" class="m-10"></canvas>
-                                {{-- 呼吸速度のグラフ --}}
-                                <canvas id="rr" width="400" height="400" class="m-10"></canvas>
                             </div>
 
-
-                            
-                                    
-                            
                             <div class="p-2 w-full flex justify-around mt-4">
-                              <button onclick="location.href='{{ route('user.experiment_register', ['experiment_id'=>$experiment->id]) }}'" class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded my-2">Back</button>
+                              <button onclick="location.href='{{ route('user.experiment_show', ['experiment_id'=>$experiment->id]) }}'" class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded my-2">Back</button>
                             </div>
                         </div>
                            
@@ -139,133 +122,58 @@ const borderColors = [
 
 // 変数をコントローラから受け取る
 const composition_count_list = @json($composition_count_list);
-const mass_loss_rates = @json($mass_loss_rates);
-console.log(mass_loss_rates);
-const color_es = @json($color_es);
-const phs = @json($phs);
-const moisture_contents = @json($moisture_contents);
-const tas = @json($tas);
-const hardnesses = @json($hardnesses);
-const vitamin_cs = @json($vitamin_cs);
-const days = @json($days);
-const rrs = @json($rrs);
-
-// データセットの配列を作る
-const mass_loss_rates_datasets = [];
-const color_es_datasets = [];
-const phs_datasets = [];
-const moisture_contents_datasets = [];
-const tas_datasets = [];
-const hardnesses_datasets = [];
-const vitamin_c_datasets = [];
-const rr_datasets = [];
-
+const x_label = @json($x_label);
+const temperature = @json($temperatures);
+const mass_loss_rate = @json($mass_loss_rates);
+const mass_loss_rate_datasets = [];
 
 composition_count_list.forEach((composition_count, index) => {
-    mass_loss_rates_datasets.push({
-        label: `composition: ${composition_count+1}`,
-        data: mass_loss_rates[index],
-        backgroundColor: colors[index % colors.length],
-        borderColor: borderColors[index % borderColors.length],
-        borderWidth: 1
-    });
-    color_es_datasets.push({
-        label: `composition: ${composition_count+1}`,
-        data: color_es[index],
-        backgroundColor: colors[index % colors.length],
-        borderColor: borderColors[index % borderColors.length],
-        borderWidth: 1
-    });
-    phs_datasets.push({
-        label: `composition: ${composition_count+1}`,
-        data: phs[index],
-        backgroundColor: colors[index % colors.length],
-        borderColor: borderColors[index % borderColors.length],
-        borderWidth: 1
-    });
-    moisture_contents_datasets.push({
-        label: `composition: ${composition_count+1}`,
-        data: moisture_contents[index],
-        backgroundColor: colors[index % colors.length],
-        borderColor: borderColors[index % borderColors.length],
-        borderWidth: 1
-    });
-    tas_datasets.push({
-        label: `composition: ${composition_count+1}`,
-        data: tas[index],
-        backgroundColor: colors[index % colors.length],
-        borderColor: borderColors[index % borderColors.length],
-        borderWidth: 1
-    });
-    hardnesses_datasets.push({
-        label: `composition: ${composition_count+1}`,
-        data: hardnesses[index],
-        backgroundColor: colors[index % colors.length],
-        borderColor: borderColors[index % borderColors.length],
-        borderWidth: 1
-    });
-    vitamin_c_datasets.push({
-        label: `composition: ${composition_count+1}`,
-        data: vitamin_cs[index],
-        backgroundColor: colors[index % colors.length],
-        borderColor: borderColors[index % borderColors.length],
-        borderWidth: 1
-    });
-    rr_datasets.push({
-        label: `composition: ${composition_count+1}`,
-        data: rrs[index],
+    mass_loss_rate_datasets.push({
+        label: `composition: ${composition_count}`,
+        data: mass_loss_rate[index],
         backgroundColor: colors[index % colors.length],
         borderColor: borderColors[index % borderColors.length],
         borderWidth: 1
     });
 });
-console.log(days);
-console.log(mass_loss_rates_datasets);
-// グラフを作成する
+
+
 function createLineChart(chartId, datasets, title, labels) {
    
-    var ctx = document.getElementById(chartId).getContext('2d');
-    return new Chart(ctx, {
-        type: 'line', // グラフのタイプ
-        data: {
-            labels: labels, // x軸ラベル
-            datasets: datasets  //データセット配列
-        },
-        options: {
-            responsive: false,
-            maintainAspectRatio: false,
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            },
-            plugins: {
-                title: {
-                    display: true,
-                    text: title,
-                    font: {
-                        size: 16
-                    },
-                    padding: {
-                        top: 20,
-                        bottom: 30
-                    },
-                    color: '#111'
-                }
-            }
-        }
+   var ctx = document.getElementById(chartId).getContext('2d');
+   return new Chart(ctx, {
+       type: 'line', // グラフのタイプ
+       data: {
+           labels: labels, // x軸ラベル
+           datasets: datasets  //データセット配列
+       },
+       options: {
+           responsive: false,
+           maintainAspectRatio: false,
+           scales: {
+               y: {
+                   beginAtZero: true
+               }
+           },
+           plugins: {
+               title: {
+                   display: true,
+                   text: title,
+                   font: {
+                       size: 16
+                   },
+                   padding: {
+                       top: 20,
+                       bottom: 30
+                   },
+                   color: '#111'
+               }
+           }
+       }
 
-    });
+   });
 }
-
-var massLossRateChart = createLineChart('mass_loss_rate', mass_loss_rates_datasets, 'Mass Loss Rate(%)', days);
-var colorTestChart = createLineChart('color_e', color_es_datasets, 'Color Test (ΔE)', days);
-var pHChart = createLineChart('ph', phs_datasets, 'pH', days);
-var moistureContentChart = createLineChart('moisture_content', moisture_contents_datasets, 'Moistrue Content(%)', days);
-var taChart = createLineChart('ta', tas_datasets, 'TA(%)', days);
-var hardnessChart = createLineChart('hardness', hardnesses_datasets, 'Hardness(N)', days);
-var vitaminCChart = createLineChart('vitamin_c', vitamin_c_datasets, 'Vitamin C(%)', days);
-var rrChart = createLineChart('rr', rr_datasets, 'RR (mgCO^2/(kg*h))', days);
+var mass_loss_rateChart = createLineChart('mass_loss_rate', mass_loss_rate_datasets, 'mass_loss_rate', temperature);
 
 </script>
 

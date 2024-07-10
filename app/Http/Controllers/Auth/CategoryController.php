@@ -14,6 +14,10 @@ use App\Models\Antibacteria_test;
 use App\Models\Material_detail;
 use App\Models\Fruit_detail;
 use App\Models\Bacteria_detail;
+use App\Models\Enzyme_detail;
+use App\Models\Substrate_detail;
+use App\Models\Gas_detail;
+use App\Models\Solvent_detail;
 use App\Models\Ph_material_detail;
 use App\Models\Antibacteria_test_type;
 use Illuminate\Support\Facades\DB;
@@ -37,28 +41,37 @@ public function index(Request $request)
 {
     $keyword = $request->input('keyword');
     $material = $request->input('material');
+    $solvent = $request->input('solvent');
     $bacterium = $request->input('bacterium');
     $fruit = $request->input('fruit');
-    $ph_material = $request->input('ph_material');
-    $antibacteria_test_type = $request->input('antibacteria_test_type');
+    $enzyme = $request->input('enzyme');
+    $substrate = $request->input('substrate');
+    $gas = $request->input('gas');
 
     //一旦全部のデータをとる
     $selected_materials = Material_detail::query();
+    $selected_solvents = Solvent_detail::query();
     $selected_bacteria = Bacteria_detail::query();
     $selected_fruits = Fruit_detail::query();
-    $selected_phMaterials = Ph_material_detail::query();
-    $selected_antibacteriaTestTypes = Antibacteria_test_type::query();
+    $selected_enzymes = Enzyme_detail::query();
+    $selected_substrates = Substrate_detail::query();
+    $selected_gases =  Gas_detail::query();
 
 
     if(!empty($keyword)){
         $selected_materials->where('name', 'LIKE', "%{$keyword}%");
+        $selected_solvents->where('name', 'LIKE', "%{$keyword}%");
         $selected_bacteria->where('name', 'LIKE', "%{$keyword}%");
         $selected_fruits->where('name', 'LIKE', "%{$keyword}%");
-        $selected_phMaterials->where('name', 'LIKE', "%{$keyword}%");
-        $selected_antibacteriaTestTypes->where('name', 'LIKE', "%{$keyword}%");
+        $selected_enzymes->where('name', 'LIKE', "%{$keyword}%");
+        $selected_substrates->where('name', 'LIKE', "%{$keyword}%");
+        $selected_gases->where('name', 'LIKE', "%{$keyword}%");
     }
     if (!empty($material)) {
         $selected_materials->where('name', 'LIKE', "%{$material}%");
+    }
+    if (!empty($solvent)) {
+        $selected_solvents->where('name', 'LIKE', "%{$solvent}%");
     }
     if (!empty($bacterium)) {
         $selected_bacteria->where('name', 'LIKE', "%{$bacterium}%");
@@ -66,11 +79,14 @@ public function index(Request $request)
     if (!empty($fruit)) {
         $selected_fruits->where('name', 'LIKE', "%{$fruit}%");
     }
-    if (!empty($ph_material)) {
-        $selected_phMaterials->where('name', 'LIKE', "%{$ph_material}%");
+    if (!empty($enzyme)) {
+        $selected_enzymes->where('name', 'LIKE', "%{$enzyme}%");
     }
-    if (!empty($antibacteria_test_type)) {
-        $selected_antibacteriaTestTypes->where('name', 'LIKE', "%{$antibacteria_test_type}%");
+    if (!empty($substrate)) {
+        $selected_substrates->where('name', 'LIKE', "%{$substrate}%");
+    }
+    if (!empty($gas)) {
+        $selected_gases->where('name', 'LIKE', "%{$gas}%");
     }
     
     //絞ったデータをゲットする，もしインプットに値が入っていなければ，空にする
@@ -78,6 +94,11 @@ public function index(Request $request)
         $selected_materials = $selected_materials->get();
     } else {
         $selected_materials = [];
+    }
+    if (!empty($keyword) || !empty($solvent)) {
+        $selected_solvents = $selected_solvents->get();
+    } else {
+        $selected_solvents = [];
     }
     if (!empty($keyword) || !empty($bacterium)) {
         $selected_bacteria = $selected_bacteria->get();
@@ -89,26 +110,33 @@ public function index(Request $request)
     } else {
         $selected_fruits = [];
     }
-    if (!empty($keyword) || !empty($ph_material)) {
-        $selected_phMaterials = $selected_phMaterials->get();
+    if (!empty($keyword) || !empty($enzyme)) {
+        $selected_enzymes = $selected_enzymes->get();
     } else {
-        $selected_phMaterials = [];
+        $selected_enzymes = [];
     }
-    if (!empty($keyword) || !empty($antibacteria_test_type)) {
-        $selected_antibacteriaTestTypes = $selected_antibacteriaTestTypes->get();
+    if (!empty($keyword) || !empty($substrate)) {
+        $selected_substrates = $selected_substrates->get();
     } else {
-        $selected_antibacteriaTestTypes = [];
+        $selected_substrates = [];
+    }
+    if (!empty($keyword) || !empty($gas)) {
+        $selected_gases = $selected_gases->get();
+    } else {
+        $selected_gases = [];
     }
     
     $materials_list = Material_detail::orderby('name', 'asc')->get();
+    $solvents_list = Solvent_detail::orderby('name', 'asc')->get();
     $fruits_list = Fruit_detail::orderby('name', 'asc')->get();
     $bacteria_list = Bacteria_detail::orderby('name', 'asc')->get();
-    $phMaterial_list = Ph_material_detail::orderby('name', 'asc')->get();
-    $antibacteriaTypeTest_list = Antibacteria_test_type::orderby('name', 'asc')->get();
+    $enzymes_list = Enzyme_detail::orderby('name', 'asc')->get();
+    $substrates_list = Substrate_detail::orderby('name', 'asc')->get();
+    $gases_list = Gas_detail::orderby('name', 'asc')->get();
 
     return view('user.category.index', compact(
-        'selected_materials', 'selected_bacteria', 'selected_fruits', 'selected_phMaterials', 'selected_antibacteriaTestTypes',
-        'keyword', 'material', 'materials_list', 'bacteria_list', 'fruits_list', 'phMaterial_list', 'antibacteriaTypeTest_list'
+        'selected_materials','selected_solvents', 'selected_bacteria', 'selected_fruits', 'selected_enzymes', 'selected_substrates','selected_gases',
+        'keyword', 'material', 'materials_list','solvents_list', 'bacteria_list', 'fruits_list', 'enzymes_list', 'substrates_list','gases_list'
     ));
 }
     
@@ -150,7 +178,8 @@ public function index(Request $request)
             $fruit_detail-> charactaristic = $request->charactaristic;
             $fruit_detail->save();
 
-        }elseif($request->formType === 'bacteria'){
+        }
+        elseif($request->formType === 'bacteria'){
             $request->validate([
                 'name' =>['required', 'string', 'max:255'],
                 'charactaristic' =>  ['string', 'nullable']
@@ -161,7 +190,57 @@ public function index(Request $request)
             $bacteria_detail-> charactaristic = $request->charactaristic;
             $bacteria_detail->save();
 
-        }elseif($request->formType === 'ph_material'){
+        }
+        elseif($request->formType === 'solvent'){
+            $request->validate([
+                'name' =>['required', 'string', 'max:255'],
+                'charactaristic' =>  ['string', 'nullable']
+            ]);
+
+            $solvent_detail = new solvent_detail();
+            $solvent_detail-> name = $request->name;
+            $solvent_detail-> charactaristic = $request->charactaristic;
+            $solvent_detail->save();
+
+        }
+        elseif($request->formType === 'enzyme'){
+            $request->validate([
+                'name' =>['required', 'string', 'max:255'],
+                'charactaristic' =>  ['string', 'nullable']
+            ]);
+
+            $enzyme_detail = new Enzyme_detail();
+            $enzyme_detail-> name = $request->name;
+            $enzyme_detail-> charactaristic = $request->charactaristic;
+            $enzyme_detail->save();
+
+        }
+        elseif($request->formType === 'substrate'){
+            $request->validate([
+                'name' =>['required', 'string', 'max:255'],
+                'charactaristic' =>  ['string', 'nullable']
+            ]);
+
+            $substrate_detail = new Substrate_detail();
+            $substrate_detail-> name = $request->name;
+            $substrate_detail-> charactaristic = $request->charactaristic;
+            $substrate_detail->save();
+
+        }
+        elseif($request->formType === 'gas'){
+            $request->validate([
+                'name' =>['required', 'string', 'max:255'],
+                'charactaristic' =>  ['string', 'nullable']
+            ]);
+
+            $gas_detail = new gas_detail();
+            $gas_detail-> name = $request->name;
+            $gas_detail-> charactaristic = $request->charactaristic;
+            $gas_detail->save();
+
+        }
+
+        elseif($request->formType === 'ph_material'){
             $request->validate([
                 'name' =>['required', 'string', 'max:255'],
                 'charactaristic' =>  ['string', 'nullable']

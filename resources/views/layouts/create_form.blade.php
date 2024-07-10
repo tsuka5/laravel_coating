@@ -58,7 +58,7 @@
             <div class="p-2 mx-auto">
               <div class="relative">
                 <label for="concentration" class="leading-7 text-sm text-gray-600">The Percentage of Material in the Solvent (% (w/w))</label>
-                <input id="concentration" type="number" name="concentration" value="{{ old('concentration') }}" step="0.01" placeholder="ex: 0.80" required class="w-full bg-gray-100 bg-opacity-50 rounded border
+                <input id="concentration" type="number" name="concentration" value="{{ old('concentration') }}" step="0.001" placeholder="ex: 0.80" required class="w-full bg-gray-100 bg-opacity-50 rounded border
                   border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
               </div>
             </div>
@@ -509,6 +509,12 @@
             </div>
             <div class="p-2 mx-auto">
               <div class="relative">
+                  <label for="memo" class="leading-7 text-sm text-gray-600">memo </label>
+                  <input id="memo" type="text" name="memo" value="{{ old('memo') }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+              </div>
+            </div>
+            {{-- <div class="p-2 mx-auto">
+              <div class="relative">
                   <label for="test_type" class="leading-7 text-sm text-gray-600">Test Type </label>
                   <select id="test_type" name="test_name" data-toggle="select" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                     @foreach ($antibacteria_test_list as $selected_test)
@@ -541,7 +547,7 @@
                   <label for="mic" class="leading-7 text-sm text-gray-600">MIC</label>
                   <input id="mic" type="mic" name="mic" value="{{ old('mic') }}" step="0.01" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                 </div>
-            </div>
+            </div> --}}
           </div>
           
       <div class="p-2 w-full flex justify-around mt-4">
@@ -551,6 +557,196 @@
       </form>
     </div>
   </div>
+
+  @elseif($formType == 'enzyme_test')
+  <div class="container px-5 mx-auto">
+    <div class="flex flex-col text-center w-full mb-4 mt-4">
+      <h4 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Enzyme Test</h4>
+    </div>
+    <div class="mx-auto">
+      <x-input-error :messages="$errors->all()" class="mb-4"  />
+        <form id="enzyme_test_form" method="post" action="{{ route('user.store', ['id'=>$id, 'formType'=>'enzyme_test', 'experiment_id'=>$experiment->id]) }}">
+          @csrf
+
+          <div class="m-2">
+          
+            <div class="p-2 mx-auto">
+              <div class="relative">
+                  <label for="enzyme_name" class="leading-7 text-sm text-gray-600">enzyme Name</label>
+                  <select id="enzyme_name" name="enzyme_name" data-toggle="select" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                    @foreach ($enzymes_list as $selected_enzyme)
+                    <option value="{{ $selected_enzyme->name }}"> {{ $selected_enzyme->name }}</option>
+                    @endforeach
+                  </select>                                      
+              </div>
+            </div>
+            <p class="text-red-500">If you don't see the enzyme in this list, please add it here.</p>
+            <div class="p-2 w-full flex justify-around">
+              <button type="button" onclick="location.href='{{ route('user.category.create', ['categoryType'=>'enzyme']) }}'" class="bg-gray-200 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded">Add</button>                   
+            </div>
+
+            <div class="p-2 mx-auto">
+              <div class="relative">
+                <label for="enzyme_concentration" class="leading-7 text-sm text-gray-600">Enzyme Concentration (%)</label>
+                <input id="enzyme_concentration" type="number" name="enzyme_concentration" value="{{ old('enzyme_concentration') }}" step="0.001" placeholder="ex: 0.80" required class="w-full bg-gray-100 bg-opacity-50 rounded border
+                  border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+              </div>
+            </div>
+
+            <div class="p-2 mx-auto">
+              <div class="relative">
+                  <label for="substrate_name" class="leading-7 text-sm text-gray-600">Substrate </label>
+                  <select id="substrate_name" name="substrate_name" data-toggle="select" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                    @foreach ($substrates_list as $selected_substrate)
+                    <option value="{{ $selected_substrate->name }}"> {{ $selected_substrate->name }}</option>
+                    @endforeach
+                  </select>                                      
+              </div>
+            </div>
+            <p class="text-red-500">If you don't see the Substrate in this list, please add it here.</p>
+            <div class="p-2 w-full flex justify-around">
+              <button type="button" onclick="location.href='{{ route('user.category.create', ['categoryType'=>'substrate']) }}'" class="bg-gray-200 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded">Add</button>
+            </div>
+
+            <div class="p-2 mx-auto">
+              <div class="relative">
+                <label for="substrate_concentration" class="leading-7 text-sm text-gray-600">Substrate Concentration (%)</label>
+                <input id="substrate_concentration" type="number" name="substrate_concentration" value="{{ old('substrate_concentration') }}" step="0.001" placeholder="ex: 0.80" required class="w-full bg-gray-100 bg-opacity-50 rounded border
+                  border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+              </div>
+            </div>
+
+            <div class="p-2 mx-auto">
+              <div class="relative">
+                <label for="ph" class="leading-7 text-sm text-gray-600">pH of the reaction mixture</label>
+                <input id="ph" type="number" name="ph" value="{{ old('ph') }}" step="0.01" placeholder="ex: 0.80"  class="w-full bg-gray-100 bg-opacity-50 rounded border
+                  border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+              </div>
+            </div>
+            <div class="p-2 mx-auto">
+              <div class="relative">
+                <label for="temperature" class="leading-7 text-sm text-gray-600">temperature (℃)</label>
+                <input id="temperature" type="number" name="temperature" value="{{ old('temperature') }}" step="0.01" placeholder="ex: 0.80"  class="w-full bg-gray-100 bg-opacity-50 rounded border
+                  border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+              </div>
+            </div>
+            <div class="p-2 mx-auto">
+              <div class="relative">
+                <label for="volume" class="leading-7 text-sm text-gray-600">Volume(ml)</label>
+                <input id="volume" type="number" name="volume" value="{{ old('volume') }}" step="0.01" placeholder="ex: 0.80"  class="w-full bg-gray-100 bg-opacity-50 rounded border
+                  border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+              </div>
+            </div>
+            <div class="p-2 mx-auto">
+              <div class="relative">
+                <label for="time" class="leading-7 text-sm text-gray-600">Reaction Time (h)</label>
+                <input id="time" type="number" name="time" value="{{ old('time') }}" step="0.01" placeholder="ex: 0.80"  class="w-full bg-gray-100 bg-opacity-50 rounded border
+                  border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+              </div>
+            </div>
+
+            <div class="p-2 mx-auto">
+              <div class="relative">
+                  <label for="memo" class="leading-7 text-sm text-gray-600">memo </label>
+                  <input id="memo" type="text" name="memo" value="{{ old('memo') }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+              </div>
+            </div>
+            
+          </div>
+          
+      <div class="p-2 w-full flex justify-around mt-4">
+        <button type="submit" class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">Register</button>
+      </div>
+      </form>
+    </div>
+  </div>
+
+  @elseif($formType ='tga_test')
+  <div class="container px-5 mx-auto">
+    <div class="flex flex-col text-center w-full mb-4 mt-4">
+      <h4 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">tga Test</h4>
+    </div>
+    <div class="mx-auto">
+      <x-input-error :messages="$errors->all()" class="mb-4"  />
+        <form id="tga_test_form" method="post" action="{{ route('user.store', ['id'=>$id, 'formType'=>'tga_test', 'experiment_id'=>$experiment->id]) }}">
+          @csrf
+
+          <div class="m-2">
+          
+            <div class="p-2 mx-auto">
+              <div class="relative">
+                  <label for="gas_name" class="leading-7 text-sm text-gray-600">Gas Name</label>
+                  <select id="gas_name" name="gas_name" data-toggle="select" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                    @foreach ($gas_list as $selected_gas)
+                    <option value="{{ $selected_gas->name }}"> {{ $selected_gas->name }}</option>
+                    @endforeach
+                  </select>                                      
+              </div>
+            </div>
+            <p class="text-red-500">If you don't see the enzyme in this list, please add it here.</p>
+            <div class="p-2 w-full flex justify-around">
+              <button type="button" onclick="location.href='{{ route('user.category.create', ['categoryType'=>'gas']) }}'" class="bg-gray-200 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded">Add</button>                   
+            </div>
+
+            <div class="p-2 mx-auto">
+              <div class="relative">
+                <label for="flow_rate" class="leading-7 text-sm text-gray-600">flow_rate (%)</label>
+                <input id="flow_rate" type="number" name="flow_rate" value="{{ old('flow_rate') }}" step="0.01" placeholder="ex: 0.80" required class="w-full bg-gray-100 bg-opacity-50 rounded border
+                  border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+              </div>
+            </div>
+
+            <div class="p-2 mx-auto">
+              <div class="relative">
+                <label for="start_temperature" class="leading-7 text-sm text-gray-600">start_temperature (℃)</label>
+                <input id="start_temperature" type="number" name="start_temperature" value="{{ old('start_temperature') }}" step="0.01" placeholder="ex: 0.80" required class="w-full bg-gray-100 bg-opacity-50 rounded border
+                  border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+              </div>
+            </div>
+            
+            <div class="p-2 mx-auto">
+              <div class="relative">
+                <label for="end_temperature class="leading-7 text-sm text-gray-600">end_temperature (℃)</label>
+                <input id="end_temperature" type="number" name="end_temperature" value="{{ old('end_temperature') }}" step="0.01" placeholder="ex: 0.80" required class="w-full bg-gray-100 bg-opacity-50 rounded border
+                  border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+              </div>
+            </div>
+
+            <div class="p-2 mx-auto">
+              <div class="relative">
+                <label for="temperature_range class="leading-7 text-sm text-gray-600">temperature_range (℃)</label>
+                <input id="temperature_range" type="number" name="temperature_range" value="{{ old('temperature_range') }}" step="0.01" placeholder="ex: 0.80" required class="w-full bg-gray-100 bg-opacity-50 rounded border
+                  border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+              </div>
+            </div>
+
+            <div class="p-2 mx-auto">
+              <div class="relative">
+                <label for="heating_rate class="leading-7 text-sm text-gray-600">heating_rate (℃)</label>
+                <input id="heating_rate" type="number" name="heating_rate" value="{{ old('heating_rate') }}" step="0.01" placeholder="ex: 0.80" required class="w-full bg-gray-100 bg-opacity-50 rounded border
+                  border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+              </div>
+            </div>
+ 
+
+            <div class="p-2 mx-auto">
+              <div class="relative">
+                  <label for="memo" class="leading-7 text-sm text-gray-600">memo </label>
+                  <input id="memo" type="text" name="memo" value="{{ old('memo') }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+              </div>
+            </div>
+            
+          </div>
+          
+      <div class="p-2 w-full flex justify-around mt-4">
+        <button type="submit" class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">Register</button>
+      </div>
+      </form>
+    </div>
+  </div>
+
+
+
 @elseif($formType == 'note')
   <div class="container px-5 mx-auto">
     <div class="flex flex-col text-center w-full mb-4 mt-4">

@@ -35,6 +35,7 @@ class DashboardController extends Controller
             $materials[$composition->id] = Material::where('composition_id', $composition->id)->get();
         }
     }
+
     // $selected_compositions = Material_composition::orderby('id','desc')->paginate(5);
 
     //     $materials=[];

@@ -120,18 +120,70 @@
                                         <div class="lg:w-1/3 md:w-1/2 sm:w-full p-4">
                                             <div class="border-2 border-gray-300 rounded divide-y-2 divide-gray-300">
                                                 @if ($experiment->paper_url === null)
-                                                    <div class="flex justify-center bg-gray-200 p-1">
+                                                    <div class="flex justify-center bg-blue-100 p-1">
                                                         <p>Your Experiment</p>
                                                     </div>
+                                                    <div class="mx-2 text-center">
+                                                        <table class="w-full table-fixed">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th class="w-1/4"></th>
+                                                                    <th class="w-3/4"></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td class="p-2">Title :</td>
+                                                                    <td class="p-2 text-center break-words">{{$experiment->title}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="p-2">Name :</td>
+                                                                    <td class="p-2 text-center break-words">{{$experiment->name}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="p-2">Date :</td>
+                                                                    <td class="p-2 text-center break-words">{{$experiment->date}}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+    
                                                 @else
-                                                    <div class="flex justify-center bg-gray-200 p-1">
+                                                    <div class="flex justify-center bg-blue-100 p-1">
                                                         <p>Paper</p>
                                                     </div>
+                                                    <div class="mx-2 text-center">
+                                                        <table class="w-full table-fixed">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th class="w-1/4"></th>
+                                                                    <th class="w-3/4"></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td class="p-2">Title :</td>
+                                                                    <td class="p-2 text-center break-words">{{$experiment->title}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="p-2">Name :</td>
+                                                                    <td class="p-2 text-center break-words">{{$experiment->name}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="p-2">Date :</td>
+                                                                    <td class="p-2 text-center break-words">{{$experiment->date}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="p-2">URL :</td>
+                                                                    <td class="p-2 text-center break-words">{{$experiment->paper_url}}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+    
                                                 @endif
-                                                <div class="mx-2 text-center">
-                                                    <p>Title :  {{$experiment->title}}</p>
-                                                </div>
                                                 <div class="p-2">
+                                                    <p class='text-center'> Used Materials </p>
                                                     @foreach($compositions[$experiment->id] as $composition)
                                                         @foreach($materials[$composition->id] as $material) 
                                                         <div>

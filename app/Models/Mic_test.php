@@ -10,7 +10,7 @@ use App\Models\Material_composition;
 
 
 
-class Colony_test extends Model
+class Mic_test extends Model
 {
     use HasFactory;
 
@@ -26,8 +26,7 @@ class Colony_test extends Model
     protected $fillable = [
         'composition_id',
         'concentration',
-        'day',
-        'colony_diameter',
+        'mic',
         'memo',
         
     ];
