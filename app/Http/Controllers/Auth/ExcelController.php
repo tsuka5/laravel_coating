@@ -748,21 +748,21 @@ class ExcelController extends Controller
             Storing_multiple_test::insert($multiple_tests);
 
                 //enzyme_testの保存
-                $sheet3 = $spreadsheet->getSheet(2);
-                $enzyme_highestRow = $sheet3->getHighestRow();
-                $enzyme_tests = [];
+            //     $sheet3 = $spreadsheet->getSheet(2);
+            //     $enzyme_highestRow = $sheet3->getHighestRow();
+            //     $enzyme_tests = [];
 
-            for ($column = 0; $column <= $composition_count*4-1; $column += 4 ){
-                    for ($row = 5; $row <= $enzyme_highestRow; $row++){
-                        $enzyme_tests[] = [
-                            'composition_id' => $sheet3->getCell($column_list[$column + 2] . '3')->getValue(),
-                            'day' => $sheet3->getCell($column_list[$column] . $row)->getValue(),
-                            'enzyme_activity' => $sheet3->getCell($column_list[$column + 1] . $row)->getValue(),
-                            'memo' => $sheet3->getCell($column_list[$column + 2] . $row)->getValue()
-                        ];
-                    }
-            }
-            Enzyme_value::insert($enzyme_tests);
+            // for ($column = 0; $column <= $composition_count*4-1; $column += 4 ){
+            //         for ($row = 5; $row <= $enzyme_highestRow; $row++){
+            //             $enzyme_tests[] = [
+            //                 'composition_id' => $sheet3->getCell($column_list[$column + 2] . '3')->getValue(),
+            //                 'day' => $sheet3->getCell($column_list[$column] . $row)->getValue(),
+            //                 'enzyme_activity' => $sheet3->getCell($column_list[$column + 1] . $row)->getValue(),
+            //                 'memo' => $sheet3->getCell($column_list[$column + 2] . $row)->getValue()
+            //             ];
+            //         }
+            // }
+            // Enzyme_value::insert($enzyme_tests);
         }
         
         elseif($request->type === 'film_condition'){
