@@ -586,7 +586,7 @@ class ProfileController extends Controller
             $material = Material::findOrFail($id);
             $composition_id = Material::select('composition_id')->where('id',$id)->first();
             $experiment_id = Material_composition::select('experiment_id')->where('id',$composition_id->composition_id)->first();
-            return view('user.profile.edit_experiment', compact('id', 'material', 'materials_list','solvents_list', 'ph_materials_list', 'editType', 'experiment_id'));
+            return view('user.profile.edit_experiment', compact('id', 'material', 'materials_list','solvents_list', 'editType', 'experiment_id'));
         } elseif ($editType === 'film_condition') {
             $film_condition = Film_condition::findOrFail($id);
             $experiment_id = Film_condition::select('experiment_id')->where('id',$id)->first();
