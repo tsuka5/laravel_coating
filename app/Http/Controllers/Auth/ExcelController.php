@@ -248,8 +248,8 @@ class ExcelController extends Controller
         $spreadsheet->addSheet($sheet5, 4); 
 
         $storing_test = Storing_test::where('experiment_id', $experiment_id)->first();
-        $fruit_name = Fruit_detail::where('id', $storing_test->storing_fruit_id)->first();
         $antibacteria_test = Antibacteria_test::where('experiment_id', $experiment_id)->first();
+        $fruit_name = Fruit_detail::where('id', $antibacteria_test->antibacteria_fruit_id)->first();
         $bacteria_name = Bacteria_detail::where('id', $antibacteria_test->bacteria_id)->first();
 
         // 組成の数に影響されないデータ
@@ -1034,9 +1034,9 @@ class ExcelController extends Controller
             $sheet2 = new Worksheet($spreadsheet, $sheet2_name);
             $spreadsheet->addSheet($sheet2, 1);  
 
-            $sheet3_name = 'enzyme_test';
-            $sheet3 = new Worksheet($spreadsheet, $sheet3_name);
-            $spreadsheet->addSheet($sheet3, 2);  
+            // $sheet3_name = 'enzyme_test';
+            // $sheet3 = new Worksheet($spreadsheet, $sheet3_name);
+            // $spreadsheet->addSheet($sheet3, 2);  
 
             // データをシートに設定
             $storing_test = Storing_test::where('experiment_id', $experiment_id)->first();
@@ -1053,7 +1053,7 @@ class ExcelController extends Controller
             $sheet1->setCellValue('D1', 'Fruit name');
             $sheet1->setCellValue('D2', $fruit_name->name);
             $sheet2->setCellValue('A1', 'Multiple Storing test');
-            $sheet3->setCellValue('A1', 'Enzyme test');
+            // $sheet3->setCellValue('A1', 'Enzyme test');
             //組成の数に影響を受けるデータ
             $composition_ids = Material_composition::where('experiment_id', $experiment_id)->get(['id']);
             $composition_number = 1;
@@ -1096,20 +1096,20 @@ class ExcelController extends Controller
                     $sheet2->setCellValue($column_list[$multiple_composition_start+14] . $index+5, $multiple_test->memo);
                 }
                 // //enzyme_testの設定
-                $sheet3->setCellValue($column_list[$enzyme_composition_start] . '3', 'composition:'.$composition_number);
-                $sheet3->setCellValue($column_list[$enzyme_composition_start+1] . '3', 'id=');
-                $sheet3->setCellValue($column_list[$enzyme_composition_start+2] . '3', $composition_id);
-                $enzyme_columns = range($enzyme_composition_start, $enzyme_composition_start+2);
-                $enzyme_values = ['Day','Enzyme Actibity', 'memo'];
-                foreach ($enzyme_columns as $index => $column) {
-                    $sheet3->setCellValue($column_list[$column] . '4', $enzyme_values[$index]);
-                }
-                $enzyme_tests = enzyme_value::where('composition_id', $composition_id)->get();
-                foreach($enzyme_tests as $index => $enzyme_test){
-                    $sheet3->setCellValue($column_list[$enzyme_composition_start] . $index+5, $enzyme_test->day);
-                    $sheet3->setCellValue($column_list[$enzyme_composition_start+1] . $index+5, $enzyme_test->enzyme_activity);
-                    $sheet3->setCellValue($column_list[$enzyme_composition_start+2] . $index+5, $enzyme_test->memo);
-                }
+                // $sheet3->setCellValue($column_list[$enzyme_composition_start] . '3', 'composition:'.$composition_number);
+                // $sheet3->setCellValue($column_list[$enzyme_composition_start+1] . '3', 'id=');
+                // $sheet3->setCellValue($column_list[$enzyme_composition_start+2] . '3', $composition_id);
+                // $enzyme_columns = range($enzyme_composition_start, $enzyme_composition_start+2);
+                // $enzyme_values = ['Day','Enzyme Actibity', 'memo'];
+                // foreach ($enzyme_columns as $index => $column) {
+                //     $sheet3->setCellValue($column_list[$column] . '4', $enzyme_values[$index]);
+                // }
+                // $enzyme_tests = enzyme_value::where('composition_id', $composition_id)->get();
+                // foreach($enzyme_tests as $index => $enzyme_test){
+                //     $sheet3->setCellValue($column_list[$enzyme_composition_start] . $index+5, $enzyme_test->day);
+                //     $sheet3->setCellValue($column_list[$enzyme_composition_start+1] . $index+5, $enzyme_test->enzyme_activity);
+                //     $sheet3->setCellValue($column_list[$enzyme_composition_start+2] . $index+5, $enzyme_test->memo);
+                // }
                 //tgaは後で
 
                 //選択した材料組成の表示
@@ -1135,7 +1135,7 @@ class ExcelController extends Controller
                 // $sheet1->getStyle('D:E')->getNumberFormat()->setFormatCode('0.0');
                 $sheet2->getColumnDimension($column)->setAutoSize(true);
                 // $sheet2->getStyle('C:I')->getNumberFormat()->setFormatCode('0.0');
-                $sheet3->getColumnDimension($column)->setAutoSize(true);
+                // $sheet3->getColumnDimension($column)->setAutoSize(true);
                 // $sheet3->getStyle('C:I')->getNumberFormat()->setFormatCode('0.0'); 
                 }
              
