@@ -44,7 +44,7 @@
            
             <p class="text-red-500">If you don't see the solvent in this list, please add it here</p>
             <div class="p-2 w-full flex justify-around">
-              <button type="button" onclick="location.href='{{ route('user.category.create', ['categoryType'=>'material']) }}'" class="bg-gray-200 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded">Add</button>
+              <button type="button" onclick="location.href='{{ route('user.category.create', ['categoryType'=>'solvent']) }}'" class="bg-gray-200 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded">Add</button>
             </div>
 
             <div class="p-2 mx-auto">
