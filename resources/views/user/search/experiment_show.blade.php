@@ -127,6 +127,12 @@
                                                     Film Condition
                                                 </div>
                                             </div> 
+                                            @if($film_condition->isEmpty())
+                                            <div class="text-center">
+                                                No Data
+                                            </div>
+                                           
+                                            @else
                                             <div class="my-1 mr-2">
                                                 <div class="flex justify-center">
                                                     <button onclick="location.href='{{ route('user.everyone_show.table', ['id' => $experiment->id, 'type' => 'film_condition']) }}';"class="p-2 m-2 text-white bg-gray-500 border-0 focus:outline-none
@@ -136,7 +142,7 @@
                                             <div class="text-center">
                                                 <a href="{{ route('user.edit_export.excel', ['experiment_id' => $experiment->id, 'type' => 'film_condition']) }}" class="btn btn-primary m-2">Download Now Data</a>                                          
                                             </div>
-
+                                            @endif
 
                                             
                                         </div>
