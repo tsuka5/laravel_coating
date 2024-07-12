@@ -199,7 +199,7 @@
                                                             @if(isset($materials[$composition->id]) && $materials[$composition->id]->isNotEmpty())
                                                                 @foreach($materials[$composition->id] as $material)
                                                                 <p class="text-center">
-                                                                    {{$material->material_detail->name}} : {{ $material->concentration }}
+                                                                    {{$material->material_detail->name}} : {{ $material->concentration }}  %
                                                                 </p>
                                                                 @endforeach
                                                             @endif

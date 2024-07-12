@@ -159,49 +159,49 @@ const rr_datasets = [];
 
 composition_count_list.forEach((composition_count, index) => {
     mass_loss_rates_datasets.push({
-        label: `composition: ${composition_count}`,
+        label: `composition: ${composition_count+1}`,
         data: mass_loss_rates[index],
         backgroundColor: colors[index % colors.length],
         borderColor: borderColors[index % borderColors.length],
         borderWidth: 1
     });
     color_es_datasets.push({
-        label: `composition: ${composition_count}`,
+        label: `composition: ${composition_count+1}`,
         data: color_es[index],
         backgroundColor: colors[index % colors.length],
         borderColor: borderColors[index % borderColors.length],
         borderWidth: 1
     });
     phs_datasets.push({
-        label: `composition: ${composition_count}`,
+        label: `composition: ${composition_count+1}`,
         data: phs[index],
         backgroundColor: colors[index % colors.length],
         borderColor: borderColors[index % borderColors.length],
         borderWidth: 1
     });
     moisture_contents_datasets.push({
-        label: `composition: ${composition_count}`,
+        label: `composition: ${composition_count+1}`,
         data: moisture_contents[index],
         backgroundColor: colors[index % colors.length],
         borderColor: borderColors[index % borderColors.length],
         borderWidth: 1
     });
     tas_datasets.push({
-        label: `composition: ${composition_count}`,
+        label: `composition: ${composition_count+1}`,
         data: tas[index],
         backgroundColor: colors[index % colors.length],
         borderColor: borderColors[index % borderColors.length],
         borderWidth: 1
     });
     vitamin_c_datasets.push({
-        label: `composition: ${composition_count}`,
+        label: `composition: ${composition_count+1}`,
         data: vitamin_cs[index],
         backgroundColor: colors[index % colors.length],
         borderColor: borderColors[index % borderColors.length],
         borderWidth: 1
     });
     rr_datasets.push({
-        label: `composition: ${composition_count}`,
+        label: `composition: ${composition_count+1}`,
         data: rrs[index],
         backgroundColor: colors[index % colors.length],
         borderColor: borderColors[index % borderColors.length],
