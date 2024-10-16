@@ -40,7 +40,7 @@
                                         <p class="text-center">Name : {{$experiment->name}}</p>
                                     </div>
                                     <div class="w-1/2 border-2">
-                                        <p class="text-center">Date : {{$experiment->day}}</p>
+                                        <p class="text-center">Date : {{$experiment->date}}</p>
                                     </div>
                                     <div class="w-full border-2">
                                         <p class="text-center">Title : {{$experiment->title}}</p>
@@ -53,7 +53,7 @@
                                         <p class="text-center">Name : {{$experiment->name}}</p>
                                     </div>
                                     <div class="w-1/2 border-b border-l-2 border-gray-400 pt-3 pl-2">
-                                        <p class="text-center">Date : {{$experiment->day}}</p>
+                                        <p class="text-center">Date : {{$experiment->date}}</p>
                                     </div>
                                     <div class="w-full border-b border-t-2 border-gray-400 pt-3 pl-2">
                                         <p class="text-center">Title : {{$experiment->title}}</p>

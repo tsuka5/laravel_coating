@@ -80,6 +80,8 @@
                                 <canvas id="hardness" width="400" height="400" class="m-10"></canvas>
                                 {{-- pHのグラフ --}}
                                 <canvas id="ph" width="400" height="400" class="m-10"></canvas>
+                                {{-- tssのグラフ --}}
+                                <canvas id="tss" width="400" height="400" class="m-10"></canvas>
                                 {{-- 水分含有量のグラフ --}}
                                 <canvas id="moisture_content" width="400" height="400" class="m-10"></canvas>
                                 {{-- TAのグラフ --}}
@@ -142,6 +144,7 @@ const composition_count_list = @json($composition_count_list);
 const mass_loss_rates = @json($mass_loss_rates);
 console.log(mass_loss_rates);
 const color_es = @json($color_es);
+const tsss = @json($tsss);
 const phs = @json($phs);
 const moisture_contents = @json($moisture_contents);
 const tas = @json($tas);
@@ -154,6 +157,7 @@ const rrs = @json($rrs);
 const mass_loss_rates_datasets = [];
 const color_es_datasets = [];
 const phs_datasets = [];
+const tsss_datasets = [];
 const moisture_contents_datasets = [];
 const tas_datasets = [];
 const hardnesses_datasets = [];
@@ -179,6 +183,13 @@ composition_count_list.forEach((composition_count, index) => {
     phs_datasets.push({
         label: `composition: ${composition_count+1}`,
         data: phs[index],
+        backgroundColor: colors[index % colors.length],
+        borderColor: borderColors[index % borderColors.length],
+        borderWidth: 1
+    });
+    tsss_datasets.push({
+        label: `composition: ${composition_count+1}`,
+        data: tsss[index],
         backgroundColor: colors[index % colors.length],
         borderColor: borderColors[index % borderColors.length],
         borderWidth: 1
@@ -261,6 +272,7 @@ function createLineChart(chartId, datasets, title, labels) {
 var massLossRateChart = createLineChart('mass_loss_rate', mass_loss_rates_datasets, 'Mass Loss Rate(%)', days);
 var colorTestChart = createLineChart('color_e', color_es_datasets, 'Color Test (ΔE)', days);
 var pHChart = createLineChart('ph', phs_datasets, 'pH', days);
+var tssChart = createLineChart('tss', tsss_datasets, 'TSS', days);
 var moistureContentChart = createLineChart('moisture_content', moisture_contents_datasets, 'Moistrue Content(%)', days);
 var taChart = createLineChart('ta', tas_datasets, 'TA(%)', days);
 var hardnessChart = createLineChart('hardness', hardnesses_datasets, 'Hardness(N)', days);
