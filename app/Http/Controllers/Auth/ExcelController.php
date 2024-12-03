@@ -200,7 +200,7 @@ class ExcelController extends Controller
             //２枚目のワークシートの設定
             $sheet2->setCellValue('A1', 'film_condition');
             $columns = range('A', 'F');
-            $values = ['cating amount(ml)', 'petri dish area(cm^2)', 'degasting temperature(℃)', 'drying temperature(℃)', 'drying humidity(%RH)', 'drying time(h)'];
+            $values = ['casting amount(ml)', 'petri dish area(cm^2)', 'degasting temperature(℃)', 'drying temperature(℃)', 'drying humidity(%RH)', 'drying time(h)'];
             foreach ($columns as $index => $column) {
                 $sheet2->setCellValue($column . 2, $values[$index]);
             }

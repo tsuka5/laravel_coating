@@ -72,32 +72,6 @@
                             
 
                             <div class = "flex justify-center flex-wrap">
-                                {{-- 粘度のグラフ --}}
-                                <canvas id="viscosity" width="400" height="400" class="m-10"></canvas>
-                                {{-- 水透過性のグラフ --}}
-                                <canvas id="wvp" width="400" height="400" class="m-10"></canvas>
-                                {{-- せん断応力のグラフ --}}
-                                <canvas id="shear_stress" width="400" height="400" class="m-10"></canvas>
-                                {{-- pHのグラフ --}}
-                                <canvas id="ph" width="400" height="400" class="m-10"></canvas>
-                                {{-- 溶解度のグラフ --}}
-                                <canvas id="water_solubility" width="400" height="400" class="m-10"></canvas>
-                                {{-- 接触角のグラフ --}}
-                                <canvas id="contact_angle" width="400" height="400" class="m-10"></canvas>
-                                
-                                <canvas id="ts" width="400" height="400" class="m-10"></canvas>
-
-                                <canvas id="eab" width="400" height="400" class="m-10"></canvas>
-
-                                <canvas id="light_transmittance" width="400" height="400" class="m-10"></canvas>
-
-                                <canvas id="thickness" width="400" height="400" class="m-10"></canvas>
-
-                                <canvas id="moisture_content" width="400" height="400" class="m-10"></canvas>
-
-                                <canvas id="d43" width="400" height="400" class="m-10"></canvas>
-
-                                <canvas id="d32" width="400" height="400" class="m-10"></canvas>
                             </div>
 
                             <div class="p-2 w-full flex justify-around mt-4">
@@ -112,222 +86,154 @@
     </div>
     </x-app-layout>
     
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-
-<script>
-
-const colors = [
-    'rgba(255, 99, 132, 0.8)', // red
-    'rgba(54, 162, 235, 0.8)', // blue
-    'rgba(255, 206, 86, 0.8)',  // yellow
-    'rgba(75, 192, 192, 0.8)',  // green
-    'rgba(153, 102, 255, 0.8)', // purple
-    'rgba(255, 159, 64, 0.8)',  // orange
-    'rgba(199, 199, 199, 0.8)', // grey
-    'rgba(83, 102, 255, 0.8)',  // dark blue
-    'rgba(255, 99, 204, 0.8)',  // pink
-    'rgba(210, 99, 132, 0.8)'   // mauve
-];
-
-const borderColors = [
-    'rgba(255, 99, 132, 1)', // red
-    'rgba(54, 162, 235, 1)', // blue
-    'rgba(255, 206, 86, 1)',  // yellow
-    'rgba(75, 192, 192, 1)',  // green
-    'rgba(153, 102, 255, 1)', // purple
-    'rgba(255, 159, 64, 1)',  // orange
-    'rgba(199, 199, 199, 1)', // grey
-    'rgba(83, 102, 255, 1)',  // dark blue
-    'rgba(255, 99, 204, 1)',  // pink
-    'rgba(210, 99, 132, 1)'   // mauve
-];
-
-// 変数をコントローラから受け取る
-const composition_count_list = @json($composition_count_list);
-const x_label = @json($x_label);
-const ph = @json($ph);
-const viscosity = @json($viscosities);
-console.log(viscosity);
-const temperature = @json($temperature);
-const humidity = @json($humidities);
-const water_solubility = @json($water_solubility);
-const wvp = @json($wvps);
-const contact_angle = @json($contact_angle);
-const shear_rate = @json($shear_rates);
-const shear_stress = @json($shear_stresses);
-const ts = @json($ts);
-const eab = @json($eab);
-const light_transmittance = @json($light_transmittance);
-const thickness = @json($thickness);
-const moisture_content = @json($moisture_content);
-const d43 = @json($d43);
-const d32 = @json($d32);
-
-const viscosity_datasets = [];
-const shear_stress_datasets = [];
-const wvp_datasets = [];
-
-composition_count_list.forEach((composition_count, index) => {
-    viscosity_datasets.push({
-        label: `composition: ${composition_count}`,
-        data: viscosity[index],
-        backgroundColor: colors[index % colors.length],
-        borderColor: borderColors[index % borderColors.length],
-        borderWidth: 1
-    });
-    shear_stress_datasets.push({
-        label: `composition: ${composition_count}`,
-        data: shear_stress[index],
-        backgroundColor: colors[index % colors.length],
-        borderColor: borderColors[index % borderColors.length],
-        borderWidth: 1
-    });
-    wvp_datasets.push({
-        label: `composition: ${composition_count}`,
-        data: wvp[index],
-        backgroundColor: colors[index % colors.length],
-        borderColor: borderColors[index % borderColors.length],
-        borderWidth: 1
-    });
-});
-
-
-function createLineChart(chartId, datasets, title, labels) {
-   
-   var ctx = document.getElementById(chartId).getContext('2d');
-   return new Chart(ctx, {
-       type: 'line', // グラフのタイプ
-       data: {
-           labels: labels, // x軸ラベル
-           datasets: datasets  //データセット配列
-       },
-       options: {
-           responsive: false,
-           maintainAspectRatio: false,
-           scales: {
-               y: {
-                   beginAtZero: true
-               }
-           },
-           plugins: {
-               title: {
-                   display: true,
-                   text: title,
-                   font: {
-                       size: 16
-                   },
-                   padding: {
-                       top: 20,
-                       bottom: 30
-                   },
-                   color: '#111'
-               }
-           }
-       }
-
-   });
-}
-console.log(temperature);
-var viscosityChart = createLineChart('viscosity', viscosity_datasets, 'Viscosity(cP)', temperature);
-var shear_stressChart = createLineChart('shear_stress', shear_stress_datasets, 'Shear Stress', shear_rate);
-var wvpChart = createLineChart('wvp', wvp_datasets, 'Wvp', humidity);
-
-function createDataset(label, data, colorIndex) {
-    return {
-        label: label,
-        data: data,
-        backgroundColor: colors[colorIndex % colors.length],
-        borderColor: borderColors[colorIndex % borderColors.length],
-        borderWidth: 1
-    };
-}
-const ph_datasets = createDataset('pH', ph, 0);
-// const viscosity_datasets = createDataset('viscosity', viscosity, 1);
-const water_solubility_datasets = createDataset('water solubility', water_solubility, 2);
-// const wvp_datasets = createDataset('wvp', wvp, 3);
-const contact_angle_datasets = createDataset('contact_angle', contact_angle, 4);
-// const shear_rate_datasets = createDataset('shear_rate', shear_rate, 5);
-// const shear_stress_datasets = createDataset('shear_stress', shear_stress, 6);
-const ts_datasets = createDataset('ts', ts, 7);
-const eab_datasets = createDataset('eab', eab, 8);
-const light_transmittance_datasets = createDataset('light_transmittance', light_transmittance, 9);
-const thickness_datasets = createDataset('thickness', thickness, 10);
-const moisture_content_datasets = createDataset('moisture_content', moisture_content, 11);
-const d43_datasets = createDataset('d43', d43, 12);
-const d32_datasets = createDataset('d32', d32, 13);
-
-
-
-// グラフを作成する
-function createBarChart(chartId, datasets, title, labels) {
-    var ctx = document.getElementById(chartId).getContext('2d');
-    //データの最大値を計算
-    const maxValue = datasets.reduce((max, dataset) => {
-        const datasetMax = Math.max(...dataset.data);
-        return datasetMax > max ? datasetMax : max;
-    }, 0);
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const colors = [
+                'rgba(255, 99, 132, 0.8)', 'rgba(54, 162, 235, 0.8)', 'rgba(255, 206, 86, 0.8)',
+                'rgba(75, 192, 192, 0.8)', 'rgba(153, 102, 255, 0.8)', 'rgba(255, 159, 64, 0.8)',
+                'rgba(199, 199, 199, 0.8)', 'rgba(83, 102, 255, 0.8)', 'rgba(255, 99, 204, 0.8)',
+                'rgba(210, 99, 132, 0.8)'
+            ];
+        
+            const borderColors = colors.map(color => color.replace('0.8', '1'));
+        
+           
+            const composition_count_list = @json($composition_count_list);
+            const x_label = @json($x_label);
+            const temperature = @json($temperature);
+            const humidity = @json($humidities);
     
+            const dataMap = {
+                ph: @json($ph),
+                viscosity: @json($viscosities),
+                water_solubility: @json($water_solubility),
+                wvp: @json($wvps),
+                contact_angle: @json($contact_angle),
+                shear_stress: @json($shear_stresses),
+                ts: @json($ts),
+                eab: @json($eab),
+                light_transmittance: @json($light_transmittance),
+                thickness: @json($thickness),
+                moisture_content: @json($moisture_content),
+                d43: @json($d43),
+                d32: @json($d32)
+            };
+        
+            const container = document.querySelector('.flex-wrap');
+            if (!container) {
+                console.error('No container found for canvas elements');
+                return;
+            }
     
-    return new Chart(ctx, {
-        type: 'bar', // グラフのタイプ
-        data: {
-            labels: labels, // x軸ラベル
-            datasets: datasets  //データセット配列
-        },
-        options: {
-            responsive: false,
-            maintainAspectRatio: false,
-            
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    max: maxValue * 1.1,
-                    grid: {
-                        display: false,
-                    }
-                },
-                x: {
-                    grid:{
-                        display: false
-                    }
-                }
-            },
-            plugins: {
-                title: {
-                    display: true,
-                    text: title,
-                    font: {
-                        size: 16
-                    },
-                    padding: {
-                        top: 20,
-                        bottom: 30
-                    },
-                    color: '#111'
+            function createCanvas(chartId) {
+                const canvas = document.createElement('canvas');
+                canvas.id = chartId;
+                canvas.width = 400;
+                canvas.height = 400;
+                canvas.classList.add('m-10');
+                return canvas;
+            }
+    
+            // データセットを作成
+            function createDatasets(data, labelPrefix) {
+                const isBarChart = !['wvp', 'viscosity'].includes(labelPrefix);
+    
+                if (isBarChart) {
+                    // 棒グラフの場合、1つのデータセットを作成
+                    const datasetData = composition_count_list.map((_, index) => {
+                        const value = data[index];
+                        return value === null || value === undefined ? 0 : value;
+                    });
+    
+                    return [
+                        {
+                            label: labelPrefix.replace('_', ' ').toUpperCase(),
+                            data: datasetData,
+                            backgroundColor: colors.slice(0, datasetData.length), // データ数に合わせる
+                            borderColor: borderColors.slice(0, datasetData.length),
+                            borderWidth: 1
+                        }
+                    ];
+                } else {
+                    // 折れ線グラフの場合、compositionごとにデータセットを作成
+                    return composition_count_list.map((composition, index) => {
+                        const datasetData = Array.isArray(data[index])
+                            ? data[index].map(value => (value === null || value === undefined ? 0 : value))
+                            : [data[index] === null || data[index] === undefined ? 0 : data[index]];
+    
+                        return {
+                            label: `composition: ${composition}`,
+                            data: datasetData,
+                            backgroundColor: colors[index % colors.length],
+                            borderColor: borderColors[index % borderColors.length],
+                            borderWidth: 1
+                        };
+                    });
                 }
             }
-        }
-    });
-}
-console.log(ph_datasets);
-var phChart = createBarChart('ph', [ph_datasets], 'pH', x_label);
-// var viscosityChart = createBarChart('viscosity', [viscosity_datasets], 'Viscosity (cP)', x_label);
-var waterSolubilityChart = createBarChart('water_solubility', [water_solubility_datasets], 'Water Solubility (%)', x_label);
-// var wvpChart = createBarChart('wvp', [wvp_datasets], 'wvp', x_label);
-var contactAngleChart = createBarChart('contact_angle', [contact_angle_datasets], 'Contact Angle (°)', x_label);
-// var shearRateChart = createBarChart('shear_rate', [shear_rate_datasets], 'Shear Rate (1/s)', x_label);
-// var shearStressChart = createBarChart('shear_stress', [shear_stress_datasets], 'Shear Stress (Pa*s)', x_label);
-var tsChart = createBarChart('ts', [ts_datasets], 'Tensile Strength (MPa)', x_label);
-var eabChart = createBarChart('eab', [eab_datasets], 'EAB (%)', x_label);
-var lightTransmittanceChart = createBarChart('light_transmittance', [light_transmittance_datasets], 'Light Transmittance (%)', x_label);
-var thicknessChart = createBarChart('thickness', [thickness_datasets], 'Thickness (mm)', x_label);
-var moistureContentChart = createBarChart('moisture_content', [moisture_content_datasets], 'Moisture Content (%)', x_label);
-var d43Chart = createBarChart('d43', [d43_datasets], 'D43 (mm)', x_label);
-var d32Chart = createBarChart('d32', [d32_datasets], 'D32 (mm)', x_label);
-
-</script>
-
+    
+    
+        
+            // グラフ作成の共通関数
+            function createChart(chartId, type, datasets, title, labels) {
+                const ctx = document.getElementById(chartId).getContext('2d');
+                const maxValue = Math.max(...datasets.flatMap(dataset => dataset.data)) * 1.1;
+        
+                return new Chart(ctx, {
+                    type: type,
+                    data: {
+                        labels: labels,
+                        datasets: datasets
+                    },
+                   
+                    options: {
+                        responsive: false,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: maxValue,
+                                grid: { display: false }
+                            },
+                            x: {
+                                grid: { display: false }
+                            }
+                        },
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: title,
+                                font: { size: 16 },
+                                padding: { top: 20, bottom: 30 },
+                                color: '#111'
+                            }
+                        }
+                    }
+                });
+            }
+            console.log(dataMap);
+            Object.entries(dataMap).forEach(([key, data]) => {
+                const isAllNull = Array.isArray(data[0]) // data がネストされた配列かどうか確認
+                    ? data.every(dataset => dataset.every(value => value === null))
+                    : data.every(value => value === null);
+    
+                if (!isAllNull) {
+                    const datasets = createDatasets(data, key);
+                    const canvas = createCanvas(key);
+                    container.appendChild(canvas);
+                    const chartType = ['viscosity', 'wvp'].includes(key) ? 'line' : 'bar';
+                    const label = key === 'viscosity' ? temperature : key === 'wvp' ? humidity : x_label;
+                    createChart(key, chartType, datasets, key.replace('_', ' ').toUpperCase(), label);
+                    
+                } else {
+                    console.log(`No valid data for ${key}`);
+                }
+            });
+    
+        });
+        </script>
 
 
 

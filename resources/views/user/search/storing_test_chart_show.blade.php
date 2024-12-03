@@ -72,20 +72,6 @@
                             
 
                             <div class = "flex justify-center flex-wrap">
-                            {{-- 質量損失のグラフ --}}
-                                <canvas id="mass_loss_rate" width="400" height="400" class="m-10"></canvas>
-                                {{-- 色彩測定のグラフ --}}
-                                <canvas id="color_e" width="400" height="400" class="m-10"></canvas>
-                                {{-- pHのグラフ --}}
-                                <canvas id="ph" width="400" height="400" class="m-10"></canvas>
-                                {{-- 水分含有量のグラフ --}}
-                                <canvas id="moisture_content" width="400" height="400" class="m-10"></canvas>
-                                {{-- TAのグラフ --}}
-                                <canvas id="ta" width="400" height="400" class="m-10"></canvas>
-                                {{-- ビタミンC含有量のグラフ --}}
-                                <canvas id="vitamin_c" width="400" height="400" class="m-10"></canvas>
-                                {{-- 呼吸速度のグラフ --}}
-                                <canvas id="rr" width="400" height="400" class="m-10"></canvas>
                             </div>
 
 
@@ -104,163 +90,115 @@
     </div>
     </x-app-layout>
     
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> 
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const colors = [
+            'rgba(255, 99, 132, 0.8)', 'rgba(54, 162, 235, 0.8)', 'rgba(255, 206, 86, 0.8)',
+            'rgba(75, 192, 192, 0.8)', 'rgba(153, 102, 255, 0.8)', 'rgba(255, 159, 64, 0.8)',
+            'rgba(199, 199, 199, 0.8)', 'rgba(83, 102, 255, 0.8)', 'rgba(255, 99, 204, 0.8)',
+            'rgba(210, 99, 132, 0.8)'
+        ];
 
+        const borderColors = colors.map(color => color.replace('0.8', '1'));
 
-<script>
+        const dataMap = {
+            mass_loss_rate: @json($mass_loss_rates),
+            color_e: @json($color_es),
+            ph: @json($phs),
+            moisture_content: @json($moisture_contents),
+            ta: @json($tas),
+            hardness: @json($hardnesses),
+            vitamin_c: @json($vitamin_cs),
+            rr: @json($rrs)
+        };
+        console.log(dataMap.hardness.flat());
 
-const colors = [
-    'rgba(255, 99, 132, 0.8)', // red
-    'rgba(54, 162, 235, 0.8)', // blue
-    'rgba(255, 206, 86, 0.8)',  // yellow
-    'rgba(75, 192, 192, 0.8)',  // green
-    'rgba(153, 102, 255, 0.8)', // purple
-    'rgba(255, 159, 64, 0.8)',  // orange
-    'rgba(199, 199, 199, 0.8)', // grey
-    'rgba(83, 102, 255, 0.8)',  // dark blue
-    'rgba(255, 99, 204, 0.8)',  // pink
-    'rgba(210, 99, 132, 0.8)'   // mauve
-];
+        const labels = @json($days);
+       
+        const compositionCountList = @json($composition_count_list);
 
-const borderColors = [
-    'rgba(255, 99, 132, 1)', // red
-    'rgba(54, 162, 235, 1)', // blue
-    'rgba(255, 206, 86, 1)',  // yellow
-    'rgba(75, 192, 192, 1)',  // green
-    'rgba(153, 102, 255, 1)', // purple
-    'rgba(255, 159, 64, 1)',  // orange
-    'rgba(199, 199, 199, 1)', // grey
-    'rgba(83, 102, 255, 1)',  // dark blue
-    'rgba(255, 99, 204, 1)',  // pink
-    'rgba(210, 99, 132, 1)'   // mauve
-];
-
-// 変数をコントローラから受け取る
-const composition_count_list = @json($composition_count_list);
-const mass_loss_rates = @json($mass_loss_rates);
-console.log(mass_loss_rates);
-const color_es = @json($color_es);
-const phs = @json($phs);
-const moisture_contents = @json($moisture_contents);
-const tas = @json($tas);
-const vitamin_cs = @json($vitamin_cs);
-const days = @json($days);
-const rrs = @json($rrs);
-
-// データセットの配列を作る
-const mass_loss_rates_datasets = [];
-const color_es_datasets = [];
-const phs_datasets = [];
-const moisture_contents_datasets = [];
-const tas_datasets = [];
-const vitamin_c_datasets = [];
-const rr_datasets = [];
-
-
-composition_count_list.forEach((composition_count, index) => {
-    mass_loss_rates_datasets.push({
-        label: `composition: ${composition_count+1}`,
-        data: mass_loss_rates[index],
-        backgroundColor: colors[index % colors.length],
-        borderColor: borderColors[index % borderColors.length],
-        borderWidth: 1
-    });
-    color_es_datasets.push({
-        label: `composition: ${composition_count+1}`,
-        data: color_es[index],
-        backgroundColor: colors[index % colors.length],
-        borderColor: borderColors[index % borderColors.length],
-        borderWidth: 1
-    });
-    phs_datasets.push({
-        label: `composition: ${composition_count+1}`,
-        data: phs[index],
-        backgroundColor: colors[index % colors.length],
-        borderColor: borderColors[index % borderColors.length],
-        borderWidth: 1
-    });
-    moisture_contents_datasets.push({
-        label: `composition: ${composition_count+1}`,
-        data: moisture_contents[index],
-        backgroundColor: colors[index % colors.length],
-        borderColor: borderColors[index % borderColors.length],
-        borderWidth: 1
-    });
-    tas_datasets.push({
-        label: `composition: ${composition_count+1}`,
-        data: tas[index],
-        backgroundColor: colors[index % colors.length],
-        borderColor: borderColors[index % borderColors.length],
-        borderWidth: 1
-    });
-    vitamin_c_datasets.push({
-        label: `composition: ${composition_count+1}`,
-        data: vitamin_cs[index],
-        backgroundColor: colors[index % colors.length],
-        borderColor: borderColors[index % borderColors.length],
-        borderWidth: 1
-    });
-    rr_datasets.push({
-        label: `composition: ${composition_count+1}`,
-        data: rrs[index],
-        backgroundColor: colors[index % colors.length],
-        borderColor: borderColors[index % borderColors.length],
-        borderWidth: 1
-    });
-});
-console.log(days);
-console.log(mass_loss_rates_datasets);
-// グラフを作成する
-function createLineChart(chartId, datasets, title, labels) {
-   
-    var ctx = document.getElementById(chartId).getContext('2d');
-    return new Chart(ctx, {
-        type: 'line', // グラフのタイプ
-        data: {
-            labels: labels, // x軸ラベル
-            datasets: datasets  //データセット配列
-        },
-        options: {
-            responsive: false,
-            maintainAspectRatio: false,
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            },
-            plugins: {
-                title: {
-                    display: true,
-                    text: title,
-                    font: {
-                        size: 16
-                    },
-                    padding: {
-                        top: 20,
-                        bottom: 30
-                    },
-                    color: '#111'
-                }
-            }
+        function createDatasets(dataArray) {
+            return compositionCountList.map((compositionCount, index) => ({
+                label: `composition: ${compositionCount + 1}`,
+                data: dataArray[index],
+                backgroundColor: colors[index % colors.length],
+                borderColor: borderColors[index % colors.length],
+                borderWidth: 1
+            }));              
         }
 
-    });
-}
+        function createCanvas(id){
+            const canvas = document.createElement('canvas');
+            canvas.id = id;
+            canvas.width = 400;
+            canvas.height = 400;
+            canvas.classList.add('m-10');
+            return canvas;
+        }
 
-var massLossRateChart = createLineChart('mass_loss_rate', mass_loss_rates_datasets, 'Mass Loss Rate(%)', days);
-var colorTestChart = createLineChart('color_e', color_es_datasets, 'Color Test (ΔE)', days);
-var pHChart = createLineChart('ph', phs_datasets, 'pH', days);
-var moistureContentChart = createLineChart('moisture_content', moisture_contents_datasets, 'Moistrue Content(%)', days);
-var taChart = createLineChart('ta', tas_datasets, 'TA(%)', days);
-var vitaminCChart = createLineChart('vitamin_c', vitamin_c_datasets, 'Vitamin C(%)', days);
-var rrChart = createLineChart('rr', rr_datasets, 'RR (mgCO^2/(kg*h))', days);
+        function getMinMax(data) {
+            const allValues = data.flat().filter(value => value !== null && !isNaN(value));
+            const min = Math.min(...allValues);
+            const max = Math.max(...allValues);
 
-</script>
+            const padding = (max - min) * 0.1;
+            return { min: min - padding, max: max + padding };
+        }
 
+        function createLineChart(chartId, datasets, title, min, max) {
+            const ctx = document.getElementById(chartId).getContext('2d');
+            return new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: datasets
+                },
+                options: {
+                    responsive: false,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            min: min,
+                            max: max
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: title,
+                            font: { size: 16 },
+                            padding: { top: 20, bottom: 30 },
+                            color: '#111'
+                        }
+                    }
+                }
+            });
+        }
+        const container = document.querySelector('.flex-wrap');
+        if (!container) {
+            console.error('No container found');
+            return;
+        }
+        
+        Object.entries(dataMap).forEach(([chartId, data]) => {
+            const isAllNull = data.every(dataset => dataset.every(value => value === null));
 
+            if (!isAllNull) {
+                const datasets = createDatasets(data);
+                console.log(datasets);
+                const title = chartId.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 
+                const { min, max } = getMinMax(data);
+               
+                const canvas = createCanvas(chartId);
+                container.appendChild(canvas);
 
-
-
-
-                            
+                createLineChart(chartId, datasets, title, min, max);
+            } else {
+                console.log(`No valid data for ${chartId}`);
+            }
+        });
+    })
+    </script>

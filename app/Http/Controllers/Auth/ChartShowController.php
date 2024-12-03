@@ -535,7 +535,7 @@ class ChartShowController extends Controller
                 $color_es[$composition_count_number] = $color_e;
                 $phs[$composition_count_number] = $ph;
                 $moisture_contents[$composition_count_number] = $moisture_content;
-                $hardnesses[$composition_count_number] = $hardnesses;
+                $hardnesses[$composition_count_number] = $hardness;
                 $tas[$composition_count_number] = $ta;
                 $vitamin_cs[$composition_count_number] = $vitamin_c;
                 $rrs[$composition_count_number] = $rr;
