@@ -28,13 +28,16 @@ class Material_detail extends Model
 
     protected $fillable = [
         'name',
-        'charactaristic'
+        'charactaristic',
+        'category_id',
     ];
 
     public function material(): HasOne
     {
         return $this->hasOne(Material::class, 'material_id', 'id');
     }
-
- 
+    public function material_category(): BelongsTo
+    {
+        return $this->belongsTo(Material_category::class, 'category_id', 'id');
+    }
 }

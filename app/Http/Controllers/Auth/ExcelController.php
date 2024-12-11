@@ -332,11 +332,8 @@ class ExcelController extends Controller
             //セルの横幅調整
             foreach ($column_list as $column) {
                 $sheet1->getColumnDimension($column)->setAutoSize(true);
-                // $sheet1->getStyle('D:E')->getNumberFormat()->setFormatCode('0.0');
                 $sheet2->getColumnDimension($column)->setAutoSize(true);
-                // $sheet2->getStyle('C:I')->getNumberFormat()->setFormatCode('0.0');
                 $sheet3->getColumnDimension($column)->setAutoSize(true);
-                // $sheet3->getStyle('C:I')->getNumberFormat()->setFormatCode('0.0'); 
                 $sheet4->getColumnDimension($column)->setAutoSize(true);
                 $sheet5->getColumnDimension($column)->setAutoSize(true);
             }

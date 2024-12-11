@@ -152,6 +152,7 @@
 
             const padding = (max - min) * 0.1;
             return { min: min - padding, max: max + padding };
+            
         }
 
         function createLineChart(chartId, datasets, title, min, max) {
