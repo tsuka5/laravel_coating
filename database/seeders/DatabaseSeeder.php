@@ -58,15 +58,16 @@ class DatabaseSeeder extends Seeder
             // Enzyme_valueSeeder::class,
             AdminSeeder::class,
             NoteSeeder::class,
+            Material_categorySeeder::class,
         ]);
 
-        
+
 
         // Experiment::factory()->count(15)->create();
 
         // Material_composition::factory()->count(30)->create();
         // $composition_count = Material_composition::count();
-        
+
         // Material::factory()->count(30)->create();
         // Film_condition::factory()->count($composition_count)->create();
 
@@ -75,10 +76,10 @@ class DatabaseSeeder extends Seeder
         // Viscosity_test::factory()->count($characteristic_test_count)->create();
         // Wvp_test::factory()->count($characteristic_test_count)->create();
         // Tga_test::factory()->count($characteristic_test_count)->create();
-        
+
         // $tga_test_count = Tga_test::count();
         // Tga_value::factory()->count($tga_test_count)->create();
-        
+
         // Storing_test::factory()->count(15)->create();
         // $storing_test_count = Storing_test::count();
         // Storing_multiple_test::factory()->count($storing_test_count)->create();

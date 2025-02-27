@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('material_categories', function (Blueprint $table) {
+        Schema::create('material_properties', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->foreignId('parent_id')->nullable()->constrained('material_categories')->nullOnDelete();
-            $table->text('description')->nullable();
+            $table->foreignId('material_id')->constrained('material_details');
+            $table->text('name')->nullable();
+            $table->json('properties');
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('material_categories');
+        Schema::dropIfExists('material_properties');
     }
 };
