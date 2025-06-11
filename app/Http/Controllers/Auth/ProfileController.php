@@ -79,6 +79,11 @@ class ProfileController extends Controller
         //実験の条件を取得
         $film_condition = Film_condition::where('experiment_id', $experiment->id)->first();
         $storing_test = Storing_test::where('experiment_id', $experiment->id)->first();
+        $coating_methods = Storing_test::select('coating_method')
+            ->whereNotNull('coating_method')
+            ->distinct()
+            ->orderBy('coating_method', 'asc')
+            ->pluck('coating_method');
         $antibacteria_test = Antibacteria_test::where('experiment_id', $experiment->id)->first();
 
         //実験の結果を取得
@@ -156,7 +161,8 @@ class ProfileController extends Controller
             'enzyme_value_check',
             'eager_experiment_tga',
             'eager_composition_tga',
-            'tga_value_check'
+            'tga_value_check',
+            'coating_methods'
         ));
     }
 
@@ -417,6 +423,7 @@ class ProfileController extends Controller
                 'storing_temperature' => ['numeric', 'nullable'],
                 'storing_humidity' => ['numeric', 'nullable'],
                 'storing_day' => ['numeric', 'nullable'],
+                'coating_method' => ['string', 'nullable'],
                 // 'mass_loss_rate' => ['numeric', 'nullable'],
                 // 'l' => ['numeric', 'nullable'],
                 // 'a' => ['numeric', 'nullable'],
@@ -457,6 +464,11 @@ class ProfileController extends Controller
             $storing_test->storing_temperature = $request->storing_temperature;
             $storing_test->storing_humidity = $request->storing_humidity;
             $storing_test->storing_day = $request->storing_day;
+            if ($request->coating_method == '__new__') {
+                $storing_test->coating_method = $request->new_coating_method;
+            } else {
+                $storing_test->coating_method = $request->coating_method;
+            }
             $storing_test->memo = $request->memo;
             // $storing_test-> mass_loss_rate = $request->mass_loss_rate;
             // $storing_test-> l = $request->l;
@@ -634,8 +646,13 @@ class ProfileController extends Controller
 
             return view('user.profile.edit_experiment', compact('editType', 'id', 'charactaristic_test', 'experiment_id'));
         } elseif ($editType === 'storing_test') {
+            $coating_methods = Storing_test::select('coating_method')
+                ->whereNotNull('coating_method')
+                ->distinct()
+                ->orderBy('coating_method', 'asc')
+                ->pluck('coating_method');
             $storing_test = Storing_test::findOrFail($id);
-            return view('user.profile.edit_experiment', compact('id', 'storing_test', 'fruits_list', 'editType'));
+            return view('user.profile.edit_experiment', compact('id', 'storing_test', 'fruits_list', 'editType', 'coating_methods'));
         } elseif ($editType === 'antibacteria_test') {
             $antibacteria_test = Antibacteria_test::findOrFail($id);
             return view('user.profile.edit_experiment', compact('id', 'antibacteria_test',  'bacteria_list', 'fruits_list', 'editType'));
@@ -780,12 +797,10 @@ class ProfileController extends Controller
             $charactaristic_test->save();
         } elseif ($request->editType === 'storing_test') {
             $id = $request->id;
-
             // $composition_id = Storing_test::select('composition_id')->where('id',$id)->first();
             // $experiment_id = Material_composition::select('experiment_id')->where('id',->composition_id)->first();
             // $composition_id = $composition_id->composition_id;
             // $experiment_id = $experiment_id->experiment_id;
-
 
 
             $storing_test = Storing_test::findOrFail($id);
@@ -828,6 +843,11 @@ class ProfileController extends Controller
             $storing_test->storing_temperature = $request->storing_temperature;
             $storing_test->storing_humidity = $request->storing_humidity;
             $storing_test->storing_day = $request->storing_day;
+            if ($request->coating_method == "__new__") {
+                $storing_test->coating_method = $request->new_coating_method;
+            } else {
+                $storing_test->coating_method = $request->coating_method;
+            }
             // $storing_test-> mass_loss_rate = $request->mass_loss_rate;
             // $storing_test-> l = $request->l;
             // $storing_test-> a = $request->a;

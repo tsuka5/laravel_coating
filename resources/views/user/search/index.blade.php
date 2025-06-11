@@ -1,4 +1,4 @@
-<x-app-layout>
+{{-- <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             Search
@@ -50,10 +50,7 @@
                 </div>
             </div>
         </div>
-        {{-- <button onclick="location.href='{{ route('user.compareWholeData', ['type' => 'characteristic_test', 'item' => 'ph'])}}'" class="p-2 m-2 text-white bg-blue-500 border-0 focus:outline-none
-        hover:bg-blue-600 rounded">
-            pH
-        </button> --}}
+        
     </div>
 
     <div class="lg:w-1/2 w-full px-4 mt-3 mb-3 mx-auto border-2 border-gray-400 bg-white rounded-lg">
@@ -157,7 +154,7 @@
         </form>
         </div>
     </div>
-    {{-- {{dd($selected_experiments)}} --}}
+
     @if(!empty($selected_experiments))
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -262,5 +259,117 @@
             </div>
         </div>
     </div> 
+    @endif
+</x-app-layout> --}}
+
+
+
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Search</h2>
+    </x-slot>
+    
+    {{-- 上部のボタン部分は変更なし --}}
+
+    <div class="lg:w-1/2 w-full px-4 mt-3 mb-3 mx-auto border-2 border-gray-400 bg-white rounded-lg">
+        <div class="text-center mt-3 mb-2"><h1>Search Experiment</h1></div>
+        <div class="p-3 flex justify-center items-end">
+            <form action="{{ route('user.search.index') }}" method="GET" class="w-full">
+                <div class="flex-col justify-start">
+                    <div class="relative w-full mb-4">
+                        <label for="keyword" class="leading-7 text-sm text-gray-600">Key words</label>
+                        <input type="text" id="keyword" name="keyword" value="{{ $keyword ?? '' }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:bg-transparent focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                    </div>
+            
+                    <table class="table-auto w-full text-left whitespace-no-wrap mb-4">
+                        <thead>
+                            <tr>
+                                <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">Category</th>
+                                <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br">Options</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="px-4 py-3">Materials</td>
+                                <td class="px-4 py-3">
+                                    <select name="material" class="w-full">
+                                        <option value="">Select</option>
+                                        @foreach ($materials_list as $material_detail)
+                                            <option value="{{ $material_detail->name }}" @if(request('material') == $material_detail->name) selected @endif> 
+                                                {{ $material_detail->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>   
+                                </td> 
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-3">Fruit and Vegetable</td>
+                                <td class="px-4 py-3">
+                                    <select name="fruit" class="w-full">
+                                        <option value="">Select</option>
+                                        @foreach ($fruits_list as $fruit_detail)
+                                            <option value="{{ $fruit_detail->name }}" @if(request('fruit') == $fruit_detail->name) selected @endif> 
+                                                {{ $fruit_detail->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </td> 
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="flex justify-center">
+                        <button type="submit" class="lg:mt-2 xl:mt-4 flex-shrink-0 inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">Search</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    @if( $selected_experiments->isNotEmpty() || request()->query() )
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900 dark:text-gray-100">
+                    <div class="container px-5 mx-auto ">
+                        {{ $selected_experiments->appends(request()->query())->links() }}
+
+                        <div class="w-full mx-auto overflow-auto border-2 border-gray-400 bg-white rounded-lg">
+                            <table class="table-auto w-full text-left whitespace-no-wrap">
+                                <thead>
+                                    <tr>
+                                        <th class="px-4 py-3 title-font tracking-wider font-medium text-white text-lg bg-gray-400 border text-center">Experiment_Title</th>
+                                        <th class="px-4 py-3 title-font tracking-wider font-medium text-white text-lg bg-gray-400 border text-center">Composition</th>
+                                        <th class="px-4 py-3 title-font tracking-wider font-medium text-white text-lg bg-gray-400 border text-center">Fruit or Vegetable</th>
+                                        <th class="px-4 py-3 title-font tracking-wider font-medium bg-gray-400"></th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-400">
+                                    @forelse ($selected_experiments as $experiment)
+                                        <tr>
+                                            <td class="px-4 py-3 border text-center" style="word-wrap: break-word;">{{ $experiment->title }}</td>
+                                            <td class="px-4 py-3 border text-center" style="word-wrap: break-word;">
+                                                {{-- ネストしたリレーションを辿って名前を取得し、重複を除外して表示 --}}
+                                                {{ $experiment->material_composition->pluck('material.material_detail.name')->unique()->join(', ') }}
+                                            </td>
+                                            <td class="px-4 py-3 border text-center" style="word-wrap: break-word;">
+                                                {{ $experiment->storing_test->pluck('fruit_detail.name')->unique()->join(', ') }}
+                                            </td>
+                                            <td class="px-4 py-3 border text-center">
+                                                <button onclick="location.href='{{ route('user.experiment_show', ['experiment_id' => $experiment->id])}}'" class="text-white bg-gray-400 border-0 py-2 px-4 focus:outline-none hover:bg-gray-500 rounded">Detail</button>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="4" class="text-center py-4">検索結果が見つかりませんでした。</td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     @endif
 </x-app-layout>

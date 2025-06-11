@@ -348,6 +348,21 @@
             </div>
             <div class="p-2 mx-auto">
               <div class="relative">
+                  <label for="coating_method_select" class="leading-7 text-sm text-gray-600">Coating Method</label>
+                  <select name="coating_method" id="coating_method_select" data-toggle="select" required class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                      @foreach ($coating_methods as $selected_method)
+                        <option value="{{ $selected_method }}"> {{ $selected_method }}</option>
+                      @endforeach
+                    <option value="__new__"> + Input New Method</option>
+                  </select>
+                  <div id="new_coating_method_wrapper" style="display: none; margin-top: 10px;">
+                      <label for="new_coating_method_input">New Coating Method</label>
+                      <input type="text" name="new_coating_method" id="new_coating_method_input" placeholder="Input New Method">
+                  </div>
+              </div>
+            </div>
+            <div class="p-2 mx-auto">
+              <div class="relative">
                   <label for="memo" class="leading-7 text-sm text-gray-600">memo </label>
                   <input id="memo" type="text" name="memo" value="{{ old('memo') }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
               </div>
@@ -807,3 +822,29 @@
   </div>
 
 @endif
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const selectElement = document.getElementById('coating_method_select');
+        const newMethodWrapper = document.getElementById('new_coating_method_wrapper');
+        const newMethodInput = document.getElementById('new_coating_method_input');
+
+        selectElement.addEventListener('change', function () {
+            // もし選択された値が '__new__' なら
+            if (this.value === '__new__') {
+                // テキストボックスのラッパーを表示する
+                newMethodWrapper.style.display = 'block';
+                // テキストボックスにフォーカスを当てて入力を促す
+                newMethodInput.focus();
+                 // 新規入力フィールドを必須にする
+                newMethodInput.setAttribute('required', 'required');
+            } else {
+                // それ以外の値が選択されたら、テキストボックスを非表示にする
+                newMethodWrapper.style.display = 'none';
+                // テキストボックスの値をクリアする
+                newMethodInput.value = '';
+                // 必須属性を削除する
+                newMethodInput.removeAttribute('required');
+            }
+        });
+    });
+</script>

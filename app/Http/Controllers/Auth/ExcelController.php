@@ -139,9 +139,9 @@ class ExcelController extends Controller
             //セルの横幅調整           
             foreach ($column_list as $column) {
                 $sheet1->getColumnDimension($column)->setAutoSize(true);
-                // $sheet1->getStyle('D:E')->getNumberFormat()->setFormatCode('0.0');
+                // $sheet1->getStyle('D:E')->getNumberFormat()->setFormatCode('0.00000');
                 $sheet2->getColumnDimension($column)->setAutoSize(true);
-                // $sheet2->getStyle('C:I')->getNumberFormat()->setFormatCode('0.0');
+                // $sheet2->getStyle('C:I')->getNumberFormat()->setFormatCode('0.00000');
             }
 
 
@@ -212,7 +212,7 @@ class ExcelController extends Controller
             foreach (range($startColumn, $endColumn) as $column) {
                 $sheet1->getColumnDimension($column)->setAutoSize(true);
                 $sheet2->getColumnDimension($column)->setAutoSize(true);
-                $sheet2->getStyle('A:F')->getNumberFormat()->setFormatCode('0.0');
+                // $sheet2->getStyle('A:F')->getNumberFormat()->setFormatCode('0.00000');
             }
 
 
@@ -433,7 +433,7 @@ class ExcelController extends Controller
             //セルの横幅調整
             foreach ($column_list as $column) {
                 $sheet1->getColumnDimension($column)->setAutoSize(true);
-                // $sheet1->getStyle('D:E')->getNumberFormat()->setFormatCode('0.0');
+                // $sheet1->getStyle('D:E')->getNumberFormat()->setFormatCode('0.00000');
                 $sheet2->getColumnDimension($column)->setAutoSize(true);
             }
 
@@ -530,7 +530,7 @@ class ExcelController extends Controller
             //セルの横幅調整
             foreach ($column_list as $column) {
                 $sheet1->getColumnDimension($column)->setAutoSize(true);
-                // $sheet1->getStyle('D:E')->getNumberFormat()->setFormatCode('0.0');
+                // $sheet1->getStyle('D:E')->getNumberFormat()->setFormatCode('0.00000');
                 $sheet2->getColumnDimension($column)->setAutoSize(true);
             }
 
@@ -1112,11 +1112,11 @@ class ExcelController extends Controller
             //セルの横幅調整           
             foreach ($column_list as $column) {
                 $sheet1->getColumnDimension($column)->setAutoSize(true);
-                // $sheet1->getStyle('D:E')->getNumberFormat()->setFormatCode('0.0');
+                // $sheet1->getStyle('D:E')->getNumberFormat()->setFormatCode('0.00000');
                 $sheet2->getColumnDimension($column)->setAutoSize(true);
-                // $sheet2->getStyle('C:I')->getNumberFormat()->setFormatCode('0.0');
+                // $sheet2->getStyle('C:I')->getNumberFormat()->setFormatCode('0.00000');
                 // $sheet3->getColumnDimension($column)->setAutoSize(true);
-                // $sheet3->getStyle('C:I')->getNumberFormat()->setFormatCode('0.0'); 
+                // $sheet3->getStyle('C:I')->getNumberFormat()->setFormatCode('0.00000'); 
             }
 
 
@@ -1196,7 +1196,7 @@ class ExcelController extends Controller
             foreach (range($startColumn, $endColumn) as $column) {
                 $sheet1->getColumnDimension($column)->setAutoSize(true);
                 $sheet2->getColumnDimension($column)->setAutoSize(true);
-                $sheet2->getStyle('A:F')->getNumberFormat()->setFormatCode('0.0');
+                // $sheet2->getStyle('A:F')->getNumberFormat()->setFormatCode('0.00000');
             }
 
 
@@ -1336,6 +1336,7 @@ class ExcelController extends Controller
                 $sheet2->getColumnDimension($column)->setAutoSize(true);
                 $sheet3->getColumnDimension($column)->setAutoSize(true);
                 $sheet4->getColumnDimension($column)->setAutoSize(true);
+                // $sheet4->getStyle('A:DR')->getNumberFormat()->setFormatCode('0.00000');
             }
 
             // 出力設定

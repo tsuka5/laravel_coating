@@ -37,95 +37,177 @@ class CategoryController extends Controller
         $this->middleware('auth:users');
     }
 
+    // public function index(Request $request)
+    // {
+    //     $keyword = $request->input('keyword');
+    //     $material = $request->input('material');
+    //     $solvent = $request->input('solvent');
+    //     $bacterium = $request->input('bacterium');
+    //     $fruit = $request->input('fruit');
+    //     $enzyme = $request->input('enzyme');
+    //     $substrate = $request->input('substrate');
+    //     $gas = $request->input('gas');
+
+    //     //一旦全部のデータをとる
+    //     $selected_materials = Material_detail::query();
+    //     $selected_solvents = Solvent_detail::query();
+    //     $selected_bacteria = Bacteria_detail::query();
+    //     $selected_fruits = Fruit_detail::query();
+    //     $selected_enzymes = Enzyme_detail::query();
+    //     $selected_substrates = Substrate_detail::query();
+    //     $selected_gases =  Gas_detail::query();
+
+
+    //     if (!empty($keyword)) {
+    //         $selected_materials->where('name', 'LIKE', "%{$keyword}%");
+    //         $selected_solvents->where('name', 'LIKE', "%{$keyword}%");
+    //         $selected_bacteria->where('name', 'LIKE', "%{$keyword}%");
+    //         $selected_fruits->where('name', 'LIKE', "%{$keyword}%");
+    //         $selected_enzymes->where('name', 'LIKE', "%{$keyword}%");
+    //         $selected_substrates->where('name', 'LIKE', "%{$keyword}%");
+    //         $selected_gases->where('name', 'LIKE', "%{$keyword}%");
+    //     }
+    //     if (!empty($material)) {
+    //         $selected_materials->where('name', 'LIKE', "%{$material}%");
+    //     }
+    //     if (!empty($solvent)) {
+    //         $selected_solvents->where('name', 'LIKE', "%{$solvent}%");
+    //     }
+    //     if (!empty($bacterium)) {
+    //         $selected_bacteria->where('name', 'LIKE', "%{$bacterium}%");
+    //     }
+    //     if (!empty($fruit)) {
+    //         $selected_fruits->where('name', 'LIKE', "%{$fruit}%");
+    //     }
+    //     if (!empty($enzyme)) {
+    //         $selected_enzymes->where('name', 'LIKE', "%{$enzyme}%");
+    //     }
+    //     if (!empty($substrate)) {
+    //         $selected_substrates->where('name', 'LIKE', "%{$substrate}%");
+    //     }
+    //     if (!empty($gas)) {
+    //         $selected_gases->where('name', 'LIKE', "%{$gas}%");
+    //     }
+
+    //     //絞ったデータをゲットする，もしインプットに値が入っていなければ，空にする
+    //     if (!empty($keyword) || !empty($material)) {
+    //         $selected_materials = $selected_materials->get();
+    //     } else {
+    //         $selected_materials = [];
+    //     }
+    //     if (!empty($keyword) || !empty($solvent)) {
+    //         $selected_solvents = $selected_solvents->get();
+    //     } else {
+    //         $selected_solvents = [];
+    //     }
+    //     if (!empty($keyword) || !empty($bacterium)) {
+    //         $selected_bacteria = $selected_bacteria->get();
+    //     } else {
+    //         $selected_bacteria = [];
+    //     }
+    //     if (!empty($keyword) || !empty($fruit)) {
+    //         $selected_fruits = $selected_fruits->get();
+    //     } else {
+    //         $selected_fruits = [];
+    //     }
+    //     if (!empty($keyword) || !empty($enzyme)) {
+    //         $selected_enzymes = $selected_enzymes->get();
+    //     } else {
+    //         $selected_enzymes = [];
+    //     }
+    //     if (!empty($keyword) || !empty($substrate)) {
+    //         $selected_substrates = $selected_substrates->get();
+    //     } else {
+    //         $selected_substrates = [];
+    //     }
+    //     if (!empty($keyword) || !empty($gas)) {
+    //         $selected_gases = $selected_gases->get();
+    //     } else {
+    //         $selected_gases = [];
+    //     }
+
+    //     $materials_list = Material_detail::orderby('name', 'asc')->get();
+    //     $solvents_list = Solvent_detail::orderby('name', 'asc')->get();
+    //     $fruits_list = Fruit_detail::orderby('name', 'asc')->get();
+    //     $bacteria_list = Bacteria_detail::orderby('name', 'asc')->get();
+    //     $enzymes_list = Enzyme_detail::orderby('name', 'asc')->get();
+    //     $substrates_list = Substrate_detail::orderby('name', 'asc')->get();
+    //     $gases_list = Gas_detail::orderby('name', 'asc')->get();
+
+    //     return view('user.category.index', compact(
+    //         'selected_materials',
+    //         'selected_solvents',
+    //         'selected_bacteria',
+    //         'selected_fruits',
+    //         'selected_enzymes',
+    //         'selected_substrates',
+    //         'selected_gases',
+    //         'keyword',
+    //         'material',
+    //         'materials_list',
+    //         'solvents_list',
+    //         'bacteria_list',
+    //         'fruits_list',
+    //         'enzymes_list',
+    //         'substrates_list',
+    //         'gases_list'
+    //     ));
+    // }
+
+
     public function index(Request $request)
     {
+        // 1. 検索キーワードを取得
         $keyword = $request->input('keyword');
-        $material = $request->input('material');
-        $solvent = $request->input('solvent');
-        $bacterium = $request->input('bacterium');
-        $fruit = $request->input('fruit');
-        $enzyme = $request->input('enzyme');
-        $substrate = $request->input('substrate');
-        $gas = $request->input('gas');
+        $materialName = $request->input('material');
+        $solventName = $request->input('solvent');
+        $bacteriumName = $request->input('bacterium');
+        $fruitName = $request->input('fruit');
+        $enzymeName = $request->input('enzyme');
+        $substrateName = $request->input('substrate');
+        $gasName = $request->input('gas');
 
-        //一旦全部のデータをとる
-        $selected_materials = Material_detail::query();
-        $selected_solvents = Solvent_detail::query();
-        $selected_bacteria = Bacteria_detail::query();
-        $selected_fruits = Fruit_detail::query();
-        $selected_enzymes = Enzyme_detail::query();
-        $selected_substrates = Substrate_detail::query();
-        $selected_gases =  Gas_detail::query();
+        // 2. 各カテゴリの検索結果を取得
+        // when() を使って条件分岐をチェーン内に記述
+
+        $selected_materials = Material_detail::query()
+            ->when($keyword, fn($q) => $q->where('name', 'LIKE', "%{$keyword}%"))
+            ->when($materialName, fn($q) => $q->where('name', 'LIKE', "%{$materialName}%"))
+            // 検索条件がある場合のみ get() を実行し、なければ空のコレクションを返す
+            ->when($keyword || $materialName, fn($q) => $q->get(), fn() => collect());
+
+        $selected_solvents = Solvent_detail::query()
+            ->when($keyword, fn($q) => $q->where('name', 'LIKE', "%{$keyword}%"))
+            ->when($solventName, fn($q) => $q->where('name', 'LIKE', "%{$solventName}%"))
+            ->when($keyword || $solventName, fn($q) => $q->get(), fn() => collect());
+
+        $selected_bacteria = Bacteria_detail::query()
+            ->when($keyword, fn($q) => $q->where('name', 'LIKE', "%{$keyword}%"))
+            ->when($bacteriumName, fn($q) => $q->where('name', 'LIKE', "%{$bacteriumName}%"))
+            ->when($keyword || $bacteriumName, fn($q) => $q->get(), fn() => collect());
+
+        $selected_fruits = Fruit_detail::query()
+            ->when($keyword, fn($q) => $q->where('name', 'LIKE', "%{$keyword}%"))
+            ->when($fruitName, fn($q) => $q->where('name', 'LIKE', "%{$fruitName}%"))
+            ->when($keyword || $fruitName, fn($q) => $q->get(), fn() => collect());
+
+        $selected_enzymes = Enzyme_detail::query()
+            ->when($keyword, fn($q) => $q->where('name', 'LIKE', "%{$keyword}%"))
+            ->when($enzymeName, fn($q) => $q->where('name', 'LIKE', "%{$enzymeName}%"))
+            ->when($keyword || $enzymeName, fn($q) => $q->get(), fn() => collect());
+
+        $selected_substrates = Substrate_detail::query()
+            ->when($keyword, fn($q) => $q->where('name', 'LIKE', "%{$keyword}%"))
+            ->when($substrateName, fn($q) => $q->where('name', 'LIKE', "%{$substrateName}%"))
+            ->when($keyword || $substrateName, fn($q) => $q->get(), fn() => collect());
+
+        $selected_gases = Gas_detail::query()
+            ->when($keyword, fn($q) => $q->where('name', 'LIKE', "%{$keyword}%"))
+            ->when($gasName, fn($q) => $q->where('name', 'LIKE', "%{$gasName}%"))
+            ->when($keyword || $gasName, fn($q) => $q->get(), fn() => collect());
 
 
-        if (!empty($keyword)) {
-            $selected_materials->where('name', 'LIKE', "%{$keyword}%");
-            $selected_solvents->where('name', 'LIKE', "%{$keyword}%");
-            $selected_bacteria->where('name', 'LIKE', "%{$keyword}%");
-            $selected_fruits->where('name', 'LIKE', "%{$keyword}%");
-            $selected_enzymes->where('name', 'LIKE', "%{$keyword}%");
-            $selected_substrates->where('name', 'LIKE', "%{$keyword}%");
-            $selected_gases->where('name', 'LIKE', "%{$keyword}%");
-        }
-        if (!empty($material)) {
-            $selected_materials->where('name', 'LIKE', "%{$material}%");
-        }
-        if (!empty($solvent)) {
-            $selected_solvents->where('name', 'LIKE', "%{$solvent}%");
-        }
-        if (!empty($bacterium)) {
-            $selected_bacteria->where('name', 'LIKE', "%{$bacterium}%");
-        }
-        if (!empty($fruit)) {
-            $selected_fruits->where('name', 'LIKE', "%{$fruit}%");
-        }
-        if (!empty($enzyme)) {
-            $selected_enzymes->where('name', 'LIKE', "%{$enzyme}%");
-        }
-        if (!empty($substrate)) {
-            $selected_substrates->where('name', 'LIKE', "%{$substrate}%");
-        }
-        if (!empty($gas)) {
-            $selected_gases->where('name', 'LIKE', "%{$gas}%");
-        }
-
-        //絞ったデータをゲットする，もしインプットに値が入っていなければ，空にする
-        if (!empty($keyword) || !empty($material)) {
-            $selected_materials = $selected_materials->get();
-        } else {
-            $selected_materials = [];
-        }
-        if (!empty($keyword) || !empty($solvent)) {
-            $selected_solvents = $selected_solvents->get();
-        } else {
-            $selected_solvents = [];
-        }
-        if (!empty($keyword) || !empty($bacterium)) {
-            $selected_bacteria = $selected_bacteria->get();
-        } else {
-            $selected_bacteria = [];
-        }
-        if (!empty($keyword) || !empty($fruit)) {
-            $selected_fruits = $selected_fruits->get();
-        } else {
-            $selected_fruits = [];
-        }
-        if (!empty($keyword) || !empty($enzyme)) {
-            $selected_enzymes = $selected_enzymes->get();
-        } else {
-            $selected_enzymes = [];
-        }
-        if (!empty($keyword) || !empty($substrate)) {
-            $selected_substrates = $selected_substrates->get();
-        } else {
-            $selected_substrates = [];
-        }
-        if (!empty($keyword) || !empty($gas)) {
-            $selected_gases = $selected_gases->get();
-        } else {
-            $selected_gases = [];
-        }
-
+        // 3. 検索フォームの選択肢用リストを取得
         $materials_list = Material_detail::orderby('name', 'asc')->get();
         $solvents_list = Solvent_detail::orderby('name', 'asc')->get();
         $fruits_list = Fruit_detail::orderby('name', 'asc')->get();
@@ -134,6 +216,7 @@ class CategoryController extends Controller
         $substrates_list = Substrate_detail::orderby('name', 'asc')->get();
         $gases_list = Gas_detail::orderby('name', 'asc')->get();
 
+        // 4. ビューにデータを渡す
         return view('user.category.index', compact(
             'selected_materials',
             'selected_solvents',
@@ -142,19 +225,23 @@ class CategoryController extends Controller
             'selected_enzymes',
             'selected_substrates',
             'selected_gases',
-            'keyword',
-            'material',
             'materials_list',
             'solvents_list',
             'bacteria_list',
             'fruits_list',
             'enzymes_list',
             'substrates_list',
-            'gases_list'
+            'gases_list',
+            'keyword',
+            'materialName',
+            'solventName',
+            'bacteriumName',
+            'fruitName',
+            'enzymeName',
+            'substrateName',
+            'gasName'
         ));
     }
-
-
     /**
      * Show the form for creating a new resource.
      */

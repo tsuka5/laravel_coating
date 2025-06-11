@@ -5,11 +5,9 @@
         </h2>
     </x-slot>
     
-    {{-- <div class="lg:w-1/4 md:w-1/2 w-full px-4 mx-auto mt-6"> --}}
         <div class="lg:w-2/3 w-full px-4 mt-3 mb-3 mx-auto border-2 border-gray-400 bg-white rounded-lg">
             <x-flash-message status="session('status')" />
             <div class="p-3 flex xl:flex-nowrap md:flex-nowrap lg:flex-wrap flex-wrap justify-center">
-                {{-- <div class="flex xl:flex-nowrap md:flex-nowrap lg:flex-wrap flex-wrap justify-center items-end md:justify-start"> --}}
                     <form action="{{ route('user.category.index') }}" method="GET">
                 <div class = "flex-col justify-start">
                     <div class="relative w-40 sm:w-auto xl:mr-4 lg:mr-0 sm:mr-4 mr-2 mb-4">
@@ -127,36 +125,6 @@
                                 </td>
                             </tr>
 
-                            {{-- <tr>
-                                <td class="px-4 py-3">pH Materials</td>
-                                <td class="px-4 py-3">
-                                    <select name="ph_material" data-toggle="select">
-                                        <option value="">Select</option>
-                                        @foreach ($phMaterial_list as $selected_phMaterial)
-                                        <option value="{{ $selected_phMaterial->name }}"> {{ $selected_phMaterial->name }}</option>
-                                        @endforeach
-                                    </select>                 
-                                </td> 
-                                <td>
-                                    <button type="button" onclick="location.href='{{ route('user.category.create', ['categoryType'=>'phMaterial']) }}'" class="bg-gray-200 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded">Add</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="px-4 py-3">Antibacteria Test Type</td>
-                                <td class="px-4 py-3">
-                                    <select name="antibacteria_test_type" data-toggle="select">
-                                        <option value="">Select</option>
-                                        @foreach ($antibacteriaTypeTest_list as $selected_antibacteriaTypeTest)
-                                        <option value="{{ $selected_antibacteriaTypeTest->name }}"> {{ $selected_antibacteriaTypeTest->name }}</option>
-                                        @endforeach
-                                    </select>                              
-                                </td>
-                                <td>
-                                    <button type="button" onclick="location.href='{{ route('user.category.create', ['categoryType'=>'antibacteriaTestType']) }}'" class="bg-gray-200 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded">Add</button>
-                                </td> 
-                            </tr> --}}
-                          
-        
                         </tbody>
                       </table>
 
@@ -184,8 +152,6 @@
                                     <th class="px-4 py-3 title-font tracking-wider font-medium text-white text-lg bg-gray-400 border w-1/6 text-center">Category</th>
                                     <th class="px-4 py-3 title-font tracking-wider font-medium text-white text-lg bg-gray-400 border w-1/6 text-center">Name</th>
                                     <th class="px-4 py-3 title-font tracking-wider font-medium text-white text-lg bg-gray-400 border w-1/3 text-center">Characteristic</th>
-                                {{-- <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br"></th> --}}
-                                {{-- <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br"></th> --}}
                                 </tr>
                             </thead>
                             <tbody>
@@ -194,9 +160,7 @@
                                         <td class="px-4 py-3 border w-1/6 text-center">Material</td>
                                         <td class="px-4 py-3 border w-1/6 text-center">{{ $material->name }}</td>
                                         <td class="px-4 py-3 border w-1/3 text-center">{{ $material->charactaristic }}</td>
-                                        {{-- <td class="px-4 py-3">
-                                            <button onclick="location.href='{{ route('user.category.edit', ['category_type' => 'material', 'id' => $material->id ])}}'" class="text-white bg-gray-400 border-0 py-2 px-4 focus:outline-none hover:bg-gray-500 rounded">Edit</button>
-                                        </td> --}}
+                                       
                                         
                                     </tr>
                                 @endforeach
@@ -207,9 +171,7 @@
                                         <td class="px-4 py-3 border w-1/6 text-center">Solvent</td>
                                         <td class="px-4 py-3 border w-1/6 text-center">{{ $solvent->name }}</td>
                                         <td class="px-4 py-3 border w-1/3 text-center">{{ $solvent->charactaristic }}</td>
-                                        {{-- <td class="px-4 py-3">
-                                            <button onclick="location.href='{{ route('user.category.edit', ['category_type' => 'material', 'id' => $material->id ])}}'" class="text-white bg-gray-400 border-0 py-2 px-4 focus:outline-none hover:bg-gray-500 rounded">Edit</button>
-                                        </td> --}}
+                                      
                                         
                                     </tr>
                                 @endforeach
@@ -220,9 +182,7 @@
                                         <td class="px-4 py-3 border w-1/6 text-center">Bacteria</td>
                                         <td class="px-4 py-3 border w-1/6 text-center">{{ $bacterium->name }}</td>
                                         <td class="px-4 py-3 border w-1/3 text-center">{{ $bacterium->charactaristic }}</td>
-                                        {{-- <td class="px-4 py-3">
-                                            <button onclick="location.href='{{ route('user.category.show', ['category_type' => 'bacteria', 'id' => $bacterium->id ])}}'" class="text-white bg-gray-400 border-0 py-2 px-4 focus:outline-none hover:bg-gray-500 rounded">Detail</button>
-                                        </td> --}}
+                                       
                                         
                                     </tr>
                                 @endforeach
@@ -233,9 +193,7 @@
                                         <td class="px-4 py-3 border w-1/6 text-center">Fruit and Vegitable</td>
                                         <td class="px-4 py-3 border w-1/6 text-center">{{ $fruit->name }}</td>
                                         <td class="px-4 py-3 border w-1/3 text-center">{{ $fruit->charactaristic }}</td>
-                                        {{-- <td class="px-4 py-3">
-                                            <button onclick="location.href='{{ route('user.category.show', ['category_type' => 'fruit', 'id' => $fruit->id ])}}'" class="text-white bg-gray-400 border-0 py-2 px-4 focus:outline-none hover:bg-gray-500 rounded">Detail</button>
-                                        </td> --}}
+                                     
                                         
                                     </tr>
                                 @endforeach
@@ -246,9 +204,7 @@
                                         <td class="px-4 py-3 border w-1/6 text-center">Enzyme</td>
                                         <td class="px-4 py-3 border w-1/6 text-center">{{ $enzyme->name }}</td>
                                         <td class="px-4 py-3 border w-1/3 text-center">{{ $enzyme->charactaristic }}</td>
-                                        {{-- <td class="px-4 py-3">
-                                            <button onclick="location.href='{{ route('user.category.show', ['category_type' => 'fruit', 'id' => $fruit->id ])}}'" class="text-white bg-gray-400 border-0 py-2 px-4 focus:outline-none hover:bg-gray-500 rounded">Detail</button>
-                                        </td> --}}
+                                      
                                         
                                     </tr>
                                 @endforeach
@@ -259,9 +215,7 @@
                                         <td class="px-4 py-3 border w-1/6 text-center">Substrate</td>
                                         <td class="px-4 py-3 border w-1/6 text-center">{{ $substrate->name }}</td>
                                         <td class="px-4 py-3 border w-1/3 text-center">{{ $substrate->charactaristic }}</td>
-                                        {{-- <td class="px-4 py-3">
-                                            <button onclick="location.href='{{ route('user.category.show', ['category_type' => 'fruit', 'id' => $fruit->id ])}}'" class="text-white bg-gray-400 border-0 py-2 px-4 focus:outline-none hover:bg-gray-500 rounded">Detail</button>
-                                        </td> --}}
+                                       
                                         
                                     </tr>
                                 @endforeach
@@ -272,9 +226,7 @@
                                         <td class="px-4 py-3 border w-1/6 text-center">Gas</td>
                                         <td class="px-4 py-3 border w-1/6 text-center">{{ $gas->name }}</td>
                                         <td class="px-4 py-3 border w-1/3 text-center">{{ $gas->charactaristic }}</td>
-                                        {{-- <td class="px-4 py-3">
-                                            <button onclick="location.href='{{ route('user.category.show', ['category_type' => 'fruit', 'id' => $fruit->id ])}}'" class="text-white bg-gray-400 border-0 py-2 px-4 focus:outline-none hover:bg-gray-500 rounded">Detail</button>
-                                        </td> --}}
+                                      
                                         
                                     </tr>
                                 @endforeach
