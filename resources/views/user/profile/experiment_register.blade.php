@@ -382,7 +382,9 @@
                                             @if(!$storing_test)
                                              
                                                 <div class="p-1 text-center">
-                                                    <button type="button" data-toggle="modal" data-target="#storing_test_{{$composition->id}}" class="toggle-button p-2 m-2 text-white bg-gray-500 border-0 focus:outline-none hover:bg-gray-600 rounded">Basic Information</button>
+                                                    @if($composition)
+                                                        <button type="button" data-toggle="modal" data-target="#storing_test_{{$composition->id}}" class="toggle-button p-2 m-2 text-white bg-gray-500 border-0 focus:outline-none hover:bg-gray-600 rounded">Basic Information</button>
+                                                    @endif
                                                 </div>
 
                                             @else
@@ -475,7 +477,9 @@
                                             <div class="mt-2">
                                                 @if(!$antibacteria_test)
                                                 <div class="p-1 text-center">
-                                                    <button type="button" data-toggle="modal" data-target="#antibacteria_test_{{$composition->id}}" class="toggle-button p-2 m-2 text-white bg-gray-500 border-0 focus:outline-none hover:bg-gray-600 rounded">Basic Information</button>
+                                                    @if($composition)
+                                                        <button type="button" data-toggle="modal" data-target="#antibacteria_test_{{$composition->id}}" class="toggle-button p-2 m-2 text-white bg-gray-500 border-0 focus:outline-none hover:bg-gray-600 rounded">Basic Information</button>
+                                                    @endif
                                                 </div>
 
                                                 @elseif($antibacteria_test)
@@ -575,7 +579,9 @@
                                             @if(empty($eager_experiment_enzyme->enzyme_test) || !$eager_experiment_enzyme->enzyme_test->first())
                                              
                                                 <div class="p-1 text-center">
-                                                    <button type="button" data-toggle="modal" data-target="#enzyme_test_{{$composition->id}}" class="toggle-button p-2 m-2 text-white bg-gray-500 border-0 focus:outline-none hover:bg-gray-600 rounded">Basic Information</button>
+                                                    @if($composition)
+                                                        <button type="button" data-toggle="modal" data-target="#enzyme_test_{{$composition->id}}" class="toggle-button p-2 m-2 text-white bg-gray-500 border-0 focus:outline-none hover:bg-gray-600 rounded">Basic Information</button>
+                                                    @endif
                                                 </div>
 
                                             @else
