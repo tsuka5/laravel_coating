@@ -68,6 +68,7 @@
     
                                 @php
                                     $number_composition = 1;
+                                    $composition = null;
                                 @endphp
                                 <div class="flex justify-center mt-5">                                
                                     <div class="flex justify-center flex-wrap lg:w-2/3 md:w-full mx-auto"> 
@@ -672,7 +673,9 @@
                                             @if(empty($eager_experiment_tga->tga_test) || !$eager_experiment_tga->tga_test->first())
                                              
                                                 <div class="p-1 text-center">
-                                                    <button type="button" data-toggle="modal" data-target="#tga_test_{{$composition->id}}" class="toggle-button p-2 m-2 text-white bg-gray-500 border-0 focus:outline-none hover:bg-gray-600 rounded">Basic Information</button>
+                                                    @if($composition)
+                                                        <button type="button" data-toggle="modal" data-target="#tga_test_{{$composition->id}}" class="toggle-button p-2 m-2 text-white bg-gray-500 border-0 focus:outline-none hover:bg-gray-600 rounded">Basic Information</button>
+                                                    @endif
                                                 </div>
 
                                             @else
