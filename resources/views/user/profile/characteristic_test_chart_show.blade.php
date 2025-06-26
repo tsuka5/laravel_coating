@@ -123,7 +123,7 @@
 
         // データセットを作成
         function createDatasets(data, labelPrefix) {
-            const isBarChart = !['wvp', 'viscosity'].includes(labelPrefix);
+            const isBarChart = !['viscosity'].includes(labelPrefix);
 
             if (isBarChart) {
                 // 棒グラフの場合、1つのデータセットを作成
@@ -161,7 +161,7 @@
 
 
     
-        // グラフ作成の共通関数
+        //グラフ作成の共通関数
         function createChart(chartId, type, datasets, title, labels) {
             const ctx = document.getElementById(chartId).getContext('2d');
             const maxValue = Math.max(...datasets.flatMap(dataset => dataset.data)) * 1.1;
@@ -198,6 +198,7 @@
                 }
             });
         }
+
         console.log(dataMap);
         Object.entries(dataMap).forEach(([key, data]) => {
             const isAllNull = Array.isArray(data[0]) // data がネストされた配列かどうか確認
@@ -208,16 +209,20 @@
                 const datasets = createDatasets(data, key);
                 const canvas = createCanvas(key);
                 container.appendChild(canvas);
-                const chartType = ['viscosity', 'wvp'].includes(key) ? 'line' : 'bar';
-                const label = key === 'viscosity' ? temperature : key === 'wvp' ? humidity : x_label;
+                //const chartType = ['viscosity', 'wvp'].includes(key) ? 'line' : 'bar';
+                const chartType = ['viscosity'].includes(key) ? 'line' : 'bar';
+                //const label = key === 'viscosity' ? temperature : key === 'wvp' ? humidity : x_label;
+                const label = ['viscosity'].includes(key) ? temperature : x_label;
                 createChart(key, chartType, datasets, key.replace('_', ' ').toUpperCase(), label);
                 
             } else {
                 console.log(`No valid data for ${key}`);
             }
         });
+        console.log('wvp', dataMap.wvp);
 
     });
     </script>
     
+
 
