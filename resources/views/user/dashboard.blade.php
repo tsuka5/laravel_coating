@@ -10,8 +10,8 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <p class="text-xl">This is Web Database for Edible Coating!</p><br>
-                    <p class="text-xl">This database was released on Dec.22, 2023.</p><br>
-                    <p class="text-xl">This database was created by Tsukasa Ozaki and Manaka Takahashi at Poostharvest Science lab., faculty of Agriculture, Kyushu University.</p><br>
+                    <p class="text-xl">This database was released on 25 June, 2024.</p><br>
+                    <p class="text-xl">This database was created by Tsukasa Ozaki at Poostharvest Science lab., faculty of Agriculture, Kyushu University.</p><br>
                     @if(!empty($pdfFile))
                     <p class="text-xl">If you have any questions about how to use this web database, <br>
                         please click on the link below, which describes how to use the web database</p><br>
